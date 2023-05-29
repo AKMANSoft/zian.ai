@@ -1,0 +1,35 @@
+@tailwind base;
+
+@layer base {
+    html {
+        font-family: 'Inter', sans-serif;
+    }
+}
+
+
+@tailwind components;
+@tailwind utilities;
+
+
+.border-gr-angular {}
+
+
+.stick-shadow {
+    box-shadow: 0px 10px 30px #E945D0;
+}
+
+
+.text-shadow {
+    text-shadow: 0px 10px 30px #F3E0EF;
+}
+
+
+.primary-btn {
+    box-shadow: 0px 10px 30px #E945D0;
+}
+
+
+@font-face {
+    font-family: Nebula;
+    src: url("/fonts/nebula-regular.otf");
+}
