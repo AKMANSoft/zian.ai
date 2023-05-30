@@ -1,22 +1,36 @@
-import Header from "./components/header"
 import SideBar from "./components/sidebar"
+import CalendarPage from "./pages/Calendar"
+import DraftsPage from "./pages/Drafts"
 import HomePage from "./pages/Home"
+import { RouterProvider, createBrowserRouter, useLocation } from 'react-router-dom'
+
+
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomePage />
+  },
+  {
+    path: "/calendar",
+    element: <CalendarPage />
+  },
+  {
+    path: "/drafts",
+    element: <DraftsPage />
+  }
+])
+
 
 
 function App() {
 
   return (
-    <div className="bg-primary-image bg-no-repeat min-h-screen relative">
+    <div className="bg-primary-image bg-no-repeat overflow-x-hidden h-full min-h-screen relative">
       <div className="absolute top-0 left-0 -translate-x-5 -translate-y-5">
         <img src="/images/moon.png" className="w-[270px] h-auto" alt="" />
       </div>
-      <div className="w-full flex gap-5">
-        <SideBar />
-        <div className=" flex flex-col w-full px-5">
-          <Header />
-          <HomePage />
-        </div>
-      </div>
+      <RouterProvider router={router} />
     </div>
   )
 }

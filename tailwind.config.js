@@ -8,7 +8,9 @@ export default {
     extend: {
       colors: {
         "primary": "rgba(233, 69, 208, 1)",
-        "th-gray": "rgba(242, 228, 241, 1)"
+        "th-gray": "rgba(242, 228, 241, 1)",
+        "th-gray-2": "rgba(242, 228, 241, 1)",
+        "th-green-3": "#6FCF97"
       },
       fontFamily: {
         "nebula": "Nebula",
@@ -22,7 +24,8 @@ export default {
         'gr-purple': "blur(10px)"
       },
       borderRadius: {
-        '20': "20px"
+        '20': "20px",
+        '10': "10px",
       }
     },
     backgroundImage: {
@@ -35,8 +38,11 @@ export default {
       "primary-image": "cover"
     },
     boxShadow: {
-      "navigation-item": "0px 10px 30px #E945D0"
-    }
+      "navigation-item": "0px 10px 30px #E945D0",
+      "primary-btn": "0px 10px 30px #E945D0",
+      "primary-btn-lg": "0px 10px 50px #E945D0",
+      "primary-tabs": "0px 1px 5px rgba(0, 0, 0, 0.1), inset 0px -1px 8px #9375B6, inset 0px 0px 3px #b5057a",
+    },
   },
   plugins: [
     // require("daisyui"),

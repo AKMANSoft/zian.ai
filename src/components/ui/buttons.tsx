@@ -12,7 +12,7 @@ type Props = {
 export function SecondaryBtn({ className, children, filled = true }: Props) {
     return (
         <button type="button" className={cn(
-            "border border-white/5 transition-all hover:bg-white/20 rounded-lg py-[8px] px-4",
+            "border border-white/5 transition-all duration-300 hover:bg-white/20 rounded-lg py-[8px] px-4",
             filled && "bg-white/[0.06]",
             "inline-flex items-center gap-2 text-white text-xs font-semibold justify-center",
             className
@@ -28,8 +28,8 @@ export function SecondaryBtn({ className, children, filled = true }: Props) {
 export function PrimaryBtn({ className, children }: Props) {
     return (
         <button type="button" className={cn(
-            "primary-btn bg-primary",
-            "transition-all rounded-lg py-[8px] px-4",
+            "primary-btn bg-primary shadow-primary-btn hover:shadow-primary-btn-lg",
+            "transition-all duration-300 rounded-lg py-[8px] px-4",
             "inline-flex items-center gap-2 text-white text-xs font-semibold justify-center",
             className
         )}>
@@ -38,3 +38,16 @@ export function PrimaryBtn({ className, children }: Props) {
     )
 }
 
+
+
+
+export function PrimaryBtnNeon({ className, children }: Props) {
+    return (
+        <button type="button" className={cn(
+            "primary-btn-neon",
+            className
+        )}>
+            {children}
+        </button>
+    )
+}

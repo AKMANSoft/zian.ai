@@ -29,3 +29,15 @@ export function Seperator({ className = "" }: Props) {
     );
 }
 
+
+
+export function VerticalSeperator({ className = "" }: Props) {
+    return (
+        <span className={cn(
+            "block h-6 w-0.5 bg-white/30",
+            className
+        )}
+        >
+        </span>
+    );
+}

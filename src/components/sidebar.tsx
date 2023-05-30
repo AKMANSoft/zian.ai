@@ -1,15 +1,16 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    HomeIcon, FileSpreadsheetIcon, CalendarIcon,
-    LayoutListIcon, SlidersHorizontalIcon, CreditCardIcon,
-    ArrowRightIcon
-} from "lucide-react";
+    faHome, faArrowRight, faCreditCard,
+    faCalendar, faSliders, faBook, faFile
+} from '@fortawesome/free-solid-svg-icons';
 import { cn } from "../lib/utils";
 import { GrSeperator } from "./ui/seperator";
-
+import { useLocation } from "react-router-dom";
 
 
 
 export default function SideBar() {
+    const { pathname } = useLocation();
     return (
         <div className="min-w-[300px] max-w-[300px] w-full min-h-screen pt-[135px] pb-10 flex flex-col gap-10 justify-between">
             <div className="w-full">
@@ -17,19 +18,37 @@ export default function SideBar() {
                     className="w-[120px] h-auto aspect-square rounded-full overflow-hidden mx-auto"
                     alt="" />
                 <div className="mt-[30px] w-full">
-                    <NavigationItem text="Home" icon={<HomeIcon />} active={true} />
+                    <NavigationItem
+                        href="/" active={pathname === "/"}
+                        text="Home"
+                        icon={<FontAwesomeIcon icon={faHome} />} />
                     <GrSeperator className="mt-6 mb-2" />
-                    <NavigationItem className="my-0.5" text="Generate Content" icon={<FileSpreadsheetIcon />} />
-                    <NavigationItem className="my-0.5" text="Calendar" icon={<CalendarIcon />} />
-                    <NavigationItem className="my-0.5" text="Drafts" icon={<LayoutListIcon />} />
+                    <NavigationItem
+                        href="/" active={pathname === "/s"}
+                        className="my-0.5"
+                        text="Generate Content"
+                        icon={<FontAwesomeIcon icon={faFile} />} />
+                    <NavigationItem
+                        href="/calendar" active={pathname === "/calendar"}
+                        className="my-0.5"
+                        text="Calendar"
+                        icon={<FontAwesomeIcon icon={faCalendar} />} />
+                    <NavigationItem
+                        href="/drafts" active={pathname === "/drafts"}
+                        className="my-0.5" text="Drafts"
+                        icon={<FontAwesomeIcon icon={faBook} />} />
                     <GrSeperator className="my-2" />
-                    <NavigationItem className="mb-3" text="Settings" icon={<SlidersHorizontalIcon />} />
+                    <NavigationItem
+                        href="/settings" active={pathname === "/settings"}
+                        className="mb-3"
+                        text="Settings"
+                        icon={<FontAwesomeIcon icon={faSliders} />} />
                     <GrSeperator />
                 </div>
             </div>
             <div className="w-full px-12">
                 <h5 className="text-sm font-bold text-white inline-flex items-center gap-3">
-                    <CreditCardIcon />
+                    <FontAwesomeIcon icon={faCreditCard} />
                     Plan Name
                 </h5>
                 <span className="mt-7 block w-full h-1 bg-th-gray rounded-full">
@@ -42,7 +61,7 @@ export default function SideBar() {
                 <h5 className="mt-7 w-full text-sm font-bold text-white inline-flex items-center justify-between gap-3">
                     Manage Plan
                     <a href="#">
-                        <ArrowRightIcon size={18} />
+                        <FontAwesomeIcon icon={faArrowRight} />
                     </a>
                 </h5>
             </div>
@@ -54,14 +73,15 @@ export default function SideBar() {
 
 type NavigationItemProps = {
     text: string;
+    href?: string;
     icon: React.ReactNode
     active?: boolean;
     className?: string;
 }
 
-function NavigationItem({ text, className, icon, active = false }: NavigationItemProps) {
+function NavigationItem({ text, className, icon, active = false, href = "#" }: NavigationItemProps) {
     return (
-        <a href="#" className={cn(
+        <a href={href} className={cn(
             "font-bold text-sm transition-all duration-300 rounded-r-full",
             "inline-flex gap-3 items-center py-5 px-12 w-full",
             active ? "shadow-navigation-item" : "hover:shadow-navigation-item",
