@@ -30,7 +30,7 @@ export function PrimaryBtn({ className, children }: Props) {
         <button type="button" className={cn(
             "primary-btn bg-primary shadow-primary-btn hover:shadow-primary-btn-lg",
             "transition-all duration-300 rounded-lg py-[8px] px-4",
-            "inline-flex items-center gap-2 text-white text-xs font-semibold justify-center",
+            "inline-flex items-center gap-2 text-white text-sm font-semibold justify-center",
             className
         )}>
             {children}

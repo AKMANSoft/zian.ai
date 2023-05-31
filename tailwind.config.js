@@ -12,6 +12,9 @@ export default {
         "th-gray-2": "rgba(242, 228, 241, 1)",
         "th-green-3": "#6FCF97"
       },
+      backdropGrayscale: {
+        "input": "rgba(6, 18, 32, 0.1)"
+      },
       fontFamily: {
         "nebula": "Nebula",
         "jakarta": "Plus Jakarta Sans, sans-serif"

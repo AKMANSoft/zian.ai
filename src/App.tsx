@@ -1,8 +1,8 @@
-import SideBar from "./components/sidebar"
 import CalendarPage from "./pages/Calendar"
 import DraftsPage from "./pages/Drafts"
+import GenerateContentPage from "./pages/GenerateContent"
 import HomePage from "./pages/Home"
-import { RouterProvider, createBrowserRouter, useLocation } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 
 
@@ -10,6 +10,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <HomePage />
+  },
+  {
+    path: "/generate",
+    element: <GenerateContentPage />
   },
   {
     path: "/calendar",

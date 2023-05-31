@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import MainLayout from "../components/layout";
 import GrBorderBox from "../components/ui/gr-border-box";
-import { faCalendar, faChevronLeft, faChevronRight, faEdit, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faChevronRight, faEdit, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { cn } from "../lib/utils";
 import { PrimaryBtn, SecondaryBtn } from "../components/ui/buttons";
 
@@ -19,7 +19,7 @@ const filters = [
 export default function DraftsPage() {
     return (
         <MainLayout heading="Drafts">
-            <div className="pb-5 flex h-[calc(100%_-_140px)]">
+            <div className="pb-5 flex h-full">
                 <GrBorderBox className="w-full p-[2px] rounded-20" type="lg">
                     <div className="p-5 min-h-full backdrop-blur-[10px] bg-gr-purple-light opacity-90 rounded-20">
                         {/* Tabs List View  */}
@@ -29,7 +29,7 @@ export default function DraftsPage() {
                                 <FontAwesomeIcon icon={faChevronLeft} />
                             </button>
 
-                            <div className="flex mx-16 max-w-[calc(100vw_-_540px)] h-full gap-3 overflow-x-auto">
+                            <div className="flex mx-16 max-w-[calc(100vw_-_540px)] h-full gap-3 no-scrollbar overflow-x-auto">
                                 {
                                     [...filters, ...filters].map((filter, index) => (
                                         <TabItem key={filter} text={filter} active={index === 0} />
@@ -44,14 +44,14 @@ export default function DraftsPage() {
                         </div>
                         {/* Drafts Table  */}
                         <div className="mt-7 bg-gr-purple-light rounded-10 max-h-[700px] overflow-y-auto">
-                            <table className="table-fixed text-white w-full">
+                            <table className="table-fixed text-white w-full font-jakarta">
                                 <thead className="border-b-[5px] border-primary">
                                     <tr>
                                         <th className="py-5 text-start pl-7 w-24">#</th>
-                                        <th className="py-5 text-start w-32">Photo</th>
-                                        <th className="py-5 text-start">Content</th>
+                                        <th className="py-5 text-start w-32 px-5">Photo</th>
+                                        <th className="py-5 text-start px-5">Content</th>
                                         <th className="py-5 text-start w-44 px-5">Status</th>
-                                        <th className="py-5 text-start w-48">Username</th>
+                                        <th className="py-5 text-start w-48 px-5">Username</th>
                                         <th className="py-5 text-start px-5">Created Date</th>
                                         <th className="py-5 text-start px-12">Actions</th>
                                         <th className="py-5 text-start pr-7">Photo</th>
@@ -85,10 +85,10 @@ function SingleTableRow() {
     return (
         <tr>
             <td className="py-5 pl-7">01</td>
-            <td className="py-5">
+            <td className="py-5 px-5">
                 <img src="/images/table-img.png" width={80} height={80} alt="" />
             </td>
-            <td className="py-5">
+            <td className="py-5 px-5">
                 <p className="line-clamp-4">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur aliquid doloribus mollitia magni fugiat quisquam rerum a alias aspernatur, dolorem in neque dolore sed quis hic nulla animi minima debitis.
                 </p>
@@ -96,7 +96,7 @@ function SingleTableRow() {
             <td className="py-5 px-5">
                 Scheduled
             </td>
-            <td className="py-5">
+            <td className="py-5 px-5">
                 moonlanding.media
             </td>
             <td className="py-5 px-5">

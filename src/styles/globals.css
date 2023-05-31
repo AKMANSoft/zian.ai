@@ -65,6 +65,24 @@
 
 
 
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+::-webkit-scrollbar{
+    width: 4px;
+    height: 4px;
+    background: transparent;
+}
+
+
+::-webkit-scrollbar-thumb{
+    background: gray;
+    border-radius: 50px;
+}
+
+
+
 
 @font-face {
     font-family: Nebula;

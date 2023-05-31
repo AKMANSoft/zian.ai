@@ -24,7 +24,7 @@ export default function SideBar() {
                         icon={<FontAwesomeIcon icon={faHome} />} />
                     <GrSeperator className="mt-6 mb-2" />
                     <NavigationItem
-                        href="/" active={pathname === "/s"}
+                        href="/generate" active={pathname === "/generate"}
                         className="my-0.5"
                         text="Generate Content"
                         icon={<FontAwesomeIcon icon={faFile} />} />
