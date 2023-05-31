@@ -1,9 +1,10 @@
-import { faCalendar, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCalendar, faEdit, faImage, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { cn } from "../lib/utils";
 import { SecondaryBtn, PrimaryBtn } from "./ui/buttons";
 import GrBorderBox from "./ui/gr-border-box";
 import { Seperator } from "./ui/seperator";
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 
 
 
@@ -79,5 +80,24 @@ export default function PostViewSection({ className, heading, contentClassName, 
 }
 
 
+
+
+
+
+export function CalendarPostEl() {
+    return (
+        <button className="w-full text-start cursor-pointer bg-radial-gr-purple rounded-md border h-auto border-primary/40 py-2 px-3">
+            <h5 className="text-white text-xs font-bold font-jakarta line-clamp-1">
+                <FontAwesomeIcon icon={faTwitter} className="mr-[3px]" />
+                @moonlanding
+            </h5>
+            <p className="text-white/40 text-xs font-normal font-jakarta mt-2">
+                9:30pm
+                <br />
+                <FontAwesomeIcon icon={faImage} className="mt-2 text-white/60" />
+            </p>
+        </button>
+    );
+}
 
 
