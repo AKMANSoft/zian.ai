@@ -9,13 +9,27 @@ import { useLocation } from "react-router-dom";
 
 
 
-export default function SideBar() {
+type Props = {
+    expanded?: boolean;
+}
+
+
+export default function SideBar({ expanded = false }: Props) {
     const { pathname } = useLocation();
     return (
-        <div className="min-w-[300px] max-w-[300px] w-full min-h-screen pt-[135px] pb-10 flex flex-col gap-10 justify-between">
+        <div className={cn(
+            "min-w-[280px] w-full md:max-w-[280px] min-h-screen pt-20 lg:pt-[135px] pb-10",
+            "flex flex-col gap-40 lg:gap-20 justify-between z-50 px-4 lg:px-0",
+            "fixed -top-full left-0 lg:relative bg-[#1E162E] lg:bg-transparent",
+            "max-h-screen overflow-y-auto transition-all",
+            expanded && "top-0"
+        )}>
             <div className="w-full">
                 <img src="/images/avatar.png" width={120} height={120}
-                    className="w-[120px] h-auto aspect-square rounded-full overflow-hidden mx-auto"
+                    className={cn(
+                        "w-[60px] lg:w-[120px] h-auto aspect-square rounded-full overflow-hidden mx-auto",
+                        "hidden lg:block"
+                    )}
                     alt="" />
                 <div className="mt-[30px] w-full">
                     <NavigationItem
@@ -82,7 +96,7 @@ type NavigationItemProps = {
 function NavigationItem({ text, className, icon, active = false, href = "#" }: NavigationItemProps) {
     return (
         <a href={href} className={cn(
-            "font-bold text-sm transition-all duration-300 rounded-r-full",
+            "font-bold text-sm transition-all duration-300 rounded-full lg:rounded-r-full",
             "inline-flex gap-3 items-center py-5 px-12 w-full",
             active ? "shadow-navigation-item" : "hover:shadow-navigation-item",
             active ? "text-primary" : "text-white hover:text-primary",

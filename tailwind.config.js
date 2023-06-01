@@ -5,7 +5,13 @@ export default {
     "./src/**/*.{jsx,js}",
   ],
   theme: {
+    // screens: {
+    //   "xs": ""
+    // },
     extend: {
+      screens: {
+        "xs": "450px"
+      },
       colors: {
         "primary": "rgba(233, 69, 208, 1)",
         "th-gray": "rgba(242, 228, 241, 1)",
@@ -33,13 +39,16 @@ export default {
       }
     },
     backgroundImage: {
-      "primary-image": "url(/images/theme-bg.png)"
+      "primary-image": "url(/images/theme-bg.png)",
+      "primary-image-mobile": "url(/images/theme-bg-mobile.png)",
     },
     backgroundPosition: {
-      "primary-image": "center"
+      "primary-image": "center",
+      "primary-image-mobile": "center",
     },
     backgroundSize: {
-      "primary-image": "cover"
+      "primary-image": "cover",
+      "primary-image-mobile": "cover",
     },
     boxShadow: {
       "navigation-item": "0px 10px 30px #E945D0",

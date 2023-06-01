@@ -30,8 +30,8 @@ const router = createBrowserRouter([
 function App() {
 
   return (
-    <div className="bg-primary-image bg-no-repeat overflow-x-hidden h-full min-h-screen relative">
-      <div className="absolute top-0 left-0 -translate-x-5 -translate-y-5">
+    <div className="bg-primary-image-mobile lg:bg-primary-image bg-no-repeat overflow-hidden h-auto min-h-screen relative">
+      <div className="hidden xl:block absolute top-0 left-0 -translate-x-5 -translate-y-5">
         <img src="/images/moon.png" className="w-[270px] h-auto" alt="" />
       </div>
       <RouterProvider router={router} />

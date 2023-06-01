@@ -14,7 +14,7 @@ export default function GenerateContentPage() {
     return (
         <MainLayout heading="Generate Content">
             <div className="pb-5 flex gap-[20px] h-full">
-                <GrBorderBox className="w-4/5 p-[2px] rounded-20" type="lg">
+                <GrBorderBox className="w-full p-[2px] rounded-20" type="lg">
                     <div className="h-full min-h-[500px] bg-gr-purple-light backdrop-blur-[10px] opacity-90 rounded-20 relative">
                         {/* Main Content  */}
                         <div className="p-5  pb-[30px] border-b-[5px] border-primary">
@@ -47,7 +47,7 @@ export default function GenerateContentPage() {
                     </div>
                 </GrBorderBox>
                 <PostViewSection
-                    className="w-1/4"
+                    className="w-1/3"
                     contentClassName="px-4 pt-10 pb-5"
                     customContent={<EmptyPostContent />}
                 />

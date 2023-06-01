@@ -5,7 +5,7 @@ import { useState } from "react"
 import { cn } from "../../lib/utils"
 
 
-type Option = {
+export type Option = {
     value: string;
     text: string;
     disabled: boolean;
@@ -14,6 +14,8 @@ type Option = {
 
 type Props = {
     label?: string;
+    value?: Option;
+    onValueChange?: (value: Option) => void;
     className?: string;
     optClassName?: string;
     optContainerClassName?: string;
@@ -22,11 +24,22 @@ type Props = {
 }
 
 
-export default function SelectEl({ label, options, className = "", containerClassName, optClassName, optContainerClassName }: Props) {
-    const [selectedOpt, setSelectedOpt] = useState(options[0])
+export default function SelectEl({
+    label, options, className = "",
+    containerClassName, optClassName,
+    optContainerClassName,
+    value, onValueChange
+}: Props) {
+    const [selectedOpt, setSelectedOpt] = useState(value ?? options[0])
+
+
+    const onSelectedOptChange = (opt: Option) => {
+        setSelectedOpt(opt);
+        onValueChange?.call(null, opt);
+    }
 
     return (
-        <Listbox value={selectedOpt} onChange={setSelectedOpt}>
+        <Listbox value={selectedOpt} onChange={onSelectedOptChange}>
             <div className={cn("relative w-full", containerClassName)}>
                 {
                     (label && label !== "") &&
@@ -53,7 +66,7 @@ export default function SelectEl({ label, options, className = "", containerClas
                     "absolute mt-2 top-full left-0 w-full bg-th-gray/10 backdrop-blur-[10px] rounded-10 overflow-hidden outline-none",
                     "border-2 border-th-gray/20",
                     optContainerClassName
-                )}>
+                )} >
                     {
                         options.map((opt) => (
                             <Listbox.Option
@@ -62,7 +75,7 @@ export default function SelectEl({ label, options, className = "", containerClas
                                 disabled={opt.disabled}
                                 className={cn(
                                     "text-white text-start font-jakarta font-medium text-sm leading-6 py-4 px-5",
-                                    "border-b last:border-none border-white/10 w-full",
+                                    "border-b last:border-none border-white/10 w-full cursor-pointer",
                                     "data-[headlessui-state=active]:bg-gr-purple data-[headlessui-state=disabled]:bg-gray-600/50",
                                     selectedOpt.value === opt.value ? "bg-gr-purple" : "bg-transparent [&:not(:data-[headlessui-state=disabled])]:hover:bg-gr-purple",
                                     optClassName
