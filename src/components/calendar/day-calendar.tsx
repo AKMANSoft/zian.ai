@@ -1,11 +1,8 @@
-import { faChevronLeft, faChevronRight, faCalendar, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { cn } from "../../lib/utils";
-import SelectEl from "../ui/select";
-import { monthNamesLong, calendarViewModes, weekdayNamesShort, CalendarProps, formatNumberto0 } from "./defaults";
-import { PrimaryBtnNeon } from "../ui/buttons";
-import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { weekdayNamesShort, CalendarProps, formatNumberto0, monthNamesShort } from "./defaults";
+import { CalendarHeader } from "./calendar-view";
+import { ScheduleListItem } from "../postview-section";
 
 
 
@@ -29,39 +26,14 @@ export default function DayCalendarView({ mode, onModeChange }: CalendarProps) {
     return (
         <div className='text-white' >
             {/* Calendar Header  */}
-            <div className='flex items-center justify-between border-b border-primary px-8 pt-7 pb-6' >
-                <h4 className='inline-flex items-center gap-8 text-xl font-semibold font-jakarta'>
-                    <span>
-                        {monthNamesLong[currentDate.getMonth()]}
-                        <span className='mx-2'>
-                            {`${currentDate.getDate()},`}
-                        </span>
-                        {currentDate.getFullYear()}
-                    </span>
-                    <span className='inline-flex items-center gap-1 text-xs'>
-                        <button onClick={goToPrevDay} className='p-2 cursor-pointer'>
-                            <FontAwesomeIcon icon={faChevronLeft} />
-                        </button>
-                        <button onClick={goToNextDay} className='p-2 cursor-pointer'>
-                            <FontAwesomeIcon icon={faChevronRight} />
-                        </button>
-                    </span>
-                    <FontAwesomeIcon icon={faCalendar} />
-                </h4>
-                <div className='inline-flex items-center gap-6'>
-                    <button className='w-7 h-auto px-1 text-sm text-white font-semibold aspect-square rounded-full border-2 border-white'>
-                        <FontAwesomeIcon icon={faPlus} />
-                    </button>
-                    <SelectEl
-                        className='py-2 rounded'
-                        optClassName='py-2'
-                        optContainerClassName='rounded'
-                        options={calendarViewModes}
-                        value={mode}
-                        onValueChange={onModeChange}
-                    />
-                </div>
-            </div>
+            <CalendarHeader
+                mode={mode}
+                onModeChange={onModeChange}
+                className="border-none"
+                heading={`${monthNamesShort[currentDate.getMonth()]} ${currentDate.getDate()}, ${currentDate.getFullYear()}`}
+                onPrevClick={goToPrevDay}
+                onNextClick={goToNextDay}
+            />
             {/* Calendar Body */}
             {/* [&>*:nth-last-child(-n+7)]:border-b-0 */}
             <div className=''>
@@ -100,25 +72,38 @@ type HourRowElProps = {
 
 function HourRowEl({ text }: HourRowElProps) {
     return (
-        <div className={cn(
-            "w-full border-b-[0.5px] border-white/10 last:border-none px-3 pt-3 pb-5",
-            "flex items-start gap-3"
-        )}>
-            <p className={cn(
-                'text-white/60 text-sm font-normal font-jakarta w-[55px] overflow-hidden',
-            )}>
-                {text}
-            </p>
-            <div className="inline-flex items-center gap-3">
-                <PrimaryBtnNeon className="text-base text-th-gray">
-                    <FontAwesomeIcon icon={faTwitter} />
-                    @moonlanding.media
-                </PrimaryBtnNeon>
-                <PrimaryBtnNeon className="text-base text-th-gray">
-                    <FontAwesomeIcon icon={faFacebook} />
-                    @moonlanding.media
-                </PrimaryBtnNeon>
-            </div>
-        </div>
+        <ScheduleListItem
+            className="bg-transparent border-b-[0.5px] border-white/10 last:border-none px-3 pt-3 pb-5 place-items-start !rounded-none"
+            leading={
+                <p className={cn(
+                    'text-white/60 text-sm font-normal font-jakarta w-[55px] overflow-hidden',
+                )}>
+                    {text}
+                </p>
+            }
+        />
+        // <div className={cn(
+        //     "w-full border-b-[0.5px] border-white/10 last:border-none px-3 pt-3 pb-5",
+        //     "flex items-start gap-3"
+        // )}>
+        //     <p className={cn(
+        //         'text-white/60 text-sm font-normal font-jakarta w-[55px] overflow-hidden',
+        //     )}>
+        //         {text}
+        //     </p>
+        //     <div className="inline-flex items-center gap-3">
+        //         <PrimaryBtnNeon className="text-base text-th-gray">
+        //             <FontAwesomeIcon icon={faTwitter} />
+        //             @moonlanding.media
+        //         </PrimaryBtnNeon>
+        //         <PrimaryBtnNeon className="text-base text-th-gray">
+        //             <FontAwesomeIcon icon={faFacebook} />
+        //             @moonlanding.media
+        //         </PrimaryBtnNeon>
+        //         <PrimaryBtnNeon className="text-base text-th-gray">
+        //             +1
+        //         </PrimaryBtnNeon>
+        //     </div>
+        // </div>
     );
 }

@@ -1,9 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import MainLayout from "../components/layout";
 import GrBorderBox from "../components/ui/gr-border-box";
-import { faChevronLeft, faChevronRight, faEdit, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faChevronRight, faEdit, faEye, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { cn } from "../lib/utils";
 import { PrimaryBtn, SecondaryBtn } from "../components/ui/buttons";
+import { Transition, Dialog } from "@headlessui/react";
+import { useState, Fragment } from "react";
+import { SmallSchedulePostEl } from "../components/postview-section";
+import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
 
 
@@ -56,17 +60,17 @@ export default function DraftsPage() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <SingleTableRow />
-                                    <SingleTableRow />
-                                    <SingleTableRow />
-                                    <SingleTableRow />
-                                    <SingleTableRow />
-                                    <SingleTableRow />
-                                    <SingleTableRow />
-                                    <SingleTableRow />
-                                    <SingleTableRow />
-                                    <SingleTableRow />
-                                    <SingleTableRow />
+                                    <DraftItemPopup />
+                                    <DraftItemPopup />
+                                    <DraftItemPopup />
+                                    <DraftItemPopup />
+                                    <DraftItemPopup />
+                                    <DraftItemPopup />
+                                    <DraftItemPopup />
+                                    <DraftItemPopup />
+                                    <DraftItemPopup />
+                                    <DraftItemPopup />
+                                    <DraftItemPopup />
                                 </tbody>
                             </table>
                         </div>
@@ -79,9 +83,14 @@ export default function DraftsPage() {
 
 
 
-function SingleTableRow() {
+type SingleTableRowProps = {
+    onClick?: () => void
+}
+
+
+function SingleTableRow({ onClick }: SingleTableRowProps) {
     return (
-        <tr>
+        <tr role="button" onClick={onClick}>
             <td className="py-5 pl-7">01</td>
             <td className="py-5 px-5">
                 <img src="/images/table-img.png" width={80} height={80} alt="" />
@@ -141,4 +150,105 @@ function TabItem({ text, className, active = false }: TabItemProps) {
         </button>
     );
 }
+
+
+
+
+function DraftItemPopup() {
+    const [isOpen, setIsOpen] = useState(false)
+
+    function closeModal() {
+        setIsOpen(false)
+    }
+
+    function openModal() {
+        setIsOpen(true)
+    }
+
+    return (
+        <>
+            <SingleTableRow onClick={openModal} />
+
+            <Transition appear show={isOpen} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 scale-95"
+                                enterTo="opacity-100 scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 scale-100"
+                                leaveTo="opacity-0 scale-95"
+                            >
+                                <Dialog.Panel className={cn(
+                                    "w-full max-w-xl transform overflow-hidden rounded-20 bg-gr-purple-dark py-2 shadow-xl transition-all",
+                                    "relative"
+                                )}>
+                                    <button type="button" onClick={closeModal}
+                                        className="text-white text-3xl font-semibold outline-none absolute top-5 right-8 cursor-pointer">
+                                        <FontAwesomeIcon icon={faXmark} />
+                                    </button>
+                                    <div className="p-8 pb-16 pt-24 max-h-[calc(100vh_-_100px)] overflow-y-auto no-scrollbar">
+                                        <div className="h-full flex flex-col justify-between gap-6">
+                                            <div className="">
+                                                {/* {heading} */}
+                                                <div className="flex items-center gap-3">
+                                                    <SmallSchedulePostEl text="@moonlanding.media" icon={faTwitter} />
+                                                    <SmallSchedulePostEl text="@moonlanding.media" icon={faFacebook} />
+                                                </div>
+                                                <p className="mt-4 font-light text-sm text-th-gray font-jakarta">
+                                                    Lorem ipsum dolor sit amet, consect etur adip iscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia m, quis nostrud exercitation ullam co laboris nisi ut aliquip ex ea commodo consquat.
+                                                </p>
+                                                <img src="/images/today-post.png"
+                                                    className="mt-6 rounded-20 overflow-hidden object-cover object-center aspect-video w-full lg:h-[490px]" />
+
+                                            </div>
+                                            {/* Buttons  */}
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center gap-3">
+                                                    <SecondaryBtn className="px-2 xs:px-4">
+                                                        <FontAwesomeIcon icon={faEdit} />
+                                                        Edit
+                                                    </SecondaryBtn>
+                                                    <SecondaryBtn className="px-2 xs:px-4">
+                                                        <FontAwesomeIcon icon={faTrash} />
+                                                        Delete
+                                                    </SecondaryBtn>
+                                                </div>
+                                                <div className="flex items-center gap-4">
+                                                    <SecondaryBtn filled={false} className="border-white/10 py-3">
+                                                        Regenerate Image
+                                                    </SecondaryBtn>
+                                                    <PrimaryBtn className="py-3 h-full">
+                                                        Send Now
+                                                    </PrimaryBtn>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>
+        </>
+    )
+}
+
 

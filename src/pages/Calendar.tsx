@@ -17,7 +17,7 @@ export default function CalendarPage() {
             <div className="pb-5 flex flex-col lg:flex-row gap-5 h-full">
                 <GrBorderBox className="w-full p-[2px] rounded-20" type="lg">
                     <div className="h-full min-h-[500px] bg-gr-purple-light rounded-20 relative">
-                        <CalendarView onDateSelected={(date) => console.log(date)} />
+                        <CalendarView />
                     </div>
                 </GrBorderBox>
                 <PostViewSection

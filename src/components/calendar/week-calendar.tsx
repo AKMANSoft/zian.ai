@@ -1,14 +1,33 @@
 import { useEffect, useState } from "react";
 import { cn } from "../../lib/utils";
-import { CalendarGridEl, CalendarHeader } from "./calendar-view";
-import { monthNamesLong, weekdayNamesShort, CalendarProps, formatNumberto0 } from "./defaults";
+import { CalendarGridEl, CalendarHeader, CalendarPostEl } from "./calendar-view";
+import { monthNamesShort, weekdayNamesShort, CalendarProps, formatNumberto0, getWeekAllDays, CalendarWeek } from "./defaults";
 
 
+
+
+
+function getWeekFromDate(date: Date, reverse = false): CalendarWeek {
+    const currentDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    currentDate.setDate(currentDate.getDate() + (reverse ? -1 : 1))
+
+    while (currentDate.getDay() !== 0) {
+        // Move back to the previous day if the 1st day is not a Sunday
+        currentDate.setDate(reverse ? (currentDate.getDate() + 1) : (currentDate.getDate() - 1));
+    }
+
+
+    const weekDays = getWeekAllDays(currentDate, true, reverse);
+    return {
+        start: reverse ? weekDays[weekDays.length - 1] : currentDate,
+        end: reverse ? currentDate : weekDays[weekDays.length - 1],
+        allDaysArr: reverse ? weekDays.reverse() : weekDays
+    };
+}
 
 
 export default function WeekCalendarView({ mode, onModeChange }: CalendarProps) {
     const [windowWidth, setWindowWidth] = useState(-1);
-
 
     useEffect(() => {
         setWindowWidth(window.innerWidth);
@@ -18,34 +37,17 @@ export default function WeekCalendarView({ mode, onModeChange }: CalendarProps) 
     }, [])
 
     const [currentWeek, setCurrentWeek] = useState(() => {
-        return Array.from(Array(7).keys())
-            .map((idx) => {
-                const d = new Date();
-                d.setDate(d.getDate() - d.getDay() + idx);
-                return d;
-            });
+        return getWeekFromDate(new Date())
     });
 
     const goToNextWeek = () => {
-        const currentWeekLastDate = currentWeek[currentWeek.length - 1]
-        const nextWeek = Array.from(Array(7).keys())
-            .map((idx) => {
-                const d = new Date(currentWeekLastDate.getFullYear(), currentWeekLastDate.getMonth(), currentWeekLastDate.getDate() + 1);
-                d.setDate(d.getDate() - d.getDay() + idx);
-                return d;
-            });
-        setCurrentWeek(nextWeek);
+        setCurrentWeek(getWeekFromDate(currentWeek.end))
     }
 
     const goToPrevWeek = () => {
-        const currentWeekLastDate = currentWeek[currentWeek.length - 1]
-        const nextWeek = Array.from(Array(7).keys())
-            .map((idx) => {
-                const d = new Date(currentWeekLastDate.getFullYear(), currentWeekLastDate.getMonth(), currentWeekLastDate.getDate() - 1);
-                d.setDate(d.getDate() - d.getDay() - idx);
-                return d;
-            });
-        setCurrentWeek(nextWeek);
+        const date = new Date(currentWeek.start.getFullYear(), currentWeek.start.getMonth(), currentWeek.start.getDate());
+        date.setDate(date.getDate() - 8)
+        setCurrentWeek(getWeekFromDate(date))
     }
 
 
@@ -56,7 +58,7 @@ export default function WeekCalendarView({ mode, onModeChange }: CalendarProps) 
                 mode={mode}
                 onModeChange={onModeChange}
                 className="border-none"
-                heading={`${monthNamesLong[currentWeek[0].getMonth()]} ${currentWeek[0].getDate()}-${currentWeek[currentWeek.length - 1].getDate()}, ${currentWeek[0].getFullYear()}`}
+                heading={`${monthNamesShort[currentWeek.start.getMonth()]} ${currentWeek.start.getDate()}-${monthNamesShort[currentWeek.end.getMonth()]} ${currentWeek.end.getDate()}, ${currentWeek.allDaysArr[3].getFullYear()}`}
                 onPrevClick={goToPrevWeek}
                 onNextClick={goToNextWeek}
             />
@@ -77,7 +79,7 @@ export default function WeekCalendarView({ mode, onModeChange }: CalendarProps) 
                     />
                 }
                 {
-                    currentWeek.map((day, index) => (
+                    currentWeek.allDaysArr.map((day, index) => (
                         index < 7 &&
                         <CalendarGridEl
                             className={"border-b-primary min-h-0 py-5"}
@@ -101,29 +103,39 @@ export default function WeekCalendarView({ mode, onModeChange }: CalendarProps) 
                 }
                 {
                     ["08:00", "09:00", "10:00", "11:00", "12:00", "01:00", "02:00", "03:00"]
-                        .map((hour) => (
+                        .map((hour, hIndex) => (
                             <>
                                 {
                                     (
                                         windowWidth > 1000
-                                            ? currentWeek
-                                            : [1, ...currentWeek.map((d) => d.getDate() + 1)]
+                                            ? currentWeek.allDaysArr
+                                            : [1, ...currentWeek.allDaysArr.map((d) => d.getDate() + 1)]
                                     )
                                         .map((_, dIndex) => (
                                             <CalendarGridEl
+                                                className={cn(
+                                                    (windowWidth <= 1000 && dIndex === 0) && "border-y-0"
+                                                )}
                                                 content={
                                                     <div className='w-full relative'>
                                                         {
-                                                            ((typeof window !== undefined && window.innerWidth <= 1000) ? dIndex % 8 === 0 : dIndex % 7 === 0) &&
+                                                            ((windowWidth <= 1000) ? (dIndex % 8 === 0) : (dIndex % 7 === 0)) &&
                                                             <p className={cn(
-                                                                'text-white/60 text-sm font-normal font-jakarta',
-                                                                "absolute top-1 left-1"
+                                                                'text-white/60 text-xs md:text-sm font-normal font-jakarta',
+                                                                "absolute -top-6 left-3 md:lef1",
+                                                                hIndex === 0 && "top-1"
                                                             )}>
                                                                 {hour}
                                                             </p>
                                                         }
-                                                        <div className='text-center mb-2'>
-
+                                                        <div className='text-center space-y-1 mb-2'>
+                                                            {
+                                                                dIndex !== 0 && dIndex % 2 === 0 &&
+                                                                <>
+                                                                    <CalendarPostEl />
+                                                                    <CalendarPostEl />
+                                                                </>
+                                                            }
                                                         </div>
                                                     </div>
                                                 }

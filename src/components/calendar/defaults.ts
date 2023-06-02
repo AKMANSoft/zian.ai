@@ -58,7 +58,7 @@ export const calendarViewModes = [
 ];
 
 export function formatNumberto0(num: number): string {
-  return num > 10 ? `${num}` : `0${num}`;
+  return num >= 10 ? `${num}` : `0${num}`;
 }
 
 export type CalendarProps = {
@@ -83,9 +83,60 @@ export function generateMonthDatesArray(thisMonth: Date): number[] {
     prevMonthLastDay - 1,
     prevMonthLastDay,
   ];
-  const nextMonthArr = Array.from(Array(remDays - prevMonthArr.length), (_, k) => k + 1);
+  const nextMonthArr = Array.from(Array(remDays - prevMonthArr.length).keys(), (_, k) => k + 1);
   return [...prevMonthArr, ...thisMonthArr, ...nextMonthArr];
 }
+
+
+
+export function getWeekAllDays(date: Date, inclusive = false, reverse = false) {
+  return Array.from(Array(7).keys()).map((idx) => {
+    const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    d.setDate(((reverse ? -1 : 1) * idx) + d.getDate() + (inclusive ? 0 : 1));
+    return d;
+  })
+}
+
+
+
+export type CalendarWeek = {
+  start: Date;
+  end: Date;
+  allDaysArr: Date[]
+}
+
+
+
+export function getWeeksInMonth(date: Date, allWeeks = true) {
+  const weeksCount = allWeeks ? 6 : 1;
+  const weeks: CalendarWeek[] = [];
+  const currentDate = new Date(date.getFullYear(), date.getMonth(), allWeeks ? 1 : date.getDate());
+  const lastDate = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+  while (currentDate.getDay() !== 0) {
+    // Move back to the previous day if the 1st day is not a Sunday
+    currentDate.setDate(currentDate.getDate() - 1);
+  }
+
+  while (currentDate <= lastDate || weeks.length < weeksCount) {
+    const weekStart = new Date(currentDate);
+    const weekEnd = new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() + 6);
+
+
+    weeks.push({
+      start: weekStart,
+      end: weekEnd,
+      allDaysArr: getWeekAllDays(weekStart, true)
+    });
+
+    // Move to the next week
+    currentDate.setDate(currentDate.getDate() + 7);
+  }
+
+
+  return weeks;
+}
+
 
 // export function generateMonthDatesArray(thisClndr: Calendar): number[] {
 //   const prevMonthLastDay = new Date(

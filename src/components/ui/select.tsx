@@ -64,7 +64,7 @@ export default function SelectEl({
                 {/* <div className="relative w-max"> */}
                 <Listbox.Options className={cn(
                     "absolute mt-2 top-full left-0 w-full bg-th-gray/10 backdrop-blur-[10px] rounded-10 overflow-hidden outline-none",
-                    "border-2 border-th-gray/20",
+                    "border-2 border-th-gray/20 z-10",
                     optContainerClassName
                 )} >
                     {

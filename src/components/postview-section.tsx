@@ -1,9 +1,11 @@
-import { faCalendar, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { IconDefinition, faCalendar, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { cn } from "../lib/utils";
-import { SecondaryBtn, PrimaryBtn } from "./ui/buttons";
+import { SecondaryBtn, PrimaryBtn, PrimaryBtnNeon } from "./ui/buttons";
 import GrBorderBox from "./ui/gr-border-box";
 import { Seperator } from "./ui/seperator";
+import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { OverflowList } from "react-overflow-list";
 
 
 
@@ -24,7 +26,7 @@ export default function PostViewSection({ className, heading, contentClassName, 
         )} type="lg">
             <div className={cn(
                 "backdrop-blur-[10px] bg-gr-purple opacity-90 rounded-20 relative",
-                "min-w-[300px] h-full min-h-[500px] px-5 md:px-[30px] py-10",
+                "md:min-w-[300px] h-full min-h-[500px] px-5 md:px-[30px] py-10",
                 contentClassName
             )}>
                 {/* Top Center Stick Design  */}
@@ -47,15 +49,15 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                 </p>
                                 <Seperator />
                                 <div className="mt-[14px] flex items-center gap-3">
-                                    <SecondaryBtn>
+                                    <SecondaryBtn className="px-2 xs:px-4">
                                         <FontAwesomeIcon icon={faCalendar} />
                                         Reschedule
                                     </SecondaryBtn>
-                                    <SecondaryBtn>
+                                    <SecondaryBtn className="px-2 xs:px-4">
                                         <FontAwesomeIcon icon={faEdit} />
                                         Edit
                                     </SecondaryBtn>
-                                    <SecondaryBtn>
+                                    <SecondaryBtn className="px-2 xs:px-4">
                                         <FontAwesomeIcon icon={faTrash} />
                                         Delete
                                     </SecondaryBtn>
@@ -74,6 +76,86 @@ export default function PostViewSection({ className, heading, contentClassName, 
                 }
             </div>
         </GrBorderBox>
+    );
+}
+
+
+
+
+
+type ScheduleListItemProps = {
+    leading?: React.ReactNode;
+    className?: string
+}
+
+export function ScheduleListItem({ leading, className }: ScheduleListItemProps) {
+    return (
+        <div className={cn(
+            "w-full bg-[#f2e4f11a] px-3 py-[10px] md:rounded-10 gap-[10px]",
+            "grid grid-cols-6 place-items-center",
+            className
+        )}>
+            <div className="col-span-2 md:col-span-1 w-full min-w-max">
+                {leading}
+            </div>
+            <div className="col-span-4 w-full">
+                {/* <SmallSchedulePostEl text="@moonlanding.media" icon={faTwitter} />
+                <SmallSchedulePostEl text="@moonlanding.media" icon={faFacebook} />
+                <SmallSchedulePostEl text="+1" keepVisible /> */}
+                <OverflowList
+                    className="gap-2"
+                    collapseFrom="end"
+                    minVisibleItems={0}
+                    items={[
+                        {
+                            text: "@moonlanding.media",
+                            icon: faTwitter
+                        },
+                        {
+                            text: "@moonlanding.media",
+                            icon: faFacebook
+                        },
+                        {
+                            text: "@moonlanding.media",
+                            icon: faTwitter
+                        },
+                    ]}
+                    itemRenderer={(item) => (
+                        <SmallSchedulePostEl text={item.text} icon={item.icon} />
+                    )}
+                    overflowRenderer={(items) => (
+                        <SmallSchedulePostEl text={`+${items.length}`} keepVisible />
+                    )}
+                />
+            </div>
+        </div>
+    );
+}
+
+
+type SmallSchedulePostElProps = {
+    text?: string;
+    icon?: IconDefinition;
+    keepVisible?: boolean;
+}
+
+export function SmallSchedulePostEl({ text, icon, keepVisible = false }: SmallSchedulePostElProps) {
+    // hidden xs:inline-flex first:inline-flex last:inline-flex
+    return (
+        <PrimaryBtnNeon className="text-base text-th-gray">
+            {
+                icon && <FontAwesomeIcon icon={icon} />
+            }
+            {
+                text &&
+                <span className={cn(
+                    "xl:max-w-[150px]",
+                    !keepVisible && "hidden md:inline text-ellipsis overflow-hidden"
+                )}>
+                    {text}
+                </span>
+            }
+        </PrimaryBtnNeon>
     );
 }
 

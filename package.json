@@ -17,9 +17,9 @@
     "@headlessui/react": "^1.7.14",
     "class-variance-authority": "^0.6.0",
     "clsx": "^1.2.1",
-    "dayzed": "^3.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-overflow-list": "^0.5.0",
     "react-router-dom": "^6.11.2",
     "tailwind-merge": "^1.12.0"
   },

@@ -10,7 +10,8 @@ export default {
     // },
     extend: {
       screens: {
-        "xs": "450px"
+        "xs": "450px",
+        "3xl": "1800px",
       },
       colors: {
         "primary": "rgba(233, 69, 208, 1)",
@@ -28,6 +29,7 @@ export default {
       backgroundImage: {
         'gr-purple': "linear-gradient(90deg, rgba(56, 28, 77, 0.8) 0%, rgba(31, 7, 30, 0.8) 100%)",
         'gr-purple-light': "linear-gradient(206.04deg, #6F40B0 -0.61%, #1E162E 57.68%)",
+        'gr-purple-dark': "linear-gradient(90deg, #381C4D 0%, #1F071E 100%)",
         'radial-gr-purple': "radial-gradient(116.32% 95.63% at 76.68% 66.67%, rgba(233, 69, 208, 0) 0%, rgba(233, 69, 208, 0.5) 100%)",
       },
       backdropBlur: {

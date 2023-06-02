@@ -17,32 +17,36 @@ export default function GenerateContentPage() {
                 <GrBorderBox className="w-full p-[2px] rounded-20" type="lg">
                     <div className="h-full min-h-[500px] bg-gr-purple-light backdrop-blur-[10px] opacity-90 rounded-20 relative">
                         {/* Main Content  */}
-                        <div className="p-5  pb-[30px] border-b-[5px] border-primary">
-                            <SelectEl
-                                label="Select Topic"
-                                options={[
-                                    {
-                                        text: "Giveaways",
-                                        value: "giveaways",
-                                        disabled: false,
-                                    },
-                                    {
-                                        text: "Other topic",
-                                        value: "other_topic",
-                                        disabled: false,
-                                    },
-                                ]} />
-                        </div>
-                        <div className="p-5 pt-8 space-y-4">
-                            <InputEl label="Question 1" placeholder="Write your answer here" />
-                            <InputEl label="Question 2" placeholder="Write your answer here" />
-                            <InputEl label="Question 3" placeholder="Write your answer here" />
-                            <InputEl label="Question 4" placeholder="Write your answer here" />
-                        </div>
-                        <div className="absolute bottom-7 right-6">
-                            <PrimaryBtn className="px-10 h-12">
-                                Generate
-                            </PrimaryBtn>
+                        <div className="h-full flex flex-col justify-between gap-5">
+                            <div>
+                                <div className="p-5  pb-[30px] border-b-[5px] border-primary">
+                                    <SelectEl
+                                        label="Select Topic"
+                                        options={[
+                                            {
+                                                text: "Giveaways",
+                                                value: "giveaways",
+                                                disabled: false,
+                                            },
+                                            {
+                                                text: "Other topic",
+                                                value: "other_topic",
+                                                disabled: false,
+                                            },
+                                        ]} />
+                                </div>
+                                <div className="p-5 pt-8 space-y-4">
+                                    <InputEl label="Question 1" placeholder="Write your answer here" />
+                                    <InputEl label="Question 2" placeholder="Write your answer here" />
+                                    <InputEl label="Question 3" placeholder="Write your answer here" />
+                                    <InputEl label="Question 4" placeholder="Write your answer here" />
+                                </div>
+                            </div>
+                            <div className="flex justify-end p-6 pb-7">
+                                <PrimaryBtn className="px-10 h-12">
+                                    Generate
+                                </PrimaryBtn>
+                            </div>
                         </div>
                     </div>
                 </GrBorderBox>

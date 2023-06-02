@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Props, useDayzed } from 'dayzed';
 import { cn } from '../../lib/utils';
 import { ReactNode, useState } from 'react';
 import { calendarViewModes } from './defaults';
@@ -123,9 +122,9 @@ export function CalendarPostEl({ onlyIcon }: CalendarPostElProps) {
                     )}>
                         <FontAwesomeIcon icon={faTwitter} />
                         <span className={cn(
-                            "max-w-[35px] xl:max-w-[45px] 2xl:max-w-[200px] overflow-hidden text-ellipsis line-clamp-1",
+                            "max-w-[35px] xl:max-w-[45px] 2xl:max-w-[50%] 3xl:max-w-[200px] overflow-hidden text-ellipsis line-clamp-1",
                         )}>
-                            @moonlanding dd dsds ds dsdsds ds ds
+                            @moonlanding
                         </span>
                     </h5>
                     <p className={cn(
@@ -143,8 +142,7 @@ export function CalendarPostEl({ onlyIcon }: CalendarPostElProps) {
 
 
 
-export default function CalendarView(props: Omit<Props, "children" | "render">) {
-    const dayzedData = useDayzed(props);
+export default function CalendarView() {
     const [calendarMode, setCalendarMode] = useState(calendarViewModes[0]);
     switch (calendarMode) {
         case calendarViewModes[1]:
@@ -153,7 +151,7 @@ export default function CalendarView(props: Omit<Props, "children" | "render">) 
             return <DayCalendarView mode={calendarMode} onModeChange={setCalendarMode} />;
         case calendarViewModes[0]:
         default:
-            return <MonthCalendarView {...dayzedData} mode={calendarMode} onModeChange={setCalendarMode} />;
+            return <MonthCalendarView mode={calendarMode} onModeChange={setCalendarMode} />;
     }
 }
 

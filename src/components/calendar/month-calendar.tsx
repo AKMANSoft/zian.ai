@@ -1,23 +1,37 @@
-import { RenderProps } from "dayzed";
 import { CalendarGridEl, CalendarHeader, CalendarPostEl } from "./calendar-view";
-import { monthNamesShort, weekdayNamesShort, generateMonthDatesArray, CalendarProps, formatNumberto0 } from "./defaults";
+import { weekdayNamesShort, CalendarProps, formatNumberto0, monthNamesLong, getWeeksInMonth } from "./defaults";
 import { cn } from "../../lib/utils";
 import { useState } from "react";
 
-type MonthCalendarProps = CalendarProps & RenderProps
+type MonthCalendarProps = CalendarProps
+
 
 
 export default function MonthCalendarView({ mode, onModeChange }: MonthCalendarProps) {
-    const [currentMonth, setCurrentMonth] = useState((new Date()));
+    const [currentMonth, setCurrentMonth] = useState({
+        month: (new Date()).getMonth(),
+        year: (new Date()).getFullYear(),
+        weeks: getWeeksInMonth(new Date())
+    });
 
     const goToNextMonth = () => {
-        setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
+        const dateObj = new Date(currentMonth.year, currentMonth.month + 1);
+        setCurrentMonth({
+            month: dateObj.getMonth(),
+            year: dateObj.getFullYear(),
+            weeks: getWeeksInMonth(dateObj)
+        })
     }
 
     const goToPrevMonth = () => {
-        const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1);
-        setCurrentMonth(date);
+        const dateObj = new Date(currentMonth.year, currentMonth.month - 1);
+        setCurrentMonth({
+            month: dateObj.getMonth(),
+            year: dateObj.getFullYear(),
+            weeks: getWeeksInMonth(dateObj)
+        })
     }
+
     return (
 
         <div className='text-white' >
@@ -25,7 +39,7 @@ export default function MonthCalendarView({ mode, onModeChange }: MonthCalendarP
             <CalendarHeader
                 mode={mode}
                 onModeChange={onModeChange}
-                heading={monthNamesShort[currentMonth.getMonth()] + " " + currentMonth.getFullYear()}
+                heading={monthNamesLong[currentMonth.month] + " " + currentMonth.year}
                 onPrevClick={goToPrevMonth}
                 onNextClick={goToNextMonth}
             />
@@ -33,33 +47,39 @@ export default function MonthCalendarView({ mode, onModeChange }: MonthCalendarP
             {/* [&>*:nth-last-child(-n+7)]:border-b-0 */}
             <div className='grid grid-cols-7 [&>*:nth-child(7n+7)]:border-r-0 [&>*:nth-last-child(-n+7)]:border-b-0'>
                 {
-                    generateMonthDatesArray(currentMonth)
-                        .map((day, index) => (
-                            <CalendarGridEl
-                                content={
-                                    <div className='w-full'>
-                                        <div className='text-center mb-2'>
-                                            {
-                                                index < weekdayNamesShort.length &&
-                                                <p className={cn(
-                                                    'text-white font-semibold font-jakarta mb-2 uppercase',
-                                                    "text-[0px] first-letter:text-xs md:text-xs"
-                                                )}>
-                                                    {weekdayNamesShort[index]}
-                                                </p>
-                                            }
+                    currentMonth.weeks
+                        .map((week, wIndex) => (
+                            <>
+                                {
+                                    week.allDaysArr.map((date, index) => (
+                                        <CalendarGridEl
+                                            content={
+                                                <div className='w-full'>
+                                                    <div className='text-center mb-2'>
+                                                        {
+                                                            wIndex === 0 &&
+                                                            <p className={cn(
+                                                                'text-white font-semibold font-jakarta mb-2 uppercase',
+                                                                "text-[0px] first-letter:text-xs md:text-xs"
+                                                            )}>
+                                                                {weekdayNamesShort[index]}
+                                                            </p>
+                                                        }
 
-                                            <span className='text-white/60 text-xs font-normal font-jakarta'>
-                                                {formatNumberto0(day)}
-                                            </span>
-                                        </div>
-                                        {
-                                            index % 5 === 0 &&
-                                            <CalendarPostEl />
-                                        }
-                                    </div>
+                                                        <span className='text-white/60 text-xs font-normal font-jakarta'>
+                                                            {formatNumberto0(date.getDate())}
+                                                        </span>
+                                                    </div>
+                                                    {
+                                                        index % 5 === 0 &&
+                                                        <CalendarPostEl />
+                                                    }
+                                                </div>
+                                            }
+                                        />
+                                    ))
                                 }
-                            />
+                            </>
                         ))
                 }
             </div>
