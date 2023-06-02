@@ -18,17 +18,17 @@ export default function SideBar({ expanded = false }: Props) {
     const { pathname } = useLocation();
     return (
         <div className={cn(
-            "min-w-[280px] w-full md:max-w-[280px] min-h-screen pt-20 lg:pt-[135px] pb-10",
-            "flex flex-col gap-40 lg:gap-20 justify-between z-50 px-4 lg:px-0",
-            "fixed -top-full left-0 lg:relative bg-[#1E162E] lg:bg-transparent",
+            "min-w-[280px] w-full lg:max-w-[400px] xl:max-w-[280px] min-h-screen pt-20 xl:pt-[135px] pb-10",
+            "flex flex-col gap-40 lg:gap-20 justify-between z-50 px-4 xl:px-0",
+            "fixed top-0 -left-full xl:static bg-[#1E162E] xl:bg-transparent",
             "max-h-screen overflow-y-auto transition-all",
-            expanded && "top-0"
+            expanded && "left-0"
         )}>
             <div className="w-full">
                 <img src="/images/avatar.png" width={120} height={120}
                     className={cn(
-                        "w-[60px] lg:w-[120px] h-auto aspect-square rounded-full overflow-hidden mx-auto",
-                        "hidden lg:block"
+                        "w-[120px] h-auto aspect-square rounded-full overflow-hidden mx-auto",
+                        "hidden xl:block"
                     )}
                     alt="" />
                 <div className="mt-[30px] w-full">

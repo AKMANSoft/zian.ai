@@ -66,14 +66,14 @@ export type CalendarProps = {
   onModeChange: (mode: Option) => void;
 };
 
-export function generateMonthDatesArray(thisClndr: Calendar): number[] {
+export function generateMonthDatesArray(thisMonth: Date): number[] {
   const prevMonthLastDay = new Date(
-    thisClndr.year,
-    thisClndr.month,
+    thisMonth.getFullYear(),
+    thisMonth.getMonth(),
     0
   ).getDate();
   const thisMonthArr = Array.from(
-    new Array(thisClndr.lastDayOfMonth.getDate()),
+    new Array((new Date(thisMonth.getFullYear(), thisMonth.getMonth() + 1, 0)).getDate()),
     (_, i) => i + 1
   );
   const remDays = 42 - thisMonthArr.length;
@@ -86,3 +86,24 @@ export function generateMonthDatesArray(thisClndr: Calendar): number[] {
   const nextMonthArr = [...Array(remDays - prevMonthArr.length).keys()];
   return [...prevMonthArr, ...thisMonthArr, ...nextMonthArr];
 }
+
+// export function generateMonthDatesArray(thisClndr: Calendar): number[] {
+//   const prevMonthLastDay = new Date(
+//     thisClndr.year,
+//     thisClndr.month,
+//     0
+//   ).getDate();
+//   const thisMonthArr = Array.from(
+//     new Array(thisClndr.lastDayOfMonth.getDate()),
+//     (_, i) => i + 1
+//   );
+//   const remDays = 42 - thisMonthArr.length;
+//   const prevMonthArr = [
+//     prevMonthLastDay - 3,
+//     prevMonthLastDay - 2,
+//     prevMonthLastDay - 1,
+//     prevMonthLastDay,
+//   ];
+//   const nextMonthArr = [...Array(remDays - prevMonthArr.length).keys()];
+//   return [...prevMonthArr, ...thisMonthArr, ...nextMonthArr];
+// }

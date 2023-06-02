@@ -13,7 +13,7 @@ import InputEl from "../components/ui/input";
 export default function GenerateContentPage() {
     return (
         <MainLayout heading="Generate Content">
-            <div className="pb-5 flex gap-[20px] h-full">
+            <div className="pb-5 flex gap-5 min-h-[calc(100vh_-_100px)]">
                 <GrBorderBox className="w-full p-[2px] rounded-20" type="lg">
                     <div className="h-full min-h-[500px] bg-gr-purple-light backdrop-blur-[10px] opacity-90 rounded-20 relative">
                         {/* Main Content  */}
