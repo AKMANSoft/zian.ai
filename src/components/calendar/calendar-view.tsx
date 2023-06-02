@@ -21,14 +21,14 @@ type CalendarHeaderProps = CalendarProps & {
     heading: string;
     backProps?: Record<string, any>;
     forwardProps?: Record<string, any>;
-    onPrevClick: ()=> void;
-    onNextClick: ()=> void;
+    onPrevClick: () => void;
+    onNextClick: () => void;
 }
 
 
 export function CalendarHeader({
     className, heading,
-    backProps = {}, forwardProps = {},
+    onPrevClick, onNextClick,
     mode, onModeChange
 }: CalendarHeaderProps) {
     return (
@@ -40,10 +40,10 @@ export function CalendarHeader({
                 <h4 className='inline-flex items-center gap-8 text-xl font-semibold font-jakarta'>
                     {heading}
                     <span className='inline-flex items-center gap-1 text-xs'>
-                        <button {...backProps} className='p-2 cursor-pointer'>
+                        <button onClick={onPrevClick} className='p-2 cursor-pointer'>
                             <FontAwesomeIcon icon={faChevronLeft} />
                         </button>
-                        <button {...forwardProps} className='p-2 cursor-pointer'>
+                        <button onClick={onNextClick} className='p-2 cursor-pointer'>
                             <FontAwesomeIcon icon={faChevronRight} />
                         </button>
                     </span>

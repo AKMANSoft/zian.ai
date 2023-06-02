@@ -83,7 +83,7 @@ export function generateMonthDatesArray(thisMonth: Date): number[] {
     prevMonthLastDay - 1,
     prevMonthLastDay,
   ];
-  const nextMonthArr = [...Array(remDays - prevMonthArr.length).keys()];
+  const nextMonthArr = Array.from(Array(remDays - prevMonthArr.length), (_, k) => k + 1);
   return [...prevMonthArr, ...thisMonthArr, ...nextMonthArr];
 }
 

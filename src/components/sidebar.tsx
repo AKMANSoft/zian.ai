@@ -18,8 +18,8 @@ export default function SideBar({ expanded = false }: Props) {
     const { pathname } = useLocation();
     return (
         <div className={cn(
-            "min-w-[280px] w-full lg:max-w-[400px] xl:max-w-[280px] min-h-screen pt-20 xl:pt-[135px] pb-10",
-            "flex flex-col gap-40 lg:gap-20 justify-between z-50 px-4 xl:px-0",
+            "min-w-[280px] w-full lg:max-w-[400px] xl:max-w-[300px] min-h-screen pt-20 xl:pt-[135px] pb-10",
+            "flex flex-col gap-40 lg:gap-20 justify-between z-50 px-6 lg:pl-0",
             "fixed top-0 -left-full xl:static bg-[#1E162E] xl:bg-transparent",
             "max-h-screen overflow-y-auto transition-all",
             expanded && "left-0"
@@ -96,7 +96,7 @@ type NavigationItemProps = {
 function NavigationItem({ text, className, icon, active = false, href = "#" }: NavigationItemProps) {
     return (
         <a href={href} className={cn(
-            "font-bold text-sm transition-all duration-300 rounded-full lg:rounded-r-full",
+            "font-bold text-sm transition-all duration-300 rounded-full lg:rounded-none lg:rounded-r-full",
             "inline-flex gap-3 items-center py-5 px-12 w-full",
             active ? "shadow-navigation-item" : "hover:shadow-navigation-item",
             active ? "text-primary" : "text-white hover:text-primary",

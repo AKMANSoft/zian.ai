@@ -42,7 +42,7 @@ export default function Header({ heading, onToggleMenu, menuExpanded = false }: 
                 </GrBorderBox>
                 <GrBorderBox className={cn(
                     "rounded-20 block xl:hidden z-[52]",
-                    menuExpanded ? "fixed lg:relative top-4 right-4 md:top-0 md:right-0 h-12" : "h-full"
+                    menuExpanded ? "fixed lg:static top-4 right-4 h-12" : "h-full"
                 )}>
                     <button onClick={onToggleMenu} type="button" className='box-gr-border backdrop-blur-[10px] text-lg px-[10px] lg:px-3 h-full w-auto aspect-square text-white bg-gr-purple rounded-20'>
                         <FontAwesomeIcon icon={menuExpanded ? faXmark : faBars} />
