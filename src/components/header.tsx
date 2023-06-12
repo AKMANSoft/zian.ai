@@ -1,7 +1,15 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faBell, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faBell, faChevronDown, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { cn } from '../lib/utils';
 import GrBorderBox from "./ui/gr-border-box";
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "./ui/accordion"
+import { useState } from "react";
+
 
 
 type Props = {
@@ -28,18 +36,7 @@ export default function Header({ heading, onToggleMenu, menuExpanded = false }: 
                         <FontAwesomeIcon icon={faBell} />
                     </button>
                 </GrBorderBox>
-                <GrBorderBox className="rounded-20 h-full hidden lg:block">
-                    <div className={cn(
-                        "box-gr-border aspect-square lg:aspect-auto",
-                        'text-lg h-full text-white bg-gr-purple rounded-20',
-                        "inline-flex items-center p-[10px] lg:p-3 lg:pr-10 gap-[10px]",
-                        "backdrop-blur-[10px]"
-                    )}>
-                        <img src="/images/mike.png" width={32} height={32}
-                            className='h-full w-auto aspect-square rounded-full object-contain object-center' />
-                        <span className='hidden lg:inline text-sm font-bold'>Mike Males</span>
-                    </div>
-                </GrBorderBox>
+                <UserHeaderComponent className="hidden lg:block" />
                 <GrBorderBox className={cn(
                     "rounded-20 block xl:hidden z-[52]",
                     menuExpanded ? "fixed lg:static top-4 right-4 h-12" : "h-full"
@@ -53,6 +50,76 @@ export default function Header({ heading, onToggleMenu, menuExpanded = false }: 
     );
 }
 
+
+
+type UserDropElProps = {
+    expandable?: boolean;
+    className?: string;
+    toggleClassName?: string;
+}
+
+export function UserHeaderComponent({ expandable = false, className, toggleClassName }: UserDropElProps) {
+    const [active, setActive] = useState(false);
+
+    const clickHandler = () => {
+        if (expandable) setActive(!active)
+    }
+
+    return (
+        <GrBorderBox className={cn(
+            "rounded-20 h-full",
+            className
+        )}>
+            <div className={cn(
+                "box-gr-border bg-gr-purple backdrop-blur-[10px] rounded-20",
+                "h-full overflow-hidden text-white"
+            )}>
+                <div role="button" onClick={clickHandler}
+                    className={cn(
+                        'text-lg h-full',
+                        "inline-flex items-center",
+                        expandable ? "w-full px-5 py-3 gap-3 relative"
+                            : "aspect-square lg:aspect-auto p-[10px] lg:p-3 lg:pr-10 gap-[10px]",
+                        toggleClassName
+                    )}>
+                    <img src="/images/mike.png" width={32} height={32} className={cn(
+                        'h-full w-auto aspect-square rounded-full object-contain object-center'
+                    )} />
+                    <span className={cn(
+                        'font-jakarta',
+                        expandable ? 'text-base font-bold' : 'text-sm font-bold',
+                        !expandable && 'hidden lg:inline'
+                    )}>
+                        Mike Males
+                    </span>
+                    {
+                        expandable &&
+                        <span className={cn(
+                            "text-sm ps-1 absolute top-1/2 -translate-y-1/2 right-5 transition-all",
+                            active && "-rotate-180"
+                        )}>
+                            <FontAwesomeIcon icon={faChevronDown} />
+                        </span>
+                    }
+                </div>
+                {
+                    active &&
+                    <ul className="w-full h-auto border-t-2 border-white/5 divide-y-2 divide-white/5">
+                        <li className="py-4 px-5 hover:bg-white/10 font-normal text-sm font-jakarta">
+                            <a href="#">Edit Profile</a>
+                        </li>
+                        <li className="py-4 px-5 hover:bg-white/10 font-normal text-sm font-jakarta">
+                            <a href="#">Billing</a>
+                        </li>
+                        <li className="py-4 px-5 hover:bg-white/10 font-normal text-sm font-jakarta">
+                            <a href="#">Logout</a>
+                        </li>
+                    </ul>
+                }
+            </div>
+        </GrBorderBox >
+    )
+}
 
 
 function SearchEl() {

@@ -21,62 +21,65 @@ const filters = [
 
 
 export default function DraftsPage() {
+    const [activeTab, setActiveTab] = useState(0);
     return (
         <MainLayout heading="Drafts">
-            <div className="pb-5 flex">
-                <GrBorderBox className="p-[2px] rounded-20" type="lg">
-                    <div className="p-5 min-h-full backdrop-blur-[10px] bg-gr-purple-light opacity-90 rounded-20">
-                        {/* Tabs List View  */}
-                        <div className="relative h-[50px] flex justify-center gap-3">
-                            <button className="absolute top-0 left-0 h-full aspect-square rounded-10 bg-white/10 text-white shadow-primary-tabs">
-                                <FontAwesomeIcon icon={faChevronLeft} />
-                            </button>
+            <GrBorderBox className="p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)]" type="lg">
+                <div className="p-5 h-full flex flex-col backdrop-blur-[10px] bg-gr-purple-light opacity-90 rounded-20">
+                    {/* Tabs List View  */}
+                    <div className="relative min-h-[50px] flex justify-center gap-3">
+                        <button className="absolute top-0 left-0 h-full aspect-square rounded-10 bg-transparent hover:text-primary text-white">
+                            <FontAwesomeIcon icon={faChevronLeft} />
+                        </button>
 
-                            <div className="flex mx-16 max-w-[calc(100vw_-_540px)] h-full gap-3 no-scrollbar overflow-x-auto">
-                                {
-                                    [...filters, ...filters].map((filter, index) => (
-                                        <TabItem key={filter} text={filter} active={index === 0} />
-                                    ))
-                                }
-                            </div>
+                        <div className="flex mx-16 max-w-[calc(100vw_-_540px)] h-full gap-3 no-scrollbar overflow-x-auto">
+                            {
+                                [...filters, ...filters].map((filter, index) => (
+                                    <TabItem
+                                        key={filter} text={filter}
+                                        active={index === activeTab}
+                                        onClick={() => setActiveTab(index)} />
+                                ))
+                            }
+                        </div>
 
-                            <button className="absolute top-0 right-0 h-full aspect-square rounded-10 bg-white/10 text-white shadow-primary-tabs">
-                                <FontAwesomeIcon icon={faChevronRight} />
-                            </button>
-                        </div>
-                        {/* Drafts Table  */}
-                        <div className="mt-7 bg-gr-purple-light rounded-10 max-h-[700px] overflow-y-auto max-w-[100%] overflow-x-auto">
-                            <table className="text-white font-jakarta table-auto w-full">
-                                <thead className="border-b-[5px] border-primary">
-                                    <tr>
-                                        <th className="py-5 text-start pl-7 w-24">#</th>
-                                        <th className="py-5 text-start w-32 px-5">Photo</th>
-                                        <th className="py-5 text-start px-5 max-w-[200px]">Content</th>
-                                        <th className="py-5 text-start w-44 px-5">Status</th>
-                                        <th className="py-5 text-start w-48 px-5">Username</th>
-                                        <th className="py-5 text-start px-5">Created Date</th>
-                                        <th className="py-5 text-start px-12">Actions</th>
-                                        <th className="py-5 text-start pr-7">Photo</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <DraftItemPopup />
-                                    <DraftItemPopup />
-                                    <DraftItemPopup />
-                                    <DraftItemPopup />
-                                    <DraftItemPopup />
-                                    <DraftItemPopup />
-                                    <DraftItemPopup />
-                                    <DraftItemPopup />
-                                    <DraftItemPopup />
-                                    <DraftItemPopup />
-                                    <DraftItemPopup />
-                                </tbody>
-                            </table>
-                        </div>
+                        <button className="absolute top-0 right-0 h-full aspect-square rounded-10 bg-transparent hover:text-primary text-white">
+                            <FontAwesomeIcon icon={faChevronRight} />
+                        </button>
                     </div>
-                </GrBorderBox>
-            </div>
+                    {/* Drafts Table  */}
+                    <div className="-mt-px bg-gr-purple-light border border-primary rounded-10 max-h-full max-w-[100%] overflow-auto">
+                        <table className="text-white font-jakarta table-auto w-full">
+                            <thead className="border-b-[5px] border-primary bg-[#664f8e]">
+                                <tr>
+                                    <th className="py-3 min-h-[50px] text-start pl-7 w-24">#</th>
+                                    <th className="py-3 min-h-[50px] text-start w-32 px-5">Photo</th>
+                                    <th className="py-3 min-h-[50px] text-start px-5 max-w-[200px]">Content</th>
+                                    <th className="py-3 min-h-[50px] text-start w-44 px-5">Status</th>
+                                    <th className="py-3 min-h-[50px] text-start w-48 px-5">Username</th>
+                                    <th className="py-3 min-h-[50px] text-start px-5">Created Date</th>
+                                    <th className="py-3 min-h-[50px] text-start px-12">Actions</th>
+                                    <th className="py-3 min-h-[50px] text-start pr-7">Photo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <DraftItemPopup />
+                                <DraftItemPopup />
+                                <DraftItemPopup />
+                                <DraftItemPopup />
+                                <DraftItemPopup />
+                                <DraftItemPopup />
+                                <DraftItemPopup />
+                                <DraftItemPopup />
+                                <DraftItemPopup />
+                                <DraftItemPopup />
+                                <DraftItemPopup />
+                            </tbody>
+                        </table>
+                    </div>
+                    {/* Pagination  */}
+                </div>
+            </GrBorderBox>
         </MainLayout>
     );
 }
@@ -137,13 +140,14 @@ type TabItemProps = {
     text: string;
     className?: string;
     active?: boolean;
+    onClick?: () => void
 }
 
-function TabItem({ text, className, active = false }: TabItemProps) {
+function TabItem({ text, className, active = false, onClick }: TabItemProps) {
     return (
-        <button className={cn(
-            "min-w-max h-full px-6 rounded-10 text-white shadow-primary-tabs",
-            active ? "bg-primary" : "bg-white/10",
+        <button type="button" onClick={onClick} className={cn(
+            "min-w-max h-full px-6 rounded-t-10 text-white border",
+            active ? "bg-[#664f8e] border-primary border-b-[#664f8e]" : "bg-transparent border-transparent",
             className
         )}>
             {text}
