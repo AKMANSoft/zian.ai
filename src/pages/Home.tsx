@@ -21,15 +21,15 @@ export default function HomePage() {
                         Today&apos;s Post
                     </h5>
                 } />
-                <GrBorderBox className="w-full p-[2px] rounded-20" type="lg">
+                <GrBorderBox className="w-full p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)]" type="lg">
                     <div className="pb-10 h-full min-h-[500px] bg-gr-purple-light opacity-90 rounded-20 relative">
                         {/* Bottom Right Corner Design  */}
                         <div className="absolute -bottom-[27px] -right-[19px] w-[150px] h-[150px]">
                             <img src="/images/bottom-right-corner.svg" className="h-full w-full" alt="" />
                         </div>
                         {/* Main Content  */}
-                        <div className="py-[38px]">
-                            <div className="px-5 md:px-[30px] w-full inline-flex justify-between items-center">
+                        <div className="py-[38px] h-full overflow-hidden">
+                            <div className="px-5 pb-11 md:px-[30px] w-full inline-flex justify-between items-center">
                                 <h5 className="text-xl text-white font-nebula font-normal text-shadow">
                                     My Schedule
                                 </h5>
@@ -38,23 +38,31 @@ export default function HomePage() {
                                     View Calendar
                                 </a>
                             </div>
-                            <div className="mt-11 md:px-[30px]">
-                                <h6 className="px-5 md:px-0 text-sm font-normal text-white">Today</h6>
-                                <div className="mt-4 flex flex-col gap-1 md:gap-3">
-                                    <HScheduleListItem active />
-                                    <HScheduleListItem />
-                                    <HScheduleListItem />
-                                    <VerticalSeperator className="h-[25px] mt-[10px]" />
+                            <div className="max-h-full overflow-y-auto">
+                                <div className="md:px-[30px]">
+                                    <h6 className="px-5 md:px-0 text-sm font-normal text-white">Today</h6>
+                                    <div className="mt-4 flex flex-col gap-1 md:gap-3">
+                                        <HScheduleListItem active />
+                                        <HScheduleListItem />
+                                        <HScheduleListItem />
+                                        <HScheduleListItem />
+                                        <HScheduleListItem />
+                                        <HScheduleListItem />
+                                        <HScheduleListItem />
+                                        <HScheduleListItem />
+                                        <HScheduleListItem />
+                                        <VerticalSeperator className="h-[25px] mt-[10px]" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="mt-5 md:px-[30px]">
-                                <h6 className="px-5 md:px-0 text-sm font-normal text-white">Yesterday</h6>
-                                <div className="mt-4 flex flex-col gap-1 md:gap-3">
-                                    <HScheduleListItem />
-                                    <HScheduleListItem />
-                                    <HScheduleListItem />
-                                    <HScheduleListItem />
-                                    <HScheduleListItem />
+                                <div className="mt-5 md:px-[30px]">
+                                    <h6 className="px-5 md:px-0 text-sm font-normal text-white">Yesterday</h6>
+                                    <div className="mt-4 flex flex-col gap-1 md:gap-3">
+                                        <HScheduleListItem />
+                                        <HScheduleListItem />
+                                        <HScheduleListItem />
+                                        <HScheduleListItem />
+                                        <HScheduleListItem />
+                                    </div>
                                 </div>
                             </div>
                         </div>

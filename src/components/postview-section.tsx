@@ -19,23 +19,29 @@ type PostViewSectionProps = {
 
 
 export default function PostViewSection({ className, heading, contentClassName, customContent }: PostViewSectionProps) {
+    
+
     return (
         <GrBorderBox className={cn(
-            "p-[2px] rounded-20 lg:max-w-[400px]",
+            "p-[2px] rounded-20 lg:max-w-[400px] lg:max-h-[calc(100vh_-_130px)]",
             className
         )} type="lg">
             <div className={cn(
                 "backdrop-blur-[10px] bg-gr-purple opacity-90 rounded-20 relative",
                 "md:min-w-[300px] h-full min-h-[500px] px-5 md:px-[30px] py-10",
+                "relative overflow-hidden",
                 contentClassName
             )}>
+                <div id="hello" data-expanded="true">
+
+                </div>
                 {/* Top Center Stick Design  */}
                 <div className="absolute -top-[1px] left-1/2 -translate-x-1/2 bg-primary w-[80%] h-[8px] stick-shadow"></div>
                 {/* Main Content  */}
                 {
                     (customContent && customContent !== null) ? customContent
                         :
-                        <div className="h-full flex flex-col justify-between gap-28">
+                        <div className="h-full flex overflow-y-auto flex-col justify-between gap-28 no-scrollbar pb-20">
                             <div className="">
                                 {heading}
                                 <p className="mt-7 font-light text-base text-th-gray font-jakarta">
@@ -64,14 +70,16 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                 </div>
                             </div>
                             {/* Buttons  */}
-                            <div className="flex items-center gap-4">
-                                <SecondaryBtn filled={false} className="border-white/10 py-3 w-1/2">
-                                    Regenerate Image
-                                </SecondaryBtn>
-                                <PrimaryBtn className="py-3 w-1/2 h-full">
-                                    Send Now
-                                </PrimaryBtn>
-                            </div>
+                            <GrBorderBox className="p-[2px] absolute w-full bottom-0 left-0 ">
+                                <div className="bg-gr-purple backdrop-blur-3xl p-5 flex items-center gap-4">
+                                    <SecondaryBtn filled={false} className="border-white/10 py-3 w-1/2">
+                                        Regenerate Image
+                                    </SecondaryBtn>
+                                    <PrimaryBtn className="py-3 w-1/2 h-full">
+                                        Send Now
+                                    </PrimaryBtn>
+                                </div>
+                            </GrBorderBox>
                         </div>
                 }
             </div>

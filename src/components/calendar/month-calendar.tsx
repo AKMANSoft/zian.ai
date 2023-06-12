@@ -34,7 +34,7 @@ export default function MonthCalendarView({ mode, onModeChange }: MonthCalendarP
 
     return (
 
-        <div className='text-white' >
+        <div className='text-white h-full flex flex-col' >
             {/* Calendar Header  */}
             <CalendarHeader
                 mode={mode}
@@ -45,43 +45,45 @@ export default function MonthCalendarView({ mode, onModeChange }: MonthCalendarP
             />
             {/* Calendar Body */}
             {/* [&>*:nth-last-child(-n+7)]:border-b-0 */}
-            <div className='grid grid-cols-7 [&>*:nth-child(7n+7)]:border-r-0 [&>*:nth-last-child(-n+7)]:border-b-0'>
-                {
-                    currentMonth.weeks
-                        .map((week, wIndex) => (
-                            <>
-                                {
-                                    week.allDaysArr.map((date, index) => (
-                                        <CalendarGridEl
-                                            content={
-                                                <div className='w-full'>
-                                                    <div className='text-center mb-2'>
-                                                        {
-                                                            wIndex === 0 &&
-                                                            <p className={cn(
-                                                                'text-white font-semibold font-jakarta mb-2 uppercase',
-                                                                "text-[0px] first-letter:text-xs md:text-xs"
-                                                            )}>
-                                                                {weekdayNamesShort[index]}
-                                                            </p>
-                                                        }
+            <div className="h-full max-h-full overflow-y-auto">
+                <div className='grid grid-cols-7 [&>*:nth-child(7n+7)]:border-r-0 [&>*:nth-last-child(-n+7)]:border-b-0'>
+                    {
+                        currentMonth.weeks
+                            .map((week, wIndex) => (
+                                <>
+                                    {
+                                        week.allDaysArr.map((date, index) => (
+                                            <CalendarGridEl
+                                                content={
+                                                    <div className='w-full'>
+                                                        <div className='text-center mb-2'>
+                                                            {
+                                                                wIndex === 0 &&
+                                                                <p className={cn(
+                                                                    'text-white font-semibold font-jakarta mb-2 uppercase',
+                                                                    "text-[0px] first-letter:text-xs md:text-xs"
+                                                                )}>
+                                                                    {weekdayNamesShort[index]}
+                                                                </p>
+                                                            }
 
-                                                        <span className='text-white/60 text-xs font-normal font-jakarta'>
-                                                            {formatNumberto0(date.getDate())}
-                                                        </span>
+                                                            <span className='text-white/60 text-xs font-normal font-jakarta'>
+                                                                {formatNumberto0(date.getDate())}
+                                                            </span>
+                                                        </div>
+                                                        {
+                                                            index % 5 === 0 &&
+                                                            <CalendarPostEl />
+                                                        }
                                                     </div>
-                                                    {
-                                                        index % 5 === 0 &&
-                                                        <CalendarPostEl />
-                                                    }
-                                                </div>
-                                            }
-                                        />
-                                    ))
-                                }
-                            </>
-                        ))
-                }
+                                                }
+                                            />
+                                        ))
+                                    }
+                                </>
+                            ))
+                    }
+                </div>
             </div>
         </div >
     );
