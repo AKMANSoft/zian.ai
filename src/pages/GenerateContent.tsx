@@ -13,11 +13,11 @@ import InputEl from "../components/ui/input";
 export default function GenerateContentPage() {
     return (
         <MainLayout heading="Generate Content">
-            <div className="pb-5 flex gap-5 min-h-[calc(100vh_-_130px)]">
-                <GrBorderBox className="w-full p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)]" type="lg">
-                    <div className="h-full min-h-[500px] bg-gr-purple-light backdrop-blur-[10px] opacity-90 rounded-20 relative overflow-hidden">
+            <div className="pb-5 flex gap-5 min-h-[calc(100vh_-_100px)]">
+                <GrBorderBox className="w-full p-[2px] rounded-20" type="lg">
+                    <div className="h-full min-h-[500px] bg-gr-purple-light backdrop-blur-[10px] opacity-90 rounded-20 relative">
                         {/* Main Content  */}
-                        <div className="h-full flex flex-col justify-between gap-5 max-h-full overflow-y-auto">
+                        <div className="h-full flex flex-col justify-between gap-5">
                             <div>
                                 <div className="p-5  pb-[30px] border-b-[5px] border-primary">
                                     <SelectEl

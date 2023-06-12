@@ -6,7 +6,6 @@ import {
 import { cn } from "../lib/utils";
 import { GrSeperator } from "./ui/seperator";
 import { useLocation } from "react-router-dom";
-import { UserHeaderComponent } from "./header";
 
 
 
@@ -19,10 +18,10 @@ export default function SideBar({ expanded = false }: Props) {
     const { pathname } = useLocation();
     return (
         <div className={cn(
-            "min-w-[280px] w-full lg:max-w-[400px] xl:max-w-[300px] min-h-screen pt-14 pb-10",
+            "min-w-[280px] w-full lg:max-w-[400px] xl:max-w-[300px] min-h-screen pt-10 pb-10",
             "flex flex-col gap-20 lg:gap-10 justify-between z-50 px-6 lg:pl-0",
             "fixed top-0 -left-full xl:static bg-[#1E162E] xl:bg-transparent",
-            "max-h-screen overflow-y-auto transition-all",
+            "max-h-screen overflow-hidden transition-all",
             expanded && "left-0"
         )}>
             <div className="w-full">
@@ -33,9 +32,6 @@ export default function SideBar({ expanded = false }: Props) {
                     )}
                     alt="" />
                 <div className="mt-[30px] w-full">
-                    <div className="py-3">
-                        <UserHeaderComponent expandable className="lg:hidden" toggleClassName="h-[71px]" />
-                    </div>
                     <NavigationItem
                         href="/" active={pathname === "/"}
                         text="Home"

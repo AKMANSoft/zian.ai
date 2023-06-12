@@ -8,7 +8,7 @@ type Props = {
     type?: "sm" | "lg"
 }
 
-export default function GrBorderBox({ className, children, type = "lg" }: Props) {
+export default function GrBorderBox({ className, children, type = "sm" }: Props) {
     return (
         <div className={cn(
             "p-[1px]",
