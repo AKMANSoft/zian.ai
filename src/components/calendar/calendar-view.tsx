@@ -7,7 +7,7 @@ import MonthCalendarView from './month-calendar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import DayCalendarView from './day-calendar';
-import SelectEl from '../ui/select';
+import SelectEl from '../ui/selectel';
 import { faCalendar, faChevronLeft, faChevronRight, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { CalendarProps } from './defaults';
 

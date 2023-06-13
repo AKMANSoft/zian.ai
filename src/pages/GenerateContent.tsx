@@ -3,8 +3,8 @@ import GrBorderBox from "../components/ui/gr-border-box";
 import { cn } from "../lib/utils";
 import { PrimaryBtn } from "../components/ui/buttons";
 import PostViewSection from "../components/postview-section";
-import SelectEl from "../components/ui/select";
-import InputEl from "../components/ui/input";
+import SelectEl from "../components/ui/selectel";
+import { InputEl } from "../components/ui/input";
 
 
 

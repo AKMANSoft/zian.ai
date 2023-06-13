@@ -17,7 +17,8 @@ export default {
         "primary": "rgba(233, 69, 208, 1)",
         "th-gray": "rgba(242, 228, 241, 1)",
         "th-gray-2": "rgba(242, 228, 241, 1)",
-        "th-green-3": "#6FCF97"
+        "th-green-3": "#6FCF97",
+        "dark": "#1E162E"
       },
       backdropGrayscale: {
         "input": "rgba(6, 18, 32, 0.1)"
