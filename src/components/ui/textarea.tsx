@@ -11,10 +11,17 @@ type InputElProps = {
   id?: string;
   endIcon?: IconDefinition;
   value?: string;
-  onChange?: (value: string) => void
+  onChange?: (value: string) => void,
+  rows?: number;
+  cols?: number;
 }
 
-function TextAreaEl({ label, placeholder = "", labelNode = null, id = "", endIcon, value, onChange, className }: InputElProps) {
+function TextAreaEl({
+  label, placeholder = "", labelNode = null,
+  id = "", endIcon, value,
+  onChange, className,
+  rows = 5, cols = 10,
+}: InputElProps) {
 
   return (
     <div className={cn(
@@ -32,15 +39,15 @@ function TextAreaEl({ label, placeholder = "", labelNode = null, id = "", endIco
           </label>
       }
       <textarea id={id} placeholder={placeholder}
-        rows={5}
-        cols={10}
+        rows={rows}
+        cols={cols}
         value={value}
         onChange={(e) => onChange?.call(null, e.target.value)}
         className={cn(
-          "text-white text-start font-jakarta font-light text-sm leading-6 py-3 px-5",
+          "text-white h-full resize-none min-h-[200px] text-start font-jakarta font-light text-sm leading-6 py-3 px-5",
           "border border-white/10 appearance-none rounded-10 w-full bg-transparent mt-2",
           "focus:bg-th-gray/10 outline-none transition-all placeholder:text-white/70"
-        )} ></textarea>
+        )} />
       {
         endIcon && endIcon !== null &&
         <span className="h-16 absolute z-10 top-0 flex items-center justify-center right-4 text-white text-lg">

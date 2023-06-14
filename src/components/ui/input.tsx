@@ -159,7 +159,7 @@ function InputElWChips({ label, placeholder = "", labelNode = null, id = "" }: I
           </label>
       }
       <div className={cn(
-        "grid grid-cols-3 px-2 py-2 gap-2 min-h-[56px]",
+        "grid sm:grid-cols-2 lg:grid-cols-3 px-2 py-2 gap-2 min-h-[56px]",
         "border border-white/10 rounded-10 w-full bg-transparent mt-2",
         "focus-within:bg-th-gray/10"
       )}>

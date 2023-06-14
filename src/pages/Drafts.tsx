@@ -1,15 +1,14 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import MainLayout from "../components/layout";
 import GrBorderBox from "../components/ui/gr-border-box";
-import { faChevronLeft, faChevronRight, faEdit, faEye, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faChevronRight, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { cn } from "../lib/utils";
-import { PrimaryBtn, PrimaryBtnNeon, SecondaryBtn } from "../components/ui/buttons";
-import { Transition, Dialog } from "@headlessui/react";
-import { useState, Fragment, useRef } from "react";
-import { SmallSchedulePostEl } from "../components/postview-section";
-import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { PrimaryBtnNeon, SecondaryBtn } from "../components/ui/buttons";
+import { useState, useRef } from "react";
 import { formatNumberto0 } from "@/components/calendar/defaults";
-import AddDraftPopup from "@/components/drafts/AddDraftPopup";
+import ViewDraftPopup from "@/components/drafts/ViewDraftPopup";
+import AddEditDraftPopup from "@/components/drafts/AddDraftPopup";
+import WarningPopup from "@/components/WarningPopup";
 
 
 
@@ -60,7 +59,7 @@ export default function DraftsPage() {
                             </button>
 
                         </div>
-                        <AddDraftPopup />
+                        <AddEditDraftPopup variant="add" />
                     </div>
                     {/* Drafts Table  */}
                     <div className="-mt-px bg-gr-purple-light border h-full border-primary rounded-10 flex flex-col overflow-hidden">
@@ -79,17 +78,17 @@ export default function DraftsPage() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <DraftItemPopup num={1} />
-                                    <DraftItemPopup num={2} />
-                                    <DraftItemPopup num={3} />
-                                    <DraftItemPopup num={4} />
-                                    <DraftItemPopup num={5} />
-                                    <DraftItemPopup num={6} />
-                                    <DraftItemPopup num={7} />
-                                    <DraftItemPopup num={8} />
-                                    <DraftItemPopup num={9} />
-                                    <DraftItemPopup num={10} />
-                                    <DraftItemPopup num={11} />
+                                    <SingleTableRow num={1} />
+                                    <SingleTableRow num={2} />
+                                    <SingleTableRow num={3} />
+                                    <SingleTableRow num={4} />
+                                    <SingleTableRow num={5} />
+                                    <SingleTableRow num={6} />
+                                    <SingleTableRow num={7} />
+                                    <SingleTableRow num={8} />
+                                    <SingleTableRow num={9} />
+                                    <SingleTableRow num={10} />
+                                    <SingleTableRow num={11} />
                                 </tbody>
                             </table>
                         </div>
@@ -194,15 +193,19 @@ function SingleTableRow({ onClick, num }: SingleTableRowProps) {
             </td>
             <td className="py-5 px-12">
                 <div className="inline-flex items-center gap-2">
-                    <SecondaryBtn className="p-3">
-                        <FontAwesomeIcon icon={faEye} />
-                    </SecondaryBtn>
-                    <SecondaryBtn className="p-3">
-                        <FontAwesomeIcon icon={faEdit} />
-                    </SecondaryBtn>
-                    <SecondaryBtn className="p-3">
-                        <FontAwesomeIcon icon={faTrash} />
-                    </SecondaryBtn>
+                    <ViewDraftPopup />
+                    <AddEditDraftPopup variant="edit" />
+                    <WarningPopup
+                        heading="Are you sure you want to delete this post?"
+                        description="Lorem ipsum dolor sit amet, consect etur sed det dolor  rem ipsum dolor sit"
+                        negativeText="Cancel"
+                        positiveText="Yes, Delete"
+                        trigger={({ open }) => (
+                            <SecondaryBtn onClick={open} className="p-3">
+                                <FontAwesomeIcon icon={faTrash} />
+                            </SecondaryBtn>
+                        )}
+                    />
                 </div>
             </td>
             <td className="py-5 pr-7">
@@ -239,112 +242,5 @@ function TabItem({ text, className, active = false, onClick }: TabItemProps) {
 
 
 
-type DraftItemPopupProps = {
-    num: number;
-}
-
-function DraftItemPopup({ num }: DraftItemPopupProps) {
-    const [isOpen, setIsOpen] = useState(false)
-
-    function closeModal() {
-        setIsOpen(false)
-    }
-
-    function openModal() {
-        setIsOpen(true)
-    }
-
-    return (
-        <>
-            <SingleTableRow num={num} onClick={openModal} />
-
-            <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-50" onClose={closeModal}>
-                    <Transition.Child
-                        as={Fragment}
-                        enter="ease-out duration-300"
-                        enterFrom="opacity-0"
-                        enterTo="opacity-100"
-                        leave="ease-in duration-200"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
-                    >
-                        <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur" />
-                    </Transition.Child>
-
-                    <div className="fixed inset-0 overflow-y-auto">
-                        <div className="flex min-h-full items-center justify-center p-4 text-center">
-                            <Transition.Child
-                                as={Fragment}
-                                enter="ease-out duration-300"
-                                enterFrom="opacity-0 scale-95"
-                                enterTo="opacity-100 scale-100"
-                                leave="ease-in duration-200"
-                                leaveFrom="opacity-100 scale-100"
-                                leaveTo="opacity-0 scale-95"
-                            >
-                                <Dialog.Panel className={cn(
-                                    "w-full max-w-3xl transform overflow-hidden rounded-20 bg-gr-purple-dark shadow-xl transition-all",
-                                    "relative"
-                                )}>
-                                    <div className="w-full flex flex-row p-5 items-center justify-between pb-3">
-                                        <div></div>
-                                        <button type="button" onClick={closeModal}
-                                            className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-pointer">
-                                            <FontAwesomeIcon icon={faXmark} />
-                                        </button>
-                                    </div>
-
-                                    <div className="p-8 py-16 max-h-[calc(100vh_-_200px)] overflow-y-auto">
-                                        <div className="h-full flex flex-col justify-between gap-6">
-                                            <div className="">
-                                                {/* {heading} */}
-                                                <div className="flex items-center gap-3">
-                                                    <SmallSchedulePostEl text="@moonlanding.media" icon={faTwitter} />
-                                                    <SmallSchedulePostEl text="@moonlanding.media" icon={faFacebook} />
-                                                </div>
-                                                <p className="mt-4 font-light text-sm text-th-gray font-jakarta">
-                                                    Lorem ipsum dolor sit amet, consect etur adip iscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia m, quis nostrud exercitation ullam co laboris nisi ut aliquip ex ea commodo consquat.
-                                                </p>
-                                                <img src="/images/today-post.png" loading="lazy"
-                                                    className="mt-6 rounded-20 overflow-hidden object-cover object-center aspect-video w-full lg:h-[490px]" />
-
-                                            </div>
-                                            {/* Buttons  */}
-                                            <div className="flex items-center justify-between">
-                                                <div className="flex items-center gap-3">
-                                                    <SecondaryBtn className="px-2 xs:px-4">
-                                                        <FontAwesomeIcon icon={faEdit} />
-                                                        Edit
-                                                    </SecondaryBtn>
-                                                    <SecondaryBtn className="px-2 xs:px-4">
-                                                        <FontAwesomeIcon icon={faTrash} />
-                                                        Delete
-                                                    </SecondaryBtn>
-                                                </div>
-                                                <div className="flex items-center gap-4">
-                                                    <SecondaryBtn filled={false} className="border-white/10 py-3">
-                                                        Regenerate Image
-                                                    </SecondaryBtn>
-                                                    <PrimaryBtn className="py-3 h-full">
-                                                        Send Now
-                                                    </PrimaryBtn>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div className="w-full min-h-[20px]">
-
-                                    </div>
-                                </Dialog.Panel>
-                            </Transition.Child>
-                        </div>
-                    </div>
-                </Dialog>
-            </Transition>
-        </>
-    )
-}
 
 
