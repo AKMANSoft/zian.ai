@@ -42,7 +42,7 @@ export default {
       }
     },
     backgroundImage: {
-      "primary-image": "url(/images/theme-bg.svg)",
+      "primary-image": "url(/images/theme-bg.png)",
       "primary-image-mobile": "url(/images/theme-bg-mobile.png)",
     },
     backgroundPosition: {
