@@ -18,7 +18,7 @@ export default function Header({ heading, onToggleMenu, menuExpanded = false }: 
             <h2 className="hidden xl:inline text-[32px] leading-9 text-white font-nebula font-normal">
                 {heading}
             </h2>
-            <img src="/images/avatar.png" width={60} height={60}
+            <img src="/images/avatar.png" loading="lazy" width={60} height={60}
                 className={cn(
                     "w-[60px] h-auto aspect-square rounded-full overflow-hidden xl:hidden"
                 )}
@@ -76,7 +76,7 @@ export function UserHeaderComponent({ expandable = false, className, toggleClass
                             : "aspect-square lg:aspect-auto p-[10px] lg:p-3 lg:pr-10 gap-[10px]",
                         toggleClassName
                     )}>
-                    <img src="/images/mike.png" width={32} height={32} className={cn(
+                    <img src="/images/mike.png" loading="lazy" width={32} height={32} className={cn(
                         'h-full w-auto aspect-square rounded-full object-contain object-center'
                     )} />
                     <span className={cn(

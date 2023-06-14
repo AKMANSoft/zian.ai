@@ -75,7 +75,7 @@ function EmptyPostContent() {
                 "rounded-20 w-full h-full bg-white/5 backdrop-blur-[10px]",
                 "flex flex-col items-center justify-center px-8 text-center mt-3"
             )}>
-                <img src="/images/file-round-with-boder.svg" width={70} height={70}
+                <img src="/images/file-round-with-boder.svg" loading="lazy" width={70} height={70}
                     className="w-[70px] h-auto aspect-square"
                     alt="" />
                 <h4 className="text-xl leading-7 font-semibold font-jakarta mt-[10px] text-white">

@@ -180,7 +180,7 @@ function SingleTableRow({ onClick, num }: SingleTableRowProps) {
                 {formatNumberto0(num)}
             </td>
             <td className="py-5 px-5 w-full h-auto col-span-3">
-                <img src="/images/table-img.png" width={80} height={80} className="w-full h-auto aspect-square" alt="" />
+                <img src="/images/table-img.png" width={80} height={80} loading="lazy" className="w-full h-auto aspect-square" alt="" />
             </td>
             <td className="py-5 px-5 col-span-8 flex items-center lg:table-cell">
                 <p className="line-clamp-4 lg:max-w-[200px]">
@@ -306,7 +306,7 @@ function DraftItemPopup({ num }: DraftItemPopupProps) {
                                                 <p className="mt-4 font-light text-sm text-th-gray font-jakarta">
                                                     Lorem ipsum dolor sit amet, consect etur adip iscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia m, quis nostrud exercitation ullam co laboris nisi ut aliquip ex ea commodo consquat.
                                                 </p>
-                                                <img src="/images/today-post.png"
+                                                <img src="/images/today-post.png" loading="lazy"
                                                     className="mt-6 rounded-20 overflow-hidden object-cover object-center aspect-video w-full lg:h-[490px]" />
 
                                             </div>

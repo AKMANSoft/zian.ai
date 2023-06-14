@@ -26,7 +26,7 @@ export default function SideBar({ expanded = false }: Props) {
             expanded && "left-0"
         )}>
             <div className="w-full">
-                <img src="/images/avatar.png" width={120} height={120}
+                <img src="/images/avatar.png" width={120} height={120} loading="lazy"
                     className={cn(
                         "w-[120px] h-auto aspect-square rounded-full overflow-hidden mx-auto",
                         "hidden xl:block"

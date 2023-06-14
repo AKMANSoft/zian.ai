@@ -47,7 +47,7 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                 <p className="mt-7 font-light text-base text-th-gray font-jakarta">
                                     Lorem ipsum dolor sit amet, consect etur adip iscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia m, quis nostrud exercitation ullam co laboris nisi ut aliquip ex ea commodo consquat.
                                 </p>
-                                <img src="/images/today-post.png"
+                                <img src="/images/today-post.png" loading="lazy"
                                     className="mt-6 rounded-20 overflow-hidden object-cover object-center aspect-video w-full lg:h-[264px]" />
                                 <p className="my-3 text-xs text-white font-bold font-jakarta">
                                     <span>Date: </span>
