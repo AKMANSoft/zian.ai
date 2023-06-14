@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
 import { SmallSchedulePostEl } from "../postview-section"
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons"
