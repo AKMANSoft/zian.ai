@@ -82,6 +82,28 @@ body {
   display: none;
 }
 
+
+
+input[type='time']::-webkit-inner-spin-button,
+input[type='time']::-webkit-calendar-picker-indicator {
+  background: url(/icons/clock.svg);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  opacity: 1;
+  background-size: contain;
+}
+
+input[type='date']::-webkit-inner-spin-button,
+input[type='date']::-webkit-calendar-picker-indicator {
+  background: url(/icons/calendar.svg);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  opacity: 1;
+  background-size: contain;
+}
+
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;

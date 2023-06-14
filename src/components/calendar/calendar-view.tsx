@@ -7,7 +7,7 @@ import MonthCalendarView from './month-calendar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import DayCalendarView from './day-calendar';
-import SelectEl from '../ui/selectel';
+import {SelectElNew} from '../ui/selectel';
 import { faCalendar, faChevronLeft, faChevronRight, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { CalendarProps } from './defaults';
 
@@ -52,7 +52,7 @@ export function CalendarHeader({
                     <button className='w-7 h-auto px-1 text-sm text-white font-semibold aspect-square rounded-full border-2 border-white'>
                         <FontAwesomeIcon icon={faPlus} />
                     </button>
-                    <SelectEl
+                    <SelectElNew
                         className='py-2 rounded-[4px] hidden md:flex'
                         optClassName='py-2'
                         optContainerClassName='rounded'
@@ -62,7 +62,7 @@ export function CalendarHeader({
                     />
                 </div>
             </div>
-            <SelectEl
+            <SelectElNew
                 className='py-3 rounded-[4px] md:hidden mt-5'
                 optClassName='py-3'
                 optContainerClassName='rounded'

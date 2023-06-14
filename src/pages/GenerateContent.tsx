@@ -3,7 +3,7 @@ import GrBorderBox from "../components/ui/gr-border-box";
 import { cn } from "../lib/utils";
 import { PrimaryBtn } from "../components/ui/buttons";
 import PostViewSection from "../components/postview-section";
-import SelectEl from "../components/ui/selectel";
+import {SelectElNew} from "../components/ui/selectel";
 import { InputEl } from "../components/ui/input";
 
 
@@ -20,7 +20,7 @@ export default function GenerateContentPage() {
                         <div className="h-full flex flex-col justify-between gap-5 max-h-full overflow-y-auto">
                             <div>
                                 <div className="p-5  pb-[30px] border-b-[5px] border-primary">
-                                    <SelectEl
+                                    <SelectElNew
                                         label="Select Topic"
                                         options={[
                                             {

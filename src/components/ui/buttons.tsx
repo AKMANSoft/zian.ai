@@ -6,12 +6,13 @@ type Props = {
     className?: string;
     children: ReactNode;
     filled?: boolean;
+    onClick?: () => void
 }
 
 
-export function SecondaryBtn({ className, children, filled = true }: Props) {
+export function SecondaryBtn({ className, children, filled = true, onClick }: Props) {
     return (
-        <button type="button" className={cn(
+        <button type="button" onClick={onClick} className={cn(
             "border border-white/5 transition-all duration-300 hover:bg-white/20 rounded-lg py-[8px] px-4 outline-none",
             filled && "bg-white/[0.06]",
             "inline-flex items-center gap-2 text-white text-xs font-semibold justify-center",
@@ -25,9 +26,9 @@ export function SecondaryBtn({ className, children, filled = true }: Props) {
 
 
 
-export function PrimaryBtn({ className, children }: Props) {
+export function PrimaryBtn({ className, children, onClick }: Props) {
     return (
-        <button type="button" className={cn(
+        <button type="button" onClick={onClick} className={cn(
             "primary-btn bg-primary shadow-primary-btn hover:shadow-primary-btn-lg outline-none",
             "transition-all duration-300 rounded-lg py-[8px] px-4",
             "inline-flex items-center gap-2 text-white text-sm font-semibold justify-center",
@@ -41,9 +42,9 @@ export function PrimaryBtn({ className, children }: Props) {
 
 
 
-export function PrimaryBtnNeon({ className, children }: Props) {
+export function PrimaryBtnNeon({ className, children, onClick }: Props) {
     return (
-        <button type="button" className={cn(
+        <button type="button" onClick={onClick} className={cn(
             "primary-btn-neon outline-none",
             className
         )}>

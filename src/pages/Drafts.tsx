@@ -9,7 +9,7 @@ import { useState, Fragment, useRef } from "react";
 import { SmallSchedulePostEl } from "../components/postview-section";
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { formatNumberto0 } from "@/components/calendar/defaults";
-import { DialogFooter, DialogHeader } from "@/components/ui/dialog";
+import AddDraftPopup from "@/components/drafts/AddDraftPopup";
 
 
 
@@ -60,11 +60,7 @@ export default function DraftsPage() {
                             </button>
 
                         </div>
-                        <div className="py-2 w-full md:col-span-2 lg:col-span-1 min-w-max flex justify-end">
-                            <PrimaryBtn className="h-11 px-5 w-full">
-                                Add New
-                            </PrimaryBtn>
-                        </div>
+                        <AddDraftPopup />
                     </div>
                     {/* Drafts Table  */}
                     <div className="-mt-px bg-gr-purple-light border h-full border-primary rounded-10 flex flex-col overflow-hidden">
@@ -263,7 +259,7 @@ function DraftItemPopup({ num }: DraftItemPopupProps) {
             <SingleTableRow num={num} onClick={openModal} />
 
             <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                <Dialog as="div" className="relative z-50" onClose={closeModal}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -273,7 +269,7 @@ function DraftItemPopup({ num }: DraftItemPopupProps) {
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                        <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur" />
                     </Transition.Child>
 
                     <div className="fixed inset-0 overflow-y-auto">
@@ -288,18 +284,18 @@ function DraftItemPopup({ num }: DraftItemPopupProps) {
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <Dialog.Panel className={cn(
-                                    "w-full max-w-xl transform overflow-hidden rounded-20 bg-gr-purple-dark shadow-xl transition-all",
+                                    "w-full max-w-3xl transform overflow-hidden rounded-20 bg-gr-purple-dark shadow-xl transition-all",
                                     "relative"
                                 )}>
-                                    <DialogHeader className="w-full flex flex-row px-3 items-center justify-between py-3">
-                                        <div className="text-white">Add New Draft</div>
+                                    <div className="w-full flex flex-row p-5 items-center justify-between pb-3">
+                                        <div></div>
                                         <button type="button" onClick={closeModal}
                                             className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-pointer">
                                             <FontAwesomeIcon icon={faXmark} />
                                         </button>
-                                    </DialogHeader>
+                                    </div>
 
-                                    <div className="p-8 py-16 max-h-[calc(100vh_-_100px)] overflow-y-auto no-scrollbar">
+                                    <div className="p-8 py-16 max-h-[calc(100vh_-_200px)] overflow-y-auto">
                                         <div className="h-full flex flex-col justify-between gap-6">
                                             <div className="">
                                                 {/* {heading} */}
@@ -338,9 +334,9 @@ function DraftItemPopup({ num }: DraftItemPopupProps) {
 
                                         </div>
                                     </div>
-                                    <DialogFooter className="w-full min-h-[20px]">
+                                    <div className="w-full min-h-[20px]">
 
-                                    </DialogFooter>
+                                    </div>
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>
