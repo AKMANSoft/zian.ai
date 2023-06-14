@@ -1,8 +1,12 @@
-import CalendarPage from "./pages/Calendar"
-import DraftsPage from "./pages/Drafts"
-import GenerateContentPage from "./pages/GenerateContent"
+import React, { Suspense } from "react"
 import HomePage from "./pages/Home"
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+
+
+const GenerateContentPage = React.lazy(() => import("./pages/GenerateContent"));
+const CalendarPage = React.lazy(() => import("./pages/Calendar"));
+const DraftsPage = React.lazy(() => import("./pages/Drafts"));
+
 
 
 
@@ -13,15 +17,27 @@ const router = createBrowserRouter([
   },
   {
     path: "/generate",
-    element: <GenerateContentPage />
+    element: (
+      <Suspense>
+        <GenerateContentPage />
+      </Suspense>
+    )
   },
   {
     path: "/calendar",
-    element: <CalendarPage />
+    element: (
+      <Suspense>
+        <CalendarPage />
+      </Suspense>
+    )
   },
   {
     path: "/drafts",
-    element: <DraftsPage />
+    element: (
+      <Suspense>
+        <DraftsPage />
+      </Suspense>
+    )
   }
 ])
 

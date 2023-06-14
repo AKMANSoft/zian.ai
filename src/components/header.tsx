@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faBell, faChevronDown, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faChevronDown, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { cn } from '../lib/utils';
 import GrBorderBox from "./ui/gr-border-box";
-import { useState } from "react";
+import UserDropdownMenu from "./dropmenus/UserDropMenu";
+import NotificationsDropMenu from "./dropmenus/NotificationsDropMenu";
 
 
 
@@ -25,14 +26,10 @@ export default function Header({ heading, onToggleMenu, menuExpanded = false }: 
                 alt="" />
             <div className='flex items-center gap-2 h-[50px]'>
                 <SearchEl />
-                <GrBorderBox className="rounded-20 h-full">
-                    <button type="button" className='box-gr-border backdrop-blur-[10px] text-lg px-[10px] lg:px-3 h-full w-auto aspect-square text-white bg-gr-purple rounded-20'>
-                        <FontAwesomeIcon icon={faBell} />
-                    </button>
-                </GrBorderBox>
-                <UserHeaderComponent className="hidden lg:block" />
+                <NotificationsDropMenu />
+                <UserDropdownMenu className="h-12 hidden md:block" />
                 <GrBorderBox className={cn(
-                    "rounded-20 block xl:hidden z-[52]",
+                    "rounded-20 block xl:hidden z-50",
                     menuExpanded ? "fixed lg:static top-4 right-4 h-12" : "h-full"
                 )}>
                     <button onClick={onToggleMenu} type="button" className='box-gr-border backdrop-blur-[10px] text-lg px-[10px] lg:px-3 h-full w-auto aspect-square text-white bg-gr-purple rounded-20'>
@@ -47,74 +44,124 @@ export default function Header({ heading, onToggleMenu, menuExpanded = false }: 
 
 
 type UserDropElProps = {
-    expandable?: boolean;
+    dropdownOpen?: boolean;
     className?: string;
     toggleClassName?: string;
 }
 
-export function UserHeaderComponent({ expandable = false, className, toggleClassName }: UserDropElProps) {
-    const [active, setActive] = useState(false);
-
-    const clickHandler = () => {
-        if (expandable) setActive(!active)
-    }
+export function UserHeaderComponent({ className, toggleClassName, dropdownOpen }: UserDropElProps) {
+    // const [active, setActive] = useState(dropdownOpen);
 
     return (
         <GrBorderBox className={cn(
-            "rounded-20 h-full",
+            "h-full",
+            dropdownOpen ? "rounded-t-20 lg:rounded-20" : "rounded-20",
             className
         )}>
             <div className={cn(
-                "box-gr-border bg-gr-purple backdrop-blur-[10px] rounded-20",
-                "h-full overflow-hidden text-white"
+                "box-gr-border bg-gr-purple backdrop-blur-[10px]",
+                "h-full overflow-hidden text-white",
+                dropdownOpen ? "rounded-t-20 lg:rounded-20" : "rounded-20",
             )}>
-                <div role="button" onClick={clickHandler}
+                <div role="button"
                     className={cn(
                         'text-lg h-full',
-                        "inline-flex items-center",
-                        expandable ? "w-full px-5 py-3 gap-3 relative"
-                            : "aspect-square lg:aspect-auto p-[10px] lg:p-3 lg:pr-10 gap-[10px]",
+                        "inline-flex items-center w-full",
+                        "aspect-auto md:aspect-square lg:aspect-auto p-[10px] lg:p-3 lg:pr-10 gap-[10px]",
                         toggleClassName
                     )}>
                     <img src="/images/mike.png" loading="lazy" width={32} height={32} className={cn(
                         'h-full w-auto aspect-square rounded-full object-contain object-center'
                     )} />
                     <span className={cn(
-                        'font-jakarta',
-                        expandable ? 'text-base font-bold' : 'text-sm font-bold',
-                        !expandable && 'hidden lg:inline'
+                        'font-jakarta inline md:hidden lg:inline',
+                        'text-base md:text-sm font-bold',
                     )}>
                         Mike Males
                     </span>
-                    {
-                        expandable &&
-                        <span className={cn(
-                            "text-sm ps-1 absolute top-1/2 -translate-y-1/2 right-5 transition-all",
-                            active && "-rotate-180"
-                        )}>
-                            <FontAwesomeIcon icon={faChevronDown} />
-                        </span>
-                    }
+                    <span className={cn(
+                        "inline-block md:hidden text-sm ps-1 absolute top-1/2 -translate-y-1/2 right-5 transition-all",
+                        dropdownOpen && "-rotate-180"
+                    )}>
+                        <FontAwesomeIcon icon={faChevronDown} />
+                    </span>
                 </div>
-                {
-                    active &&
-                    <ul className="w-full h-auto border-t-2 border-white/5 divide-y-2 divide-white/5">
-                        <li className="py-4 px-5 hover:bg-white/10 font-normal text-sm font-jakarta">
-                            <a href="#">Edit Profile</a>
-                        </li>
-                        <li className="py-4 px-5 hover:bg-white/10 font-normal text-sm font-jakarta">
-                            <a href="#">Billing</a>
-                        </li>
-                        <li className="py-4 px-5 hover:bg-white/10 font-normal text-sm font-jakarta">
-                            <a href="#">Logout</a>
-                        </li>
-                    </ul>
-                }
             </div>
         </GrBorderBox >
     )
 }
 
+
+
+
+// type UserDropElProps = {
+//     expandable?: boolean;
+//     className?: string;
+//     toggleClassName?: string;
+// }
+
+// export function UserHeaderComponent({ expandable = false, className, toggleClassName }: UserDropElProps) {
+//     const [active, setActive] = useState(false);
+
+//     const clickHandler = () => {
+//         if (expandable) setActive(!active)
+//     }
+
+//     return (
+//         <GrBorderBox className={cn(
+//             "rounded-t-20 lg:rounded-20 h-full",
+//             className
+//         )}>
+//             <div className={cn(
+//                 "box-gr-border bg-gr-purple backdrop-blur-[10px] rounded-t-20 lg:rounded-20",
+//                 "h-full overflow-hidden text-white"
+//             )}>
+//                 <div role="button" onClick={clickHandler}
+//                     className={cn(
+//                         'text-lg h-full',
+//                         "inline-flex items-center",
+//                         expandable ? "w-full px-5 py-3 gap-3 relative"
+//                             : "aspect-square lg:aspect-auto p-[10px] lg:p-3 lg:pr-10 gap-[10px]",
+//                         toggleClassName
+//                     )}>
+//                     <img src="/images/mike.png" loading="lazy" width={32} height={32} className={cn(
+//                         'h-full w-auto aspect-square rounded-full object-contain object-center'
+//                     )} />
+//                     <span className={cn(
+//                         'font-jakarta',
+//                         expandable ? 'text-base font-bold' : 'text-sm font-bold',
+//                         !expandable && 'hidden lg:inline'
+//                     )}>
+//                         Mike Males
+//                     </span>
+//                     {
+//                         expandable &&
+//                         <span className={cn(
+//                             "text-sm ps-1 absolute top-1/2 -translate-y-1/2 right-5 transition-all",
+//                             active && "-rotate-180"
+//                         )}>
+//                             <FontAwesomeIcon icon={faChevronDown} />
+//                         </span>
+//                     }
+//                 </div>
+//                 {
+//                     active &&
+//                     <ul className="w-full h-auto border-t-2 border-white/5 divide-y-2 divide-white/5">
+//                         <li className="py-4 px-5 hover:bg-white/10 font-normal text-sm font-jakarta">
+//                             <a href="#">Edit Profile</a>
+//                         </li>
+//                         <li className="py-4 px-5 hover:bg-white/10 font-normal text-sm font-jakarta">
+//                             <a href="#">Billing</a>
+//                         </li>
+//                         <li className="py-4 px-5 hover:bg-white/10 font-normal text-sm font-jakarta">
+//                             <a href="#">Logout</a>
+//                         </li>
+//                     </ul>
+//                 }
+//             </div>
+//         </GrBorderBox >
+//     )
+// }
 
 function SearchEl() {
     return (

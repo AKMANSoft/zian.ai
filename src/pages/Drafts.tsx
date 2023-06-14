@@ -9,6 +9,7 @@ import { useState, Fragment, useRef } from "react";
 import { SmallSchedulePostEl } from "../components/postview-section";
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { formatNumberto0 } from "@/components/calendar/defaults";
+import { DialogFooter, DialogHeader } from "@/components/ui/dialog";
 
 
 
@@ -53,7 +54,6 @@ export default function DraftsPage() {
                                     ))
                                 }
                             </div>
-                            
 
                             <button type="button" onClick={() => onTabsScrollClick()} className="absolute top-1/2 -translate-y-1/2 right-3 md:right-5 aspect-square rounded-10 bg-transparent hover:text-primary text-white">
                                 <FontAwesomeIcon icon={faChevronRight} />
@@ -179,7 +179,7 @@ function SingleTableRow({ onClick, num }: SingleTableRowProps) {
             <td className="py-5 pl-7 hidden lg:table-cell">
                 {formatNumberto0(num)}
             </td>
-            <td className="py-5 px-5 w-full h-auto col-span-3">
+            <td className="py-5 px-5 w-full lg:w-auto h-auto col-span-3">
                 <img src="/images/table-img.png" width={80} height={80} loading="lazy" className="w-full h-auto aspect-square" alt="" />
             </td>
             <td className="py-5 px-5 col-span-8 flex items-center lg:table-cell">
@@ -288,14 +288,18 @@ function DraftItemPopup({ num }: DraftItemPopupProps) {
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <Dialog.Panel className={cn(
-                                    "w-full max-w-xl transform overflow-hidden rounded-20 bg-gr-purple-dark py-2 shadow-xl transition-all",
+                                    "w-full max-w-xl transform overflow-hidden rounded-20 bg-gr-purple-dark shadow-xl transition-all",
                                     "relative"
                                 )}>
-                                    <button type="button" onClick={closeModal}
-                                        className="text-white text-3xl font-semibold outline-none absolute top-5 right-8 cursor-pointer">
-                                        <FontAwesomeIcon icon={faXmark} />
-                                    </button>
-                                    <div className="p-8 pb-16 pt-24 max-h-[calc(100vh_-_100px)] overflow-y-auto no-scrollbar">
+                                    <DialogHeader className="w-full flex flex-row px-3 items-center justify-between py-3">
+                                        <div className="text-white">Add New Draft</div>
+                                        <button type="button" onClick={closeModal}
+                                            className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-pointer">
+                                            <FontAwesomeIcon icon={faXmark} />
+                                        </button>
+                                    </DialogHeader>
+
+                                    <div className="p-8 py-16 max-h-[calc(100vh_-_100px)] overflow-y-auto no-scrollbar">
                                         <div className="h-full flex flex-col justify-between gap-6">
                                             <div className="">
                                                 {/* {heading} */}
@@ -334,6 +338,9 @@ function DraftItemPopup({ num }: DraftItemPopupProps) {
 
                                         </div>
                                     </div>
+                                    <DialogFooter className="w-full min-h-[20px]">
+
+                                    </DialogFooter>
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>
