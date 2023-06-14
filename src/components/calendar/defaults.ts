@@ -1,5 +1,5 @@
 // import { Calendar } from "dayzed";
-import { Option } from "../ui/select";
+import { Option } from "../ui/selectel";
 
 export const monthNamesShort = [
   "Jan",

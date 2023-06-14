@@ -2,12 +2,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faBell, faChevronDown, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { cn } from '../lib/utils';
 import GrBorderBox from "./ui/gr-border-box";
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "./ui/accordion"
 import { useState } from "react";
 
 
