@@ -1,4 +1,4 @@
-import {  faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons"
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import React, { ReactNode } from "react"
 import { cn } from "../../lib/utils"
@@ -114,10 +114,10 @@ import {
 
 export function SelectElNew({
     label, options, className = "",
-    labelNode
+    labelNode, value
 }: Props) {
     const [open, setOpen] = React.useState(false)
-    const [selectedOpt, setSelectOpt] = React.useState<string>("")
+    const [selectedOpt, setSelectOpt] = React.useState<string>(value?.value ?? options[0].value)
 
     return (
         <Popover open={open} onOpenChange={setOpen}>

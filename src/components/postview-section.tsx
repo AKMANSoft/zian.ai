@@ -100,10 +100,11 @@ export default function PostViewSection({ className, heading, contentClassName, 
 
 type ScheduleListItemProps = {
     leading?: React.ReactNode;
-    className?: string
+    className?: string;
+    onItemClick?: ()=> void;
 }
 
-export function ScheduleListItem({ leading, className }: ScheduleListItemProps) {
+export function ScheduleListItem({ leading, className, onItemClick }: ScheduleListItemProps) {
     return (
         <div className={cn(
             "w-full bg-[#f2e4f11a] px-3 py-[10px] md:rounded-10 gap-[10px]",
@@ -136,10 +137,10 @@ export function ScheduleListItem({ leading, className }: ScheduleListItemProps) 
                         },
                     ]}
                     itemRenderer={(item) => (
-                        <SmallSchedulePostEl text={item.text} icon={item.icon} />
+                        <SmallSchedulePostEl onClick={onItemClick} text={item.text} icon={item.icon} />
                     )}
                     overflowRenderer={(items) => (
-                        <SmallSchedulePostEl text={`+${items.length}`} keepVisible />
+                        <SmallSchedulePostEl onClick={onItemClick} text={`+${items.length}`} keepVisible />
                     )}
                 />
             </div>
@@ -152,12 +153,13 @@ type SmallSchedulePostElProps = {
     text?: string;
     icon?: IconDefinition;
     keepVisible?: boolean;
+    onClick?: () => void;
 }
 
-export function SmallSchedulePostEl({ text, icon, keepVisible = false }: SmallSchedulePostElProps) {
+export function SmallSchedulePostEl({ text, icon, keepVisible = false, onClick }: SmallSchedulePostElProps) {
     // hidden xs:inline-flex first:inline-flex last:inline-flex
     return (
-        <PrimaryBtnNeon className="text-base text-th-gray">
+        <PrimaryBtnNeon onClick={onClick} className="text-base text-th-gray">
             {
                 icon && <FontAwesomeIcon icon={icon} />
             }

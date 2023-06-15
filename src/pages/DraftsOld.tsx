@@ -21,7 +21,7 @@ const filters = [
 ]
 
 
-export default function DraftsPage() {
+export default function DraftsOldPage() {
     const [activeTab, setActiveTab] = useState(0);
     const tabsContainerRef = useRef<HTMLDivElement>(null);
 
@@ -35,7 +35,7 @@ export default function DraftsPage() {
     return (
         <MainLayout heading="Drafts">
             <GrBorderBox className="p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)] " type="lg">
-                <div className="p-3 md:p-5 h-full w-full flex flex-col backdrop-blur-[10px] bg-gr-purple-light opacity-90 rounded-20">
+                <div className="p-3 md:p-5 h-full flex flex-col backdrop-blur-[10px] bg-gr-purple-light opacity-90 rounded-20">
                     {/* Tabs List View  */}
                     <div className="flex flex-col-reverse gap-5 md:gap-0 md:grid md:grid-cols-10">
                         <div className="relative min-h-[50px] w-full col-span-8 lg:col-span-9 gap-3">
@@ -62,28 +62,35 @@ export default function DraftsPage() {
                         <AddEditDraftPopup variant="add" />
                     </div>
                     {/* Drafts Table  */}
-                    <div className="-mt-px bg-gr-purple-light border w-full h-full border-primary rounded-10 flex flex-col overflow-hidden">
-                        <div className="max-h-full max-w-full overflow-auto divide-y divide-white/10 space-y-5 lg:divide-y-0 px-5 lg:px-0">
-                            <div className="border-b-[5px] w-full min-w-max hidden lg:flex items-center border-primary bg-[#664f8e] z-[1] gap-3 sticky top-0">
-                                <span className="block text-white py-3 min-h-[50px] text-start w-[50px] overflow-hidden lg:ps-4">#</span>
-                                <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden">Photo</span>
-                                <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden min-w-[200px]">Content</span>
-                                <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden">Status</span>
-                                <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden">Username</span>
-                                <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden">Created Date</span>
-                                <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden min-w-[200px]">Actions</span>
-                                <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden lg:pr-4">Photo</span>
-                            </div>
-                            <SingleTableRow num={1} />
-                            <SingleTableRow num={2} />
-                            <SingleTableRow num={3} />
-                            <SingleTableRow num={4} />
-                            <SingleTableRow num={5} />
-                            <SingleTableRow num={6} />
-                            <SingleTableRow num={7} />
-                            <SingleTableRow num={8} />
-                            <SingleTableRow num={9} />
-                            <SingleTableRow num={10} />
+                    <div className="-mt-px bg-gr-purple-light border h-full border-primary rounded-10 flex flex-col overflow-hidden">
+                        <div className="max-h-full max-w-full overflow-auto">
+                            <table className="text-white font-jakarta table-auto w-full">
+                                <thead className="hidden lg:table-header-group after:content-[''] after:block after:absolute after:w-full after:h-[5px] after:bg-primary bg-[#664f8e] z-[1] sticky top-0">
+                                    <tr>
+                                        <th className="py-3 min-h-[50px] text-start pl-7 w-24">#</th>
+                                        <th className="py-3 min-h-[50px] text-start w-32 px-5">Photo</th>
+                                        <th className="py-3 min-h-[50px] text-start px-5 max-w-[200px]">Content</th>
+                                        <th className="py-3 min-h-[50px] text-start w-44 px-5">Status</th>
+                                        <th className="py-3 min-h-[50px] text-start w-48 px-5">Username</th>
+                                        <th className="py-3 min-h-[50px] text-start px-5">Created Date</th>
+                                        <th className="py-3 min-h-[50px] text-start px-12">Actions</th>
+                                        <th className="py-3 min-h-[50px] text-start pr-7">Photo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <SingleTableRow num={1} />
+                                    <SingleTableRow num={2} />
+                                    <SingleTableRow num={3} />
+                                    <SingleTableRow num={4} />
+                                    <SingleTableRow num={5} />
+                                    <SingleTableRow num={6} />
+                                    <SingleTableRow num={7} />
+                                    <SingleTableRow num={8} />
+                                    <SingleTableRow num={9} />
+                                    <SingleTableRow num={10} />
+                                    <SingleTableRow num={11} />
+                                </tbody>
+                            </table>
                         </div>
                         {/* Table Footer / Pagination  */}
                         <DraftsPagination />
@@ -163,41 +170,28 @@ type SingleTableRowProps = {
 
 function SingleTableRow({ onClick, num }: SingleTableRowProps) {
     return (
-        <div className="flex flex-wrap lg:flex-nowrap lg:gap-3 items-center lg:min-w-max" role="button" onClick={onClick}>
-            <span className="hidden lg:block text-white py-3 min-h-[50px] text-start w-[50px] overflow-hidden lg:ps-4">
+        <tr role="button" className="grid grid-cols-12 lg:table-row" onClick={onClick}>
+            <td className="py-5 pl-7 hidden lg:table-cell">
                 {formatNumberto0(num)}
-            </span>
-            <span className="block text-white py-3 lg:min-h-[50px] text-start w-1/3 lg:w-[150px] overflow-hidden">
-                <img src="/images/table-img.png" width={80} height={80} loading="lazy" className="w-full h-full lg:w-auto min-w-[80px] lg:h-[80px] aspect-square" alt="" />
-            </span>
-            <span className="block text-white py-3 lg:min-h-[50px] text-start w-2/3 lg:w-[150px] overflow-hidden min-w-[200px] px-2">
-                <p className="w-full line-clamp-4">
+            </td>
+            <td className="py-5 px-5 w-full lg:w-auto h-auto col-span-3">
+                <img src="/images/table-img.png" width={80} height={80} loading="lazy" className="w-full h-auto aspect-square" alt="" />
+            </td>
+            <td className="py-5 px-5 col-span-8 flex items-center lg:table-cell">
+                <p className="line-clamp-4 lg:max-w-[200px]">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur aliquid doloribus mollitia magni fugiat quisquam rerum a alias aspernatur, dolorem in neque dolore sed quis hic nulla animi minima debitis.
                 </p>
-            </span>
-            <span className="block text-white py-1 lg:py-3 lg:min-h-[50px] text-start w-full lg:w-[150px] overflow-hidden">
-                <div className="flex items-center justify-between">
-                    <span className="font-semibold block lg:hidden">Status:</span>
-                    <span>Scheduled</span>
-                </div>
-            </span>
-            <span className="block text-white py-1 lg:py-3 lg:min-h-[50px] text-start w-full lg:w-[150px] overflow-hidden">
-                <div className="flex items-center justify-between">
-                    <span className="font-semibold block lg:hidden">Username:</span>
-                    <span className="block lg:w-full max-w-full whitespace-nowrap overflow-hidden text-ellipsis">
-                        moonlanding.media
-                    </span>
-                </div>
-            </span>
-            <span className="block text-white py-1 lg:py-3 lg:min-h-[50px] text-start w-full lg:w-[150px] overflow-hidden">
-                <div className="flex items-center justify-between">
-                    <span className="font-semibold block lg:hidden">Created Date:</span>
-                    <span>
-                        April 2022,  Sunday   2:00PM
-                    </span>
-                </div>
-            </span>
-            <span className="block text-white py-1 lg:py-3 lg:min-h-[50px] text-start w-[150px] max-w-[200px] overflow-hidden min-w-[200px]">
+            </td>
+            <td className="py-5 px-5 col-span-full">
+                <span>Scheduled</span>
+            </td>
+            <td className="py-5 px-5">
+                moonlanding.media
+            </td>
+            <td className="py-5 px-5">
+                April 2022,  Sunday   2:00PM
+            </td>
+            <td className="py-5 px-12">
                 <div className="inline-flex items-center gap-2">
                     <ViewDraftPopup />
                     <AddEditDraftPopup variant="edit" />
@@ -213,15 +207,13 @@ function SingleTableRow({ onClick, num }: SingleTableRowProps) {
                         )}
                     />
                 </div>
-            </span>
-            <span className="block text-white py-1 lg:py-3 lg:min-h-[50px] text-start w-[calc(100%_-_200px)] lg:w-[150px] overflow-hidden lg:pr-4">
-                <div className="flex items-center justify-end lg:justify-start">
-                    <PrimaryBtnNeon className="max-w-[400px] py-3 h-10 px-3 font-medium text-[15px] inline-flex items-center justify-center w-full lg:w-auto">
-                        Regenerate
-                    </PrimaryBtnNeon>
-                </div>
-            </span>
-        </div>
+            </td>
+            <td className="py-5 pr-7">
+                <PrimaryBtnNeon className="py-3 h-10 px-3 font-medium text-[15px]">
+                    Regenerate
+                </PrimaryBtnNeon>
+            </td>
+        </tr>
     );
 }
 

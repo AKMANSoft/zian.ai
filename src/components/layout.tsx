@@ -13,7 +13,7 @@ export default function MainLayout({ children, heading }: Props) {
     return (
         <div className="w-full flex gap-5">
             <SideBar expanded={menuExpanded} />
-            <div className="flex flex-col w-full px-2 xs:px-4 lg:px-5">
+            <div className="flex flex-col w-full max-w-full overflow-hidden px-2 xs:px-4 lg:px-5">
                 <Header heading={heading} menuExpanded={menuExpanded} onToggleMenu={()=> setMenuExpanded(!menuExpanded)} />
                 {children}
             </div>

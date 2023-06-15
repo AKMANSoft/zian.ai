@@ -7,7 +7,7 @@ type MonthCalendarProps = CalendarProps
 
 
 
-export default function MonthCalendarView({ mode, onModeChange }: MonthCalendarProps) {
+export default function MonthCalendarView({ mode, onModeChange, onPostSelect }: MonthCalendarProps) {
     const [currentMonth, setCurrentMonth] = useState({
         month: (new Date()).getMonth(),
         year: (new Date()).getFullYear(),
@@ -73,7 +73,7 @@ export default function MonthCalendarView({ mode, onModeChange }: MonthCalendarP
                                                         </div>
                                                         {
                                                             index % 5 === 0 &&
-                                                            <CalendarPostEl />
+                                                            <CalendarPostEl onClick={onPostSelect} />
                                                         }
                                                     </div>
                                                 }

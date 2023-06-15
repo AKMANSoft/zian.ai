@@ -7,7 +7,7 @@ import MonthCalendarView from './month-calendar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import DayCalendarView from './day-calendar';
-import {SelectElNew} from '../ui/selectel';
+import { SelectElNew } from '../ui/selectel';
 import { faCalendar, faChevronLeft, faChevronRight, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { CalendarProps } from './defaults';
 
@@ -100,12 +100,13 @@ export function CalendarGridEl({ content, className }: CalendarGridElProps) {
 
 type CalendarPostElProps = {
     onlyIcon?: boolean;
+    onClick?: () => void;
 }
 
 
-export function CalendarPostEl({ onlyIcon }: CalendarPostElProps) {
+export function CalendarPostEl({ onlyIcon, onClick }: CalendarPostElProps) {
     return (
-        <button className={cn(
+        <button type='button' onClick={onClick} className={cn(
             "w-full text-start cursor-pointer bg-radial-gr-purple rounded-md border h-auto border-primary/40",
             "py-1 xl:py-2 px-[10px] xl:px-3"
         )}>
@@ -142,16 +143,20 @@ export function CalendarPostEl({ onlyIcon }: CalendarPostElProps) {
 
 
 
-export default function CalendarView() {
+type CalendarViewProps = {
+    onPostSelect?: () => void
+}
+
+export default function CalendarView({ onPostSelect }: CalendarViewProps) {
     const [calendarMode, setCalendarMode] = useState(calendarViewModes[0]);
     switch (calendarMode) {
         case calendarViewModes[1]:
-            return <WeekCalendarView mode={calendarMode} onModeChange={setCalendarMode} />;
+            return <WeekCalendarView mode={calendarMode} onPostSelect={onPostSelect} onModeChange={setCalendarMode} />;
         case calendarViewModes[2]:
-            return <DayCalendarView mode={calendarMode} onModeChange={setCalendarMode} />;
+            return <DayCalendarView mode={calendarMode} onPostSelect={onPostSelect} onModeChange={setCalendarMode} />;
         case calendarViewModes[0]:
         default:
-            return <MonthCalendarView mode={calendarMode} onModeChange={setCalendarMode} />;
+            return <MonthCalendarView mode={calendarMode} onPostSelect={onPostSelect} onModeChange={setCalendarMode} />;
     }
 }
 

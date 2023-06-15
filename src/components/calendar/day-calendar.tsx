@@ -7,7 +7,7 @@ import { ScheduleListItem } from "../postview-section";
 
 
 
-export default function DayCalendarView({ mode, onModeChange }: CalendarProps) {
+export default function DayCalendarView({ mode, onModeChange, onPostSelect }: CalendarProps) {
     const [currentDate, setCurrentDate] = useState(new Date());
 
     const goToNextDay = () => {
@@ -54,7 +54,7 @@ export default function DayCalendarView({ mode, onModeChange }: CalendarProps) {
                     {
                         ["08:00", "09:00", "10:00", "11:00", "12:00", "01:00", "02:00", "03:00"]
                             .map((hour) => (
-                                <HourRowEl text={hour} />
+                                <HourRowEl onItemClick={onPostSelect} text={hour} />
                             ))
                     }
                 </div>
@@ -67,13 +67,15 @@ export default function DayCalendarView({ mode, onModeChange }: CalendarProps) {
 
 type HourRowElProps = {
     text: string;
+    onItemClick?: () => void;
 }
 
 
-function HourRowEl({ text }: HourRowElProps) {
+function HourRowEl({ text, onItemClick }: HourRowElProps) {
     return (
         <ScheduleListItem
             className="bg-transparent border-b-[0.5px] border-white/10 last:border-none px-3 pt-3 pb-5 place-items-start !rounded-none"
+            onItemClick={onItemClick}
             leading={
                 <p className={cn(
                     'text-white/60 text-sm font-normal font-jakarta w-[55px] overflow-hidden',

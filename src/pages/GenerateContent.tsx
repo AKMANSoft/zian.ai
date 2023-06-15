@@ -88,7 +88,7 @@ export default function GenerateContentPage() {
                     </div>
                 </GrBorderBox>
                 <PostViewSection
-                    className="w-full lg:w-1/3 min-h-[700px]"
+                    className="w-full lg:w-1/3 min-h-[700px] lg:min-h-0"
                     contentClassName="px-4 pt-10 pb-5"
                     heading={
                         <h5 className="text-xl text-white font-nebula font-normal leading-8">

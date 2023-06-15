@@ -64,6 +64,7 @@ export function formatNumberto0(num: number): string {
 export type CalendarProps = {
   mode: Option;
   onModeChange: (mode: Option) => void;
+  onPostSelect?: () => void;
 };
 
 export function generateMonthDatesArray(thisMonth: Date): number[] {

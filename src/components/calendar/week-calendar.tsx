@@ -26,7 +26,7 @@ function getWeekFromDate(date: Date, reverse = false): CalendarWeek {
 }
 
 
-export default function WeekCalendarView({ mode, onModeChange }: CalendarProps) {
+export default function WeekCalendarView({ mode, onModeChange, onPostSelect }: CalendarProps) {
     const [windowWidth, setWindowWidth] = useState(-1);
 
     useEffect(() => {
@@ -132,8 +132,8 @@ export default function WeekCalendarView({ mode, onModeChange }: CalendarProps) 
                                                             {
                                                                 dIndex !== 0 && dIndex % 2 === 0 &&
                                                                 <>
-                                                                    <CalendarPostEl />
-                                                                    <CalendarPostEl />
+                                                                    <CalendarPostEl onClick={onPostSelect} />
+                                                                    <CalendarPostEl onClick={onPostSelect} />
                                                                 </>
                                                             }
                                                         </div>
