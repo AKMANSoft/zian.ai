@@ -57,6 +57,7 @@ export default {
       "navigation-item": "0px 10px 30px #E945D0",
       "primary-btn": "0px 10px 30px #E945D0",
       "primary-btn-lg": "0px 10px 50px #E945D0",
+      "dark-8px": "inset 0px -1px 8px #9375B6, inset 0px 0px 5px #FFACE4",
       "primary-tabs": "0px 1px 5px rgba(0, 0, 0, 0.1), inset 0px -1px 8px #9375B6, inset 0px 0px 3px #b5057a",
     },
   },

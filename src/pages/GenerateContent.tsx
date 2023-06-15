@@ -1,59 +1,102 @@
 import MainLayout from "../components/layout";
 import GrBorderBox from "../components/ui/gr-border-box";
 import { cn } from "../lib/utils";
-import { PrimaryBtn } from "../components/ui/buttons";
+import { PrimaryWithNeon } from "../components/ui/buttons";
 import PostViewSection from "../components/postview-section";
-import {SelectElNew} from "../components/ui/selectel";
 import { InputEl } from "../components/ui/input";
+import SparkleButton from "@/components/ui/sparkle-btn";
+import { useState } from "react";
 
+
+
+
+const Topics = [
+    "Anouncements",
+    "Giveaways",
+    "Engagement Questions",
+    "Promotions",
+    "Anouncements",
+    "Giveaways",
+    "Engagement Questions",
+    "Promotions",
+    "Anouncements",
+    "Giveaways",
+    "Engagement Questions",
+    "Promotions",
+    "Anouncements",
+    "Giveaways",
+    "Engagement Questions",
+    "Promotions",
+    "Anouncements",
+    "Giveaways",
+    "Engagement Questions",
+    "Promotions",
+]
 
 
 
 
 export default function GenerateContentPage() {
+    const [selTopic, setSelTop] = useState(0);
+    const [post, setPost] = useState(false);
+
     return (
         <MainLayout heading="Generate Content">
-            <div className="pb-5 flex gap-5 min-h-[calc(100vh_-_130px)]">
-                <GrBorderBox className="w-full p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)]" type="lg">
+            <div className="pb-5 flex flex-col lg:flex-row gap-5 min-h-[calc(100vh_-_130px)]">
+                <GrBorderBox className="w-full p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)]" type="lg">
                     <div className="h-full min-h-[500px] bg-gr-purple-light backdrop-blur-[10px] opacity-90 rounded-20 relative overflow-hidden">
                         {/* Main Content  */}
-                        <div className="h-full flex flex-col justify-between gap-5 max-h-full overflow-y-auto">
-                            <div>
-                                <div className="p-5  pb-[30px] border-b-[5px] border-primary">
-                                    <SelectElNew
-                                        label="Select Topic"
-                                        options={[
-                                            {
-                                                text: "Giveaways",
-                                                value: "giveaways",
-                                                disabled: false,
-                                            },
-                                            {
-                                                text: "Other topic",
-                                                value: "other_topic",
-                                                disabled: false,
-                                            },
-                                        ]} />
-                                </div>
-                                <div className="p-5 pt-8 space-y-4">
-                                    <InputEl label="Question 1" placeholder="Write your answer here" />
-                                    <InputEl label="Question 2" placeholder="Write your answer here" />
-                                    <InputEl label="Question 3" placeholder="Write your answer here" />
-                                    <InputEl label="Question 4" placeholder="Write your answer here" />
+                        <div className="flex flex-wrap w-full h-full">
+                            <div className="w-full lg:w-[35%] xl:w-[30%] border-b-[5px] border-r border-primary px-5 py-3 lg:py-4 max-h-[70px] flex items-center">
+                                <h3 className="text-white text-xl leading-8 font-normal font-nebula">
+                                    Select Topic
+                                </h3>
+                            </div>
+                            <div className="hidden lg:flex lg:w-[65%] xl:w-[70%] border-b-4 border-primary px-5 py-4 max-h-[70px] items-center">
+                                <p className="font-jakarta text-sm font-normal leading-7 text-white/70">
+                                    Please answer these questions lorem ipsum dolor imit
+                                </p>
+                            </div>
+                            <div className="w-full lg:w-[35%] xl:w-[30%] border-r border-primary lg:h-full lg:max-h-[calc(100%_-_70px)] overflow-y-auto">
+                                <div className="w-full px-3 lg:px-5 py-4 gap-3 flex flex-row lg:flex-col max-w-full overflow-x-auto lg:overflow-hidden no-scrollbar">
+                                    {
+                                        Topics.map((topic, index) => (
+                                            <PrimaryWithNeon onClick={() => setSelTop(index)} active={selTopic === index}
+                                                className="w-full min-w-max lg:min-w-0 block text-[15px] leading-6 font-medium overflow-hidden text-start text-ellipsis max-w-full whitespace-nowrap ">
+                                                {topic}
+                                            </PrimaryWithNeon>
+                                        ))
+                                    }
                                 </div>
                             </div>
-                            <div className="flex justify-end p-6 pb-7">
-                                <PrimaryBtn className="px-10 h-12">
-                                    Generate
-                                </PrimaryBtn>
+                            <div className="w-full lg:w-[65%] xl:w-[70%] lg:h-full pb-3 lg:pb-10 gap-5 max-h-[calc(100%_-_70px)] overflow-y-auto">
+                                <div>
+                                    <div className="p-3 lg:p-5 lg:pt-8 space-y-4">
+                                        <InputEl label="Question 1" placeholder="Write your answer here" />
+                                        <InputEl label="Question 2" placeholder="Write your answer here" />
+                                        <InputEl label="Question 3" placeholder="Write your answer here" />
+                                        <InputEl label="Question 4" placeholder="Write your answer here" />
+                                    </div>
+                                </div>
+                                <div className="flex justify-end p-3 lg:p-6">
+                                    <SparkleButton onClick={() => setPost(true)} className="px-10 h-12">
+                                        Generate
+                                    </SparkleButton>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </GrBorderBox>
                 <PostViewSection
-                    className="w-1/3"
+                    className="w-full lg:w-1/3 min-h-[700px]"
                     contentClassName="px-4 pt-10 pb-5"
-                    customContent={<EmptyPostContent />}
+                    heading={
+                        <h5 className="text-xl text-white font-nebula font-normal leading-8">
+                            Result
+                        </h5>
+                    }
+                    scheduled={false}
+                    customContent={post ? null : <EmptyPostContent />}
                 />
             </div>
         </MainLayout>

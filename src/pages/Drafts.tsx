@@ -34,7 +34,7 @@ export default function DraftsPage() {
 
     return (
         <MainLayout heading="Drafts">
-            <GrBorderBox className="p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)] " type="lg">
+            <GrBorderBox className="p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)] " type="lg">
                 <div className="p-3 md:p-5 h-full flex flex-col backdrop-blur-[10px] bg-gr-purple-light opacity-90 rounded-20">
                     {/* Tabs List View  */}
                     <div className="flex flex-col-reverse gap-5 md:gap-0 md:grid md:grid-cols-10">

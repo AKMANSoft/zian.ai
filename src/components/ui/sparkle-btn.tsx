@@ -1,16 +1,22 @@
+import { cn } from "@/lib/utils";
 import { ReactNode } from "react"
 
 
 
 type Props = {
-    children?: ReactNode
+    children?: ReactNode;
+    className?: string;
+    onClick?: () => void
 }
 
-export default function SparkleButton({ children }: Props) {
+export default function SparkleButton({ children, className, onClick }: Props) {
     return (
         <div className="sp">
 
-            <button className="sparkle-button">
+            <button className={cn(
+                "sparkle-button text-white font-semibold text-sm leading-10",
+                className
+            )} onClick={onClick}>
                 <span className="spark"></span>
 
                 <span className="backdrop"></span>

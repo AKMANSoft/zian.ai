@@ -32,7 +32,7 @@ export default function SideBar({ expanded = false }: Props) {
                         "hidden xl:block"
                     )}
                     alt="" />
-                <div className="mt-4 w-full">
+                <div className="mt-16 md:mt-4 w-full">
                     <div className="py-3">
                         {/* <UserHeaderComponent expandable className="lg:hidden" toggleClassName="h-[71px]" /> */}
                         <UserDropdownMenu className="h-[71px] md:hidden" />

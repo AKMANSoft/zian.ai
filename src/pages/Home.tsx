@@ -21,7 +21,7 @@ export default function HomePage() {
                         Today&apos;s Post
                     </h5>
                 } />
-                <GrBorderBox className="w-full p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)]" type="lg">
+                <GrBorderBox className="w-full p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)]" type="lg">
                     <div className="pb-10 h-full min-h-[500px] bg-gr-purple-light opacity-90 rounded-20 relative">
                         {/* Bottom Right Corner Design  */}
                         <div className="absolute -bottom-[27px] -right-[19px] w-[150px] h-[150px]">

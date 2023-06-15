@@ -6,6 +6,7 @@ type Props = {
     className?: string;
     children: ReactNode;
     filled?: boolean;
+    active?: boolean;
     onClick?: () => void
 }
 
@@ -52,3 +53,17 @@ export function PrimaryBtnNeon({ className, children, onClick }: Props) {
         </button>
     )
 }
+
+
+export function PrimaryWithNeon({ className, children, onClick, active }: Props) {
+    return (
+        <button type="button" onClick={onClick} className={cn(
+            "primary-btn-neon outline-none transition-all duration-300",
+            active ? "bg-primary" : "hover:bg-primary/60",
+            className
+        )}>
+            {children}
+        </button>
+    )
+}
+

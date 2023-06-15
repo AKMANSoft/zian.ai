@@ -54,7 +54,7 @@ function InputEl({ label, placeholder = "", labelNode = null, id = "", endIcon, 
           labelNode
           :
           <label htmlFor={id} className={cn(
-            "text-base leading-7 font-semibold font-jakarta text-white"
+            "text-sm font-semibold font-jakarta text-white"
           )}>
             {label}
           </label>

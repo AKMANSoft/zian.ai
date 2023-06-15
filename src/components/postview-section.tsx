@@ -15,15 +15,16 @@ type PostViewSectionProps = {
     className?: string;
     contentClassName?: string;
     customContent?: React.ReactNode;
+    scheduled?: boolean;
 }
 
 
-export default function PostViewSection({ className, heading, contentClassName, customContent }: PostViewSectionProps) {
-    
+export default function PostViewSection({ className, heading, contentClassName, customContent = null, scheduled = true }: PostViewSectionProps) {
+
 
     return (
         <GrBorderBox className={cn(
-            "p-[2px] rounded-20 lg:max-w-[400px] lg:max-h-[calc(100vh_-_130px)]",
+            "p-px md:p-[2px] rounded-20 lg:max-w-[400px] lg:max-h-[calc(100vh_-_130px)]",
             className
         )} type="lg">
             <div className={cn(
@@ -39,7 +40,7 @@ export default function PostViewSection({ className, heading, contentClassName, 
                 <div className="absolute -top-[1px] left-1/2 -translate-x-1/2 bg-primary w-[80%] h-[8px] stick-shadow"></div>
                 {/* Main Content  */}
                 {
-                    (customContent && customContent !== null) ? customContent
+                    (customContent !== null) ? customContent
                         :
                         <div className="h-full flex overflow-y-auto flex-col justify-between gap-28 no-scrollbar pb-20">
                             <div className="">
@@ -49,28 +50,34 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                 </p>
                                 <img src="/images/today-post.png" loading="lazy"
                                     className="mt-6 rounded-20 overflow-hidden object-cover object-center aspect-video w-full lg:h-[264px]" />
-                                <p className="my-3 text-xs text-white font-bold font-jakarta">
-                                    <span>Date: </span>
-                                    <span className="font-medium">April 2022, Sunday 2:00PM</span>
-                                </p>
-                                <Seperator />
-                                <div className="mt-[14px] flex items-center gap-3">
-                                    <SecondaryBtn className="px-2 xs:px-4">
-                                        <FontAwesomeIcon icon={faCalendar} />
-                                        Reschedule
-                                    </SecondaryBtn>
-                                    <SecondaryBtn className="px-2 xs:px-4">
-                                        <FontAwesomeIcon icon={faEdit} />
-                                        Edit
-                                    </SecondaryBtn>
-                                    <SecondaryBtn className="px-2 xs:px-4">
-                                        <FontAwesomeIcon icon={faTrash} />
-                                        Delete
-                                    </SecondaryBtn>
-                                </div>
+                                {
+                                    scheduled &&
+                                    <>
+                                        <p className="my-3 text-xs text-white font-bold font-jakarta">
+                                            <span>Date: </span>
+                                            <span className="font-medium">April 2022, Sunday 2:00PM</span>
+                                        </p>
+                                        <Seperator />
+                                        <div className="mt-[14px] flex items-center gap-3">
+                                            <SecondaryBtn className="px-2 xs:px-4">
+                                                <FontAwesomeIcon icon={faCalendar} />
+                                                Reschedule
+                                            </SecondaryBtn>
+                                            <SecondaryBtn className="px-2 xs:px-4">
+                                                <FontAwesomeIcon icon={faEdit} />
+                                                Edit
+                                            </SecondaryBtn>
+                                            <SecondaryBtn className="px-2 xs:px-4">
+                                                <FontAwesomeIcon icon={faTrash} />
+                                                Delete
+                                            </SecondaryBtn>
+                                        </div>
+                                    </>
+                                }
+
                             </div>
                             {/* Buttons  */}
-                            <GrBorderBox className="p-[2px] absolute w-full bottom-0 left-0 ">
+                            <GrBorderBox className="p-[1px] absolute w-full bottom-0 left-0 ">
                                 <div className="bg-gr-purple backdrop-blur-3xl p-5 flex items-center gap-4">
                                     <SecondaryBtn filled={false} className="border-white/10 py-3 w-1/2">
                                         Regenerate Image
