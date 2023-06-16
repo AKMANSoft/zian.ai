@@ -5,7 +5,7 @@ import { PrimaryBtn, SecondaryBtn } from "./ui/buttons"
 
 
 
-type TriggerFunProps = {
+export type TriggerFunProps = {
     close: () => void;
     open: () => void;
 }

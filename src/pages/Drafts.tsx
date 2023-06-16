@@ -6,8 +6,8 @@ import { cn } from "../lib/utils";
 import { PrimaryBtnNeon, SecondaryBtn } from "../components/ui/buttons";
 import { useState, useRef } from "react";
 import { formatNumberto0 } from "@/components/calendar/defaults";
-import ViewDraftPopup from "@/components/drafts/ViewDraftPopup";
-import AddEditDraftPopup from "@/components/drafts/AddDraftPopup";
+import PostViewPopup from "@/components/drafts/PostViewPopup";
+import AddEditDraftPopup from "@/components/drafts/AddEditDraftPopup";
 import WarningPopup from "@/components/WarningPopup";
 
 
@@ -64,7 +64,7 @@ export default function DraftsPage() {
                     {/* Drafts Table  */}
                     <div className="-mt-px bg-gr-purple-light border w-full h-full border-primary rounded-10 flex flex-col overflow-hidden">
                         <div className="max-h-full max-w-full overflow-auto divide-y divide-white/10 space-y-5 lg:divide-y-0 px-5 lg:px-0">
-                            <div className="border-b-[5px] w-full min-w-max hidden lg:flex items-center border-primary bg-[#664f8e] z-[1] gap-3 sticky top-0">
+                            <div className="border-b-[5px] w-full min-w-max hidden lg:flex xl:justify-between items-center border-primary bg-[#664f8e] z-[1] gap-3 sticky top-0">
                                 <span className="block text-white py-3 min-h-[50px] text-start w-[50px] overflow-hidden lg:ps-4">#</span>
                                 <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden">Photo</span>
                                 <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden min-w-[200px]">Content</span>
@@ -163,7 +163,7 @@ type SingleTableRowProps = {
 
 function SingleTableRow({ onClick, num }: SingleTableRowProps) {
     return (
-        <div className="flex flex-wrap lg:flex-nowrap lg:gap-3 items-center lg:min-w-max" role="button" onClick={onClick}>
+        <div className="flex flex-wrap xl:justify-between lg:flex-nowrap lg:gap-3 items-center lg:min-w-max" role="button" onClick={onClick}>
             <span className="hidden lg:block text-white py-3 min-h-[50px] text-start w-[50px] overflow-hidden lg:ps-4">
                 {formatNumberto0(num)}
             </span>
@@ -199,7 +199,7 @@ function SingleTableRow({ onClick, num }: SingleTableRowProps) {
             </span>
             <span className="block text-white py-1 lg:py-3 lg:min-h-[50px] text-start w-[150px] max-w-[200px] overflow-hidden min-w-[200px]">
                 <div className="inline-flex items-center gap-2">
-                    <ViewDraftPopup />
+                    <PostViewPopup />
                     <AddEditDraftPopup variant="edit" />
                     <WarningPopup
                         heading="Are you sure you want to delete this post?"

@@ -6,8 +6,10 @@ import { PrimaryBtn, SecondaryBtn } from "../ui/buttons"
 import { cn } from "@/lib/utils"
 import GrBorderBox from "../ui/gr-border-box"
 import { InputEl, InputElWChips } from "../ui/input"
-import { SelectElNew } from "../ui/selectel"
+import SelectEl from "../ui/selectel"
 import { TextAreaEl } from "../ui/textarea"
+import { PostStatus } from "@/pages/GenerateContent"
+import ImageEl from "../ImageEl"
 
 
 
@@ -18,7 +20,15 @@ type Props = {
 }
 
 export default function AddEditDraftPopup({ variant = "add" }: Props) {
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
+    const [imageStatus, setImageStatus] = useState<PostStatus>(PostStatus.GENERATED);
+
+    const onRegenerateClicked = () => {
+        setImageStatus(PostStatus.GENERATING);
+        setTimeout(() => {
+            setImageStatus(PostStatus.GENERATED);
+        }, 4000);
+    }
 
     function closeModal() {
         setIsOpen(false)
@@ -98,26 +108,28 @@ export default function AddEditDraftPopup({ variant = "add" }: Props) {
                                                     } />
                                             </div>
                                             <div className="w-full grid grid-cols-2 gap-x-2">
-                                                <SelectElNew
-                                                    className="col-span-full w-full"
-                                                    labelNode={
-                                                        <label className="w-full flex items-center justify-between text-start flex-wrap gap-1 mb-2">
-                                                            <p className="text-white font-bold text-sm w-full md:w-auto">
-                                                                <FontAwesomeIcon icon={faClock} />
-                                                                <span className="ms-3">Date and Time (optional)</span>
-                                                            </p>
-                                                            <p className="text-sm font-normal text-white/70 font-jakarta ps-6 w-full md:w-auto">
-                                                                You can schedule it later
-                                                            </p>
-                                                        </label>
-                                                    }
-                                                    options={[
-                                                        {
-                                                            text: "Asia/Shanghai",
-                                                            value: "asia/shaghai",
-                                                            disabled: false
-                                                        },
-                                                    ]} />
+                                                <div className="col-span-full">
+                                                    <SelectEl
+                                                        className="w-full"
+                                                        labelNode={
+                                                            <label className="w-full flex items-center justify-between text-start flex-wrap gap-1 mb-2">
+                                                                <p className="text-white font-bold text-sm w-full md:w-auto">
+                                                                    <FontAwesomeIcon icon={faClock} />
+                                                                    <span className="ms-3">Date and Time (optional)</span>
+                                                                </p>
+                                                                <p className="text-sm font-normal text-white/70 font-jakarta ps-6 w-full md:w-auto">
+                                                                    You can schedule it later
+                                                                </p>
+                                                            </label>
+                                                        }
+                                                        options={[
+                                                            {
+                                                                text: "Asia/Shanghai",
+                                                                value: "asia/shaghai",
+                                                                disabled: false
+                                                            },
+                                                        ]} />
+                                                </div>
                                                 {/* <InputElDate className="w-full col-span-1" /> */}
                                                 <InputEl type="date" className="w-full col-span-1" />
                                                 <InputEl type="time" className="w-full col-span-1" />
@@ -134,11 +146,13 @@ export default function AddEditDraftPopup({ variant = "add" }: Props) {
                                                 value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." />
                                             <div className="flex items-center gap-3 md:gap-5 flex-wrap md:flex-nowrap">
                                                 <div className="w-full md:w-2/3 lg:w-1/2">
-                                                    <img src="/images/today-post.png" alt="" width={367} height={290}
+                                                    <ImageEl
+                                                        showLoading={imageStatus === PostStatus.GENERATING}
+                                                        src="/images/today-post.png" alt="" width={367} height={290}
                                                         className="w-full h-[260px] sm:h-80 md:h-[290px] rounded-20 overflow-hidden" />
                                                 </div>
                                                 <div className="flex items-center justify-start">
-                                                    <SecondaryBtn filled={false} className="border-white/10 py-3 px-5">
+                                                    <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3 px-5">
                                                         Regenerate Image
                                                     </SecondaryBtn>
                                                 </div>

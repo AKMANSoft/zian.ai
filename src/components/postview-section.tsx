@@ -6,6 +6,10 @@ import GrBorderBox from "./ui/gr-border-box";
 import { Seperator } from "./ui/seperator";
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { OverflowList } from "react-overflow-list";
+import ImageEl from "./ImageEl";
+import { useState } from "react";
+import { PostStatus } from "@/pages/GenerateContent";
+import PostViewPopup from "./drafts/PostViewPopup";
 
 
 
@@ -20,7 +24,14 @@ type PostViewSectionProps = {
 
 
 export default function PostViewSection({ className, heading, contentClassName, customContent = null, scheduled = true }: PostViewSectionProps) {
+    const [imageStatus, setImageStatus] = useState<PostStatus>(PostStatus.GENERATED);
 
+    const onRegenerateClicked = () => {
+        setImageStatus(PostStatus.GENERATING);
+        setTimeout(() => {
+            setImageStatus(PostStatus.GENERATED);
+        }, 4000);
+    }
 
     return (
         <GrBorderBox className={cn(
@@ -48,8 +59,11 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                 <p className="mt-7 font-light text-base text-th-gray font-jakarta">
                                     Lorem ipsum dolor sit amet, consect etur adip iscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia m, quis nostrud exercitation ullam co laboris nisi ut aliquip ex ea commodo consquat.
                                 </p>
-                                <img src="/images/today-post.png" loading="lazy"
-                                    className="mt-6 rounded-20 overflow-hidden object-cover object-center aspect-video w-full lg:h-[264px]" />
+                                <ImageEl
+                                    showLoading={imageStatus === PostStatus.GENERATING}
+                                    src="/images/today-post.png" loading="lazy"
+                                    containerClassName="mt-6"
+                                    className="object-cover object-center aspect-video w-full lg:h-[264px]" />
                                 {
                                     scheduled &&
                                     <>
@@ -79,7 +93,7 @@ export default function PostViewSection({ className, heading, contentClassName, 
                             {/* Buttons  */}
                             <GrBorderBox className="p-[1px] absolute w-full bottom-0 left-0 ">
                                 <div className="bg-gr-purple backdrop-blur-3xl p-5 flex items-center gap-4">
-                                    <SecondaryBtn filled={false} className="border-white/10 py-3 w-1/2">
+                                    <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3 w-1/2">
                                         Regenerate Image
                                     </SecondaryBtn>
                                     <PrimaryBtn className="py-3 w-1/2 h-full">
@@ -101,7 +115,7 @@ export default function PostViewSection({ className, heading, contentClassName, 
 type ScheduleListItemProps = {
     leading?: React.ReactNode;
     className?: string;
-    onItemClick?: ()=> void;
+    onItemClick?: () => void;
 }
 
 export function ScheduleListItem({ leading, className, onItemClick }: ScheduleListItemProps) {
@@ -140,7 +154,7 @@ export function ScheduleListItem({ leading, className, onItemClick }: ScheduleLi
                         <SmallSchedulePostEl onClick={onItemClick} text={item.text} icon={item.icon} />
                     )}
                     overflowRenderer={(items) => (
-                        <SmallSchedulePostEl onClick={onItemClick} text={`+${items.length}`} keepVisible />
+                        <SmallSchedulePostEl hasPost={false} text={`+${items.length}`} keepVisible />
                     )}
                 />
             </div>
@@ -154,25 +168,47 @@ type SmallSchedulePostElProps = {
     icon?: IconDefinition;
     keepVisible?: boolean;
     onClick?: () => void;
+    hasPost?: boolean;
 }
 
-export function SmallSchedulePostEl({ text, icon, keepVisible = false, onClick }: SmallSchedulePostElProps) {
+export function SmallSchedulePostEl({ text, icon, onClick, hasPost = true, keepVisible }: SmallSchedulePostElProps) {
     // hidden xs:inline-flex first:inline-flex last:inline-flex
     return (
-        <PrimaryBtnNeon onClick={onClick} className="text-base text-th-gray">
-            {
-                icon && <FontAwesomeIcon icon={icon} />
-            }
-            {
-                text &&
-                <span className={cn(
-                    "xl:max-w-[150px]",
-                    !keepVisible && "hidden md:inline text-ellipsis overflow-hidden"
-                )}>
-                    {text}
-                </span>
-            }
-        </PrimaryBtnNeon>
+        hasPost ?
+            <PostViewPopup
+                trigger={({ open }) => (
+                    <PrimaryBtnNeon onClick={open} className="text-base text-th-gray">
+                        {
+                            icon && <FontAwesomeIcon icon={icon} />
+                        }
+                        {
+                            text &&
+                            <span className={cn(
+                                "max-w-[200px] min-w-[20px]",
+                                !keepVisible && "overflow-hidden text-ellipsis whitespace-nowrap"
+                                // !keepVisible && "hidden md:inline text-ellipsis overflow-hidden"
+                            )}>
+                                {text}
+                            </span>
+                        }
+                    </PrimaryBtnNeon>
+                )} />
+            :
+            <PrimaryBtnNeon onClick={onClick} className="text-base text-th-gray">
+                {
+                    icon && <FontAwesomeIcon icon={icon} />
+                }
+                {
+                    text &&
+                    <span className={cn(
+                        "max-w-[200px] min-w-[20px]",
+                        !keepVisible && "overflow-hidden text-ellipsis whitespace-nowrap"
+                        // !keepVisible && "hidden md:inline text-ellipsis overflow-hidden"
+                    )}>
+                        {text}
+                    </span>
+                }
+            </PrimaryBtnNeon>
     );
 }
 

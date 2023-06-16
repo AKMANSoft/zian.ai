@@ -1,11 +1,12 @@
 import MainLayout from "../components/layout";
 import GrBorderBox from "../components/ui/gr-border-box";
 import { cn } from "../lib/utils";
-import { PrimaryWithNeon } from "../components/ui/buttons";
+import { PrimaryWithNeon, SecondaryBtn } from "../components/ui/buttons";
 import PostViewSection from "../components/postview-section";
 import { InputEl } from "../components/ui/input";
 import SparkleButton from "@/components/ui/sparkle-btn";
 import { useState } from "react";
+import LoadingSparkle from "@/components/LoadingSparkle";
 
 
 
@@ -35,10 +36,23 @@ const Topics = [
 
 
 
+export enum PostStatus {
+    GENERATING,
+    GENERATED,
+    NOT_GENERATED
+}
+
 
 export default function GenerateContentPage() {
     const [selTopic, setSelTop] = useState(0);
-    const [post, setPost] = useState(false);
+    const [postStatus, setPostStatus] = useState<PostStatus>(PostStatus.NOT_GENERATED);
+
+    const onPostGenerateClicked = () => {
+        setPostStatus(PostStatus.GENERATING);
+        setTimeout(() => {
+            setPostStatus(PostStatus.GENERATED);
+        }, 4000);
+    }
 
     return (
         <MainLayout heading="Generate Content">
@@ -79,7 +93,7 @@ export default function GenerateContentPage() {
                                     </div>
                                 </div>
                                 <div className="flex justify-end p-3 lg:p-6">
-                                    <SparkleButton onClick={() => setPost(true)} className="px-10 h-12">
+                                    <SparkleButton onClick={onPostGenerateClicked} className="px-10 h-12">
                                         Generate
                                     </SparkleButton>
                                 </div>
@@ -96,7 +110,11 @@ export default function GenerateContentPage() {
                         </h5>
                     }
                     scheduled={false}
-                    customContent={post ? null : <EmptyPostContent />}
+                    customContent={
+                        postStatus === PostStatus.GENERATED
+                            ? null
+                            : <EmptyPostContent loading={postStatus === PostStatus.GENERATING} />
+                    }
                 />
             </div>
         </MainLayout>
@@ -107,8 +125,11 @@ export default function GenerateContentPage() {
 
 
 
+type EmptyPostContentProps = {
+    loading?: boolean;
+}
 
-function EmptyPostContent() {
+function EmptyPostContent({ loading = false }: EmptyPostContentProps) {
     return (
         <div className="h-full flex flex-col">
             <h5 className="text-xl text-white font-nebula font-normal leading-8 text-shadow">
@@ -118,15 +139,33 @@ function EmptyPostContent() {
                 "rounded-20 w-full h-full bg-white/5 backdrop-blur-[10px]",
                 "flex flex-col items-center justify-center px-8 text-center mt-3"
             )}>
-                <img src="/images/file-round-with-boder.svg" loading="lazy" width={70} height={70}
-                    className="w-[70px] h-auto aspect-square"
-                    alt="" />
-                <h4 className="text-xl leading-7 font-semibold font-jakarta mt-[10px] text-white">
-                    Your content will be shown here
-                </h4>
-                <p className="text-sm font-normal font-jakarta text-white/70 mt-2">
-                    Sed consectetur imperdiet facilisis. Nulla maa.
-                </p>
+                {
+                    loading ?
+                        <div className="w-full flex flex-col items-center justify-center text-center">
+                            <LoadingSparkle spark />
+                            <h4 className="text-lg font-semibold font-jakarta mt-5 text-white">
+                                Regenerating content
+                            </h4>
+                            <p className="text-sm font-normal font-jakarta text-white/70 mt-">
+                                Sed consectetur imperdiet facilisis. Nulla maa.
+                            </p>
+                            <SecondaryBtn filled={false} className="mt-5">
+                                Cancel
+                            </SecondaryBtn>
+                        </div>
+                        :
+                        <>
+                            <img src="/images/file-round-with-boder.svg" loading="lazy" width={70} height={70}
+                                className="w-[70px] h-auto aspect-square"
+                                alt="" />
+                            <h4 className="text-xl leading-7 font-semibold font-jakarta mt-[10px] text-white">
+                                Your content will be shown here
+                            </h4>
+                            <p className="text-sm font-normal font-jakarta text-white/70 mt-2">
+                                Sed consectetur imperdiet facilisis. Nulla maa.
+                            </p>
+                        </>
+                }
             </div>
         </div>
     );

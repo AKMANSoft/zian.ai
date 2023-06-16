@@ -6,8 +6,8 @@ import { cn } from "../lib/utils";
 import { PrimaryBtnNeon, SecondaryBtn } from "../components/ui/buttons";
 import { useState, useRef } from "react";
 import { formatNumberto0 } from "@/components/calendar/defaults";
-import ViewDraftPopup from "@/components/drafts/ViewDraftPopup";
-import AddEditDraftPopup from "@/components/drafts/AddDraftPopup";
+import PostViewPopup from "@/components/drafts/PostViewPopup";
+import AddEditDraftPopup from "@/components/drafts/AddEditDraftPopup";
 import WarningPopup from "@/components/WarningPopup";
 
 
@@ -193,7 +193,7 @@ function SingleTableRow({ onClick, num }: SingleTableRowProps) {
             </td>
             <td className="py-5 px-12">
                 <div className="inline-flex items-center gap-2">
-                    <ViewDraftPopup />
+                    <PostViewPopup />
                     <AddEditDraftPopup variant="edit" />
                     <WarningPopup
                         heading="Are you sure you want to delete this post?"

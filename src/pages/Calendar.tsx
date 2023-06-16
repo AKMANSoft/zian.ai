@@ -26,8 +26,7 @@ export default function CalendarPage() {
                 <PostViewSection
                     className={cn(
                         "w-full lg:w-2/5 xl:w-1/3",
-                        // "hidden lg:block",
-                        post && window.innerWidth <= 1000 && "fixed backdrop-blur-3xl max-h-full top-0 left-0 z-[55] rounded-none h-full overflow-y-auto"
+                        (post && window.innerWidth <= 1000) ? "fixed backdrop-blur-3xl max-h-full top-0 left-0 z-[55] rounded-none h-full overflow-y-auto" : "hidden lg:block"
                     )}
                     contentClassName={cn(
                         "px-4 pt-8 pb-5",
