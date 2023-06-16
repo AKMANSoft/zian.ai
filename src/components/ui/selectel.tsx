@@ -1,6 +1,6 @@
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import React, { ReactNode } from "react"
+import React, { ReactNode, useEffect } from "react"
 import { cn } from "../../lib/utils"
 
 
@@ -114,10 +114,14 @@ import {
 
 export function SelectElNew({
     label, options, className = "",
-    labelNode, value
+    labelNode, value, onValueChange
 }: Props) {
     const [open, setOpen] = React.useState(false)
     const [selectedOpt, setSelectOpt] = React.useState<string>(value?.value ?? options[0].value)
+
+    useEffect(() => {
+        onValueChange?.(options.find((opt) => opt.value === selectedOpt) ?? options[0])
+    }, [onValueChange, options, selectedOpt])
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
