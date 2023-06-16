@@ -116,7 +116,7 @@ export default function PostViewPopup({ trigger }: Props) {
                                                         Delete
                                                     </SecondaryBtn>
                                                 </div>
-                                                <div className="flex items-center gap-4">
+                                                <div className="hidden md:flex items-center gap-4">
                                                     <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3">
                                                         Regenerate Image
                                                     </SecondaryBtn>
@@ -128,8 +128,13 @@ export default function PostViewPopup({ trigger }: Props) {
 
                                         </div>
                                     </div>
-                                    <div className="w-full min-h-[20px]">
-
+                                    <div className="w-full min-h-[20px] bg-gr-purple-dark p-4 md:p-5 flex md:hidden items-center gap-3 justify-end">
+                                        <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3 px-8 w-full md:w-auto">
+                                            Regenerate Image
+                                        </SecondaryBtn>
+                                        <PrimaryBtn className="py-3 h-full px-8 w-full md:w-auto">
+                                            Send Now
+                                        </PrimaryBtn>
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>
