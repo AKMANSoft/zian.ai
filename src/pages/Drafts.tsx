@@ -63,7 +63,7 @@ export default function DraftsPage() {
                     </div>
                     {/* Drafts Table  */}
                     <div className="-mt-px bg-gr-purple-light border w-full h-full border-primary rounded-10 flex flex-col overflow-hidden">
-                        <div className="max-h-full max-w-full overflow-auto divide-y divide-white/10 space-y-5 lg:divide-y-0 px-5 lg:px-0">
+                        <div className="max-h-full max-w-full overflow-auto divide-y bg-[#664f8e] lg:bg-transparent divide-white/10 space-y-5 lg:divide-y-0 px-5 lg:px-0">
                             <div className="border-b-[5px] w-full min-w-max hidden lg:flex xl:justify-between items-center border-primary bg-[#664f8e] z-[1] gap-3 sticky top-0">
                                 <span className="block text-white py-3 min-h-[50px] text-start w-[50px] overflow-hidden lg:ps-4">#</span>
                                 <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden">Photo</span>
