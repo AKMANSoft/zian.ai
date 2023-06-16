@@ -165,14 +165,14 @@ function InputElWChips({ label, placeholder = "", labelNode = null, id = "" }: I
       )}>
         {
           chips.map((chip) => (
-            <PrimaryBtnNeon key={chip} className="text-[15px] font-medium w-full">
+            <PrimaryBtnNeon key={chip} className="text-[15px] font-medium w-full cursor-default">
               <FontAwesomeIcon icon={faTwitter} />
               <span className="block max-w-full whitespace-nowrap overflow-hidden text-ellipsis">
                 {chip}
               </span>
-              <button onClick={() => removeChip(chip)} className="block ms-auto w-auto h-auto aspect-square text-base ">
+              <span onClick={() => removeChip(chip)} className="block z-[1] ms-auto w-auto h-full aspect-square cursor-pointer text-base ">
                 <FontAwesomeIcon icon={faCircleXmark} />
-              </button>
+              </span>
             </PrimaryBtnNeon>
           ))
         }
