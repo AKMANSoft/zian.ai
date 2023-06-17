@@ -201,7 +201,7 @@ export function SmallSchedulePostEl({ text, icon, onClick, hasPost = true, keepV
                 {
                     text &&
                     <span className={cn(
-                        "max-w-[20px] xs:max-w-[100px] md:max-w-[200px] min-w-[20px]",
+                        "max-w-[100px] md:max-w-[200px] min-w-[20px]",
                         !keepVisible && "overflow-hidden text-ellipsis whitespace-nowrap"
                         // !keepVisible && "hidden md:inline text-ellipsis overflow-hidden"
                     )}>
