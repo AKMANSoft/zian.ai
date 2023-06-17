@@ -135,7 +135,7 @@ export function ScheduleListItem({ leading, className, onItemClick }: ScheduleLi
                 <OverflowList
                     className="gap-2"
                     collapseFrom="end"
-                    minVisibleItems={0}
+                    minVisibleItems={1}
                     items={[
                         {
                             text: "@moonlanding.media",
@@ -184,7 +184,7 @@ export function SmallSchedulePostEl({ text, icon, onClick, hasPost = true, keepV
                         {
                             text &&
                             <span className={cn(
-                                "max-w-[200px] min-w-[20px]",
+                                "max-w-[100px] md:max-w-[200px] min-w-[20px]",
                                 !keepVisible && "overflow-hidden text-ellipsis whitespace-nowrap"
                                 // !keepVisible && "hidden md:inline text-ellipsis overflow-hidden"
                             )}>
@@ -201,7 +201,7 @@ export function SmallSchedulePostEl({ text, icon, onClick, hasPost = true, keepV
                 {
                     text &&
                     <span className={cn(
-                        "max-w-[200px] min-w-[20px]",
+                        "max-w-[20px] xs:max-w-[100px] md:max-w-[200px] min-w-[20px]",
                         !keepVisible && "overflow-hidden text-ellipsis whitespace-nowrap"
                         // !keepVisible && "hidden md:inline text-ellipsis overflow-hidden"
                     )}>
