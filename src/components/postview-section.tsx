@@ -10,6 +10,7 @@ import ImageEl from "./ImageEl";
 import { useState } from "react";
 import { PostStatus } from "@/pages/GenerateContent";
 import PostViewPopup from "./drafts/PostViewPopup";
+import { changeImageUrl } from '@/lib/utils'
 
 
 
@@ -61,7 +62,7 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                 </p>
                                 <ImageEl
                                     showLoading={imageStatus === PostStatus.GENERATING}
-                                    src="/images/today-post.png" loading="lazy"
+                                    src={changeImageUrl("/images/today-post.png")} loading="lazy"
                                     containerClassName="mt-6"
                                     className="object-cover object-center aspect-video w-full lg:h-[264px]" />
                                 {

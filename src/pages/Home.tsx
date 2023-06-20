@@ -5,6 +5,7 @@ import { cn } from "../lib/utils";
 import GrBorderBox from "../components/ui/gr-border-box";
 import MainLayout from "../components/layout";
 import PostViewSection, { ScheduleListItem } from "../components/postview-section";
+import { changeImageUrl } from '@/lib/utils'
 
 
 
@@ -25,7 +26,7 @@ export default function HomePage() {
                     <div className="pb-10 h-full min-h-[500px] bg-gr-purple-light opacity-90 rounded-20 relative">
                         {/* Bottom Right Corner Design  */}
                         <div className="absolute -bottom-[27px] -right-[19px] w-[150px] h-[150px]">
-                            <img src="/images/bottom-right-corner.svg" loading="lazy" className="h-full w-full" alt="" />
+                            <img src={changeImageUrl("/images/bottom-right-corner.svg")} loading="lazy" className="h-full w-full" alt="" />
                         </div>
                         {/* Main Content  */}
                         <div className="py-[38px] h-full overflow-hidden">

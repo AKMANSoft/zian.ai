@@ -10,6 +10,7 @@ import SelectEl from "../ui/selectel"
 import { TextAreaEl } from "../ui/textarea"
 import { PostStatus } from "@/pages/GenerateContent"
 import ImageEl from "../ImageEl"
+import { changeImageUrl } from '@/lib/utils'
 
 
 
@@ -148,7 +149,7 @@ export default function AddEditDraftPopup({ variant = "add" }: Props) {
                                                 <div className="w-full md:w-2/3 lg:w-1/2">
                                                     <ImageEl
                                                         showLoading={imageStatus === PostStatus.GENERATING}
-                                                        src="/images/today-post.png" alt="" width={367} height={290}
+                                                        src={changeImageUrl("/images/today-post.png")} alt="" width={367} height={290}
                                                         className="w-full h-[260px] sm:h-80 md:h-[290px] rounded-20 overflow-hidden" />
                                                 </div>
                                                 <div className="flex items-center justify-start">

@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils"
 import { PostStatus } from "@/pages/GenerateContent"
 import ImageEl from "../ImageEl"
 import { TriggerFunProps } from "../WarningPopup"
+import { changeImageUrl } from '@/lib/utils'
 
 
 
@@ -101,7 +102,7 @@ export default function PostViewPopup({ trigger }: Props) {
                                                 </p>
                                                 <ImageEl
                                                     showLoading={imageStatus === PostStatus.GENERATING}
-                                                    src="/images/today-post.png" loading="lazy"
+                                                    src={changeImageUrl("/images/today-post.png")} loading="lazy"
                                                     className="mt-6 rounded-20 overflow-hidden object-cover object-center aspect-video w-full lg:h-[490px]" />
                                             </div>
                                             {/* Buttons  */}

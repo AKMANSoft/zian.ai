@@ -7,6 +7,7 @@ import { InputEl } from "../components/ui/input";
 import SparkleButton from "@/components/ui/sparkle-btn";
 import { useState } from "react";
 import LoadingSparkle from "@/components/LoadingSparkle";
+import { changeImageUrl } from '@/lib/utils'
 
 
 
@@ -155,7 +156,7 @@ function EmptyPostContent({ loading = false }: EmptyPostContentProps) {
                         </div>
                         :
                         <>
-                            <img src="/images/file-round-with-boder.svg" loading="lazy" width={70} height={70}
+                            <img src={changeImageUrl("/images/file-round-with-boder.svg")} loading="lazy" width={70} height={70}
                                 className="w-[70px] h-auto aspect-square"
                                 alt="" />
                             <h4 className="text-xl leading-7 font-semibold font-jakarta mt-[10px] text-white">

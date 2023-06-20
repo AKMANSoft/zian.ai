@@ -7,6 +7,7 @@ import { cn } from "../lib/utils";
 import { GrSeperator } from "./ui/seperator";
 import { useLocation } from "react-router-dom";
 import UserDropdownMenu from "./dropmenus/UserDropMenu";
+import { changeImageUrl } from '@/lib/utils'
 
 
 
@@ -26,7 +27,7 @@ export default function SideBar({ expanded = false }: Props) {
             expanded && "left-0"
         )}>
             <div className="w-full">
-                <img src="/images/avatar.png" width={120} height={120} loading="lazy"
+                <img src={changeImageUrl("/images/avatar.png")} width={120} height={120} loading="lazy"
                     className={cn(
                         "w-[120px] h-auto aspect-square rounded-full overflow-hidden mx-auto",
                         "hidden xl:block"

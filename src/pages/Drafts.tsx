@@ -9,6 +9,7 @@ import { formatNumberto0 } from "@/components/calendar/defaults";
 import PostViewPopup from "@/components/drafts/PostViewPopup";
 import AddEditDraftPopup from "@/components/drafts/AddEditDraftPopup";
 import WarningPopup from "@/components/WarningPopup";
+import { changeImageUrl } from '@/lib/utils'
 
 
 
@@ -168,7 +169,7 @@ function SingleTableRow({ onClick, num }: SingleTableRowProps) {
                 {formatNumberto0(num)}
             </span>
             <span className="block text-white py-3 lg:min-h-[50px] text-start w-1/3 lg:w-[150px] overflow-hidden">
-                <img src="/images/table-img.png" width={80} height={80} loading="lazy" className="w-full h-full lg:w-auto min-w-[80px] lg:h-[80px] aspect-square" alt="" />
+                <img src={changeImageUrl("/images/table-img.png")} width={80} height={80} loading="lazy" className="w-full h-full lg:w-auto min-w-[80px] lg:h-[80px] aspect-square" alt="" />
             </span>
             <span className="block text-white py-3 lg:min-h-[50px] text-start w-2/3 lg:w-[150px] overflow-hidden min-w-[200px] px-2">
                 <p className="w-full line-clamp-4">
