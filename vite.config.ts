@@ -9,6 +9,20 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
   if (command === 'serve') {
     return {
       plugins: [react()],
+      // plugins: [react({ fastRefresh: false })],
+      worker: {
+        plugins: [react()],
+      },
+      // base: '/static/',
+      // server: {
+      //   host: 'localhost',
+      //   port: 3000,
+      //   open: false,
+      //   watch: {
+      //     usePolling: true,
+      //     disableGlobbing: false,
+      //   },
+      // },
       build: {
         outDir: "build",
       },
@@ -19,17 +33,24 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
           "react-dom/test-utils": "preact/test-utils",
           "react-dom": "preact/compat",
           "react/jsx-runtime": "preact/jsx-runtime"
-        }
+        },
       }
     }
   // production
   } else {
     return {
       plugins: [react()],
+      // plugins: [react({ fastRefresh: false })],
+      base: '/static/',
       build: {
         outDir: "build",
+        // manifest: true,
+        // rollupOptions: {
+        //   input: {
+        //     main: 'src/App.tsx',
+        //   },
+        // },
       },
-      base: '/static/',
       resolve: {
         alias: {
           '@': path.resolve(__dirname, './src'),
