@@ -6,15 +6,55 @@ import GrBorderBox from "../components/ui/gr-border-box";
 import MainLayout from "../components/layout";
 import PostViewSection, { ScheduleListItem } from "../components/postview-section";
 import { changeImageUrl } from '@/lib/utils'
+import { apiClient } from '@/App'
+import { useEffect, useRef, useState  } from 'react'
+
+import {
+  useLoaderData,
+} from 'react-router-dom'
+
+import {
+  Configuration,
+  UsersApi,
+} from '@/api/index'
 
 
+export async function action() {
+  let result = await apiClient.usersList().then((result) => {
+    const lastResult = result.results;
+    console.log(result.results);
+    return lastResult;
+  });
 
+  if (result) {
+    return result[0];
+  } else {
+    return null;
+  }
+}
 
 export default function HomePage() {
+  const user: any = useLoaderData();
+  const usernameRef = useRef('');
+  const [username, setUsername] = useState('');
+  // console.log(`user: ${user.username}`);
+
+  // useEffect(() => {
+  //   apiClient.usersList().then((result) => {
+  //     const lastResult = result.results;
+  //     console.log(result.results);
+  //     if (lastResult) {
+  //       // usernameRef.current = lastResult[0].username;
+  //       // console.log(`usernameRef.current: ${usernameRef.current}`)
+  //       //
+  //       setUsername(lastResult[0].username);
+  //     }
+  //   });
+  // }, []);
     return (
-        <MainLayout heading="Welcome, Mike">
+        <MainLayout heading={`Welcome,  ${user.username}` }>
             <h2 className="text-[32px] leading-9 text-white font-nebula font-normal mb-4 text-center lg:text-start xl:hidden">
-                Welcome, Mike
+              {`Welcome, ${user.username}`}
             </h2>
             <div className="flex flex-col lg:flex-row gap-5 pb-5 min-h-[calc(100vh_-_100px)]">
                 <PostViewSection className="w-full h-full lg:w-2/5" heading={
