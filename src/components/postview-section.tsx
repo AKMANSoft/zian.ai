@@ -12,6 +12,10 @@ import { PostStatus } from "@/pages/GenerateContent";
 import PostViewPopup from "./drafts/PostViewPopup";
 import { changeImageUrl } from '@/lib/utils'
 
+import {
+  useLoaderData,
+} from 'react-router-dom'
+
 
 
 
@@ -26,6 +30,9 @@ type PostViewSectionProps = {
 
 export default function PostViewSection({ className, heading, contentClassName, customContent = null, scheduled = true }: PostViewSectionProps) {
     const [imageStatus, setImageStatus] = useState<PostStatus>(PostStatus.GENERATED);
+
+    const pageData: any = useLoaderData();
+    console.log({pageData});
 
     const onRegenerateClicked = () => {
         setImageStatus(PostStatus.GENERATING);
@@ -58,11 +65,11 @@ export default function PostViewSection({ className, heading, contentClassName, 
                             <div className="">
                                 {heading}
                                 <p className="mt-7 font-light text-base text-th-gray font-jakarta">
-                                    Lorem ipsum dolor sit amet, consect etur adip iscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia m, quis nostrud exercitation ullam co laboris nisi ut aliquip ex ea commodo consquat.
+                                  { pageData?.page === 'home' ? pageData?.latestContents[0]?.text || 'No any content' : '' }
                                 </p>
                                 <ImageEl
                                     showLoading={imageStatus === PostStatus.GENERATING}
-                                    src={changeImageUrl("/images/today-post.png")} loading="lazy"
+                                    src={ pageData?.page === 'home' ? pageData?.latestContents[0]?.image || changeImageUrl("/images/today-post.png") : '' } loading="lazy"
                                     containerClassName="mt-6"
                                     className="object-cover object-center aspect-video w-full lg:h-[264px]" />
                                 {
@@ -70,7 +77,8 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                     <>
                                         <p className="my-3 text-xs text-white font-bold font-jakarta">
                                             <span>Date: </span>
-                                            <span className="font-medium">April 2022, Sunday 2:00PM</span>
+                                            <span className="font-medium">{ pageData?.page === 'home' ? pageData?.latestContents[0]?.createdTime?.toLocaleString() || '' : '' }</span>
+                                          
                                         </p>
                                         <Seperator />
                                         <div className="mt-[14px] flex items-center gap-3">

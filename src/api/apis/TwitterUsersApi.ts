@@ -30,7 +30,7 @@ export interface TwitterUsersCreateRequest {
 }
 
 export interface TwitterUsersDeleteRequest {
-    username: string;
+    id: string;
 }
 
 export interface TwitterUsersListRequest {
@@ -38,16 +38,16 @@ export interface TwitterUsersListRequest {
 }
 
 export interface TwitterUsersPartialUpdateRequest {
-    username: string;
+    id: string;
     data: TwitterAccount;
 }
 
 export interface TwitterUsersReadRequest {
-    username: string;
+    id: string;
 }
 
 export interface TwitterUsersUpdateRequest {
-    username: string;
+    id: string;
     data: TwitterAccount;
 }
 
@@ -96,8 +96,8 @@ export class TwitterUsersApi extends runtime.BaseAPI {
      * API endpoint that allows twitter users to be viewed or edited.
      */
     async twitterUsersDeleteRaw(requestParameters: TwitterUsersDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.username === null || requestParameters.username === undefined) {
-            throw new runtime.RequiredError('username','Required parameter requestParameters.username was null or undefined when calling twitterUsersDelete.');
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling twitterUsersDelete.');
         }
 
         const queryParameters: any = {};
@@ -108,7 +108,7 @@ export class TwitterUsersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/twitter-users/{username}/`.replace(`{${"username"}}`, encodeURIComponent(String(requestParameters.username))),
+            path: `/twitter-users/{id}/`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -161,8 +161,8 @@ export class TwitterUsersApi extends runtime.BaseAPI {
      * API endpoint that allows twitter users to be viewed or edited.
      */
     async twitterUsersPartialUpdateRaw(requestParameters: TwitterUsersPartialUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TwitterAccount>> {
-        if (requestParameters.username === null || requestParameters.username === undefined) {
-            throw new runtime.RequiredError('username','Required parameter requestParameters.username was null or undefined when calling twitterUsersPartialUpdate.');
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling twitterUsersPartialUpdate.');
         }
 
         if (requestParameters.data === null || requestParameters.data === undefined) {
@@ -179,7 +179,7 @@ export class TwitterUsersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/twitter-users/{username}/`.replace(`{${"username"}}`, encodeURIComponent(String(requestParameters.username))),
+            path: `/twitter-users/{id}/`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PATCH',
             headers: headerParameters,
             query: queryParameters,
@@ -201,8 +201,8 @@ export class TwitterUsersApi extends runtime.BaseAPI {
      * API endpoint that allows twitter users to be viewed or edited.
      */
     async twitterUsersReadRaw(requestParameters: TwitterUsersReadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TwitterAccount>> {
-        if (requestParameters.username === null || requestParameters.username === undefined) {
-            throw new runtime.RequiredError('username','Required parameter requestParameters.username was null or undefined when calling twitterUsersRead.');
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling twitterUsersRead.');
         }
 
         const queryParameters: any = {};
@@ -213,7 +213,7 @@ export class TwitterUsersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/twitter-users/{username}/`.replace(`{${"username"}}`, encodeURIComponent(String(requestParameters.username))),
+            path: `/twitter-users/{id}/`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -234,8 +234,8 @@ export class TwitterUsersApi extends runtime.BaseAPI {
      * API endpoint that allows twitter users to be viewed or edited.
      */
     async twitterUsersUpdateRaw(requestParameters: TwitterUsersUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TwitterAccount>> {
-        if (requestParameters.username === null || requestParameters.username === undefined) {
-            throw new runtime.RequiredError('username','Required parameter requestParameters.username was null or undefined when calling twitterUsersUpdate.');
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling twitterUsersUpdate.');
         }
 
         if (requestParameters.data === null || requestParameters.data === undefined) {
@@ -252,7 +252,7 @@ export class TwitterUsersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/twitter-users/{username}/`.replace(`{${"username"}}`, encodeURIComponent(String(requestParameters.username))),
+            path: `/twitter-users/{id}/`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

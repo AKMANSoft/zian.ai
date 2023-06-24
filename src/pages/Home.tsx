@@ -6,7 +6,7 @@ import GrBorderBox from "../components/ui/gr-border-box";
 import MainLayout from "../components/layout";
 import PostViewSection, { ScheduleListItem } from "../components/postview-section";
 import { changeImageUrl } from '@/lib/utils'
-import { apiClient } from '@/App'
+import { userApiClient } from '@/App'
 import { useEffect, useRef, useState  } from 'react'
 
 import {
@@ -20,7 +20,7 @@ import {
 
 
 export async function action() {
-  let result = await apiClient.usersList().then((result) => {
+  let result = await userApiClient.usersList().then((result) => {
     const lastResult = result.results;
     console.log(result.results);
     return lastResult;
@@ -34,9 +34,9 @@ export async function action() {
 }
 
 export default function HomePage() {
-  const user: any = useLoaderData();
-  const usernameRef = useRef('');
-  const [username, setUsername] = useState('');
+  const homeData: any = useLoaderData();
+  // const usernameRef = useRef('');
+  // const [username, setUsername] = useState('');
   // console.log(`user: ${user.username}`);
 
   // useEffect(() => {
@@ -52,14 +52,15 @@ export default function HomePage() {
   //   });
   // }, []);
     return (
-        <MainLayout heading={`Welcome,  ${user.username}` }>
+        <MainLayout heading={`Welcome,  ${homeData.user?.username}` }>
             <h2 className="text-[32px] leading-9 text-white font-nebula font-normal mb-4 text-center lg:text-start xl:hidden">
-              {`Welcome, ${user.username}`}
+              {`Welcome, ${homeData.user?.username}`}
             </h2>
             <div className="flex flex-col lg:flex-row gap-5 pb-5 min-h-[calc(100vh_-_100px)]">
                 <PostViewSection className="w-full h-full lg:w-2/5" heading={
                     <h5 className="text-xl text-white font-nebula font-normal text-shadow">
-                        Today&apos;s Post
+                      {/*Today&apos;s Post*/}
+                      Latest Post
                     </h5>
                 } />
                 <GrBorderBox className="w-full p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)]" type="lg">

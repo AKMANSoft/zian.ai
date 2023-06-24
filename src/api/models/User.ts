@@ -37,12 +37,6 @@ export interface User {
      * @memberof User
      */
     username: string;
-    /**
-     * 
-     * @type {Set<string>}
-     * @memberof User
-     */
-    readonly twitteraccounts?: Set<string>;
 }
 
 /**
@@ -68,7 +62,6 @@ export function UserFromJSONTyped(json: any, ignoreDiscriminator: boolean): User
         'url': !exists(json, 'url') ? undefined : json['url'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'username': json['username'],
-        'twitteraccounts': !exists(json, 'twitteraccounts') ? undefined : json['twitteraccounts'],
     };
 }
 
