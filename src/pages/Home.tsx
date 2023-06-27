@@ -164,6 +164,8 @@ function ScheduleList({ scheduledContents }: ScheduleListProps) {
   console.log(m);
 
   let dateTimeScheduleList = [];
+  let first = true;
+  let classNames;
   for(let [dk, dv] of m) {
     let hsScheduleList = [];
     for(let [tk, tv] of dv) {
@@ -179,9 +181,17 @@ function ScheduleList({ scheduledContents }: ScheduleListProps) {
         <HScheduleListItem items={items} time={tk}/>
       );
     }
+
+    if (first) {
+      classNames = "md:px-[30px]";
+      first = false;
+    } else {
+      classNames = "mt-5 md:px-[30px]";
+    }
+
     if (dateTimeScheduleList.length < m.size - 1) {
       dateTimeScheduleList.push(
-        <div className="md:px-[30px]">
+        <div className={classNames}>
             <h6 className="px-5 md:px-0 text-sm font-normal text-white">{dk}</h6>
             <div className="mt-4 flex flex-col gap-1 md:gap-3">
                 {hsScheduleList}
@@ -191,7 +201,7 @@ function ScheduleList({ scheduledContents }: ScheduleListProps) {
       );
     } else {
       dateTimeScheduleList.push(
-        <div className="md:px-[30px]">
+        <div className={classNames}>
             <h6 className="px-5 md:px-0 text-sm font-normal text-white">{dk}</h6>
             <div className="mt-4 flex flex-col gap-1 md:gap-3">
                 {hsScheduleList}
