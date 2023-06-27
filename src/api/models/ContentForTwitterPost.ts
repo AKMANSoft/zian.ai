@@ -63,6 +63,12 @@ export interface ContentForTwitterPost {
     readonly image?: string;
     /**
      * 
+     * @type {string}
+     * @memberof ContentForTwitterPost
+     */
+    readonly twitterUsername?: string;
+    /**
+     * 
      * @type {Date}
      * @memberof ContentForTwitterPost
      */
@@ -103,6 +109,7 @@ export function ContentForTwitterPostFromJSONTyped(json: any, ignoreDiscriminato
         'project': !exists(json, 'project') ? undefined : json['project'],
         'topic': !exists(json, 'topic') ? undefined : json['topic'],
         'image': !exists(json, 'image') ? undefined : json['image'],
+        'twitterUsername': !exists(json, 'twitter_username') ? undefined : json['twitter_username'],
         'createdTime': !exists(json, 'created_time') ? undefined : (new Date(json['created_time'])),
         'modifiedTime': !exists(json, 'modified_time') ? undefined : (json['modified_time'] === null ? null : new Date(json['modified_time'])),
     };

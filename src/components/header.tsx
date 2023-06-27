@@ -6,6 +6,8 @@ import GrBorderBox from "./ui/gr-border-box";
 import UserDropdownMenu from "./dropmenus/UserDropMenu";
 import NotificationsDropMenu from "./dropmenus/NotificationsDropMenu";
 import { changeImageUrl } from '@/lib/utils'
+import { useContext } from 'react';
+import { UserContext } from '../pages/Home'
 
 
 
@@ -49,10 +51,16 @@ type UserDropElProps = {
     dropdownOpen?: boolean;
     className?: string;
     toggleClassName?: string;
+    user?: any;
 }
 
-export function UserHeaderComponent({ className, toggleClassName, dropdownOpen }: UserDropElProps) {
+export function UserHeaderComponent({ className, toggleClassName, dropdownOpen, user }: UserDropElProps) {
     // const [active, setActive] = useState(dropdownOpen);
+  const user1: any = useContext(UserContext);
+
+  console.log('UserHeaderComponent');
+  console.log({user});
+  console.log({user1});
 
     return (
         <GrBorderBox className={cn(
@@ -79,7 +87,8 @@ export function UserHeaderComponent({ className, toggleClassName, dropdownOpen }
                         'font-jakarta inline md:hidden lg:inline',
                         'text-base md:text-sm font-bold',
                     )}>
-                        Mike Males
+                      {/*Mike Males*/}
+                      <span className="capitalize">{user?.username || user1?.username}</span>
                     </span>
                     <span className={cn(
                         "inline-block md:hidden text-sm ps-1 absolute top-1/2 -translate-y-1/2 right-5 transition-all",

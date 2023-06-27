@@ -16,10 +16,11 @@ import { changeImageUrl } from '@/lib/utils'
 
 type Props = {
     trigger?: ({ close, open }: TriggerFunProps) => ReactNode
+    content?: any
 }
 
 
-export default function PostViewPopup({ trigger }: Props) {
+export default function PostViewPopup({ trigger, content }: Props) {
     const [isOpen, setIsOpen] = useState(false);
     const [imageStatus, setImageStatus] = useState<PostStatus>(PostStatus.GENERATED);
 
@@ -94,16 +95,18 @@ export default function PostViewPopup({ trigger }: Props) {
                                             <div className="">
                                                 {/* {heading} */}
                                                 <div className="flex items-center gap-3">
-                                                    <SmallSchedulePostEl text="@moonlanding.media" icon={faTwitter} />
-                                                    <SmallSchedulePostEl text="@moonlanding.media" icon={faFacebook} />
+                                                  <SmallSchedulePostEl text={content?.text || ""} hasPost={false} icon={faTwitter} />
                                                 </div>
                                                 <p className="mt-4 font-light text-sm text-th-gray font-jakarta">
-                                                    Lorem ipsum dolor sit amet, consect etur adip iscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia m, quis nostrud exercitation ullam co laboris nisi ut aliquip ex ea commodo consquat.
+                                                  { content?.text || "Lorem ipsum dolor sit amet, consect etur adip iscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia m, quis nostrud exercitation ullam co laboris nisi ut aliquip ex ea commodo consquat." }
                                                 </p>
-                                                <ImageEl
-                                                    showLoading={imageStatus === PostStatus.GENERATING}
-                                                    src={changeImageUrl("/images/today-post.png")} loading="lazy"
-                                                    className="mt-6 rounded-20 overflow-hidden object-cover object-center aspect-video w-full lg:h-[490px]" />
+                                                {
+                                                  content?.image &&
+                                                    <ImageEl
+                                                        showLoading={imageStatus === PostStatus.GENERATING}
+                                                        src={content?.image || changeImageUrl("/images/today-post.png")} loading="lazy"
+                                                        className="mt-6 rounded-20 overflow-hidden object-cover object-center aspect-video w-full lg:h-[490px]" />
+                                                }
                                             </div>
                                             {/* Buttons  */}
                                             <div className="flex items-center justify-between">
@@ -119,7 +122,7 @@ export default function PostViewPopup({ trigger }: Props) {
                                                 </div>
                                                 <div className="hidden md:flex items-center gap-4">
                                                     <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3">
-                                                        Regenerate Image
+                                                      {content?.image ? 'Regenerate Image' : 'Generate Image'}
                                                     </SecondaryBtn>
                                                     <PrimaryBtn className="py-3 h-full">
                                                         Send Now

@@ -10,7 +10,7 @@ import ImageEl from "./ImageEl";
 import { useState } from "react";
 import { PostStatus } from "@/pages/GenerateContent";
 import PostViewPopup from "./drafts/PostViewPopup";
-import { changeImageUrl } from '@/lib/utils'
+import { changeImageUrl, sortScheduledContents } from '@/lib/utils'
 
 import {
   useLoaderData,
@@ -32,7 +32,7 @@ export default function PostViewSection({ className, heading, contentClassName, 
     const [imageStatus, setImageStatus] = useState<PostStatus>(PostStatus.GENERATED);
 
     const pageData: any = useLoaderData();
-    console.log({pageData});
+    // console.log({pageData});
 
     const onRegenerateClicked = () => {
         setImageStatus(PostStatus.GENERATING);
@@ -67,11 +67,15 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                 <p className="mt-7 font-light text-base text-th-gray font-jakarta">
                                   { pageData?.page === 'home' ? pageData?.latestContents[0]?.text || 'No any content' : '' }
                                 </p>
-                                <ImageEl
-                                    showLoading={imageStatus === PostStatus.GENERATING}
-                                    src={ pageData?.page === 'home' ? pageData?.latestContents[0]?.image || changeImageUrl("/images/today-post.png") : '' } loading="lazy"
-                                    containerClassName="mt-6"
-                                    className="object-cover object-center aspect-video w-full lg:h-[264px]" />
+                                {pageData?.page === 'home' && pageData?.latestContents[0]?.image ?
+                                  <ImageEl
+                                      showLoading={imageStatus === PostStatus.GENERATING}
+                                      src={pageData?.latestContents[0]?.image} loading="lazy"
+                                      containerClassName="mt-6"
+                                      className="object-cover object-center aspect-video w-full lg:h-[264px]" />
+                                  :
+                                  ''
+                                }
                                 {
                                     scheduled &&
                                     <>
@@ -125,9 +129,13 @@ type ScheduleListItemProps = {
     leading?: React.ReactNode;
     className?: string;
     onItemClick?: () => void;
+    items?: Array<any>;
 }
 
-export function ScheduleListItem({ leading, className, onItemClick }: ScheduleListItemProps) {
+export function ScheduleListItem({ leading, className, onItemClick, items }: ScheduleListItemProps) {
+    // const pageData: any = useLoaderData();
+    // console.log({pageData});
+
     return (
         <div className={cn(
             "w-full bg-[#f2e4f11a] px-3 py-[10px] md:rounded-10 gap-[10px]",
@@ -145,7 +153,7 @@ export function ScheduleListItem({ leading, className, onItemClick }: ScheduleLi
                     className="gap-2"
                     collapseFrom="end"
                     minVisibleItems={1}
-                    items={[
+                    items={items || [
                         {
                             text: "@moonlanding.media",
                             icon: faTwitter
@@ -160,7 +168,7 @@ export function ScheduleListItem({ leading, className, onItemClick }: ScheduleLi
                         },
                     ]}
                     itemRenderer={(item) => (
-                        <SmallSchedulePostEl onClick={onItemClick} text={item.text} icon={item.icon} />
+                        <SmallSchedulePostEl onClick={onItemClick} text={item.text} icon={item.icon} content={item.content} />
                     )}
                     overflowRenderer={(items) => (
                         <SmallSchedulePostEl hasPost={false} text={`+${items.length}`} keepVisible />
@@ -178,9 +186,10 @@ type SmallSchedulePostElProps = {
     keepVisible?: boolean;
     onClick?: () => void;
     hasPost?: boolean;
+    content?: any;
 }
 
-export function SmallSchedulePostEl({ text, icon, onClick, hasPost = true, keepVisible }: SmallSchedulePostElProps) {
+export function SmallSchedulePostEl({ text, icon, onClick, hasPost = true, keepVisible, content }: SmallSchedulePostElProps) {
     // hidden xs:inline-flex first:inline-flex last:inline-flex
     return (
         hasPost ?
@@ -201,7 +210,9 @@ export function SmallSchedulePostEl({ text, icon, onClick, hasPost = true, keepV
                             </span>
                         }
                     </PrimaryBtnNeon>
-                )} />
+                )}
+              content={content}
+            />
             :
             <PrimaryBtnNeon onClick={onClick} className="text-base text-th-gray">
                 {

@@ -10,7 +10,7 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from 'react-router-dom'
-import { changeImageUrl } from '@/lib/utils'
+import { changeImageUrl, sortScheduledContents } from '@/lib/utils'
 import {
   Configuration,
   UsersApi,
@@ -68,6 +68,9 @@ const router = createBrowserRouter([
         return r.results;
       });
       homeData.latestContents = latestContents;
+
+      const r = sortScheduledContents(latestContents);
+      console.log(r);
 
       homeData.page = 'home';
 

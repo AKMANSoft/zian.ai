@@ -5,7 +5,8 @@ import { cn } from "../lib/utils";
 import GrBorderBox from "../components/ui/gr-border-box";
 import MainLayout from "../components/layout";
 import PostViewSection, { ScheduleListItem } from "../components/postview-section";
-import { changeImageUrl } from '@/lib/utils'
+import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { changeImageUrl, sortScheduledContents } from '@/lib/utils'
 import { userApiClient } from '@/App'
 import { useEffect, useRef, useState  } from 'react'
 
@@ -17,6 +18,7 @@ import {
   Configuration,
   UsersApi,
 } from '@/api/index'
+import { createContext, useContext } from 'react';
 
 
 export async function action() {
@@ -32,6 +34,8 @@ export async function action() {
     return null;
   }
 }
+
+export const UserContext = createContext(null);
 
 export default function HomePage() {
   const homeData: any = useLoaderData();
@@ -51,8 +55,13 @@ export default function HomePage() {
   //     }
   //   });
   // }, []);
+  console.log('home page');
+  const user = homeData.user;
+  console.log({user});
+
     return (
-        <MainLayout heading={`Welcome,  ${homeData.user?.username}` }>
+        <UserContext.Provider value={user}>
+        <MainLayout heading={`Welcome,  ${homeData.user?.username}` } user={user}>
             <h2 className="text-[32px] leading-9 text-white font-nebula font-normal mb-4 text-center lg:text-start xl:hidden">
               {`Welcome, ${homeData.user?.username}`}
             </h2>
@@ -81,46 +90,54 @@ export default function HomePage() {
                                 </a>
                             </div>
                             <div className="max-h-full overflow-y-auto">
-                                <div className="md:px-[30px]">
-                                    <h6 className="px-5 md:px-0 text-sm font-normal text-white">Today</h6>
-                                    <div className="mt-4 flex flex-col gap-1 md:gap-3">
-                                        <HScheduleListItem active />
-                                        <HScheduleListItem />
-                                        <HScheduleListItem />
-                                        <HScheduleListItem />
-                                        <HScheduleListItem />
-                                        <HScheduleListItem />
-                                        <HScheduleListItem />
-                                        <HScheduleListItem />
-                                        <HScheduleListItem />
-                                        <VerticalSeperator className="h-[25px] mt-[10px]" />
-                                    </div>
-                                </div>
-                                <div className="mt-5 md:px-[30px]">
-                                    <h6 className="px-5 md:px-0 text-sm font-normal text-white">Yesterday</h6>
-                                    <div className="mt-4 flex flex-col gap-1 md:gap-3">
-                                        <HScheduleListItem />
-                                        <HScheduleListItem />
-                                        <HScheduleListItem />
-                                        <HScheduleListItem />
-                                        <HScheduleListItem />
-                                    </div>
-                                </div>
+                                {
+                                  homeData?.latestContents ? <ScheduleList scheduledContents={homeData?.latestContents} /> :
+                                    <>
+                                      <div className="md:px-[30px]">
+                                          <h6 className="px-5 md:px-0 text-sm font-normal text-white">Today</h6>
+                                          <div className="mt-4 flex flex-col gap-1 md:gap-3">
+                                              <HScheduleListItem active />
+                                              <HScheduleListItem />
+                                              <HScheduleListItem />
+                                              <HScheduleListItem />
+                                              <HScheduleListItem />
+                                              <HScheduleListItem />
+                                              <HScheduleListItem />
+                                              <HScheduleListItem />
+                                              <HScheduleListItem />
+                                              <VerticalSeperator className="h-[25px] mt-[10px]" />
+                                          </div>
+                                      </div>
+                                      <div className="mt-5 md:px-[30px]">
+                                          <h6 className="px-5 md:px-0 text-sm font-normal text-white">Yesterday</h6>
+                                          <div className="mt-4 flex flex-col gap-1 md:gap-3">
+                                              <HScheduleListItem />
+                                              <HScheduleListItem />
+                                              <HScheduleListItem />
+                                              <HScheduleListItem />
+                                              <HScheduleListItem />
+                                          </div>
+                                      </div>
+                                  </>
+                              }
                             </div>
                         </div>
                     </div>
                 </GrBorderBox>
             </div>
         </MainLayout>
+        </UserContext.Provider>
     );
 }
 
 
 type HScheduleListItemProps = {
-    active?: boolean
+    active?: boolean;
+    time?: string;
+    items?: Array<any>;
 }
 
-function HScheduleListItem({ active }: HScheduleListItemProps) {
+function HScheduleListItem({ active, time, items }: HScheduleListItemProps) {
     return (
         <ScheduleListItem
             leading={
@@ -130,9 +147,63 @@ function HScheduleListItem({ active }: HScheduleListItemProps) {
                             <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z" />
                         </svg>
                     </span>
-                    9:30 AM
+                    {time || '9:30 AM'}
                 </p>
             }
+          items={items}
         />
     )
+}
+
+type ScheduleListProps = {
+    scheduledContents: any;
+}
+
+function ScheduleList({ scheduledContents }: ScheduleListProps) {
+  const m = sortScheduledContents(scheduledContents);
+  console.log(m);
+
+  let dateTimeScheduleList = [];
+  for(let [dk, dv] of m) {
+    let hsScheduleList = [];
+    for(let [tk, tv] of dv) {
+      let items = [];
+      for (let content of tv) {
+        items.push({
+          text: content.text,
+          icon: faTwitter,
+          content: content,
+        });
+      }
+      hsScheduleList.push(
+        <HScheduleListItem items={items} time={tk}/>
+      );
+    }
+    if (dateTimeScheduleList.length < m.size - 1) {
+      dateTimeScheduleList.push(
+        <div className="md:px-[30px]">
+            <h6 className="px-5 md:px-0 text-sm font-normal text-white">{dk}</h6>
+            <div className="mt-4 flex flex-col gap-1 md:gap-3">
+                {hsScheduleList}
+                <VerticalSeperator className="h-[25px] mt-[10px]" />
+            </div>
+        </div>
+      );
+    } else {
+      dateTimeScheduleList.push(
+        <div className="md:px-[30px]">
+            <h6 className="px-5 md:px-0 text-sm font-normal text-white">{dk}</h6>
+            <div className="mt-4 flex flex-col gap-1 md:gap-3">
+                {hsScheduleList}
+            </div>
+        </div>
+      );
+    }
+  }
+
+  return (
+    <>
+      {dateTimeScheduleList}
+    </>
+  )
 }

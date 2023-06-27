@@ -8,11 +8,14 @@ import { cn } from '@/lib/utils'
 
 type Props = {
   className?: string;
+  user?: any;
 }
 
 
 
-export default function UserDropdownMenu({ className }: Props) {
+export default function UserDropdownMenu({ className, user }: Props) {
+  console.log('UserDropdownMenu');
+  console.log({user});
   return (
     <Menu as="div" className="relative block text-left z-50 h-auto">
       {({ open }) => (
@@ -22,7 +25,9 @@ export default function UserDropdownMenu({ className }: Props) {
               <UserHeaderComponent dropdownOpen={open} className={cn(
                 "w-full",
                 className
-              )} />
+              )}
+              user={user}
+              />
             </Menu.Button>
           </div>
           <Transition
