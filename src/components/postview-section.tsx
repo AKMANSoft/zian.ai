@@ -7,7 +7,7 @@ import { Seperator } from "./ui/seperator";
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { OverflowList } from "react-overflow-list";
 import ImageEl from "./ImageEl";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PostStatus } from "@/pages/GenerateContent";
 import PostViewPopup from "./drafts/PostViewPopup";
 import { changeImageUrl, sortScheduledContents } from '@/lib/utils'
@@ -16,6 +16,11 @@ import {
   useLoaderData,
 } from 'react-router-dom'
 
+import {
+  userApiClient,
+  twitterUserApiClient,
+  contentApiClient,
+} from '@/api.env'
 
 
 
@@ -30,6 +35,7 @@ type PostViewSectionProps = {
 
 export default function PostViewSection({ className, heading, contentClassName, customContent = null, scheduled = true }: PostViewSectionProps) {
     const [imageStatus, setImageStatus] = useState<PostStatus>(PostStatus.GENERATED);
+    const [content, setContent] = useState<any>(null);
 
     const pageData: any = useLoaderData();
     // console.log({pageData});
@@ -39,6 +45,25 @@ export default function PostViewSection({ className, heading, contentClassName, 
         setTimeout(() => {
             setImageStatus(PostStatus.GENERATED);
         }, 4000);
+    }
+
+    function onDeleteContent(): void {
+      if (content) {
+        console.log(`Delete content: ${content.id}`);
+        contentApiClient.contentsDelete({id: content.id}).then((r) => {
+          // console.log(r);
+          contentApiClient.contentsScheduled().then((r) => {
+            // console.log(r.results);
+            if (r.results) {
+              setContent(r.results[0]);
+            } else {
+              setContent(null);
+            }
+            window.location.reload();
+            // return r.results;
+          });
+        });
+      }
     }
 
     return (
@@ -66,6 +91,7 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                 {heading}
                                 <p className="mt-7 font-light text-base text-th-gray font-jakarta">
                                   { pageData?.page === 'home' ? pageData?.latestContents[0]?.text || 'No any content' : '' }
+                                  { pageData?.page === 'home' && pageData?.latestContents[0]?.text && setContent(pageData?.latestContents[0]) }
                                 </p>
                                 {pageData?.page === 'home' && pageData?.latestContents[0]?.image ?
                                   <ImageEl
@@ -94,7 +120,7 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                                 <FontAwesomeIcon icon={faEdit} />
                                                 Edit
                                             </SecondaryBtn>
-                                            <SecondaryBtn className="px-2 xs:px-4">
+                                            <SecondaryBtn className="px-2 xs:px-4" onClick={onDeleteContent}>
                                                 <FontAwesomeIcon icon={faTrash} />
                                                 Delete
                                             </SecondaryBtn>

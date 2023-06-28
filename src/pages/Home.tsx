@@ -7,7 +7,7 @@ import MainLayout from "../components/layout";
 import PostViewSection, { ScheduleListItem } from "../components/postview-section";
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { changeImageUrl, sortScheduledContents } from '@/lib/utils'
-import { userApiClient } from '@/App'
+import { userApiClient } from '@/api.env'
 import { useEffect, useRef, useState  } from 'react'
 
 import {

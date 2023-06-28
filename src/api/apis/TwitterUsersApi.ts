@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Snippets API
- * Test description
+ * Content Creator and Scheduler API
+ * Content Creator and Scheduler API for frontend
  *
  * The version of the OpenAPI document: v1
  * Contact: contact@snippets.local

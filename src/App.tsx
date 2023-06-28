@@ -18,29 +18,17 @@ import {
   TwitterUsersApi,
 } from './api/index'
 
+import {
+  userApiClient,
+  twitterUserApiClient,
+  contentApiClient,
+
+} from '@/api.env'
+
+
 const GenerateContentPage = React.lazy(() => import("./pages/GenerateContent"));
 const CalendarPage = React.lazy(() => import("./pages/Calendar"));
 const DraftsPage = React.lazy(() => import("./pages/Drafts"));
-
-
-
-
-// let cookies = new Cookies(document.cookie);
-// const cookies = new Cookies();
-const apiConf = new Configuration({
-  // basePath: 'http://127.0.0.1:8000/api',
-  basePath: '/api',
-  // headers: {
-  //   // 'X-CSRFToken': cookies.get('csrftoken'),
-  //   'Cookie': document.cookie,
-  // }
-})
-
-export const userApiClient = new UsersApi(apiConf);
-export const ContentApiClient = new ContentsApi(apiConf);
-export const twitterUserApiClient = new TwitterUsersApi(apiConf);
-
-// console.log(cookies.get('csrftoken'));
 
 const router = createBrowserRouter([
   {
@@ -64,7 +52,7 @@ const router = createBrowserRouter([
         homeData.user = null;
       }
 
-      const latestContents = await ContentApiClient.contentsScheduled().then((r) => {
+      const latestContents = await contentApiClient.contentsScheduled().then((r) => {
         // console.log(r.results);
         return r.results;
       });
