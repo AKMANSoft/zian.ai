@@ -17,12 +17,13 @@ type Props = {
     positiveText: string;
     negativeText: string;
     trigger: ({ close, open }: TriggerFunProps) => ReactNode;
+    onClickPositiveTextButton?: () => void;
 }
 
 
 export default function WarningPopup({
     heading, description, negativeText,
-    positiveText, trigger
+    positiveText, trigger, onClickPositiveTextButton,
 }: Props) {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -85,7 +86,7 @@ export default function WarningPopup({
                                             <SecondaryBtn filled={false} onClick={closeModal} className="border-white/10 py-3 px-4 md:px-8 w-full md:w-auto">
                                                 {negativeText}
                                             </SecondaryBtn>
-                                            <PrimaryBtn className="py-3 h-full px-4 md:px-8 w-full md:w-auto">
+                                            <PrimaryBtn className="py-3 h-full px-4 md:px-8 w-full md:w-auto" onClick={onClickPositiveTextButton}>
                                                 {positiveText}
                                             </PrimaryBtn>
                                         </div>

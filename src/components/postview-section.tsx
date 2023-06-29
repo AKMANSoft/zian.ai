@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 import { PostStatus } from "@/pages/GenerateContent";
 import PostViewPopup from "./drafts/PostViewPopup";
 import { changeImageUrl, sortScheduledContents } from '@/lib/utils'
+import WarningPopup from "@/components/WarningPopup";
 
 import {
   useLoaderData,
@@ -120,10 +121,25 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                                 <FontAwesomeIcon icon={faEdit} />
                                                 Edit
                                             </SecondaryBtn>
+                                           {/*
                                             <SecondaryBtn className="px-2 xs:px-4" onClick={onDeleteContent}>
                                                 <FontAwesomeIcon icon={faTrash} />
                                                 Delete
                                             </SecondaryBtn>
+                                             */}
+                                            <WarningPopup
+                                                heading="Are you sure you want to delete this post?"
+                                                description={ pageData?.page === 'home' ? pageData?.latestContents[0]?.text || 'No any content' : '' }
+                                                negativeText="Cancel"
+                                                positiveText="Yes, Delete"
+                                                trigger={({ open }) => (
+                                                    <SecondaryBtn onClick={open} className="p-3">
+                                                        <FontAwesomeIcon icon={faTrash} />
+                                                        Delete
+                                                    </SecondaryBtn>
+                                                )}
+                                              onClickPositiveTextButton={onDeleteContent}
+                                            />
                                         </div>
                                     </>
                                 }
