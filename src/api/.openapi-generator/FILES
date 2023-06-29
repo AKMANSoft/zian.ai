@@ -1,10 +1,13 @@
 apis/ContentsApi.ts
+apis/ProjectsApi.ts
 apis/TwitterUsersApi.ts
 apis/UsersApi.ts
 apis/index.ts
 index.ts
 models/ContentForTwitterPost.ts
 models/ContentsList200Response.ts
+models/Project.ts
+models/ProjectsList200Response.ts
 models/TwitterAccount.ts
 models/TwitterUsersList200Response.ts
 models/User.ts

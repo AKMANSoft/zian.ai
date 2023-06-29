@@ -32,17 +32,23 @@ export interface ContentForTwitterPost {
      */
     text: string;
     /**
-     * Who created the text, maybe from OpenAI or a website user
+     * 
      * @type {string}
      * @memberof ContentForTwitterPost
      */
-    creator: string;
+    readonly creator?: string;
     /**
      * 
      * @type {number}
      * @memberof ContentForTwitterPost
      */
     status?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContentForTwitterPost
+     */
+    readonly statusText?: string;
     /**
      * 
      * @type {number}
@@ -87,7 +93,6 @@ export interface ContentForTwitterPost {
 export function instanceOfContentForTwitterPost(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "text" in value;
-    isInstance = isInstance && "creator" in value;
 
     return isInstance;
 }
@@ -104,8 +109,9 @@ export function ContentForTwitterPostFromJSONTyped(json: any, ignoreDiscriminato
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'text': json['text'],
-        'creator': json['creator'],
+        'creator': !exists(json, 'creator') ? undefined : json['creator'],
         'status': !exists(json, 'status') ? undefined : json['status'],
+        'statusText': !exists(json, 'status_text') ? undefined : json['status_text'],
         'project': !exists(json, 'project') ? undefined : json['project'],
         'topic': !exists(json, 'topic') ? undefined : json['topic'],
         'image': !exists(json, 'image') ? undefined : json['image'],
@@ -125,7 +131,6 @@ export function ContentForTwitterPostToJSON(value?: ContentForTwitterPost | null
     return {
         
         'text': value.text,
-        'creator': value.creator,
         'status': value.status,
         'project': value.project,
         'topic': value.topic,

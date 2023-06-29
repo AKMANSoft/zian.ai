@@ -22,7 +22,7 @@ import {
   userApiClient,
   twitterUserApiClient,
   contentApiClient,
-
+  // projectStatusListApiClient,
 } from '@/api.env'
 
 
@@ -88,7 +88,29 @@ const router = createBrowserRouter([
       <Suspense>
         <DraftsPage />
       </Suspense>
-    )
+    ),
+    errorElement: <ErrorPage />,
+    loader: async () => {
+      let draftsData: any = {};
+
+      const contentsList = await contentApiClient.contentsList().then((r) => {
+        // console.log('Contents list');
+        // console.log(r.results);
+        // return r.results;
+
+        // console.log(r);
+        return r;
+      });
+
+      // const statusList = await contentApiClient.contentsStatus({id: '360'}).then((r) => {
+      // // const statusList = await projectStatusListApiClient.projectStatusListList().then((r) => {
+      //   console.log(r);
+      //   // console.log(r.results);
+      //   return r;
+      // });
+
+      return {contentsList};
+    }
   }
 ])
 

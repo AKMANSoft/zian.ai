@@ -16,7 +16,7 @@ export function changeImageUrl(name: string, prefix: string = '/static') {
     return name
 }
 
-function formatDate(date: Date) {
+export function formatDate(date: Date) {
   let hours = date.getHours();
   let minutes = date.getMinutes();
   let ampm = hours >= 12 ? 'PM' : 'AM';

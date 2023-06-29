@@ -11,6 +11,16 @@ import AddEditDraftPopup from "@/components/drafts/AddEditDraftPopup";
 import WarningPopup from "@/components/WarningPopup";
 import { changeImageUrl } from '@/lib/utils'
 
+import {
+  useLoaderData,
+} from 'react-router-dom'
+
+import {
+  userApiClient,
+  twitterUserApiClient,
+  contentApiClient,
+} from '@/api.env'
+
 
 
 const filters = [
@@ -25,6 +35,9 @@ const filters = [
 export default function DraftsPage() {
     const [activeTab, setActiveTab] = useState(0);
     const tabsContainerRef = useRef<HTMLDivElement>(null);
+
+    const pageData: any = useLoaderData();
+    console.log(pageData);
 
     const onTabsScrollClick = (reverse = false) => {
         tabsContainerRef.current?.scrollBy({
@@ -75,6 +88,11 @@ export default function DraftsPage() {
                                 <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden min-w-[200px]">Actions</span>
                                 <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden lg:pr-4">Photo</span>
                             </div>
+                            {
+                              pageData?.contentsList?.results && pageData?.contentsList.results.map( (content: any) => 
+                                <SingleTableRow num={content.id} content={content} /> )
+                            }
+                            {/*
                             <SingleTableRow num={1} />
                             <SingleTableRow num={2} />
                             <SingleTableRow num={3} />
@@ -85,6 +103,7 @@ export default function DraftsPage() {
                             <SingleTableRow num={8} />
                             <SingleTableRow num={9} />
                             <SingleTableRow num={10} />
+                              */}
                         </div>
                         {/* Table Footer / Pagination  */}
                         <DraftsPagination />
@@ -159,34 +178,52 @@ function DraftsPagination() {
 type SingleTableRowProps = {
     num: number;
     onClick?: () => void
+    content?: any
 }
 
 
-function SingleTableRow({ onClick, num }: SingleTableRowProps) {
+function SingleTableRow({ onClick, num, content }: SingleTableRowProps) {
+    function onDeleteContent(): void {
+      if (content) {
+        console.log(`Delete content: ${content.id}`);
+        contentApiClient.contentsDelete({id: content.id}).then((r) => {
+          // console.log(r);
+            window.location.reload();
+        });
+      }
+    }
+
     return (
         <div className="flex flex-wrap xl:justify-between lg:flex-nowrap lg:gap-3 items-center lg:min-w-max" role="button" onClick={onClick}>
             <span className="hidden lg:block text-white py-3 min-h-[50px] text-start w-[50px] overflow-hidden lg:ps-4">
                 {formatNumberto0(num)}
             </span>
             <span className="block text-white py-3 lg:min-h-[50px] text-start w-1/3 lg:w-[150px] overflow-hidden">
-                <img src={changeImageUrl("/images/table-img.png")} width={80} height={80} loading="lazy" className="w-full h-full lg:w-auto min-w-[80px] lg:h-[80px] aspect-square" alt="" />
-            </span>
+              {/*<img src={changeImageUrl("/images/table-img.png")} width={80} height={80} loading="lazy" className="w-full h-full lg:w-auto min-w-[80px] lg:h-[80px] aspect-square" alt="" />*/}
+              { 
+                content?.image ? 
+                  <img src={content?.image} width={80} height={80} loading="lazy" className="w-full h-full lg:w-auto min-w-[80px] lg:h-[80px] aspect-square" alt="" />
+                  :
+                  <span>No Image</span>
+
+              }
+                            </span>
             <span className="block text-white py-3 lg:min-h-[50px] text-start w-2/3 lg:w-[150px] overflow-hidden min-w-[200px] px-2">
                 <p className="w-full line-clamp-4">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur aliquid doloribus mollitia magni fugiat quisquam rerum a alias aspernatur, dolorem in neque dolore sed quis hic nulla animi minima debitis.
+                  {content?.text}
                 </p>
             </span>
             <span className="block text-white py-1 lg:py-3 lg:min-h-[50px] text-start w-full lg:w-[150px] overflow-hidden">
                 <div className="flex items-center justify-between">
                     <span className="font-semibold block lg:hidden">Status:</span>
-                    <span>Scheduled</span>
+                    <span>{content?.statusText}</span>
                 </div>
             </span>
             <span className="block text-white py-1 lg:py-3 lg:min-h-[50px] text-start w-full lg:w-[150px] overflow-hidden">
                 <div className="flex items-center justify-between">
                     <span className="font-semibold block lg:hidden">Username:</span>
                     <span className="block lg:w-full max-w-full whitespace-nowrap overflow-hidden text-ellipsis">
-                        moonlanding.media
+                      {content?.creator}
                     </span>
                 </div>
             </span>
@@ -194,17 +231,17 @@ function SingleTableRow({ onClick, num }: SingleTableRowProps) {
                 <div className="flex items-center justify-between">
                     <span className="font-semibold block lg:hidden">Created Date:</span>
                     <span>
-                        April 2022,  Sunday   2:00PM
+                      {content?.createdTime.toLocaleString()}
                     </span>
                 </div>
             </span>
             <span className="block text-white py-1 lg:py-3 lg:min-h-[50px] text-start w-[150px] max-w-[200px] overflow-hidden min-w-[200px]">
                 <div className="inline-flex items-center gap-2">
-                    <PostViewPopup />
+                    <PostViewPopup content={content}/>
                     <AddEditDraftPopup variant="edit" />
                     <WarningPopup
                         heading="Are you sure you want to delete this post?"
-                        description="Lorem ipsum dolor sit amet, consect etur sed det dolor  rem ipsum dolor sit"
+                        description={content?.text}
                         negativeText="Cancel"
                         positiveText="Yes, Delete"
                         trigger={({ open }) => (
@@ -212,6 +249,7 @@ function SingleTableRow({ onClick, num }: SingleTableRowProps) {
                                 <FontAwesomeIcon icon={faTrash} />
                             </SecondaryBtn>
                         )}
+                       onClickPositiveTextButton={onDeleteContent}
                     />
                 </div>
             </span>
