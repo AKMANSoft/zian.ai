@@ -4,7 +4,7 @@ import GrBorderBox from "../components/ui/gr-border-box";
 import { faChevronLeft, faChevronRight, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { cn } from "../lib/utils";
 import { PrimaryBtnNeon, SecondaryBtn } from "../components/ui/buttons";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { formatNumberto0 } from "@/components/calendar/defaults";
 import PostViewPopup from "@/components/drafts/PostViewPopup";
 import AddEditDraftPopup from "@/components/drafts/AddEditDraftPopup";
@@ -35,15 +35,57 @@ const filters = [
 export default function DraftsPage() {
     const [activeTab, setActiveTab] = useState(0);
     const tabsContainerRef = useRef<HTMLDivElement>(null);
+    const [contentList, setContentList] = useState([]);
+    const [contentResult, setContentResult] = useState<any>(null);
+    const [page, setPage] = useState<number>(1);
 
     const pageData: any = useLoaderData();
-    console.log(pageData);
+    // console.log(pageData);
 
     const onTabsScrollClick = (reverse = false) => {
         tabsContainerRef.current?.scrollBy({
             behavior: "smooth",
             left: 300 * (reverse ? -1 : 1)
         })
+    }
+
+    useEffect(() => {
+        async function startFetching() {
+          setContentResult(null);
+          const result = await contentApiClient.contentsList({page}).then((r) => {
+            console.log(r);
+            return r;
+          });
+
+          if (!ignore) {
+            setContentResult(result);
+          }
+        }
+
+      let ignore = false;
+      startFetching();
+      return () => {
+        ignore = true;
+      }
+    }, [page]);
+
+    function getContentListFromPage(page: number) {
+      // if (page <= 1) {
+      //   let itemList = pageData?.contentsList?.results && pageData?.contentsList.results.map( (content: any) =>
+      //     <SingleTableRow num={content.id} content={content} /> );
+      //   return itemList;
+      // } else {
+      //   if (contentResult) {
+      //     return contentResult.results.map((content: any) =>
+      //     <SingleTableRow num={content.id} content={content} /> );
+      //   }
+      //   return [];
+      // }
+
+      if (contentResult) {
+        return contentResult.results.map((content: any) =>
+        <SingleTableRow num={content.id} content={content} /> );
+      }
     }
 
     return (
@@ -89,8 +131,10 @@ export default function DraftsPage() {
                                 <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden lg:pr-4">Photo</span>
                             </div>
                             {
-                              pageData?.contentsList?.results && pageData?.contentsList.results.map( (content: any) => 
-                                <SingleTableRow num={content.id} content={content} /> )
+                              // pageData?.contentsList?.results && pageData?.contentsList.results.map( (content: any) =>
+                              //   <SingleTableRow num={content.id} content={content} /> )
+
+                              getContentListFromPage(page)
                             }
                             {/*
                             <SingleTableRow num={1} />
@@ -106,7 +150,7 @@ export default function DraftsPage() {
                               */}
                         </div>
                         {/* Table Footer / Pagination  */}
-                        <DraftsPagination />
+                        <DraftsPagination setPage={setPage}/>
                     </div>
                 </div>
             </GrBorderBox>
@@ -118,7 +162,7 @@ export default function DraftsPage() {
 
 
 
-function DraftsPagination() {
+function DraftsPagination({setPage}: any) {
     const [activePage, setActivePage] = useState(1);
     const visiblePages = [1, 2, 3, 4, 5];
 
@@ -128,6 +172,7 @@ function DraftsPagination() {
         if (newPage <= 0) newPage = 1
         if (newPage >= lastPage) newPage = lastPage
         setActivePage(newPage);
+        setPage(newPage);
     }
 
     return (
