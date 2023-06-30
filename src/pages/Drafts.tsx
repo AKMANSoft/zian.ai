@@ -28,7 +28,6 @@ const filters = [
     "Announcements",
     "Giveaways",
     "Engagement Questions",
-    "Engagement Questions",
     "Promotions",
 ]
 
@@ -45,7 +44,8 @@ export default function DraftsPage() {
 
     const pageData: any = useLoaderData();
     // console.log(pageData);
-
+    const [topic, setTopic] = useState(pageData.topicsList[0].text);
+    
     const onTabsScrollClick = (reverse = false) => {
         tabsContainerRef.current?.scrollBy({
             behavior: "smooth",
@@ -56,7 +56,7 @@ export default function DraftsPage() {
     useEffect(() => {
         async function startFetching() {
           // setContentResult(null);
-          const result = await contentApiClient.contentsList({page}).then((r) => {
+          const result = await contentApiClient.contentsList({page, topic}).then((r) => {
             // console.log(r);
             return r;
           }).catch((e) => {
@@ -95,7 +95,7 @@ export default function DraftsPage() {
       return () => {
         ignore = true;
       }
-    }, [page, deleteNumber]);
+    }, [page, deleteNumber, topic]);
 
     function getContentListFromPage() {
       // if (page <= 1) {
@@ -134,11 +134,13 @@ export default function DraftsPage() {
 
                             <div ref={tabsContainerRef} className="flex mx-10 md:mx-16  h-full gap-3 no-scrollbar overflow-x-auto">
                                 {
-                                    [...filters, ...filters].map((filter, index) => (
+                                    // [...filters, ...filters].map((filter, index) => (
+                                    // [...filters].map((filter, index) => (
+                                  [...pageData.topicsList.map((e: any) => e.text)].map((filter, index) => (
                                         <TabItem
                                             key={filter} text={filter}
                                             active={index === activeTab}
-                                            onClick={() => setActiveTab(index)} />
+                                            onClick={() => {setActiveTab(index); setTopic(filter); setPage(1);}} />
                                     ))
                                 }
                             </div>
@@ -200,6 +202,10 @@ function DraftsPagination({currentPage, totalPage, setPage}: any) {
     let visiblePages: number[] = [];
 
     console.log(`totalPage: ${totalPage}, currentPage: ${currentPage}`);
+
+    if (activePage !== currentPage) {
+      setActivePage(currentPage);
+    }
 
     if (currentPage <= 3) {
       if (totalPage >= 5) {

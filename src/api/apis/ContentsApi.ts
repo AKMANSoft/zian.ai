@@ -34,10 +34,14 @@ export interface ContentsDeleteRequest {
 }
 
 export interface ContentsLatestRequest {
+    topic?: string;
+    untopic?: string;
     page?: number;
 }
 
 export interface ContentsListRequest {
+    topic?: string;
+    untopic?: string;
     page?: number;
 }
 
@@ -51,6 +55,8 @@ export interface ContentsReadRequest {
 }
 
 export interface ContentsScheduledRequest {
+    topic?: string;
+    untopic?: string;
     page?: number;
 }
 
@@ -138,6 +144,14 @@ export class ContentsApi extends runtime.BaseAPI {
     async contentsLatestRaw(requestParameters: ContentsLatestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentsList200Response>> {
         const queryParameters: any = {};
 
+        if (requestParameters.topic !== undefined) {
+            queryParameters['topic'] = requestParameters.topic;
+        }
+
+        if (requestParameters.untopic !== undefined) {
+            queryParameters['untopic'] = requestParameters.untopic;
+        }
+
         if (requestParameters.page !== undefined) {
             queryParameters['page'] = requestParameters.page;
         }
@@ -170,6 +184,14 @@ export class ContentsApi extends runtime.BaseAPI {
      */
     async contentsListRaw(requestParameters: ContentsListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentsList200Response>> {
         const queryParameters: any = {};
+
+        if (requestParameters.topic !== undefined) {
+            queryParameters['topic'] = requestParameters.topic;
+        }
+
+        if (requestParameters.untopic !== undefined) {
+            queryParameters['untopic'] = requestParameters.untopic;
+        }
 
         if (requestParameters.page !== undefined) {
             queryParameters['page'] = requestParameters.page;
@@ -276,6 +298,14 @@ export class ContentsApi extends runtime.BaseAPI {
      */
     async contentsScheduledRaw(requestParameters: ContentsScheduledRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentsList200Response>> {
         const queryParameters: any = {};
+
+        if (requestParameters.topic !== undefined) {
+            queryParameters['topic'] = requestParameters.topic;
+        }
+
+        if (requestParameters.untopic !== undefined) {
+            queryParameters['untopic'] = requestParameters.untopic;
+        }
 
         if (requestParameters.page !== undefined) {
             queryParameters['page'] = requestParameters.page;

@@ -22,6 +22,7 @@ import {
   userApiClient,
   twitterUserApiClient,
   contentApiClient,
+  topicApiClient,
   // projectStatusListApiClient,
 } from '@/api.env'
 import { createContext, useContext } from 'react';
@@ -111,7 +112,14 @@ const router = createBrowserRouter([
         pageData.user = null;
       }
 
-      const contentsList = await contentApiClient.contentsList().then((r) => {
+      // get topics
+      const topicsList = await topicApiClient.topicsList().then((r) => {
+        console.log(r);
+        return r;
+      });
+      pageData.topicsList = topicsList;
+
+      const contentsList = await contentApiClient.contentsList({topic: topicsList[0].text}).then((r) => {
         // console.log('Contents list');
         // console.log(r.results);
         // return r.results;
@@ -119,7 +127,7 @@ const router = createBrowserRouter([
         // console.log(r);
         return r;
       });
-      pageData.contentsList = contentsList
+      pageData.contentsList = contentsList;
 
       // const statusList = await contentApiClient.contentsStatus({id: '360'}).then((r) => {
       // // const statusList = await projectStatusListApiClient.projectStatusListList().then((r) => {
