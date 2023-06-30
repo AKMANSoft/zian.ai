@@ -35,9 +35,11 @@ const filters = [
 export default function DraftsPage() {
     const [activeTab, setActiveTab] = useState(0);
     const tabsContainerRef = useRef<HTMLDivElement>(null);
-    const [contentList, setContentList] = useState([]);
     const [contentResult, setContentResult] = useState<any>(null);
     const [page, setPage] = useState<number>(1);
+    const [count, setCount] = useState<number>(0);
+    const [numPerPage, setNumPerPage] = useState<number>(0);
+    let totalPage = 0;
 
     const pageData: any = useLoaderData();
     // console.log(pageData);
@@ -59,6 +61,12 @@ export default function DraftsPage() {
 
           if (!ignore) {
             setContentResult(result);
+            setCount(result.count);
+            if (numPerPage < result.results.length) {
+              setNumPerPage(result.results.length);
+            }
+            // totalPage = Math.ceil(count / numPerPage);
+            // console.log(`count: ${count}, numPerPage: ${numPerPage}, totalPage: ${totalPage}`);
           }
         }
 
@@ -69,7 +77,7 @@ export default function DraftsPage() {
       }
     }, [page]);
 
-    function getContentListFromPage(page: number) {
+    function getContentListFromPage() {
       // if (page <= 1) {
       //   let itemList = pageData?.contentsList?.results && pageData?.contentsList.results.map( (content: any) =>
       //     <SingleTableRow num={content.id} content={content} /> );
@@ -134,7 +142,7 @@ export default function DraftsPage() {
                               // pageData?.contentsList?.results && pageData?.contentsList.results.map( (content: any) =>
                               //   <SingleTableRow num={content.id} content={content} /> )
 
-                              getContentListFromPage(page)
+                              getContentListFromPage()
                             }
                             {/*
                             <SingleTableRow num={1} />
@@ -150,7 +158,7 @@ export default function DraftsPage() {
                               */}
                         </div>
                         {/* Table Footer / Pagination  */}
-                        <DraftsPagination setPage={setPage}/>
+                        <DraftsPagination currentPage={page} totalPage={Math.ceil(count / numPerPage)} setPage={setPage}/>
                     </div>
                 </div>
             </GrBorderBox>
@@ -162,15 +170,47 @@ export default function DraftsPage() {
 
 
 
-function DraftsPagination({setPage}: any) {
+function DraftsPagination({currentPage, totalPage, setPage}: any) {
     const [activePage, setActivePage] = useState(1);
-    const visiblePages = [1, 2, 3, 4, 5];
+    let visiblePages: number[] = [];
 
-    const onPageChange = (page: number) => {
-        const lastPage = visiblePages[visiblePages.length - 1];
+    console.log(`totalPage: ${totalPage}, currentPage: ${currentPage}`);
+
+    if (currentPage <= 3) {
+      if (totalPage >= 5) {
+        visiblePages = [1, 2, 3, 4, 5];
+      } else if (totalPage === 4) {
+        visiblePages = [1, 2, 3, 4];
+      } else if (totalPage === 3) {
+        visiblePages = [1, 2, 3];
+      } else if (totalPage === 2) {
+        visiblePages = [1, 2];
+      } else if (totalPage === 1) {
+        visiblePages = [1];
+      }
+    } else if (currentPage <= totalPage - 2){
+      visiblePages = [currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2];
+    } else {
+      // currentPage > totalPage - 2
+      if (currentPage === totalPage - 1) {
+        visiblePages = [currentPage - 2, currentPage - 1, currentPage, currentPage + 1];
+      } else if (currentPage === totalPage) {
+        visiblePages = [currentPage - 2, currentPage - 1, currentPage];
+      }
+    }
+
+    const onPageChange = (page: number, totalPage?: number) => {
+      let lastPage = 0;
+        if (totalPage) {
+          lastPage = totalPage;
+        } else {
+          lastPage = visiblePages[visiblePages.length - 1];
+        }
+
         let newPage = page;
         if (newPage <= 0) newPage = 1
         if (newPage >= lastPage) newPage = lastPage
+        
         setActivePage(newPage);
         setPage(newPage);
     }
@@ -207,7 +247,8 @@ function DraftsPagination({setPage}: any) {
                     <FontAwesomeIcon icon={faChevronRight} />
                 </button>
                 <button type="button"
-                    onClick={() => onPageChange(visiblePages[visiblePages.length - 1])}
+                    // onClick={() => onPageChange(visiblePages[visiblePages.length - 1])}
+                    onClick={() => onPageChange(totalPage, totalPage)}
                     className="outline-none bg-white/5 rounded text-xs font-normal text-white p-2 w-8 h-8 aspect-square">
                     <FontAwesomeIcon icon={faChevronRight} />
                     <FontAwesomeIcon icon={faChevronRight} />
@@ -268,7 +309,8 @@ function SingleTableRow({ onClick, num, content }: SingleTableRowProps) {
                 <div className="flex items-center justify-between">
                     <span className="font-semibold block lg:hidden">Username:</span>
                     <span className="block lg:w-full max-w-full whitespace-nowrap overflow-hidden text-ellipsis">
-                      {content?.creator}
+                      {/*content?.creator*/}
+                      {content?.twitterUsername}
                     </span>
                 </div>
             </span>
