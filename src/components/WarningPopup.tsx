@@ -86,7 +86,7 @@ export default function WarningPopup({
                                             <SecondaryBtn filled={false} onClick={closeModal} className="border-white/10 py-3 px-4 md:px-8 w-full md:w-auto">
                                                 {negativeText}
                                             </SecondaryBtn>
-                                            <PrimaryBtn className="py-3 h-full px-4 md:px-8 w-full md:w-auto" onClick={onClickPositiveTextButton}>
+                                          <PrimaryBtn className="py-3 h-full px-4 md:px-8 w-full md:w-auto" onClick={() => {onClickPositiveTextButton && onClickPositiveTextButton(); closeModal();}}>
                                                 {positiveText}
                                             </PrimaryBtn>
                                         </div>

@@ -40,6 +40,7 @@ export default function DraftsPage() {
     const [page, setPage] = useState<number>(1);
     const [count, setCount] = useState<number>(0);
     const [numPerPage, setNumPerPage] = useState<number>(0);
+    const [deleteNumber, setDeleteNumber] = useState<number>(0);
     let totalPage = 0;
 
     const pageData: any = useLoaderData();
@@ -56,18 +57,36 @@ export default function DraftsPage() {
         async function startFetching() {
           // setContentResult(null);
           const result = await contentApiClient.contentsList({page}).then((r) => {
-            console.log(r);
+            // console.log(r);
             return r;
+          }).catch((e) => {
+            console.log(e);
+            console.log(`page: ${page}`);
+            if (page > 1) {
+              const page1 = page - 1;
+              console.log(`previous page: ${page1}`);
+              setPage(page1);  // find previous page data
+            }
           });
 
           if (!ignore) {
-            setContentResult(result);
-            setCount(result.count);
-            if (numPerPage < result.results.length) {
-              setNumPerPage(result.results.length);
+            if (result) {
+              setContentResult(result);
+              setCount(result.count);
+              if (numPerPage < result.results.length) {
+                setNumPerPage(result.results.length);
+              }
+
+              // totalPage = Math.ceil(count / numPerPage);
+              // console.log(`count: ${count}, numPerPage: ${numPerPage}, totalPage: ${totalPage}`);
+
+              if (! result.results) {
+                console.log(`page: ${page}`);
+                const page1 = page - 1;
+                console.log(`page1: ${page1}`);
+                setPage(page1);  // find previous page data
+              }
             }
-            // totalPage = Math.ceil(count / numPerPage);
-            // console.log(`count: ${count}, numPerPage: ${numPerPage}, totalPage: ${totalPage}`);
           }
         }
 
@@ -76,7 +95,7 @@ export default function DraftsPage() {
       return () => {
         ignore = true;
       }
-    }, [page]);
+    }, [page, deleteNumber]);
 
     function getContentListFromPage() {
       // if (page <= 1) {
@@ -93,10 +112,11 @@ export default function DraftsPage() {
 
       if (contentResult) {
         return contentResult.results.map((content: any) =>
-        <SingleTableRow num={content.id} content={content} /> );
+        <SingleTableRow num={content.id} content={content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber}/> );
       } else {
         let itemList = pageData?.contentsList?.results && pageData?.contentsList.results.map( (content: any) =>
-          <SingleTableRow num={content.id} content={content} /> );
+          // <SingleTableRow num={content.id} content={content} /> );
+          <SingleTableRow num={content.id} content={content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber}/> );
         return itemList;
       }
     }
@@ -270,16 +290,19 @@ type SingleTableRowProps = {
     num: number;
     onClick?: () => void
     content?: any
+    deleteNumber: number
+    setDeleteNumber: any
 }
 
 
-function SingleTableRow({ onClick, num, content }: SingleTableRowProps) {
+function SingleTableRow({ onClick, num, content, deleteNumber, setDeleteNumber }: SingleTableRowProps) {
     function onDeleteContent(): void {
       if (content) {
         console.log(`Delete content: ${content.id}`);
         contentApiClient.contentsDelete({id: content.id}).then((r) => {
           // console.log(r);
-            window.location.reload();
+            // window.location.reload();
+          setDeleteNumber(deleteNumber + 1);
         });
       }
     }
