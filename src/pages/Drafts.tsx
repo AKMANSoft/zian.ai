@@ -54,7 +54,7 @@ export default function DraftsPage() {
 
     useEffect(() => {
         async function startFetching() {
-          setContentResult(null);
+          // setContentResult(null);
           const result = await contentApiClient.contentsList({page}).then((r) => {
             console.log(r);
             return r;
@@ -65,6 +65,8 @@ export default function DraftsPage() {
             setCount(result.count);
             if (numPerPage < result.results.length) {
               setNumPerPage(result.results.length);
+            } else {
+              setContentResult(null);
             }
             // totalPage = Math.ceil(count / numPerPage);
             // console.log(`count: ${count}, numPerPage: ${numPerPage}, totalPage: ${totalPage}`);
@@ -94,6 +96,10 @@ export default function DraftsPage() {
       if (contentResult) {
         return contentResult.results.map((content: any) =>
         <SingleTableRow num={content.id} content={content} /> );
+      } else {
+        let itemList = pageData?.contentsList?.results && pageData?.contentsList.results.map( (content: any) =>
+          <SingleTableRow num={content.id} content={content} /> );
+        return itemList;
       }
     }
 
