@@ -95,7 +95,7 @@ export default function PostViewPopup({ trigger, content }: Props) {
                                             <div className="">
                                                 {/* {heading} */}
                                                 <div className="flex items-center gap-3">
-                                                  <SmallSchedulePostEl text={content?.text || ""} hasPost={false} icon={faTwitter} />
+                                                  <SmallSchedulePostEl text={content?.twitterUsername || ""} hasPost={false} icon={faTwitter} />
                                                 </div>
                                                 <p className="mt-4 font-light text-sm text-th-gray font-jakarta">
                                                   { content?.text || "Lorem ipsum dolor sit amet, consect etur adip iscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia m, quis nostrud exercitation ullam co laboris nisi ut aliquip ex ea commodo consquat." }

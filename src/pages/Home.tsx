@@ -170,7 +170,8 @@ function ScheduleList({ scheduledContents }: ScheduleListProps) {
       let items = [];
       for (let content of tv) {
         items.push({
-          text: content.text,
+          // text: content.text,
+          text: content.twitterUsername,
           icon: faTwitter,
           content: content,
         });

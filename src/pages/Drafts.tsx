@@ -65,8 +65,6 @@ export default function DraftsPage() {
             setCount(result.count);
             if (numPerPage < result.results.length) {
               setNumPerPage(result.results.length);
-            } else {
-              setContentResult(null);
             }
             // totalPage = Math.ceil(count / numPerPage);
             // console.log(`count: ${count}, numPerPage: ${numPerPage}, totalPage: ${totalPage}`);
