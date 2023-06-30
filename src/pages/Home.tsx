@@ -35,10 +35,10 @@ export async function action() {
   }
 }
 
-export const UserContext = createContext(null);
+// export const UserContext = createContext(null);
 
 export default function HomePage() {
-  const homeData: any = useLoaderData();
+  const pageData: any = useLoaderData();
   // const usernameRef = useRef('');
   // const [username, setUsername] = useState('');
   // console.log(`user: ${user.username}`);
@@ -55,15 +55,14 @@ export default function HomePage() {
   //     }
   //   });
   // }, []);
-  console.log('home page');
-  const user = homeData.user;
-  console.log({user});
+  // console.log('home page');
+  // const user = pageData.user;
+  // console.log({user});
 
     return (
-        <UserContext.Provider value={user}>
-        <MainLayout heading={`Welcome,  ${homeData.user?.username}` } user={user}>
+        <MainLayout heading={`Welcome,  ${pageData.user?.username}` } user={pageData.user}>
             <h2 className="text-[32px] leading-9 text-white font-nebula font-normal mb-4 text-center lg:text-start xl:hidden">
-              {`Welcome, ${homeData.user?.username}`}
+              {`Welcome, ${pageData.user?.username}`}
             </h2>
             <div className="flex flex-col lg:flex-row gap-5 pb-5 min-h-[calc(100vh_-_100px)]">
                 <PostViewSection className="w-full h-full lg:w-2/5" heading={
@@ -91,7 +90,7 @@ export default function HomePage() {
                             </div>
                             <div className="max-h-full overflow-y-auto">
                                 {
-                                  homeData?.latestContents ? <ScheduleList scheduledContents={homeData?.latestContents} /> :
+                                  pageData?.latestContents ? <ScheduleList scheduledContents={pageData?.latestContents} /> :
                                     <>
                                       <div className="md:px-[30px]">
                                           <h6 className="px-5 md:px-0 text-sm font-normal text-white">Today</h6>
@@ -126,7 +125,6 @@ export default function HomePage() {
                 </GrBorderBox>
             </div>
         </MainLayout>
-        </UserContext.Provider>
     );
 }
 

@@ -10,6 +10,7 @@ import PostViewPopup from "@/components/drafts/PostViewPopup";
 import AddEditDraftPopup from "@/components/drafts/AddEditDraftPopup";
 import WarningPopup from "@/components/WarningPopup";
 import { changeImageUrl } from '@/lib/utils'
+// import { createContext, useContext } from 'react';
 
 import {
   useLoaderData,
@@ -97,7 +98,7 @@ export default function DraftsPage() {
     }
 
     return (
-        <MainLayout heading="Drafts">
+        <MainLayout heading="Drafts" user={pageData.user}>
             <GrBorderBox className="p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)] " type="lg">
                 <div className="p-3 md:p-5 h-full w-full flex flex-col backdrop-blur-[10px] bg-gr-purple-light opacity-90 rounded-20">
                     {/* Tabs List View  */}

@@ -14,8 +14,8 @@ type Props = {
 
 
 export default function UserDropdownMenu({ className, user }: Props) {
-  console.log('UserDropdownMenu');
-  console.log({user});
+  // console.log('UserDropdownMenu');
+  // console.log({user});
   return (
     <Menu as="div" className="relative block text-left z-50 h-auto">
       {({ open }) => (

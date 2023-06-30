@@ -19,8 +19,8 @@ type Props = {
 
 export default function SideBar({ expanded = false, user }: Props) {
     const { pathname } = useLocation();
-  console.log('side bar');
-  console.log({user});
+  // console.log('side bar');
+  // console.log({user});
     return (
         <div className={cn(
             "min-w-[280px] w-full lg:max-w-[400px] xl:max-w-[300px] min-h-screen pt-5 pb-10",
@@ -39,7 +39,9 @@ export default function SideBar({ expanded = false, user }: Props) {
                 <div className="mt-16 md:mt-4 w-full">
                     <div className="py-3">
                         {/* <UserHeaderComponent expandable className="lg:hidden" toggleClassName="h-[71px]" /> */}
+                      <>
                         <UserDropdownMenu className="h-[71px] md:hidden" user={user} />
+                      </>
                     </div>
                     <NavigationItem
                         href="/" active={pathname === "/"}

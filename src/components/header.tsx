@@ -7,7 +7,8 @@ import UserDropdownMenu from "./dropmenus/UserDropMenu";
 import NotificationsDropMenu from "./dropmenus/NotificationsDropMenu";
 import { changeImageUrl } from '@/lib/utils'
 import { useContext } from 'react';
-import { UserContext } from '../pages/Home'
+// import { UserContext } from '../pages/Home'
+import { UserContext } from '@/App'
 
 
 
@@ -15,9 +16,10 @@ type Props = {
     heading: string;
     menuExpanded?: boolean;
     onToggleMenu: () => void;
+    user?: any
 }
 
-export default function Header({ heading, onToggleMenu, menuExpanded = false }: Props) {
+export default function Header({ heading, onToggleMenu, menuExpanded = false, user }: Props) {
     return (
         <header className="mt-4 lg:mt-7 mb-9 flex items-start lg:items-center justify-between w-full">
             <h2 className="hidden xl:inline text-[32px] leading-9 text-white font-nebula font-normal">
@@ -31,7 +33,7 @@ export default function Header({ heading, onToggleMenu, menuExpanded = false }: 
             <div className='flex items-center gap-2 h-[50px]'>
                 {/*<SearchEl />*/}
                 <NotificationsDropMenu />
-                <UserDropdownMenu className="h-12 hidden md:block" />
+                <UserDropdownMenu className="h-12 hidden md:block" user={user}/>
                 <GrBorderBox className={cn(
                     "rounded-20 block xl:hidden z-50",
                     menuExpanded ? "fixed lg:static top-4 right-4 h-12" : "h-full"
@@ -56,11 +58,11 @@ type UserDropElProps = {
 
 export function UserHeaderComponent({ className, toggleClassName, dropdownOpen, user }: UserDropElProps) {
     // const [active, setActive] = useState(dropdownOpen);
-  const user1: any = useContext(UserContext);
+  // const user1: any = useContext(UserContext);
 
-  console.log('UserHeaderComponent');
-  console.log({user});
-  console.log({user1});
+  // console.log('UserHeaderComponent');
+  // console.log({user});
+  // console.log({user1});
 
     return (
         <GrBorderBox className={cn(
@@ -88,7 +90,8 @@ export function UserHeaderComponent({ className, toggleClassName, dropdownOpen, 
                         'text-base md:text-sm font-bold',
                     )}>
                       {/*Mike Males*/}
-                      <span className="capitalize">{user?.username || user1?.username}</span>
+                      {/*<span className="capitalize">{user?.username || user1?.username}</span>*/}
+                      <span className="capitalize">{user?.username}</span>
                     </span>
                     <span className={cn(
                         "inline-block md:hidden text-sm ps-1 absolute top-1/2 -translate-y-1/2 right-5 transition-all",

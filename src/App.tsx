@@ -24,16 +24,20 @@ import {
   contentApiClient,
   // projectStatusListApiClient,
 } from '@/api.env'
+import { createContext, useContext } from 'react';
+
 
 
 const GenerateContentPage = React.lazy(() => import("./pages/GenerateContent"));
 const CalendarPage = React.lazy(() => import("./pages/Calendar"));
 const DraftsPage = React.lazy(() => import("./pages/Drafts"));
 
+export const UserContext = createContext(null);
+
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
+    element: <HomePage /> ,
     errorElement: <ErrorPage />,
     loader: async () => {
       let homeData: any = {};
@@ -85,13 +89,27 @@ const router = createBrowserRouter([
   {
     path: "/drafts",
     element: (
-      <Suspense>
-        <DraftsPage />
-      </Suspense>
+        <Suspense>
+          <DraftsPage />
+        </Suspense>
     ),
     errorElement: <ErrorPage />,
     loader: async () => {
-      let draftsData: any = {};
+      let pageData: any = {};
+
+      let lastResult = null;
+      await userApiClient.usersList().then((result) => {
+        lastResult = result.results;
+        console.log(result.results);
+      });
+
+      if (lastResult) {
+        // return lastResult[0];
+        pageData.user = lastResult[0];
+      } else {
+        // return null;
+        pageData.user = null;
+      }
 
       const contentsList = await contentApiClient.contentsList().then((r) => {
         // console.log('Contents list');
@@ -101,6 +119,7 @@ const router = createBrowserRouter([
         // console.log(r);
         return r;
       });
+      pageData.contentsList = contentsList
 
       // const statusList = await contentApiClient.contentsStatus({id: '360'}).then((r) => {
       // // const statusList = await projectStatusListApiClient.projectStatusListList().then((r) => {
@@ -109,7 +128,7 @@ const router = createBrowserRouter([
       //   return r;
       // });
 
-      return {contentsList};
+      return pageData;
     }
   }
 ])
