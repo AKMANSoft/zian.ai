@@ -8,6 +8,7 @@ import {
   ProfilesApi,
   TimezonesApi,
   SchedulesApi,
+  ImagesApi,
   // ProjectStatusListApi,
 } from './api/index'
 
@@ -30,6 +31,7 @@ export const topicApiClient = new TopicsApi(apiConf);
 export const profileApiClient = new ProfilesApi(apiConf);
 export const timezoneApiClient = new TimezonesApi(apiConf);
 export const scheduleApiClient = new SchedulesApi(apiConf);
+export const imageApiClient = new ImagesApi(apiConf);
 // export const projectStatusListApiClient = new ProjectStatusListApi(apiConf);
 
 // console.log(cookies.get('csrftoken'));

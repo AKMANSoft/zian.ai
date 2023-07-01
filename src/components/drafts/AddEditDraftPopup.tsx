@@ -16,6 +16,8 @@ import { useContext, useEffect } from "react"
 
 import {
   scheduleApiClient,
+  contentApiClient,
+  imageApiClient,
 } from '@/api.env'
 
 
@@ -33,14 +35,25 @@ export default function AddEditDraftPopup({ variant = "add", content }: Props) {
 
     const [timezone, setTimezone] = useState<any>('');
     const [schedule, setSchedule] = useState<any>(null);
+    // const imageUrl = content?.image;
+    const [image, setImage] = useState<any>('');
 
     const profile: any = useContext(profileContext);
 
     const onRegenerateClicked = () => {
         setImageStatus(PostStatus.GENERATING);
-        setTimeout(() => {
+
+        // contentApiClient.contentsCreateImage({id: content.id}).then((r) => {
+        imageApiClient.imagesCreateImage({id: content.id}).then((r) => {
+          console.log(r);
+          setImage(r.imageUrl);
+        }).finally(() => {
             setImageStatus(PostStatus.GENERATED);
-        }, 4000);
+        });
+
+        // setTimeout(() => {
+        //     setImageStatus(PostStatus.GENERATED);
+        // }, 4000);
     }
 
     function closeModal() {
@@ -48,7 +61,9 @@ export default function AddEditDraftPopup({ variant = "add", content }: Props) {
     }
 
     function openModal() {
-        setIsOpen(true)
+        setImage(content?.image);
+        setIsOpen(true);
+        console.log(`image url: ${image}`);
     }
 
     useEffect(() => {
@@ -233,16 +248,21 @@ export default function AddEditDraftPopup({ variant = "add", content }: Props) {
                                             <div className="flex items-center gap-3 md:gap-5 flex-wrap md:flex-nowrap">
                                                 <div className="w-full md:w-2/3 lg:w-1/2">
                                                     {
-                                                      content?.image &&
+                                                      image ?
                                                         <ImageEl
                                                             showLoading={imageStatus === PostStatus.GENERATING}
-                                                            src={content?.image} alt="" width={367} height={290}
+                                                            src={image} alt="" width={367} height={290}
+                                                            className="w-full h-[260px] sm:h-80 md:h-[290px] rounded-20 overflow-hidden" />
+                                                        :
+                                                        <ImageEl
+                                                            showLoading={imageStatus === PostStatus.GENERATING}
+                                                            src="" alt="No Image" width={367} height={290}
                                                             className="w-full h-[260px] sm:h-80 md:h-[290px] rounded-20 overflow-hidden" />
                                                     }
                                                 </div>
                                                 <div className="flex items-center justify-start">
                                                     <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3 px-5">
-                                                        Regenerate Image
+                                                      { image ? 'Regenerate Image' : 'Generate Image' }
                                                     </SecondaryBtn>
                                                 </div>
                                             </div>

@@ -24,7 +24,7 @@ export default function ImageEl({
                 <div className="absolute top-0 left-0 w-full h-full  bg-[#2C163CB2] flex gap-4 flex-col items-center justify-center text-center">
                     <LoadingSparkle spark />
                     <p className="text-xs font-semibold text-white">
-                        Regenerating image
+                        Generating image
                     </p>
                 </div>
             }

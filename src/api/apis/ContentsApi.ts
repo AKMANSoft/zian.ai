@@ -29,6 +29,10 @@ export interface ContentsCreateRequest {
     data: ContentForTwitterPost;
 }
 
+export interface ContentsCreateImageRequest {
+    id: string;
+}
+
 export interface ContentsDeleteRequest {
     id: string;
 }
@@ -103,6 +107,39 @@ export class ContentsApi extends runtime.BaseAPI {
      */
     async contentsCreate(requestParameters: ContentsCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentForTwitterPost> {
         const response = await this.contentsCreateRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Create image for content
+     */
+    async contentsCreateImageRaw(requestParameters: ContentsCreateImageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentForTwitterPost>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling contentsCreateImage.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/contents/{id}/create_image/`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ContentForTwitterPostFromJSON(jsonValue));
+    }
+
+    /**
+     * Create image for content
+     */
+    async contentsCreateImage(requestParameters: ContentsCreateImageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentForTwitterPost> {
+        const response = await this.contentsCreateImageRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
