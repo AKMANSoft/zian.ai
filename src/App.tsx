@@ -127,6 +127,13 @@ const router = createBrowserRouter([
       }
       pageData.topicsList = topicsList;
 
+      // get Twitter account
+      const twitterUsersList = await twitterUserApiClient.twitterUsersList().then((r) => {
+        console.log(r);
+        return r;
+      });
+      pageData.twitterUsersList = twitterUsersList;
+
       const contentsList = await contentApiClient.contentsList({topic: topicsList[0].text}).then((r) => {
         // console.log('Contents list');
         // console.log(r.results);

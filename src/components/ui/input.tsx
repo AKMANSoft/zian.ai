@@ -7,6 +7,8 @@ import { IconDefinition, faCalendar, faCircleXmark } from "@fortawesome/free-sol
 import { Popover, PopoverContent, PopoverTrigger } from "./popover"
 import { Calendar } from "./calendar"
 import { SelectSingleEventHandler } from "react-day-picker"
+import { twitterUserContext } from "@/pages/Drafts"
+import { useContext } from 'react';
 
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement>
@@ -132,8 +134,14 @@ type InputElWChipsProps = {
 }
 
 function InputElWChips({ label, placeholder = "", labelNode = null, id = "" }: InputElWChipsProps) {
-  const [chips, setChips] = React.useState(["dad", "dada"]);
   const [inputVal, setInputVal] = React.useState("");
+  const twitterUsersList: any = useContext(twitterUserContext);
+  // console.log('InputElWChips');
+  // console.log(twitterUsersList);
+  const realTwitterUsersList: string[] = twitterUsersList && twitterUsersList?.results?.map((e: any) => e.username);
+
+  // const [chips, setChips] = React.useState(["Twitter"]);
+  const [chips, setChips] = React.useState(realTwitterUsersList);
 
   const handleKeyPress: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === "Enter") {
@@ -170,12 +178,15 @@ function InputElWChips({ label, placeholder = "", labelNode = null, id = "" }: I
               <span className="block max-w-full whitespace-nowrap overflow-hidden text-ellipsis">
                 {chip}
               </span>
+              {/*
               <span onClick={() => removeChip(chip)} className="block z-[1] ms-auto w-auto h-full aspect-square cursor-pointer text-base ">
                 <FontAwesomeIcon icon={faCircleXmark} />
               </span>
+                */}
             </PrimaryBtnNeon>
           ))
         }
+        {/*
         <input type="text" id={id}
           value={inputVal} onChange={(e) => setInputVal(e.target.value)}
           onKeyDown={handleKeyPress} placeholder={placeholder}
@@ -183,6 +194,7 @@ function InputElWChips({ label, placeholder = "", labelNode = null, id = "" }: I
             "text-white h-10 text-start bg-transparent font-jakarta font-normal text-sm leading-6 w-full px-2",
             "outline-none transition-all placeholder:text-white/70"
           )} />
+          */}
       </div>
     </div>
   )
