@@ -11,6 +11,12 @@ import { TextAreaEl } from "../ui/textarea"
 import { PostStatus } from "@/pages/GenerateContent"
 import ImageEl from "../ImageEl"
 import { changeImageUrl } from '@/lib/utils'
+import { profileContext } from '@/pages/Drafts'
+import { useContext, useEffect } from "react"
+
+import {
+  scheduleApiClient,
+} from '@/api.env'
 
 
 
@@ -18,11 +24,17 @@ import { changeImageUrl } from '@/lib/utils'
 
 type Props = {
     variant: "edit" | "add"
+    content?: any
 }
 
-export default function AddEditDraftPopup({ variant = "add" }: Props) {
+export default function AddEditDraftPopup({ variant = "add", content }: Props) {
     const [isOpen, setIsOpen] = useState(false);
     const [imageStatus, setImageStatus] = useState<PostStatus>(PostStatus.GENERATED);
+
+    const [timezone, setTimezone] = useState<any>('');
+    const [schedule, setSchedule] = useState<any>(null);
+
+    const profile: any = useContext(profileContext);
 
     const onRegenerateClicked = () => {
         setImageStatus(PostStatus.GENERATING);
@@ -38,6 +50,40 @@ export default function AddEditDraftPopup({ variant = "add" }: Props) {
     function openModal() {
         setIsOpen(true)
     }
+
+    useEffect(() => {
+      async function startFetching() {
+        // setContentResult(null);
+        let result = null;
+        if (content?.statusText === 'Scheduled') {
+          result = await scheduleApiClient.schedulesRead({id: content.id}).then((r) => {
+            console.log(r);
+            return r;
+          }).catch((e) => {
+            console.log(e);
+            // console.log(`content: ${content}`);
+          });
+        }
+
+        if (!ignore) {
+          if (result) {
+              setSchedule(result.userScheduleTime);
+              setTimezone(result.timezoneText);
+            }
+
+          if (! result) {
+            setSchedule(null);
+            setTimezone('');
+          }
+        }
+      }
+
+      let ignore = false;
+      startFetching();
+      return () => {
+        ignore = true;
+      }
+    }, [content]);
 
     return (
         <>
@@ -123,17 +169,55 @@ export default function AddEditDraftPopup({ variant = "add" }: Props) {
                                                                 </p>
                                                             </label>
                                                         }
-                                                        options={[
+                                                        options={
+                                                          timezone ? timezone === profile.timezoneText ? [
+                                                              {
+                                                                  text: profile.timezoneText,
+                                                                  value: profile.timezone,
+                                                                  disabled: false
+                                                              }
+                                                            ] : [
+                                                              {
+                                                                  text: timezone,
+                                                                  value: timezone,
+                                                                  disabled: false
+                                                              },
+                                                              {
+                                                                  text: profile.timezoneText,
+                                                                  value: profile.timezone,
+                                                                  disabled: false
+                                                              }
+                                                          ]
+
+
+                                                          :
+
+                                                          [
                                                             {
-                                                                text: "Asia/Shanghai",
-                                                                value: "asia/shaghai",
+                                                                // text: "Asia/Shanghai",
+                                                                // value: "asia/shaghai",
+                                                                // disabled: false
+                                                                text: profile.timezoneText,
+                                                                value: profile.timezone,
                                                                 disabled: false
                                                             },
                                                         ]} />
                                                 </div>
                                                 {/* <InputElDate className="w-full col-span-1" /> */}
-                                                <InputEl type="date" className="w-full col-span-1" />
-                                                <InputEl type="time" className="w-full col-span-1" />
+                                                {
+                                                  schedule ? <>
+                                                    {/*<InputEl type="date" className="w-full col-span-1" value={schedule.toLocaleDateString()} />*/}
+                                                    <InputEl type="date" className="w-full col-span-1"
+                                                      value={new Date(schedule.getTime() - schedule.getTimezoneOffset() * 60 * 1000).toISOString().split('T')[0]}
+                                                    />
+                                                    <InputEl type="time" className="w-full col-span-1" value={schedule.toTimeString().split(' ')[0]} />
+                                                  </>
+                                                  :
+                                                  <>
+                                                    <InputEl type="date" className="w-full col-span-1" />
+                                                    <InputEl type="time" className="w-full col-span-1" />
+                                                  </>
+                                                }
                                             </div>
                                             <TextAreaEl
                                                 labelNode={
@@ -144,13 +228,17 @@ export default function AddEditDraftPopup({ variant = "add" }: Props) {
                                                         </p>
                                                     </label>
                                                 }
-                                                value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." />
+                                                value={content?.text}
+                                            />
                                             <div className="flex items-center gap-3 md:gap-5 flex-wrap md:flex-nowrap">
                                                 <div className="w-full md:w-2/3 lg:w-1/2">
-                                                    <ImageEl
-                                                        showLoading={imageStatus === PostStatus.GENERATING}
-                                                        src={changeImageUrl("/images/today-post.png")} alt="" width={367} height={290}
-                                                        className="w-full h-[260px] sm:h-80 md:h-[290px] rounded-20 overflow-hidden" />
+                                                    {
+                                                      content?.image &&
+                                                        <ImageEl
+                                                            showLoading={imageStatus === PostStatus.GENERATING}
+                                                            src={content?.image} alt="" width={367} height={290}
+                                                            className="w-full h-[260px] sm:h-80 md:h-[290px] rounded-20 overflow-hidden" />
+                                                    }
                                                 </div>
                                                 <div className="flex items-center justify-start">
                                                     <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3 px-5">

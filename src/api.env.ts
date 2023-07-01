@@ -5,6 +5,9 @@ import {
   ContentsApi,
   TwitterUsersApi,
   TopicsApi,
+  ProfilesApi,
+  TimezonesApi,
+  SchedulesApi,
   // ProjectStatusListApi,
 } from './api/index'
 
@@ -24,6 +27,9 @@ export const userApiClient = new UsersApi(apiConf);
 export const contentApiClient = new ContentsApi(apiConf);
 export const twitterUserApiClient = new TwitterUsersApi(apiConf);
 export const topicApiClient = new TopicsApi(apiConf);
+export const profileApiClient = new ProfilesApi(apiConf);
+export const timezoneApiClient = new TimezonesApi(apiConf);
+export const scheduleApiClient = new SchedulesApi(apiConf);
 // export const projectStatusListApiClient = new ProjectStatusListApi(apiConf);
 
 // console.log(cookies.get('csrftoken'));

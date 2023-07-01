@@ -23,6 +23,8 @@ import {
   twitterUserApiClient,
   contentApiClient,
   topicApiClient,
+  profileApiClient,
+  timezoneApiClient,
   // projectStatusListApiClient,
 } from '@/api.env'
 import { createContext, useContext } from 'react';
@@ -133,6 +135,13 @@ const router = createBrowserRouter([
         return r;
       });
       pageData.twitterUsersList = twitterUsersList;
+
+      // get profile
+      const profile = await profileApiClient.profilesList().then((r) => {
+        console.log(r);
+        return r.results[0];
+      });
+      pageData.profile = profile;
 
       const contentsList = await contentApiClient.contentsList({topic: topicsList[0].text}).then((r) => {
         // console.log('Contents list');

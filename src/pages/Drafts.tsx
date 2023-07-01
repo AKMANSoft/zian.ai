@@ -33,6 +33,7 @@ const filters = [
 
 export const noTopicString = '(No Topic)';
 export const twitterUserContext = createContext(null);
+export const profileContext = createContext(null);
 
 export default function DraftsPage() {
     const [activeTab, setActiveTab] = useState(0);
@@ -140,6 +141,7 @@ export default function DraftsPage() {
     }
 
     return (
+        <profileContext.Provider value={pageData.profile}>
         <twitterUserContext.Provider value={pageData.twitterUsersList}>
         <MainLayout heading="Drafts" user={pageData.user}>
             <GrBorderBox className="p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)] " type="lg">
@@ -211,6 +213,7 @@ export default function DraftsPage() {
             </GrBorderBox>
         </MainLayout>
         </twitterUserContext.Provider>
+        </profileContext.Provider>
     );
 }
 
@@ -380,7 +383,7 @@ function SingleTableRow({ onClick, num, content, deleteNumber, setDeleteNumber }
             <span className="block text-white py-1 lg:py-3 lg:min-h-[50px] text-start w-[150px] max-w-[200px] overflow-hidden min-w-[200px]">
                 <div className="inline-flex items-center gap-2">
                     <PostViewPopup content={content}/>
-                    <AddEditDraftPopup variant="edit" />
+                    <AddEditDraftPopup variant="edit" content={content} />
                     <WarningPopup
                         heading="Are you sure you want to delete this post?"
                         description={content?.text}

@@ -1,5 +1,8 @@
 apis/ContentsApi.ts
+apis/ProfilesApi.ts
 apis/ProjectsApi.ts
+apis/SchedulesApi.ts
+apis/TimezonesApi.ts
 apis/TopicsApi.ts
 apis/TwitterUsersApi.ts
 apis/UsersApi.ts
@@ -7,8 +10,13 @@ apis/index.ts
 index.ts
 models/ContentForTwitterPost.ts
 models/ContentsList200Response.ts
+models/Profile.ts
+models/ProfilesList200Response.ts
 models/Project.ts
 models/ProjectsList200Response.ts
+models/ScheduleForTwitterPost.ts
+models/SchedulesList200Response.ts
+models/Timezone.ts
 models/Topic.ts
 models/TwitterAccount.ts
 models/TwitterUsersList200Response.ts

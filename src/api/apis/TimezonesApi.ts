@@ -15,38 +15,27 @@
 
 import * as runtime from '../runtime';
 import type {
-  User,
-  UsersList200Response,
+  Timezone,
 } from '../models';
 import {
-    UserFromJSON,
-    UserToJSON,
-    UsersList200ResponseFromJSON,
-    UsersList200ResponseToJSON,
+    TimezoneFromJSON,
+    TimezoneToJSON,
 } from '../models';
 
-export interface UsersListRequest {
-    page?: number;
-}
-
-export interface UsersReadRequest {
-    id: string;
+export interface TimezonesReadRequest {
+    id: number;
 }
 
 /**
  * 
  */
-export class UsersApi extends runtime.BaseAPI {
+export class TimezonesApi extends runtime.BaseAPI {
 
     /**
      * This viewset automatically provides `list` and `retrieve` actions.
      */
-    async usersListRaw(requestParameters: UsersListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UsersList200Response>> {
+    async timezonesListRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Timezone>>> {
         const queryParameters: any = {};
-
-        if (requestParameters.page !== undefined) {
-            queryParameters['page'] = requestParameters.page;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -54,29 +43,29 @@ export class UsersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/users/`,
+            path: `/timezones/`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => UsersList200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(TimezoneFromJSON));
     }
 
     /**
      * This viewset automatically provides `list` and `retrieve` actions.
      */
-    async usersList(requestParameters: UsersListRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UsersList200Response> {
-        const response = await this.usersListRaw(requestParameters, initOverrides);
+    async timezonesList(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Timezone>> {
+        const response = await this.timezonesListRaw(initOverrides);
         return await response.value();
     }
 
     /**
      * This viewset automatically provides `list` and `retrieve` actions.
      */
-    async usersReadRaw(requestParameters: UsersReadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
+    async timezonesReadRaw(requestParameters: TimezonesReadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Timezone>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling usersRead.');
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling timezonesRead.');
         }
 
         const queryParameters: any = {};
@@ -87,20 +76,20 @@ export class UsersApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/users/{id}/`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/timezones/{id}/`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => UserFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TimezoneFromJSON(jsonValue));
     }
 
     /**
      * This viewset automatically provides `list` and `retrieve` actions.
      */
-    async usersRead(requestParameters: UsersReadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<User> {
-        const response = await this.usersReadRaw(requestParameters, initOverrides);
+    async timezonesRead(requestParameters: TimezonesReadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Timezone> {
+        const response = await this.timezonesReadRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
