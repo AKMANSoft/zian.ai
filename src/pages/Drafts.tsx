@@ -31,6 +31,7 @@ const filters = [
     "Promotions",
 ]
 
+export const noTopicString = '(No Topic)';
 
 export default function DraftsPage() {
     const [activeTab, setActiveTab] = useState(0);
@@ -56,18 +57,34 @@ export default function DraftsPage() {
     useEffect(() => {
         async function startFetching() {
           // setContentResult(null);
-          const result = await contentApiClient.contentsList({page, topic}).then((r) => {
-            // console.log(r);
-            return r;
-          }).catch((e) => {
-            console.log(e);
-            console.log(`page: ${page}`);
-            if (page > 1) {
-              const page1 = page - 1;
-              console.log(`previous page: ${page1}`);
-              setPage(page1);  // find previous page data
-            }
-          });
+          let result = null;
+          if (topic === noTopicString) {
+            result = await contentApiClient.contentsList({page, untopic: "true"}).then((r) => {
+              // console.log(r);
+              return r;
+            }).catch((e) => {
+              console.log(e);
+              console.log(`page: ${page}`);
+              if (page > 1) {
+                const page1 = page - 1;
+                console.log(`previous page: ${page1}`);
+                setPage(page1);  // find previous page data
+              }
+            });
+          } else {
+            result = await contentApiClient.contentsList({page, topic}).then((r) => {
+              // console.log(r);
+              return r;
+            }).catch((e) => {
+              console.log(e);
+              console.log(`page: ${page}`);
+              if (page > 1) {
+                const page1 = page - 1;
+                console.log(`previous page: ${page1}`);
+                setPage(page1);  // find previous page data
+              }
+            });
+          }
 
           if (!ignore) {
             if (result) {
@@ -136,7 +153,8 @@ export default function DraftsPage() {
                                 {
                                     // [...filters, ...filters].map((filter, index) => (
                                     // [...filters].map((filter, index) => (
-                                  [...pageData.topicsList.map((e: any) => e.text)].map((filter, index) => (
+                                    
+                                    [...pageData.topicsList.map((e: any) => e.text)].map((filter, index) => (
                                         <TabItem
                                             key={filter} text={filter}
                                             active={index === activeTab}

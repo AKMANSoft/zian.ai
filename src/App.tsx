@@ -33,6 +33,11 @@ const GenerateContentPage = React.lazy(() => import("./pages/GenerateContent"));
 const CalendarPage = React.lazy(() => import("./pages/Calendar"));
 const DraftsPage = React.lazy(() => import("./pages/Drafts"));
 
+import {
+  noTopicString,
+} from '@/pages/Drafts'
+
+
 export const UserContext = createContext(null);
 
 const router = createBrowserRouter([
@@ -117,6 +122,9 @@ const router = createBrowserRouter([
         console.log(r);
         return r;
       });
+      if (topicsList) {
+        topicsList.push({text: noTopicString});
+      }
       pageData.topicsList = topicsList;
 
       const contentsList = await contentApiClient.contentsList({topic: topicsList[0].text}).then((r) => {
