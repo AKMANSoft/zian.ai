@@ -14,6 +14,7 @@ type InputElProps = {
   onChange?: (value: string) => void,
   rows?: number;
   cols?: number;
+  maxLength?: number;
 }
 
 function TextAreaEl({
@@ -21,6 +22,7 @@ function TextAreaEl({
   id = "", endIcon, value,
   onChange, className,
   rows = 5, cols = 10,
+  maxLength = 280,
 }: InputElProps) {
 
   return (
@@ -42,12 +44,14 @@ function TextAreaEl({
         rows={rows}
         cols={cols}
         value={value}
+        maxLength={maxLength}
         onChange={(e) => onChange?.call(null, e.target.value)}
         className={cn(
           "text-white h-full resize-none min-h-[200px] text-start font-jakarta font-light text-sm leading-6 py-3 px-5",
           "border border-white/10 appearance-none rounded-10 w-full bg-transparent mt-2",
           "focus:bg-th-gray/10 outline-none transition-all placeholder:text-white/70"
         )} />
+      {/*<p className="text-white text-start font-light text-sm">Please input at most {maxLength} characters</p>*/}
       {
         endIcon && endIcon !== null &&
         <span className="h-16 absolute z-10 top-0 flex items-center justify-center right-4 text-white text-lg">

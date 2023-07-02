@@ -39,10 +39,10 @@ export interface ScheduleForTwitterPost {
     status?: number;
     /**
      * 
-     * @type {Date}
+     * @type {string}
      * @memberof ScheduleForTwitterPost
      */
-    userScheduleTime?: Date | null;
+    userScheduleTime?: string | null;
     /**
      * 
      * @type {number}
@@ -87,7 +87,7 @@ export function ScheduleForTwitterPostFromJSONTyped(json: any, ignoreDiscriminat
         'content': json['content'],
         'schedule': (new Date(json['schedule'])),
         'status': !exists(json, 'status') ? undefined : json['status'],
-        'userScheduleTime': !exists(json, 'user_schedule_time') ? undefined : (json['user_schedule_time'] === null ? null : new Date(json['user_schedule_time'])),
+        'userScheduleTime': !exists(json, 'user_schedule_time') ? undefined : json['user_schedule_time'],
         'timezone': !exists(json, 'timezone') ? undefined : json['timezone'],
         'timezoneText': !exists(json, 'timezone_text') ? undefined : json['timezone_text'],
         'createdTime': !exists(json, 'created_time') ? undefined : (new Date(json['created_time'])),
@@ -106,7 +106,7 @@ export function ScheduleForTwitterPostToJSON(value?: ScheduleForTwitterPost | nu
         'content': value.content,
         'schedule': (value.schedule.toISOString()),
         'status': value.status,
-        'user_schedule_time': value.userScheduleTime === undefined ? undefined : (value.userScheduleTime === null ? null : value.userScheduleTime.toISOString()),
+        'user_schedule_time': value.userScheduleTime,
         'timezone': value.timezone,
     };
 }

@@ -13,6 +13,7 @@ import ImageEl from "../ImageEl"
 import { changeImageUrl } from '@/lib/utils'
 import { profileContext } from '@/pages/Drafts'
 import { useContext, useEffect } from "react"
+import { DateTime } from "luxon";
 
 import {
   scheduleApiClient,
@@ -39,6 +40,11 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
     const [schedule, setSchedule] = useState<any>(null);
     // const imageUrl = content?.image;
     const [image, setImage] = useState<any>('');
+
+    const [message, setMessage] = useState<string>('');
+    const [messageClass, setMessageClass] = useState<string>('');
+    const [scheduleMessage, setScheduleMessage] = useState<string>('');
+    const [scheduleMessageClass, setScheduleMessageClass] = useState<string>('');
 
     const profile: any = useContext(profileContext);
 
@@ -71,6 +77,11 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
         setImage(content?.image);
         setIsOpen(true);
         console.log(`image url: ${image}`);
+
+        setMessage('');
+        setMessageClass('');
+        setScheduleMessage('');
+        setScheduleMessageClass('');
     }
 
     useEffect(() => {
@@ -89,7 +100,8 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
 
         if (!ignore) {
           if (result) {
-              setSchedule(result.userScheduleTime);
+              console.log(`schedule: ${result.schedule}`);
+              setSchedule(result.schedule);
               setTimezone(result.timezoneText);
             }
 
@@ -106,6 +118,131 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
         ignore = true;
       }
     }, [content]);
+
+    function onSubmit() {
+      const contentSelector = '#content-text';
+      const timezoneSelector = "#headlessui-listbox-button-P0-1";
+      const dateSelector = 'input[type="date"]';
+      const timeSelector = 'input[type="time"]';
+
+      const contentText = (document.querySelector(contentSelector) as HTMLInputElement).value;
+      // const timezoneText = (document.querySelector(timezoneSelector) as HTMLInputElement).textContent;
+      const timezoneText = profile.timezoneText;
+      const dateText = (document.querySelector(dateSelector) as HTMLInputElement).value;
+      const timeText = (document.querySelector(timeSelector) as HTMLInputElement).value;
+
+      console.log(`timezone: ${timezoneText}, date: ${dateText}, time: ${timeText}, content: ${contentText}`);
+
+      if (content) {  // edit existing content
+        const contentForTwitterPost = {
+          id: content.id,
+          text: contentText,
+          status: content.status,
+          project: content.project,
+          topic: content.topic,
+        }
+        const contentsUpdateRequest = {
+              id: content.id,
+              data: contentForTwitterPost,
+        }
+
+        contentApiClient.contentsUpdate(contentsUpdateRequest).then((r) => {
+          console.log(r);
+
+          const msg_class = 'text-green-500';
+          // const message = `Updated the draft(${content.id}) successfully`;
+          const message = `Updated the draft successfully`;
+          setMessage(message);
+          setMessageClass(msg_class);
+        }).catch((r) => {
+          console.log(r);
+
+          const msg_class = 'text-red-500';
+          // const message = `Failed to updated the draft(${content.id})`;
+          const message = `Failed to updated the draft`;
+          setMessage(message);
+          setMessageClass(msg_class);
+        }).finally(() => {
+          if (deleteNumber !== undefined) {
+            let lastNumber = deleteNumber + 1;
+            setDeleteNumber && setDeleteNumber(lastNumber);
+            // console.log('update deleteNumber');
+          }
+        });
+
+        // schedule draft
+        if (schedule) { // update schedule
+          if (timezoneText && dateText && timeText) {
+            console.log(`Update schedule for content: ${content.id}`);
+
+            const dateFormat = `${dateText}T${timeText}`;
+            console.log(`dateFormat: ${dateFormat}`);
+            const userDate = DateTime.fromISO(dateFormat, {zone: timezoneText});
+            // const userDate = DateTime.fromISO(dateFormat, {zone: profile.timezoneText});
+            const userDateStr = userDate.toISO();
+            const userLocalDateStr = userDate.toLocal().toISO();
+            console.log(`userDateStr: ${userDateStr}, userLocalDateStr: ${userLocalDateStr}`);
+
+            if (userDateStr && userLocalDateStr) {
+              const scheduleDate = new Date(userDateStr);
+              // const userScheduleTime = new Date(userLocalDateStr);
+              const userScheduleTime = new Date(dateFormat);
+
+              const scheduleForTwitterPost = {
+                content: content.id,
+                // schedule: userDate,
+                // userScheduleTime: userDate,
+                schedule: scheduleDate,
+                userScheduleTime: dateFormat,
+                status: schedule.status,
+                timezone: profile.timezone,
+                // timezoneText: timezoneText,
+              };
+              const schedulesUpdateRequest = {
+                id: content.id,
+                data: scheduleForTwitterPost,
+              };
+              console.log(schedulesUpdateRequest);
+
+              scheduleApiClient.schedulesUpdate(schedulesUpdateRequest).then((r) => {
+                console.log('Updated schedule');
+                console.log(r);
+
+                const msg_class = 'text-green-500';
+                const message = `Updated the schedule successfully`;
+                setScheduleMessage(message);
+                setScheduleMessageClass(msg_class);
+              }).catch((e) => {
+                console.log(e);
+
+                const msg_class = 'text-red-500';
+                const message = `Failed to updated the schedule`;
+                setScheduleMessage(message);
+                setScheduleMessageClass(msg_class);
+              }).finally(() => {
+                if (deleteNumber !== undefined) {
+                  let lastNumber = deleteNumber + 1;
+                  setDeleteNumber && setDeleteNumber(lastNumber);
+                  // console.log('update deleteNumber');
+                }
+              });
+            } else {
+              const scheduleMessage = 'Wrong date format';
+              const msg_class = 'text-red-500';
+              setScheduleMessage(scheduleMessage);
+              setScheduleMessageClass(msg_class);
+            }
+          } else {
+            console.log('Timezone, date or time is blank');
+          }
+        } else {  // create new schedule
+          console.log(`Create schedule for content: ${content.id}`);
+          // scheduleApiClient.schedulesCreate().then().catch().finally();
+        }
+      } else {  // add new content
+        console.log('Create new draft');
+      }
+    }
 
     return (
         <>
@@ -192,47 +329,64 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
                                                             </label>
                                                         }
                                                         options={
-                                                          timezone ? timezone === profile.timezoneText ? [
-                                                              {
-                                                                  text: profile.timezoneText,
-                                                                  value: profile.timezone,
-                                                                  disabled: false
-                                                              }
-                                                            ] : [
-                                                              {
-                                                                  text: timezone,
-                                                                  value: timezone,
-                                                                  disabled: false
-                                                              },
-                                                              {
-                                                                  text: profile.timezoneText,
-                                                                  value: profile.timezone,
-                                                                  disabled: false
-                                                              }
-                                                          ]
-
-
-                                                          :
+                                                        //   timezone ? timezone === profile.timezoneText ? [
+                                                        //       {
+                                                        //           text: profile.timezoneText,
+                                                        //           value: profile.timezone,
+                                                        //           disabled: true
+                                                        //       }
+                                                        //     ] : [
+                                                        //       {
+                                                        //           text: timezone,
+                                                        //           value: timezone,
+                                                        //           disabled: true
+                                                        //       },
+                                                        //       {
+                                                        //           text: profile.timezoneText,
+                                                        //           value: profile.timezone,
+                                                        //           disabled: true
+                                                        //       }
+                                                        //   ]
+                                                        //
+                                                        //
+                                                        //   :
+                                                        //
+                                                        //   [
+                                                        //     {
+                                                        //         // text: "Asia/Shanghai",
+                                                        //         // value: "asia/shaghai",
+                                                        //         // disabled: true
+                                                        //         text: profile.timezoneText,
+                                                        //         value: profile.timezone,
+                                                        //         disabled: true
+                                                        //     },
+                                                        // ]
 
                                                           [
                                                             {
                                                                 // text: "Asia/Shanghai",
                                                                 // value: "asia/shaghai",
-                                                                // disabled: false
+                                                                // disabled: true
                                                                 text: profile.timezoneText,
                                                                 value: profile.timezone,
-                                                                disabled: false
+                                                                disabled: true
                                                             },
-                                                        ]} />
+                                                        ]
+                                                    } 
+                                                  />
                                                 </div>
                                                 {/* <InputElDate className="w-full col-span-1" /> */}
                                                 {
                                                   schedule ? <>
                                                     {/*<InputEl type="date" className="w-full col-span-1" value={schedule.toLocaleDateString()} />*/}
                                                     <InputEl type="date" className="w-full col-span-1"
-                                                      value={new Date(schedule.getTime() - schedule.getTimezoneOffset() * 60 * 1000).toISOString().split('T')[0]}
+                                                      // value={new Date(schedule.getTime() - schedule.getTimezoneOffset() * 60 * 1000).toISOString().split('T')[0]}
+                                                      value={DateTime.fromISO(schedule.toISOString()).setZone(profile.timezoneText).toFormat('yyyy-MM-dd')}
                                                     />
-                                                    <InputEl type="time" className="w-full col-span-1" value={schedule.toTimeString().split(' ')[0]} />
+                                                    <InputEl type="time" className="w-full col-span-1"
+                                                      // value={schedule.toTimeString().split(' ')[0]}
+                                                      value={DateTime.fromISO(schedule.toISOString()).setZone(profile.timezoneText).toFormat('HH:mm:ss')}
+                                                    />
                                                   </>
                                                   :
                                                   <>
@@ -242,11 +396,13 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
                                                 }
                                             </div>
                                             <TextAreaEl
+                                                id="content-text"
                                                 labelNode={
                                                     <label className="w-full flex items-center justify-between">
                                                         <p className="text-white text-sm font-bold">
                                                             <FontAwesomeIcon icon={faT} />
                                                             <span className="ms-3">Text</span>
+                                                            <span className="text-white text-start font-light text-sm ms-3">(Please input at most 280 characters)</span>
                                                         </p>
                                                     </label>
                                                 }
@@ -264,7 +420,7 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
                                                         <ImageEl
                                                             showLoading={imageStatus === PostStatus.GENERATING}
                                                             src="" alt="No Image" width={367} height={290}
-                                                            className="w-full h-[260px] sm:h-80 md:h-[290px] rounded-20 overflow-hidden" />
+                                                            className="w-full h-[260px] sm:h-80 md:h-[290px] rounded-20 overflow-hidden text-white" />
                                                     }
                                                 </div>
                                                 <div className="flex items-center justify-start">
@@ -278,10 +434,14 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
                                     {/* Footer  */}
                                     <GrBorderBox className="p-px md:p-[2px] w-full">
                                         <div className="w-full min-h-[20px] bg-gr-purple-dark p-4 md:p-5 flex items-center gap-3 justify-end">
+                                            <p id="message" className={messageClass ? "grow text-start font-light text-sm" + ' ' + messageClass : "grow text-start font-light text-sm"}>{message}</p>
+                                            <p id="message1" className={scheduleMessageClass ? "grow text-start font-light text-sm" + ' ' + scheduleMessageClass : "grow text-start font-light text-sm"}>
+                                              {scheduleMessage}
+                                            </p>
                                             <SecondaryBtn onClick={closeModal} filled={false} className="border-white/10 py-3 px-8 w-full md:w-auto">
                                                 Cancel
                                             </SecondaryBtn>
-                                            <PrimaryBtn className="py-3 h-full px-8 w-full md:w-auto">
+                                            <PrimaryBtn className="py-3 h-full px-8 w-full md:w-auto" onClick={onSubmit}>
                                                 {variant === "add" ? "Add" : "Save"}
                                             </PrimaryBtn>
                                         </div>
