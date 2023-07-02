@@ -27,9 +27,11 @@ import {
 type Props = {
     variant: "edit" | "add"
     content?: any
+    deleteNumber?: number
+    setDeleteNumber?: (n: number) => void
 }
 
-export default function AddEditDraftPopup({ variant = "add", content }: Props) {
+export default function AddEditDraftPopup({ variant = "add", content, deleteNumber, setDeleteNumber }: Props) {
     const [isOpen, setIsOpen] = useState(false);
     const [imageStatus, setImageStatus] = useState<PostStatus>(PostStatus.GENERATED);
 
@@ -45,8 +47,13 @@ export default function AddEditDraftPopup({ variant = "add", content }: Props) {
 
         // contentApiClient.contentsCreateImage({id: content.id}).then((r) => {
         imageApiClient.imagesCreateImage({id: content.id}).then((r) => {
-          console.log(r);
+          // console.log(r);
           setImage(r.imageUrl);
+          if (deleteNumber !== undefined) {
+            let lastNumber = deleteNumber + 1;
+            setDeleteNumber && setDeleteNumber(lastNumber);
+            // console.log('update deleteNumber');
+          }
         }).finally(() => {
             setImageStatus(PostStatus.GENERATED);
         });

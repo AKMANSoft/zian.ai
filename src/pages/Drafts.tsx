@@ -134,8 +134,8 @@ export default function DraftsPage() {
         <SingleTableRow num={content.id} content={content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber}/> );
       } else {
         let itemList = pageData?.contentsList?.results && pageData?.contentsList.results.map( (content: any) =>
-          // <SingleTableRow num={content.id} content={content} /> );
-          <SingleTableRow num={content.id} content={content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber}/> );
+        // <SingleTableRow num={content.id} content={content} /> );
+        <SingleTableRow num={content.id} content={content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber}/> );
         return itemList;
       }
     }
@@ -172,7 +172,7 @@ export default function DraftsPage() {
                             </button>
 
                         </div>
-                        <AddEditDraftPopup variant="add" />
+                        <AddEditDraftPopup variant="add" deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber} />
                     </div>
                     {/* Drafts Table  */}
                     <div className="-mt-px bg-gr-purple-light border w-full h-full border-primary rounded-10 flex flex-col overflow-hidden">
@@ -383,7 +383,7 @@ function SingleTableRow({ onClick, num, content, deleteNumber, setDeleteNumber }
             <span className="block text-white py-1 lg:py-3 lg:min-h-[50px] text-start w-[150px] max-w-[200px] overflow-hidden min-w-[200px]">
                 <div className="inline-flex items-center gap-2">
                     <PostViewPopup content={content}/>
-                    <AddEditDraftPopup variant="edit" content={content} />
+                    <AddEditDraftPopup variant="edit" content={content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber}/>
                     <WarningPopup
                         heading="Are you sure you want to delete this post?"
                         description={content?.text}
