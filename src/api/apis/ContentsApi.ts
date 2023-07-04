@@ -64,6 +64,10 @@ export interface ContentsScheduledRequest {
     page?: number;
 }
 
+export interface ContentsSendRequest {
+    id: string;
+}
+
 export interface ContentsUpdateRequest {
     id: string;
     data: ContentForTwitterPost;
@@ -368,6 +372,39 @@ export class ContentsApi extends runtime.BaseAPI {
      */
     async contentsScheduled(requestParameters: ContentsScheduledRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentsList200Response> {
         const response = await this.contentsScheduledRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Send content to twitter immediately
+     */
+    async contentsSendRaw(requestParameters: ContentsSendRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentForTwitterPost>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling contentsSend.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/contents/{id}/send/`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ContentForTwitterPostFromJSON(jsonValue));
+    }
+
+    /**
+     * Send content to twitter immediately
+     */
+    async contentsSend(requestParameters: ContentsSendRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentForTwitterPost> {
+        const response = await this.contentsSendRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

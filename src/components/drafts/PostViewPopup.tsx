@@ -33,6 +33,9 @@ export default function PostViewPopup({ trigger, content, deleteNumber, setDelet
     const [isOpen, setIsOpen] = useState(false);
     const [imageStatus, setImageStatus] = useState<PostStatus>(PostStatus.GENERATED);
     const [image, setImage] = useState<any>('');
+    const [message, setMessage] = useState<string>('');
+    const [messageClass, setMessageClass] = useState<string>('');
+    const [sendStatus, setSendStatus] = useState<string>('');
 
     // const onRegenerateClicked = () => {
     //     setImageStatus(PostStatus.GENERATING);
@@ -69,6 +72,37 @@ export default function PostViewPopup({ trigger, content, deleteNumber, setDelet
     function openModal() {
         setImage(content?.image);
         setIsOpen(true)
+
+        setMessage('');
+        setMessageClass('');
+        setSendStatus('');
+    }
+
+    function onClickSendNow(): void {
+      if (content) {
+        setSendStatus('sending');
+
+        console.log(`Send content: ${content.id}`);
+        contentApiClient.contentsSend({id: content.id}).then((r) => {
+          console.log(r);
+
+          const msg_class = 'text-green-500';
+          const message = `Send the draft successfully`;
+          setMessage(message);
+          setMessageClass(msg_class);
+          setSendStatus('sent');
+
+          if (setDeleteNumber && deleteNumber != undefined) {
+            setDeleteNumber(deleteNumber + 1);
+          }
+        }).catch((e) => {
+          const msg_class = 'text-red-500';
+          const message = `Failed to send the draft`;
+          setMessage(message);
+          setMessageClass(msg_class);
+          setSendStatus('');
+        });
+      }
     }
 
     function onDeleteContent(): void {
@@ -136,8 +170,12 @@ export default function PostViewPopup({ trigger, content, deleteNumber, setDelet
                                         </button>
                                     </div>
 
-                                    <div className="p-8 py-16 max-h-[calc(100vh_-_200px)] overflow-y-auto">
+                                    {/*<div className="p-8 py-16 max-h-[calc(100vh_-_200px)] overflow-y-auto">*/}
+                                    <div className="p-8 py-12 max-h-[calc(100vh_-_200px)] overflow-y-auto">
                                         <div className="h-full flex flex-col justify-between gap-6">
+                                            <div className="flex items-center justify-start">
+                                              <p className={messageClass}>{message}</p>
+                                            </div>
                                             <div className="">
                                                 {/* {heading} */}
                                                 <div className="flex items-center gap-3">
@@ -161,46 +199,58 @@ export default function PostViewPopup({ trigger, content, deleteNumber, setDelet
                                                 }
                                             </div>
                                             {/* Buttons  */}
-                                            <div className="flex items-center justify-between">
-                                                <div className="flex items-center gap-3">
-                                                    {/*
-                                                    <SecondaryBtn className="px-2 xs:px-4">
-                                                        <FontAwesomeIcon icon={faEdit} />
-                                                        Edit
-                                                    </SecondaryBtn>
-                                                      */}
-                                                    <AddEditDraftPopup variant="edit" content={content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber} hasWord={true}/>
+                                            {
+                                              content?.statusText === 'Sent' ? '' : (
+                                                <div className="flex items-center justify-between">
+                                                    <div className="flex items-center gap-3">
+                                                        {/*
+                                                        <SecondaryBtn className="px-2 xs:px-4">
+                                                            <FontAwesomeIcon icon={faEdit} />
+                                                            Edit
+                                                        </SecondaryBtn>
+                                                          */}
+                                                        <AddEditDraftPopup variant="edit" content={content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber} hasWord={true}/>
 
-                                                    {/*
-                                                    <SecondaryBtn className="px-2 xs:px-4">
-                                                        <FontAwesomeIcon icon={faTrash} />
-                                                        Delete
-                                                    </SecondaryBtn>
-                                                      */}
+                                                        {/*
+                                                        <SecondaryBtn className="px-2 xs:px-4">
+                                                            <FontAwesomeIcon icon={faTrash} />
+                                                            Delete
+                                                        </SecondaryBtn>
+                                                          */}
 
-                                                    <WarningPopup
-                                                        heading="Are you sure you want to delete this post?"
-                                                        description={content?.text}
-                                                        negativeText="Cancel"
-                                                        positiveText="Yes, Delete"
-                                                        trigger={({ open }) => (
-                                                            <SecondaryBtn onClick={open} className="px-2 xs:px-4">
-                                                                <FontAwesomeIcon icon={faTrash} />
-                                                                Delete
-                                                            </SecondaryBtn>
-                                                        )}
-                                                       onClickPositiveTextButton={onDeleteContent}
-                                                    />
+                                                        <WarningPopup
+                                                            heading="Are you sure you want to delete this post?"
+                                                            description={content?.text}
+                                                            negativeText="Cancel"
+                                                            positiveText="Yes, Delete"
+                                                            trigger={({ open }) => (
+                                                                <SecondaryBtn onClick={open} className="px-2 xs:px-4">
+                                                                    <FontAwesomeIcon icon={faTrash} />
+                                                                    Delete
+                                                                </SecondaryBtn>
+                                                            )}
+                                                           onClickPositiveTextButton={onDeleteContent}
+                                                        />
+                                                    </div>
+                                                    <div className="hidden md:flex items-center gap-4">
+                                                        <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3">
+                                                          {image ? 'Regenerate Image' : 'Generate Image'}
+                                                        </SecondaryBtn>
+                                                        {
+                                                          sendStatus === '' ?
+                                                            <PrimaryBtn className="py-3 h-full" onClick={onClickSendNow}>
+                                                                Send Now
+                                                            </PrimaryBtn>
+                                                            : sendStatus === 'sending' ? 
+                                                              <PrimaryBtn disabled={true} className="py-3 h-full">
+                                                                  Sending...
+                                                              </PrimaryBtn>
+                                                            : ''
+                                                        }
+                                                    </div>
                                                 </div>
-                                                <div className="hidden md:flex items-center gap-4">
-                                                    <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3">
-                                                      {image ? 'Regenerate Image' : 'Generate Image'}
-                                                    </SecondaryBtn>
-                                                    <PrimaryBtn className="py-3 h-full">
-                                                        Send Now
-                                                    </PrimaryBtn>
-                                                </div>
-                                            </div>
+                                              )
+                                            }
 
                                         </div>
                                     </div>

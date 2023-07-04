@@ -8,6 +8,7 @@ type Props = {
     filled?: boolean;
     active?: boolean;
     onClick?: () => void
+    disabled?: boolean;
 }
 
 
@@ -27,14 +28,16 @@ export function SecondaryBtn({ className, children, filled = true, onClick }: Pr
 
 
 
-export function PrimaryBtn({ className, children, onClick }: Props) {
+export function PrimaryBtn({ className, children, onClick, disabled = false }: Props) {
     return (
         <button type="button" onClick={onClick} className={cn(
             "primary-btn bg-primary shadow-primary-btn hover:shadow-primary-btn-lg outline-none",
             "transition-all duration-300 rounded-lg py-[8px] px-4",
             "inline-flex items-center gap-2 text-white text-sm font-semibold justify-center",
             className
-        )}>
+        )}
+        disabled={disabled}
+        >
             {children}
         </button>
     )
