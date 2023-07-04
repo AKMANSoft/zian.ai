@@ -9,8 +9,13 @@ import { cn } from "@/lib/utils"
 import { PostStatus } from "@/pages/GenerateContent"
 import ImageEl from "../ImageEl"
 import { TriggerFunProps } from "../WarningPopup"
+import WarningPopup from "@/components/WarningPopup";
 import { changeImageUrl } from '@/lib/utils'
 import AddEditDraftPopup from "@/components/drafts/AddEditDraftPopup";
+
+import {
+  contentApiClient,
+} from '@/api.env'
 
 
 
@@ -40,6 +45,20 @@ export default function PostViewPopup({ trigger, content, deleteNumber, setDelet
 
     function openModal() {
         setIsOpen(true)
+    }
+
+    function onDeleteContent(): void {
+      if (content) {
+        console.log(`Delete content: ${content.id}`);
+        contentApiClient.contentsDelete({id: content.id}).then((r) => {
+          // console.log(r);
+            // window.location.reload();
+          if (setDeleteNumber && deleteNumber != undefined) {
+            closeModal(); // close this popup
+            setDeleteNumber(deleteNumber + 1);
+          }
+        });
+      }
     }
 
     return (
@@ -122,10 +141,26 @@ export default function PostViewPopup({ trigger, content, deleteNumber, setDelet
                                                       */}
                                                     <AddEditDraftPopup variant="edit" content={content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber} hasWord={true}/>
 
+                                                    {/*
                                                     <SecondaryBtn className="px-2 xs:px-4">
                                                         <FontAwesomeIcon icon={faTrash} />
                                                         Delete
                                                     </SecondaryBtn>
+                                                      */}
+
+                                                    <WarningPopup
+                                                        heading="Are you sure you want to delete this post?"
+                                                        description={content?.text}
+                                                        negativeText="Cancel"
+                                                        positiveText="Yes, Delete"
+                                                        trigger={({ open }) => (
+                                                            <SecondaryBtn onClick={open} className="px-2 xs:px-4">
+                                                                <FontAwesomeIcon icon={faTrash} />
+                                                                Delete
+                                                            </SecondaryBtn>
+                                                        )}
+                                                       onClickPositiveTextButton={onDeleteContent}
+                                                    />
                                                 </div>
                                                 <div className="hidden md:flex items-center gap-4">
                                                     <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3">
