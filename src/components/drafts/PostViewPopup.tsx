@@ -10,6 +10,7 @@ import { PostStatus } from "@/pages/GenerateContent"
 import ImageEl from "../ImageEl"
 import { TriggerFunProps } from "../WarningPopup"
 import { changeImageUrl } from '@/lib/utils'
+import AddEditDraftPopup from "@/components/drafts/AddEditDraftPopup";
 
 
 
@@ -17,10 +18,12 @@ import { changeImageUrl } from '@/lib/utils'
 type Props = {
     trigger?: ({ close, open }: TriggerFunProps) => ReactNode
     content?: any
+    deleteNumber?: number
+    setDeleteNumber?: (n: number) => void
 }
 
 
-export default function PostViewPopup({ trigger, content }: Props) {
+export default function PostViewPopup({ trigger, content, deleteNumber, setDeleteNumber }: Props) {
     const [isOpen, setIsOpen] = useState(false);
     const [imageStatus, setImageStatus] = useState<PostStatus>(PostStatus.GENERATED);
 
@@ -111,10 +114,14 @@ export default function PostViewPopup({ trigger, content }: Props) {
                                             {/* Buttons  */}
                                             <div className="flex items-center justify-between">
                                                 <div className="flex items-center gap-3">
+                                                    {/*
                                                     <SecondaryBtn className="px-2 xs:px-4">
                                                         <FontAwesomeIcon icon={faEdit} />
                                                         Edit
                                                     </SecondaryBtn>
+                                                      */}
+                                                    <AddEditDraftPopup variant="edit" content={content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber} hasWord={true}/>
+
                                                     <SecondaryBtn className="px-2 xs:px-4">
                                                         <FontAwesomeIcon icon={faTrash} />
                                                         Delete

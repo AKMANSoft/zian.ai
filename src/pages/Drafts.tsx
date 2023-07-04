@@ -396,7 +396,7 @@ function SingleTableRow({ onClick, num, content, deleteNumber, setDeleteNumber }
             </span>
             <span className="block text-white py-1 lg:py-3 lg:min-h-[50px] text-start w-[150px] max-w-[200px] overflow-hidden min-w-[200px]">
                 <div className="inline-flex items-center gap-2">
-                    <PostViewPopup content={content}/>
+                    <PostViewPopup content={content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber}/>
                     <AddEditDraftPopup variant="edit" content={content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber}/>
                     <WarningPopup
                         heading="Are you sure you want to delete this post?"

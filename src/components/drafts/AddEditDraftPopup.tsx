@@ -30,9 +30,10 @@ type Props = {
     content?: any
     deleteNumber?: number
     setDeleteNumber?: (n: number) => void
+    hasWord?: boolean | undefined
 }
 
-export default function AddEditDraftPopup({ variant = "add", content, deleteNumber, setDeleteNumber }: Props) {
+export default function AddEditDraftPopup({ variant = "add", content, deleteNumber, setDeleteNumber, hasWord }: Props) {
     const [isOpen, setIsOpen] = useState(false);
     const [imageStatus, setImageStatus] = useState<PostStatus>(PostStatus.GENERATED);
 
@@ -328,6 +329,11 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
                         <PrimaryBtn onClick={openModal} className="h-11 px-5 w-full">
                             Add New
                         </PrimaryBtn>
+                        : hasWord ?
+                        <SecondaryBtn onClick={openModal} className="px-2 xs:px-4">
+                            <FontAwesomeIcon icon={faEdit} />
+                            Edit
+                        </SecondaryBtn>
                         :
                         <SecondaryBtn onClick={openModal} className="p-3">
                             <FontAwesomeIcon icon={faEdit} />
