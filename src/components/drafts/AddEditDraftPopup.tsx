@@ -41,6 +41,8 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
     // const imageUrl = content?.image;
     const [image, setImage] = useState<any>('');
 
+    const [localContent, setLocalContent] = useState<any>(content);
+
     const [message, setMessage] = useState<string>('');
     const [messageClass, setMessageClass] = useState<string>('');
     const [scheduleMessage, setScheduleMessage] = useState<string>('');
@@ -112,12 +114,20 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
         }
       }
 
+      console.log('Running useEffect');
+      console.log(`imageStatus: ${imageStatus}`);
+
+      if (imageStatus === PostStatus.GENERATING) {
+        console.log('Do not update content when generating image');
+        return () => {};
+      }
+
       let ignore = false;
       startFetching();
       return () => {
         ignore = true;
       }
-    }, [content]);
+    }, [localContent]);
 
     function onSubmit() {
       const contentSelector = '#content-text';
@@ -154,6 +164,7 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
           const message = `Updated the draft successfully`;
           setMessage(message);
           setMessageClass(msg_class);
+          setLocalContent(r);
         }).catch((r) => {
           console.log(r);
 
@@ -212,6 +223,7 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
                 const message = `Updated the schedule successfully`;
                 setScheduleMessage(message);
                 setScheduleMessageClass(msg_class);
+                setSchedule(scheduleDate);
               }).catch((e) => {
                 console.log(e);
 
@@ -406,7 +418,7 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
                                                         </p>
                                                     </label>
                                                 }
-                                                value={content?.text}
+                                                value={localContent?.text || content?.text}
                                             />
                                             <div className="flex items-center gap-3 md:gap-5 flex-wrap md:flex-nowrap">
                                                 <div className="w-full md:w-2/3 lg:w-1/2">
