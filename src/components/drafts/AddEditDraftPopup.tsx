@@ -84,6 +84,7 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
         setMessageClass('');
         setScheduleMessage('');
         setScheduleMessageClass('');
+        setLocalContent(content);
     }
 
     useEffect(() => {
@@ -93,6 +94,7 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
         if (content?.statusText === 'Scheduled') {
           result = await scheduleApiClient.schedulesRead({id: content.id}).then((r) => {
             console.log(r);
+            // setLocalContent(r);
             return r;
           }).catch((e) => {
             console.log(e);
@@ -114,13 +116,13 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
         }
       }
 
-      console.log('Running useEffect');
-      console.log(`imageStatus: ${imageStatus}`);
-
-      if (imageStatus === PostStatus.GENERATING) {
-        console.log('Do not update content when generating image');
-        return () => {};
-      }
+      // console.log('Running useEffect');
+      // console.log(`imageStatus: ${imageStatus}`);
+      //
+      // if (imageStatus === PostStatus.GENERATING) {
+      //   console.log('Do not update content when generating image');
+      //   return () => {};
+      // }
 
       let ignore = false;
       startFetching();
@@ -250,6 +252,68 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
         } else {  // create new schedule
           console.log(`Create schedule for content: ${content.id}`);
           // scheduleApiClient.schedulesCreate().then().catch().finally();
+          if (timezoneText && dateText && timeText) {
+            console.log(`Update schedule for content: ${content.id}`);
+
+            const dateFormat = `${dateText}T${timeText}`;
+            console.log(`dateFormat: ${dateFormat}`);
+            const userDate = DateTime.fromISO(dateFormat, {zone: timezoneText});
+            // const userDate = DateTime.fromISO(dateFormat, {zone: profile.timezoneText});
+            const userDateStr = userDate.toISO();
+            const userLocalDateStr = userDate.toLocal().toISO();
+            console.log(`userDateStr: ${userDateStr}, userLocalDateStr: ${userLocalDateStr}`);
+
+            if (userDateStr && userLocalDateStr) {
+              const scheduleDate = new Date(userDateStr);
+              // const userScheduleTime = new Date(userLocalDateStr);
+              const userScheduleTime = new Date(dateFormat);
+
+              const scheduleForTwitterPost = {
+                content: content.id,
+                // schedule: userDate,
+                // userScheduleTime: userDate,
+                schedule: scheduleDate,
+                userScheduleTime: dateFormat,
+                timezone: profile.timezone,
+                // timezoneText: timezoneText,
+              };
+              const schedulesCreateRequest = {
+                data: scheduleForTwitterPost,
+              };
+              console.log(schedulesCreateRequest);
+
+              scheduleApiClient.schedulesCreate(schedulesCreateRequest).then((r) => {
+                console.log('Created schedule');
+                console.log(r);
+
+                const msg_class = 'text-green-500';
+                const message = `Created the schedule successfully`;
+                setScheduleMessage(message);
+                setScheduleMessageClass(msg_class);
+                setSchedule(scheduleDate);
+              }).catch((e) => {
+                console.log(e);
+
+                const msg_class = 'text-red-500';
+                const message = `Failed to create the schedule`;
+                setScheduleMessage(message);
+                setScheduleMessageClass(msg_class);
+              }).finally(() => {
+                if (deleteNumber !== undefined) {
+                  let lastNumber = deleteNumber + 1;
+                  setDeleteNumber && setDeleteNumber(lastNumber);
+                  // console.log('update deleteNumber');
+                }
+              });
+            } else {
+              const scheduleMessage = 'Wrong date format';
+              const msg_class = 'text-red-500';
+              setScheduleMessage(scheduleMessage);
+              setScheduleMessageClass(msg_class);
+            }
+          } else {
+            console.log('Timezone, date or time is blank');
+          }
         }
       } else {  // add new content
         console.log('Create new draft');
