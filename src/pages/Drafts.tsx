@@ -32,6 +32,7 @@ const filters = [
 ]
 
 export const noTopicString = '(No Topic)';
+export const allTopicString = '(All)';
 export const twitterUserContext = createContext(null);
 export const profileContext = createContext(null);
 
@@ -62,6 +63,19 @@ export default function DraftsPage() {
           let result = null;
           if (topic === noTopicString) {
             result = await contentApiClient.contentsList({page, untopic: "true"}).then((r) => {
+              // console.log(r);
+              return r;
+            }).catch((e) => {
+              console.log(e);
+              console.log(`page: ${page}`);
+              if (page > 1) {
+                const page1 = page - 1;
+                console.log(`previous page: ${page1}`);
+                setPage(page1);  // find previous page data
+              }
+            });
+          } else if (topic === allTopicString) {
+            result = await contentApiClient.contentsList({page}).then((r) => {
               // console.log(r);
               return r;
             }).catch((e) => {
@@ -179,13 +193,13 @@ export default function DraftsPage() {
                         <div className="max-h-full max-w-full overflow-auto divide-y bg-[#664f8e] lg:bg-transparent divide-white/10 space-y-5 lg:divide-y-0 px-5 lg:px-0">
                             <div className="border-b-[5px] w-full min-w-max hidden lg:flex xl:justify-between items-center border-primary bg-[#664f8e] z-[1] gap-3 sticky top-0">
                                 <span className="block text-white py-3 min-h-[50px] text-start w-[50px] overflow-hidden lg:ps-4">#</span>
-                                <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden">Photo</span>
+                                <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden">Image</span>
                                 <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden min-w-[200px]">Content</span>
                                 <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden">Status</span>
                                 <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden">Username</span>
                                 <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden">Created Date</span>
                                 <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden min-w-[200px]">Actions</span>
-                                <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden lg:pr-4">Photo</span>
+                                <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden lg:pr-4">Image</span>
                             </div>
                             {
                               // pageData?.contentsList?.results && pageData?.contentsList.results.map( (content: any) =>

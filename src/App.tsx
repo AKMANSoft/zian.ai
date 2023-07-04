@@ -37,6 +37,7 @@ const DraftsPage = React.lazy(() => import("./pages/Drafts"));
 
 import {
   noTopicString,
+  allTopicString,
 } from '@/pages/Drafts'
 
 
@@ -126,6 +127,7 @@ const router = createBrowserRouter([
       });
       if (topicsList) {
         topicsList.push({text: noTopicString});
+        topicsList.push({text: allTopicString});
       }
       pageData.topicsList = topicsList;
 
