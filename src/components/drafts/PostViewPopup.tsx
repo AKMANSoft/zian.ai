@@ -15,6 +15,7 @@ import AddEditDraftPopup from "@/components/drafts/AddEditDraftPopup";
 
 import {
   contentApiClient,
+  imageApiClient,
 } from '@/api.env'
 
 
@@ -31,12 +32,34 @@ type Props = {
 export default function PostViewPopup({ trigger, content, deleteNumber, setDeleteNumber }: Props) {
     const [isOpen, setIsOpen] = useState(false);
     const [imageStatus, setImageStatus] = useState<PostStatus>(PostStatus.GENERATED);
+    const [image, setImage] = useState<any>('');
+
+    // const onRegenerateClicked = () => {
+    //     setImageStatus(PostStatus.GENERATING);
+    //     setTimeout(() => {
+    //         setImageStatus(PostStatus.GENERATED);
+    //     }, 4000);
+    // }
 
     const onRegenerateClicked = () => {
         setImageStatus(PostStatus.GENERATING);
-        setTimeout(() => {
+
+        // contentApiClient.contentsCreateImage({id: content.id}).then((r) => {
+        imageApiClient.imagesCreateImage({id: content.id}).then((r) => {
+          // console.log(r);
+          setImage(r.imageUrl);
+          if (deleteNumber !== undefined) {
+            let lastNumber = deleteNumber + 1;
+            setDeleteNumber && setDeleteNumber(lastNumber);
+            // console.log('update deleteNumber');
+          }
+        }).finally(() => {
             setImageStatus(PostStatus.GENERATED);
-        }, 4000);
+        });
+
+        // setTimeout(() => {
+        //     setImageStatus(PostStatus.GENERATED);
+        // }, 4000);
     }
 
     function closeModal() {
@@ -44,6 +67,7 @@ export default function PostViewPopup({ trigger, content, deleteNumber, setDelet
     }
 
     function openModal() {
+        setImage(content?.image);
         setIsOpen(true)
     }
 
@@ -123,11 +147,17 @@ export default function PostViewPopup({ trigger, content, deleteNumber, setDelet
                                                   { content?.text || "Lorem ipsum dolor sit amet, consect etur adip iscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim venia m, quis nostrud exercitation ullam co laboris nisi ut aliquip ex ea commodo consquat." }
                                                 </p>
                                                 {
-                                                  content?.image &&
+                                                  image ?
                                                     <ImageEl
                                                         showLoading={imageStatus === PostStatus.GENERATING}
-                                                        src={content?.image || changeImageUrl("/images/today-post.png")} loading="lazy"
+                                                        src={image || changeImageUrl("/images/today-post.png")} loading="lazy"
                                                         className="mt-6 rounded-20 overflow-hidden object-cover object-center aspect-video w-full lg:h-[490px]" />
+                                                    : imageStatus === PostStatus.GENERATING ?
+                                                    <ImageEl
+                                                        showLoading={imageStatus === PostStatus.GENERATING}
+                                                        src="" alt="No Image" loading="lazy"
+                                                        className="mt-6 rounded-20 overflow-hidden object-cover object-center aspect-video w-full lg:h-[490px] text-white" />
+                                                      : ''
                                                 }
                                             </div>
                                             {/* Buttons  */}
@@ -164,7 +194,7 @@ export default function PostViewPopup({ trigger, content, deleteNumber, setDelet
                                                 </div>
                                                 <div className="hidden md:flex items-center gap-4">
                                                     <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3">
-                                                      {content?.image ? 'Regenerate Image' : 'Generate Image'}
+                                                      {image ? 'Regenerate Image' : 'Generate Image'}
                                                     </SecondaryBtn>
                                                     <PrimaryBtn className="py-3 h-full">
                                                         Send Now
