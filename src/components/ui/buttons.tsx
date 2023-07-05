@@ -46,12 +46,14 @@ export function PrimaryBtn({ className, children, onClick, disabled = false }: P
 
 
 
-export function PrimaryBtnNeon({ className, children, onClick }: Props) {
+export function PrimaryBtnNeon({ className, children, onClick, disabled = false }: Props) {
     return (
         <button type="button" onClick={onClick} className={cn(
             "primary-btn-neon outline-none",
             className
-        )}>
+        )}
+        disabled={disabled}
+        >
             {children}
         </button>
     )

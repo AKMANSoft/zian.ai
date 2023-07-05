@@ -20,6 +20,7 @@ import {
   userApiClient,
   twitterUserApiClient,
   contentApiClient,
+  imageApiClient,
 } from '@/api.env'
 
 
@@ -145,11 +146,11 @@ export default function DraftsPage() {
 
       if (contentResult) {
         return contentResult.results.map((content: any) =>
-        <SingleTableRow num={content.id} content={content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber}/> );
+        <SingleTableRow key={content.id} num={content.id} content={content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber}/> );
       } else {
         let itemList = pageData?.contentsList?.results && pageData?.contentsList.results.map( (content: any) =>
         // <SingleTableRow num={content.id} content={content} /> );
-        <SingleTableRow num={content.id} content={content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber}/> );
+        <SingleTableRow key={content.id} num={content.id} content={content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber}/> );
         return itemList;
       }
     }
@@ -340,6 +341,12 @@ type SingleTableRowProps = {
 
 
 function SingleTableRow({ onClick, num, content, deleteNumber, setDeleteNumber }: SingleTableRowProps) {
+    const [imageStatus, setImageStatus] = useState<string>('');
+
+    const imageUrl = content?.image;
+    const [image, setImage] = useState<any>(imageUrl);
+    // setImage(imageUrl);
+
     function onDeleteContent(): void {
       if (content) {
         console.log(`Delete content: ${content.id}`);
@@ -351,6 +358,25 @@ function SingleTableRow({ onClick, num, content, deleteNumber, setDeleteNumber }
       }
     }
 
+    function onGenerateImage(): void {
+      setImageStatus('generating');
+
+      // contentApiClient.contentsCreateImage({id: content.id}).then((r) => {
+      console.log(`imageUrl before: ${image}`);
+      imageApiClient.imagesCreateImage({id: content.id}).then((r) => {
+        // console.log(r);
+        setImage(r.imageUrl);
+        // console.log(`imageUrl after: ${image}`);
+        // if (deleteNumber !== undefined) {
+        //   deleteNumber = deleteNumber + 1;
+        //   setDeleteNumber && setDeleteNumber(deleteNumber);
+        //   // console.log('update deleteNumber');
+        // }
+      }).finally(() => {
+          setImageStatus('');
+      });
+    }
+
     return (
         <div className="flex flex-wrap xl:justify-between lg:flex-nowrap lg:gap-3 items-center lg:min-w-max" role="button" onClick={onClick}>
             <span className="hidden lg:block text-white py-3 min-h-[50px] text-start w-[50px] overflow-hidden lg:ps-4">
@@ -359,8 +385,10 @@ function SingleTableRow({ onClick, num, content, deleteNumber, setDeleteNumber }
             <span className="block text-white py-3 lg:min-h-[50px] text-start w-1/3 lg:w-[150px] overflow-hidden">
               {/*<img src={changeImageUrl("/images/table-img.png")} width={80} height={80} loading="lazy" className="w-full h-full lg:w-auto min-w-[80px] lg:h-[80px] aspect-square" alt="" />*/}
               { 
-                content?.image ? 
-                  <img src={content?.image} width={80} height={80} loading="lazy" className="w-full h-full lg:w-auto min-w-[80px] lg:h-[80px] aspect-square" alt="" />
+                // content?.image ?
+                //   <img src={content?.image} width={80} height={80} loading="lazy" className="w-full h-full lg:w-auto min-w-[80px] lg:h-[80px] aspect-square" alt="" />
+                image ?
+                  <img src={image} width={80} height={80} loading="lazy" className="w-full h-full lg:w-auto min-w-[80px] lg:h-[80px] aspect-square" alt="" />
                   :
                   <span>No Image</span>
 
@@ -417,8 +445,14 @@ function SingleTableRow({ onClick, num, content, deleteNumber, setDeleteNumber }
             </span>
             <span className="block text-white py-1 lg:py-3 lg:min-h-[50px] text-start w-[calc(100%_-_200px)] lg:w-[150px] overflow-hidden lg:pr-4">
                 <div className="flex items-center justify-end lg:justify-start">
-                    <PrimaryBtnNeon className="max-w-[400px] py-3 h-10 px-3 font-medium text-[15px] inline-flex items-center justify-center w-full lg:w-auto">
-                        Regenerate
+                    <PrimaryBtnNeon className="max-w-[400px] py-3 h-10 px-3 font-medium text-[15px] inline-flex items-center justify-center w-full lg:w-auto"
+                      onClick={onGenerateImage}
+                      disabled={imageStatus === 'generating' ? true : false}
+                    >
+                      {
+                        imageStatus === 'generating' ? 'Generating...' :
+                          image ? 'Regenerate' :  'Generate'
+                      }
                     </PrimaryBtnNeon>
                 </div>
             </span>
