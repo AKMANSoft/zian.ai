@@ -12,7 +12,7 @@ import { PostStatus } from "@/pages/GenerateContent"
 import ImageEl from "../ImageEl"
 import { changeImageUrl } from '@/lib/utils'
 import { profileContext } from '@/pages/Drafts'
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useRef } from "react"
 import { DateTime } from "luxon";
 
 import {
@@ -20,6 +20,11 @@ import {
   contentApiClient,
   imageApiClient,
 } from '@/api.env'
+
+import {
+  noTopicString,
+  allTopicString,
+} from '@/pages/Drafts'
 
 
 
@@ -49,27 +54,71 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
     const [scheduleMessage, setScheduleMessage] = useState<string>('');
     const [scheduleMessageClass, setScheduleMessageClass] = useState<string>('');
 
+    const dateRef: any = useRef(null);
+    const timeRef: any = useRef(null);
+    const textRef: any = useRef(null);
+    const isGenerateImage = useRef<boolean>(false);
+
+    let updateNumber: any;
+    if (deleteNumber != undefined) {
+      updateNumber = useRef<number>(deleteNumber);
+    } else {
+      updateNumber = useRef<number>(0);
+    }
+    // const updateNumber = useRef<number | undefined>(deleteNumber);
+
     const profile: any = useContext(profileContext);
 
     const onRegenerateClicked = () => {
-        setImageStatus(PostStatus.GENERATING);
+        const contentText = textRef.current?.value;
 
-        // contentApiClient.contentsCreateImage({id: content.id}).then((r) => {
-        imageApiClient.imagesCreateImage({id: content.id}).then((r) => {
-          // console.log(r);
-          setImage(r.imageUrl);
-          if (deleteNumber !== undefined) {
-            let lastNumber = deleteNumber + 1;
-            setDeleteNumber && setDeleteNumber(lastNumber);
-            // console.log('update deleteNumber');
+        if (content) {  // update existing content
+          console.log('Generate image for existing content');
+
+          // first submit content
+          onSubmit();
+          if (contentText && contentText.trim()) {  // there is content
+            setImageStatus(PostStatus.GENERATING);
+
+            // contentApiClient.contentsCreateImage({id: content.id}).then((r) => {
+            imageApiClient.imagesCreateImage({id: content.id}).then((r) => {
+              // console.log(r);
+              setImage(r.imageUrl);
+              if (deleteNumber !== undefined) {
+                updateNumber.current = updateNumber.current + 1;
+                setDeleteNumber && setDeleteNumber(updateNumber.current);
+                // console.log('update deleteNumber');
+              }
+            }).finally(() => {
+                setImageStatus(PostStatus.GENERATED);
+            });
+
+            // setTimeout(() => {
+            //     setImageStatus(PostStatus.GENERATED);
+            // }, 4000);
+          } else {
+            console.log('No content');
+
+            const msg_class = 'text-red-500';
+            const message = 'No any content, please input some';
+            setMessage(message);
+            setMessageClass(msg_class);
           }
-        }).finally(() => {
-            setImageStatus(PostStatus.GENERATED);
-        });
+        } else { // create new content
+          console.log('Save draft and generate image for new content');
+          if (contentText && contentText.trim()) {  // there is content
+            isGenerateImage.current = true;
+            // console.log(`isGenerateImage before: ${isGenerateImage.current}`);
+            onSubmit();
+          } else {
+            console.log('No content');
 
-        // setTimeout(() => {
-        //     setImageStatus(PostStatus.GENERATED);
-        // }, 4000);
+            const msg_class = 'text-red-500';
+            const message = 'No any content, please input some';
+            setMessage(message);
+            setMessageClass(msg_class);
+          }
+        }
     }
 
     function closeModal() {
@@ -86,6 +135,7 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
         setScheduleMessage('');
         setScheduleMessageClass('');
         setLocalContent(content);
+        isGenerateImage.current = false;
     }
 
     useEffect(() => {
@@ -131,6 +181,141 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
         ignore = true;
       }
     }, [localContent]);
+
+    function createOrUpdateSchedule(timezoneText: string, dateText: string, timeText: string, content: any) {
+      // schedule draft
+      if (schedule) { // update schedule
+        if (timezoneText && dateText && timeText) {
+          console.log(`Update schedule for content: ${content.id}`);
+
+          const dateFormat = `${dateText}T${timeText}`;
+          console.log(`dateFormat: ${dateFormat}`);
+          const userDate = DateTime.fromISO(dateFormat, {zone: timezoneText});
+          // const userDate = DateTime.fromISO(dateFormat, {zone: profile.timezoneText});
+          const userDateStr = userDate.toISO();
+          const userLocalDateStr = userDate.toLocal().toISO();
+          console.log(`userDateStr: ${userDateStr}, userLocalDateStr: ${userLocalDateStr}`);
+
+          if (userDateStr && userLocalDateStr) {
+            const scheduleDate = new Date(userDateStr);
+            // const userScheduleTime = new Date(userLocalDateStr);
+            const userScheduleTime = new Date(dateFormat);
+
+            const scheduleForTwitterPost = {
+              content: content.id,
+              // schedule: userDate,
+              // userScheduleTime: userDate,
+              schedule: scheduleDate,
+              userScheduleTime: dateFormat,
+              status: schedule.status,
+              timezone: profile.timezone,
+              // timezoneText: timezoneText,
+            };
+            const schedulesUpdateRequest = {
+              id: content.id,
+              data: scheduleForTwitterPost,
+            };
+            console.log(schedulesUpdateRequest);
+
+            scheduleApiClient.schedulesUpdate(schedulesUpdateRequest).then((r) => {
+              console.log('Updated schedule');
+              console.log(r);
+
+              const msg_class = 'text-green-500';
+              const message = `Updated the schedule successfully`;
+              setScheduleMessage(message);
+              setScheduleMessageClass(msg_class);
+              setSchedule(scheduleDate);
+            }).catch((e) => {
+              console.log(e);
+
+              const msg_class = 'text-red-500';
+              const message = `Failed to update the schedule`;
+              setScheduleMessage(message);
+              setScheduleMessageClass(msg_class);
+            }).finally(() => {
+              if (deleteNumber !== undefined) {
+                updateNumber.current = updateNumber.current + 1;
+                setDeleteNumber && setDeleteNumber(updateNumber.current);
+                // console.log('update deleteNumber');
+              }
+            });
+          } else {
+            const scheduleMessage = 'Wrong date format';
+            const msg_class = 'text-red-500';
+            setScheduleMessage(scheduleMessage);
+            setScheduleMessageClass(msg_class);
+          }
+        } else {
+          console.log('Timezone, date or time is blank');
+        }
+      } else {  // create new schedule
+        console.log(`Create schedule for content: ${content.id}`);
+        // scheduleApiClient.schedulesCreate().then().catch().finally();
+        if (timezoneText && dateText && timeText) {
+          console.log(`Update schedule for content: ${content.id}`);
+
+          const dateFormat = `${dateText}T${timeText}`;
+          console.log(`dateFormat: ${dateFormat}`);
+          const userDate = DateTime.fromISO(dateFormat, {zone: timezoneText});
+          // const userDate = DateTime.fromISO(dateFormat, {zone: profile.timezoneText});
+          const userDateStr = userDate.toISO();
+          const userLocalDateStr = userDate.toLocal().toISO();
+          console.log(`userDateStr: ${userDateStr}, userLocalDateStr: ${userLocalDateStr}`);
+
+          if (userDateStr && userLocalDateStr) {
+            const scheduleDate = new Date(userDateStr);
+            // const userScheduleTime = new Date(userLocalDateStr);
+            const userScheduleTime = new Date(dateFormat);
+
+            const scheduleForTwitterPost = {
+              content: content.id,
+              // schedule: userDate,
+              // userScheduleTime: userDate,
+              schedule: scheduleDate,
+              userScheduleTime: dateFormat,
+              timezone: profile.timezone,
+              // timezoneText: timezoneText,
+            };
+            const schedulesCreateRequest = {
+              data: scheduleForTwitterPost,
+            };
+            console.log(schedulesCreateRequest);
+
+            scheduleApiClient.schedulesCreate(schedulesCreateRequest).then((r) => {
+              console.log('Created schedule');
+              console.log(r);
+
+              const msg_class = 'text-green-500';
+              const message = `Created the schedule successfully`;
+              setScheduleMessage(message);
+              setScheduleMessageClass(msg_class);
+              setSchedule(scheduleDate);
+            }).catch((e) => {
+              console.log(e);
+
+              const msg_class = 'text-red-500';
+              const message = `Failed to create the schedule`;
+              setScheduleMessage(message);
+              setScheduleMessageClass(msg_class);
+            }).finally(() => {
+              if (deleteNumber !== undefined) {
+                updateNumber.current = updateNumber.current + 1;
+                setDeleteNumber && setDeleteNumber(updateNumber.current);
+                // console.log('update deleteNumber');
+              }
+            });
+          } else {
+            const scheduleMessage = 'Wrong date format';
+            const msg_class = 'text-red-500';
+            setScheduleMessage(scheduleMessage);
+            setScheduleMessageClass(msg_class);
+          }
+        } else {
+          console.log('Timezone, date or time is blank');
+        }
+      }
+    }
 
     function onSubmit() {
       const contentSelector = '#content-text';
@@ -178,8 +363,8 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
           setMessageClass(msg_class);
         }).finally(() => {
           if (deleteNumber !== undefined) {
-            let lastNumber = deleteNumber + 1;
-            setDeleteNumber && setDeleteNumber(lastNumber);
+            updateNumber.current = updateNumber.current + 1;
+            setDeleteNumber && setDeleteNumber(updateNumber.current);
             // console.log('update deleteNumber');
           }
         });
@@ -231,13 +416,13 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
                 console.log(e);
 
                 const msg_class = 'text-red-500';
-                const message = `Failed to updated the schedule`;
+                const message = `Failed to update the schedule`;
                 setScheduleMessage(message);
                 setScheduleMessageClass(msg_class);
               }).finally(() => {
                 if (deleteNumber !== undefined) {
-                  let lastNumber = deleteNumber + 1;
-                  setDeleteNumber && setDeleteNumber(lastNumber);
+                  updateNumber.current = updateNumber.current + 1;
+                  setDeleteNumber && setDeleteNumber(updateNumber.current);
                   // console.log('update deleteNumber');
                 }
               });
@@ -301,8 +486,8 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
                 setScheduleMessageClass(msg_class);
               }).finally(() => {
                 if (deleteNumber !== undefined) {
-                  let lastNumber = deleteNumber + 1;
-                  setDeleteNumber && setDeleteNumber(lastNumber);
+                  updateNumber.current = updateNumber.current + 1;
+                  setDeleteNumber && setDeleteNumber(updateNumber.current);
                   // console.log('update deleteNumber');
                 }
               });
@@ -318,6 +503,115 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
         }
       } else {  // add new content
         console.log('Create new draft');
+
+        const contentText = textRef.current?.value;
+        const timezoneText = profile.timezoneText;
+        const dateText = dateRef.current?.value;
+        const timeText = timeRef.current?.value;
+
+        console.log(`timezone value: ${timezoneText}`);
+        console.log(`date value: ${dateText}`);
+        console.log(`time value: ${timeText}`);
+        console.log(`text value: ${contentText}`);
+
+        if (contentText && contentText.trim()) {  // there is content
+          const contentForTwitterPost = {
+            text: contentText,
+          }
+          const contentsCreateRequest = {
+            data: contentForTwitterPost,
+          }
+
+          contentApiClient.contentsCreate(contentsCreateRequest).then((new_content: any) => {
+            console.log(new_content);
+
+            const msg_class = 'text-green-500';
+            const message = `Created the draft successfully. You can see it on the tab ${noTopicString} or ${allTopicString}. Or continue to create new draft.`;
+            setMessage(message);
+            setMessageClass(msg_class);
+            setLocalContent(new_content);
+
+            console.log(`isGenerateImage: ${isGenerateImage.current}`);
+            if (isGenerateImage.current) {
+              try {
+                console.log('Generate image for new content');
+                if (contentText && contentText.trim()) {  // there is content
+                  if (new_content) {
+                    setImageStatus(PostStatus.GENERATING);
+                    imageApiClient.imagesCreateImage({id: new_content?.id}).then((imageContent) => {
+                      console.log(imageContent);
+                      setImage(imageContent.imageUrl);
+
+                      const msg_class = 'text-green-500';
+                      const message = `Created the image for the draft`;
+                      setMessage(message);
+                      setMessageClass(msg_class);
+
+                      if (deleteNumber !== undefined) {
+                        updateNumber.current = updateNumber.current + 1;
+                        setDeleteNumber && setDeleteNumber(updateNumber.current);
+                        // console.log('update deleteNumber');
+                      }
+                    }).catch((e) => {
+                      console.log(e);
+
+                      const msg_class = 'text-red-500';
+                      const message = `Failed to create the image for the draft`;
+                      setMessage(message);
+                      setMessageClass(msg_class);
+                    }).finally(() => {
+                        setImageStatus(PostStatus.GENERATED);
+                    });
+
+                    // setTimeout(() => {
+                    //     setImageStatus(PostStatus.GENERATED);
+                    // }, 4000);
+                  }
+                } else {
+                  console.log('No content');
+
+                  const msg_class = 'text-red-500';
+                  const message = 'No any content, please input some';
+                  setMessage(message);
+                  setMessageClass(msg_class);
+                }
+              } catch (e) {
+                  console.log(e);
+
+                  const msg_class = 'text-red-500';
+                  const message = `Failed to create the image for the draft`;
+                  setMessage(message);
+                  setMessageClass(msg_class);
+              } finally {
+                isGenerateImage.current = false;
+                // console.log(`isGenerateImage after: ${isGenerateImage.current}`);
+              }
+            }
+
+            createOrUpdateSchedule(timezoneText, dateText, timeText, new_content);
+          }).catch((r) => {
+            console.log(r);
+
+            const msg_class = 'text-red-500';
+            const message = `Failed to create the draft`;
+            setMessage(message);
+            setMessageClass(msg_class);
+          }).finally(() => {
+            if (deleteNumber !== undefined) {
+              updateNumber.current = updateNumber.current + 1;
+              setDeleteNumber && setDeleteNumber(updateNumber.current);
+              // console.log('update deleteNumber');
+            }
+          });
+
+        } else {  // no content
+          console.log('No content');
+
+          const msg_class = 'text-red-500';
+          const message = 'No any content, please input some';
+          setMessage(message);
+          setMessageClass(msg_class);
+        }
       }
     }
 
@@ -330,14 +624,14 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
                             Add New
                         </PrimaryBtn>
                         : hasWord ?
-                        <SecondaryBtn onClick={openModal} className="px-2 xs:px-4">
-                            <FontAwesomeIcon icon={faEdit} />
-                            Edit
-                        </SecondaryBtn>
-                        :
-                        <SecondaryBtn onClick={openModal} className="p-3">
-                            <FontAwesomeIcon icon={faEdit} />
-                        </SecondaryBtn>
+                          <SecondaryBtn onClick={openModal} className="px-2 xs:px-4">
+                              <FontAwesomeIcon icon={faEdit} />
+                              Edit
+                          </SecondaryBtn>
+                          :
+                          <SecondaryBtn onClick={openModal} className="p-3">
+                              <FontAwesomeIcon icon={faEdit} />
+                          </SecondaryBtn>
                 }
 
             </div>
@@ -464,16 +758,18 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
                                                     <InputEl type="date" className="w-full col-span-1"
                                                       // value={new Date(schedule.getTime() - schedule.getTimezoneOffset() * 60 * 1000).toISOString().split('T')[0]}
                                                       value={DateTime.fromISO(schedule.toISOString()).setZone(profile.timezoneText).toFormat('yyyy-MM-dd')}
+                                                      ref={dateRef}
                                                     />
                                                     <InputEl type="time" className="w-full col-span-1"
                                                       // value={schedule.toTimeString().split(' ')[0]}
                                                       value={DateTime.fromISO(schedule.toISOString()).setZone(profile.timezoneText).toFormat('HH:mm:ss')}
+                                                      ref={timeRef}
                                                     />
                                                   </>
                                                   :
                                                   <>
-                                                    <InputEl type="date" className="w-full col-span-1" />
-                                                    <InputEl type="time" className="w-full col-span-1" />
+                                                    <InputEl type="date" className="w-full col-span-1" ref={dateRef} />
+                                                    <InputEl type="time" className="w-full col-span-1" ref={timeRef} />
                                                   </>
                                                 }
                                             </div>
@@ -489,6 +785,7 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
                                                     </label>
                                                 }
                                                 value={localContent?.text || content?.text}
+                                                ref={textRef}
                                             />
                                             <div className="flex items-center gap-3 md:gap-5 flex-wrap md:flex-nowrap">
                                                 <div className="w-full md:w-2/3 lg:w-1/2">

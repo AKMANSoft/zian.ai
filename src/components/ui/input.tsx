@@ -44,7 +44,8 @@ type InputElProps = {
   onChange?: (value: string) => void
 }
 
-function InputEl({ label, placeholder = "", labelNode = null, id = "", endIcon, type = "text", value, onChange, className }: InputElProps) {
+// function InputEl({ label, placeholder = "", labelNode = null, id = "", endIcon, type = "text", value, onChange, className }: InputElProps) {
+const InputEl = React.forwardRef(({ label, placeholder = "", labelNode = null, id = "", endIcon, type = "text", value, onChange, className }: InputElProps, ref: any) => {
 
   return (
     <div className={cn(
@@ -68,7 +69,9 @@ function InputEl({ label, placeholder = "", labelNode = null, id = "", endIcon, 
           "text-white text-start font-jakarta font-semibold text-sm leading-6 py-3 px-5",
           "border border-white/10 appearance-none rounded-10 w-full bg-transparent mt-2",
           "focus:bg-th-gray/10 outline-none transition-all placeholder:text-white/70"
-        )} />
+        )}
+      ref={ref}
+      />
       {
         endIcon && endIcon !== null &&
         <span className="h-16 absolute z-10 top-0 flex items-center justify-center right-4 text-white text-lg">
@@ -77,7 +80,7 @@ function InputEl({ label, placeholder = "", labelNode = null, id = "", endIcon, 
       }
     </div>
   )
-}
+});
 
 
 
