@@ -1,4 +1,5 @@
 apis/ContentsApi.ts
+apis/ContentsReadApi.ts
 apis/ImagesApi.ts
 apis/ProfilesApi.ts
 apis/ProjectsApi.ts

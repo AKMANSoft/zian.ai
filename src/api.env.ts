@@ -9,6 +9,7 @@ import {
   TimezonesApi,
   SchedulesApi,
   ImagesApi,
+  ContentsReadApi,
   // ProjectStatusListApi,
 } from './api/index'
 
@@ -26,6 +27,7 @@ const apiConf = new Configuration({
 
 export const userApiClient = new UsersApi(apiConf);
 export const contentApiClient = new ContentsApi(apiConf);
+export const contentReadApiClient = new ContentsReadApi(apiConf);
 export const twitterUserApiClient = new TwitterUsersApi(apiConf);
 export const topicApiClient = new TopicsApi(apiConf);
 export const profileApiClient = new ProfilesApi(apiConf);

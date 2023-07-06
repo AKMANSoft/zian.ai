@@ -22,6 +22,7 @@ import {
   userApiClient,
   twitterUserApiClient,
   contentApiClient,
+  contentReadApiClient,
   topicApiClient,
   profileApiClient,
   timezoneApiClient,
@@ -81,9 +82,10 @@ const router = createBrowserRouter([
       });
       pageData.profile = profile;
 
-      const latestContents = await contentApiClient.contentsScheduled().then((r) => {
+      // const latestContents = await contentApiClient.contentsScheduled().then((r) => {
+      const latestContents = await contentReadApiClient.contentsReadScheduled().then((r) => {
         // console.log(r.results);
-        return r.results;
+        return r;
       });
       pageData.latestContents = latestContents;
 

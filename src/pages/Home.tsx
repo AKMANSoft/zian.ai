@@ -28,6 +28,7 @@ import {
   userApiClient,
   twitterUserApiClient,
   contentApiClient,
+  contentReadApiClient,
   imageApiClient,
 } from '@/api.env'
 
@@ -77,10 +78,11 @@ export default function HomePage() {
       async function startFetching() {
         // setContentResult(null);
         let result = null;
-        result = await contentApiClient.contentsScheduled().then((r) => {
+        // result = await contentApiClient.contentsScheduled().then((r) => {
+        result = await contentReadApiClient.contentsReadScheduled().then((r) => {
           console.log(r);
           // return r;
-          return r.results;
+          return r;
         }).catch((e) => {
           console.log(e);
         });
