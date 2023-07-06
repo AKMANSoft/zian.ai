@@ -30,12 +30,20 @@ export function formatDate(date: Date) {
   return strTime
 }
 
-export function sortScheduledContents(scheduledContents: any) {
+export function sortScheduledContents(scheduledContents: any, useCreatedTime: boolean = false) {
   let result = new Map();
   for (const content of scheduledContents) {
-    const date = content.createdTime.toLocaleDateString();
-    // const time = content.createdTime.toLocaleTimeString();
-    const time = formatDate(content.createdTime);
+    let date: string, time: string;
+    if (useCreatedTime) {
+      date = content.createdTime.toLocaleDateString();
+      // const time = content.createdTime.toLocaleTimeString();
+      time = formatDate(content.createdTime);
+    } else {
+      // console.log(content.scheduleTime);
+      date = content.scheduleTime.toLocaleDateString();
+      // const time = content.scheduleTime.toLocaleTimeString();
+      time = formatDate(content.scheduleTime);
+    }
 
     if (result.has(date)) {
       let e = result.get(date);

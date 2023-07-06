@@ -15,11 +15,11 @@
 
 import * as runtime from '../runtime';
 import type {
-  ContentForTwitterPost,
+  ContentForTwitterPostSchedule,
 } from '../models';
 import {
-    ContentForTwitterPostFromJSON,
-    ContentForTwitterPostToJSON,
+    ContentForTwitterPostScheduleFromJSON,
+    ContentForTwitterPostScheduleToJSON,
 } from '../models';
 
 export interface ContentsReadListRequest {
@@ -44,7 +44,7 @@ export class ContentsReadApi extends runtime.BaseAPI {
     /**
      * This viewset automatically provides `list`, `retrieve` actions.
      */
-    async contentsReadListRaw(requestParameters: ContentsReadListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ContentForTwitterPost>>> {
+    async contentsReadListRaw(requestParameters: ContentsReadListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ContentForTwitterPostSchedule>>> {
         const queryParameters: any = {};
 
         if (requestParameters.topic !== undefined) {
@@ -67,13 +67,13 @@ export class ContentsReadApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ContentForTwitterPostFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ContentForTwitterPostScheduleFromJSON));
     }
 
     /**
      * This viewset automatically provides `list`, `retrieve` actions.
      */
-    async contentsReadList(requestParameters: ContentsReadListRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ContentForTwitterPost>> {
+    async contentsReadList(requestParameters: ContentsReadListRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ContentForTwitterPostSchedule>> {
         const response = await this.contentsReadListRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -81,7 +81,7 @@ export class ContentsReadApi extends runtime.BaseAPI {
     /**
      * This viewset automatically provides `list`, `retrieve` actions.
      */
-    async contentsReadReadRaw(requestParameters: ContentsReadReadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentForTwitterPost>> {
+    async contentsReadReadRaw(requestParameters: ContentsReadReadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ContentForTwitterPostSchedule>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling contentsReadRead.');
         }
@@ -100,13 +100,13 @@ export class ContentsReadApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ContentForTwitterPostFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => ContentForTwitterPostScheduleFromJSON(jsonValue));
     }
 
     /**
      * This viewset automatically provides `list`, `retrieve` actions.
      */
-    async contentsReadRead(requestParameters: ContentsReadReadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentForTwitterPost> {
+    async contentsReadRead(requestParameters: ContentsReadReadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ContentForTwitterPostSchedule> {
         const response = await this.contentsReadReadRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -114,7 +114,7 @@ export class ContentsReadApi extends runtime.BaseAPI {
     /**
      * Get latest scheduled contents for twitter
      */
-    async contentsReadScheduledRaw(requestParameters: ContentsReadScheduledRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ContentForTwitterPost>>> {
+    async contentsReadScheduledRaw(requestParameters: ContentsReadScheduledRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ContentForTwitterPostSchedule>>> {
         const queryParameters: any = {};
 
         if (requestParameters.topic !== undefined) {
@@ -137,13 +137,13 @@ export class ContentsReadApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ContentForTwitterPostFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ContentForTwitterPostScheduleFromJSON));
     }
 
     /**
      * Get latest scheduled contents for twitter
      */
-    async contentsReadScheduled(requestParameters: ContentsReadScheduledRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ContentForTwitterPost>> {
+    async contentsReadScheduled(requestParameters: ContentsReadScheduledRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ContentForTwitterPostSchedule>> {
         const response = await this.contentsReadScheduledRaw(requestParameters, initOverrides);
         return await response.value();
     }

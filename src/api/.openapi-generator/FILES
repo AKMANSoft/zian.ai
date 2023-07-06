@@ -11,6 +11,7 @@ apis/UsersApi.ts
 apis/index.ts
 index.ts
 models/ContentForTwitterPost.ts
+models/ContentForTwitterPostSchedule.ts
 models/ContentsList200Response.ts
 models/ImageForTwitterPost.ts
 models/ImagesList200Response.ts

@@ -129,7 +129,8 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                         <p className="my-3 text-xs text-white font-bold font-jakarta">
                                             <span>Date: </span>
                                             {/*<span className="font-medium">{ pageData?.page === 'home' ? pageData?.latestContents[0]?.createdTime?.toLocaleString() || '' : '' }</span>*/}
-                                            <span className="font-medium">{ content?.createdTime?.toLocaleString() || '' }</span>
+                                            {/*<span className="font-medium">{ content?.createdTime?.toLocaleString() || '' }</span>*/}
+                                            <span className="font-medium">{ content?.scheduleTime?.toLocaleString() || '' }</span>
                                           
                                         </p>
                                         <Seperator />
