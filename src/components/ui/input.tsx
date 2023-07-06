@@ -7,7 +7,7 @@ import { IconDefinition, faCalendar, faCircleXmark } from "@fortawesome/free-sol
 import { Popover, PopoverContent, PopoverTrigger } from "./popover"
 import { Calendar } from "./calendar"
 import { SelectSingleEventHandler } from "react-day-picker"
-import { twitterUserContext } from "@/pages/Drafts"
+import { twitterUserContext } from "@/App"
 import { useContext } from 'react';
 
 

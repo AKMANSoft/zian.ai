@@ -11,7 +11,7 @@ import { TextAreaEl } from "../ui/textarea"
 import { PostStatus } from "@/pages/GenerateContent"
 import ImageEl from "../ImageEl"
 import { changeImageUrl } from '@/lib/utils'
-import { profileContext } from '@/pages/Drafts'
+import { profileContext } from '@/App'
 import { useContext, useEffect, useRef } from "react"
 import { DateTime } from "luxon";
 

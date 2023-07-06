@@ -23,6 +23,11 @@ import {
   imageApiClient,
 } from '@/api.env'
 
+import {
+  twitterUserContext,
+  profileContext,
+} from '@/App'
+
 
 
 const filters = [
@@ -34,8 +39,8 @@ const filters = [
 
 export const noTopicString = '(No Topic)';
 export const allTopicString = '(All)';
-export const twitterUserContext = createContext(null);
-export const profileContext = createContext(null);
+// export const twitterUserContext = createContext(null);
+// export const profileContext = createContext(null);
 
 export default function DraftsPage() {
     const [activeTab, setActiveTab] = useState(0);

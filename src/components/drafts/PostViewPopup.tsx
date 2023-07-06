@@ -70,6 +70,9 @@ export default function PostViewPopup({ trigger, content, deleteNumber, setDelet
     }
 
     function openModal() {
+        console.log('openModal');
+        console.log(content);
+
         setImage(content?.image);
         setIsOpen(true)
 

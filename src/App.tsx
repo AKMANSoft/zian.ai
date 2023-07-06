@@ -42,6 +42,8 @@ import {
 
 
 export const UserContext = createContext(null);
+export const twitterUserContext = createContext(null);
+export const profileContext = createContext(null);
 
 const router = createBrowserRouter([
   {
@@ -49,7 +51,7 @@ const router = createBrowserRouter([
     element: <HomePage /> ,
     errorElement: <ErrorPage />,
     loader: async () => {
-      let homeData: any = {};
+      let pageData: any = {};
 
       let lastResult = null;
       await userApiClient.usersList().then((result) => {
@@ -59,24 +61,38 @@ const router = createBrowserRouter([
 
       if (lastResult) {
         // return lastResult[0];
-        homeData.user = lastResult[0];
+        pageData.user = lastResult[0];
       } else {
         // return null;
-        homeData.user = null;
+        pageData.user = null;
       }
+
+      // get Twitter account
+      const twitterUsersList = await twitterUserApiClient.twitterUsersList().then((r) => {
+        console.log(r);
+        return r;
+      });
+      pageData.twitterUsersList = twitterUsersList;
+
+      // get profile
+      const profile = await profileApiClient.profilesList().then((r) => {
+        console.log(r);
+        return r.results[0];
+      });
+      pageData.profile = profile;
 
       const latestContents = await contentApiClient.contentsScheduled().then((r) => {
         // console.log(r.results);
         return r.results;
       });
-      homeData.latestContents = latestContents;
+      pageData.latestContents = latestContents;
 
       const r = sortScheduledContents(latestContents);
       console.log(r);
 
-      homeData.page = 'home';
+      pageData.page = 'home';
 
-      return homeData;
+      return pageData;
     },
   },
   {
@@ -106,6 +122,7 @@ const router = createBrowserRouter([
     loader: async () => {
       let pageData: any = {};
 
+      // get user
       let lastResult = null;
       await userApiClient.usersList().then((result) => {
         lastResult = result.results;

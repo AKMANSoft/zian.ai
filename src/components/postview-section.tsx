@@ -31,12 +31,15 @@ type PostViewSectionProps = {
     contentClassName?: string;
     customContent?: React.ReactNode;
     scheduled?: boolean;
+    content?: any
+    deleteNumber?: number
+    setDeleteNumber?: (n: number) => void
 }
 
 
-export default function PostViewSection({ className, heading, contentClassName, customContent = null, scheduled = true }: PostViewSectionProps) {
+export default function PostViewSection({ className, heading, contentClassName, customContent = null, scheduled = true, content, deleteNumber, setDeleteNumber }: PostViewSectionProps) {
     const [imageStatus, setImageStatus] = useState<PostStatus>(PostStatus.GENERATED);
-    const [content, setContent] = useState<any>(null);
+    // const [content, setContent] = useState<any>(null);
 
     const pageData: any = useLoaderData();
     // console.log({pageData});
@@ -53,16 +56,22 @@ export default function PostViewSection({ className, heading, contentClassName, 
         console.log(`Delete content: ${content.id}`);
         contentApiClient.contentsDelete({id: content.id}).then((r) => {
           // console.log(r);
-          contentApiClient.contentsScheduled().then((r) => {
-            // console.log(r.results);
-            if (r.results) {
-              setContent(r.results[0]);
-            } else {
-              setContent(null);
-            }
-            window.location.reload();
-            // return r.results;
-          });
+          // contentApiClient.contentsScheduled().then((r) => {
+          //   // console.log(r.results);
+          //   if (r.results) {
+          //     // setContent(r.results[0]);
+          //   } else {
+          //     // setContent(null);
+          //   }
+          //   window.location.reload();
+          //   // return r.results;
+          // });
+
+          if (deleteNumber !== undefined) {
+            deleteNumber = deleteNumber + 1;
+            setDeleteNumber && setDeleteNumber(deleteNumber);
+            // console.log('update deleteNumber');
+          }
         });
       }
     }
@@ -91,13 +100,24 @@ export default function PostViewSection({ className, heading, contentClassName, 
                             <div className="">
                                 {heading}
                                 <p className="mt-7 font-light text-base text-th-gray font-jakarta">
-                                  { pageData?.page === 'home' ? pageData?.latestContents[0]?.text || 'No any content' : '' }
-                                  { pageData?.page === 'home' && pageData?.latestContents[0]?.text && setContent(pageData?.latestContents[0]) }
+                                  {/* pageData?.page === 'home' ? pageData?.latestContents[0]?.text || 'No any content' : '' */}
+                                  {/* pageData?.page === 'home' && pageData?.latestContents[0]?.text && setContent(pageData?.latestContents[0]) */}
+                                  { content?.text || 'No any content' }
                                 </p>
-                                {pageData?.page === 'home' && pageData?.latestContents[0]?.image ?
+                                {
+                                  // pageData?.page === 'home' && pageData?.latestContents[0]?.image ?
+                                  // <ImageEl
+                                  //     showLoading={imageStatus === PostStatus.GENERATING}
+                                  //     src={pageData?.latestContents[0]?.image} loading="lazy"
+                                  //     containerClassName="mt-6"
+                                  //     className="object-cover object-center aspect-video w-full lg:h-[264px]" />
+                                  // :
+                                  // ''
+
+                                  content?.image ?
                                   <ImageEl
                                       showLoading={imageStatus === PostStatus.GENERATING}
-                                      src={pageData?.latestContents[0]?.image} loading="lazy"
+                                      src={content?.image} loading="lazy"
                                       containerClassName="mt-6"
                                       className="object-cover object-center aspect-video w-full lg:h-[264px]" />
                                   :
@@ -108,7 +128,8 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                     <>
                                         <p className="my-3 text-xs text-white font-bold font-jakarta">
                                             <span>Date: </span>
-                                            <span className="font-medium">{ pageData?.page === 'home' ? pageData?.latestContents[0]?.createdTime?.toLocaleString() || '' : '' }</span>
+                                            {/*<span className="font-medium">{ pageData?.page === 'home' ? pageData?.latestContents[0]?.createdTime?.toLocaleString() || '' : '' }</span>*/}
+                                            <span className="font-medium">{ content?.createdTime?.toLocaleString() || '' }</span>
                                           
                                         </p>
                                         <Seperator />
@@ -129,7 +150,8 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                              */}
                                             <WarningPopup
                                                 heading="Are you sure you want to delete this post?"
-                                                description={ pageData?.page === 'home' ? pageData?.latestContents[0]?.text || 'No any content' : '' }
+                                                // description={ pageData?.page === 'home' ? pageData?.latestContents[0]?.text || 'No any content' : '' }
+                                                description={ content?.text || 'No any content' }
                                                 negativeText="Cancel"
                                                 positiveText="Yes, Delete"
                                                 trigger={({ open }) => (
