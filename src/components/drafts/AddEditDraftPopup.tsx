@@ -36,9 +36,12 @@ type Props = {
     deleteNumber?: number
     setDeleteNumber?: (n: number) => void
     hasWord?: boolean | undefined
+    newWords?: string | undefined
+    className?: string | undefined
+    hasParent?: boolean | undefined
 }
 
-export default function AddEditDraftPopup({ variant = "add", content, deleteNumber, setDeleteNumber, hasWord }: Props) {
+export default function AddEditDraftPopup({ variant = "add", content, deleteNumber, setDeleteNumber, hasWord, newWords, className, hasParent = true }: Props) {
     const [isOpen, setIsOpen] = useState(false);
     const [imageStatus, setImageStatus] = useState<PostStatus>(PostStatus.GENERATED);
 
@@ -617,24 +620,41 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
 
     return (
         <>
-            <div className="py-2 w-full md:col-span-2 lg:col-span-1 min-w-max flex justify-end">
-                {
-                    variant === "add" ?
-                        <PrimaryBtn onClick={openModal} className="h-11 px-5 w-full">
-                            Add New
-                        </PrimaryBtn>
-                        : hasWord ?
-                          <SecondaryBtn onClick={openModal} className="px-2 xs:px-4">
-                              <FontAwesomeIcon icon={faEdit} />
-                              Edit
-                          </SecondaryBtn>
-                          :
-                          <SecondaryBtn onClick={openModal} className="p-3">
-                              <FontAwesomeIcon icon={faEdit} />
-                          </SecondaryBtn>
-                }
+            {
+              hasParent ? 
+                <div className="py-2 w-full md:col-span-2 lg:col-span-1 min-w-max flex justify-end">
+                    {
+                        variant === "add" ?
+                            <PrimaryBtn onClick={openModal} className={ className || "h-11 px-5 w-full" }>
+                              { newWords ||  'Add New' }
+                            </PrimaryBtn>
+                            : hasWord ?
+                              <SecondaryBtn onClick={openModal} className={ className || "px-2 xs:px-4" }>
+                                <FontAwesomeIcon icon={faEdit} />
+                                { newWords ||  'Edit' }
+                              </SecondaryBtn>
+                              :
+                              <SecondaryBtn onClick={openModal} className={ className || "p-3" }>
+                                <FontAwesomeIcon icon={faEdit} />
+                              </SecondaryBtn>
+                    }
 
-            </div>
+                </div>
+              : 
+                  variant === "add" ?
+                      <PrimaryBtn onClick={openModal} className={ className || "h-11 px-5 w-full" }>
+                        { newWords ||  'Add New' }
+                      </PrimaryBtn>
+                      : hasWord ?
+                        <SecondaryBtn onClick={openModal} className={ className || "px-2 xs:px-4" }>
+                          <FontAwesomeIcon icon={faEdit} />
+                          { newWords ||  'Edit' }
+                        </SecondaryBtn>
+                        :
+                        <SecondaryBtn onClick={openModal} className={ className || "p-3" }>
+                          <FontAwesomeIcon icon={faEdit} />
+                        </SecondaryBtn>
+            }
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-50" onClose={closeModal}>
                     <Transition.Child

@@ -12,6 +12,7 @@ import { PostStatus } from "@/pages/GenerateContent";
 import PostViewPopup from "./drafts/PostViewPopup";
 import { changeImageUrl, sortScheduledContents } from '@/lib/utils'
 import WarningPopup from "@/components/WarningPopup";
+import AddEditDraftPopup from "@/components/drafts/AddEditDraftPopup";
 
 import {
   useLoaderData,
@@ -135,6 +136,7 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                         </p>
                                         <Seperator />
                                         <div className="mt-[14px] flex items-center gap-3">
+                                            {/*
                                             <SecondaryBtn className="px-2 xs:px-4">
                                                 <FontAwesomeIcon icon={faCalendar} />
                                                 Reschedule
@@ -143,6 +145,18 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                                 <FontAwesomeIcon icon={faEdit} />
                                                 Edit
                                             </SecondaryBtn>
+                                              */}
+
+                                            <AddEditDraftPopup variant="edit" content={content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber} hasWord={true}
+                                              newWords={'Reschedule'}
+                                              className={"px-2 xs:px-4"}
+                                              hasParent={false}
+                                            />
+                                            <AddEditDraftPopup variant="edit" content={content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber} hasWord={true}
+                                              className={"px-2 xs:px-4"}
+                                              hasParent={false}
+                                            />
+
                                            {/*
                                             <SecondaryBtn className="px-2 xs:px-4" onClick={onDeleteContent}>
                                                 <FontAwesomeIcon icon={faTrash} />
