@@ -22,6 +22,7 @@ import {
   userApiClient,
   twitterUserApiClient,
   contentApiClient,
+  imageApiClient,
 } from '@/api.env'
 
 
@@ -40,6 +41,9 @@ type PostViewSectionProps = {
 
 export default function PostViewSection({ className, heading, contentClassName, customContent = null, scheduled = true, content, deleteNumber, setDeleteNumber }: PostViewSectionProps) {
     const [imageStatus, setImageStatus] = useState<PostStatus>(PostStatus.GENERATED);
+    const [image, setImage] = useState<any>(content?.image);
+    const [sendStatus, setSendStatus] = useState<string>('');
+    // const [isGenerateImage, setIsGenerateImage] = useState<boolean>(false);
     // const [content, setContent] = useState<any>(null);
 
     const pageData: any = useLoaderData();
@@ -47,10 +51,31 @@ export default function PostViewSection({ className, heading, contentClassName, 
 
     const onRegenerateClicked = () => {
         setImageStatus(PostStatus.GENERATING);
-        setTimeout(() => {
+
+        // contentApiClient.contentsCreateImage({id: content.id}).then((r) => {
+        imageApiClient.imagesCreateImage({id: content.id}).then((r) => {
+          // console.log(r);
+          setImage(r.imageUrl);
+          if (deleteNumber !== undefined) {
+            let lastNumber = deleteNumber + 1;
+            setDeleteNumber && setDeleteNumber(lastNumber);
+            // console.log('update deleteNumber');
+          }
+        }).finally(() => {
             setImageStatus(PostStatus.GENERATED);
-        }, 4000);
+        });
+
+        // setTimeout(() => {
+        //     setImageStatus(PostStatus.GENERATED);
+        // }, 4000);
     }
+
+    // const onRegenerateClicked = () => {
+    //     setImageStatus(PostStatus.GENERATING);
+    //     setTimeout(() => {
+    //         setImageStatus(PostStatus.GENERATED);
+    //     }, 4000);
+    // }
 
     function onDeleteContent(): void {
       if (content) {
@@ -73,6 +98,35 @@ export default function PostViewSection({ className, heading, contentClassName, 
             setDeleteNumber && setDeleteNumber(deleteNumber);
             // console.log('update deleteNumber');
           }
+        });
+      }
+    }
+
+    function onClickSendNow(): void {
+      if (content) {
+        setSendStatus('sending');
+
+        console.log(`Send content: ${content.id}`);
+        contentApiClient.contentsSend({id: content.id}).then((r) => {
+          console.log(r);
+
+          const msg_class = 'text-green-500';
+          const message = `Send the draft successfully`;
+          // setMessage(message);
+          // setMessageClass(msg_class);
+          // setSendStatus('sent');
+          setSendStatus('');
+
+          if (setDeleteNumber && deleteNumber != undefined) {
+            deleteNumber = deleteNumber + 1;
+            setDeleteNumber(deleteNumber);
+          }
+        }).catch((e) => {
+          const msg_class = 'text-red-500';
+          const message = `Failed to send the draft`;
+          // setMessage(message);
+          // setMessageClass(msg_class);
+          setSendStatus('');
         });
       }
     }
@@ -115,14 +169,28 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                   // :
                                   // ''
 
-                                  content?.image ?
-                                  <ImageEl
-                                      showLoading={imageStatus === PostStatus.GENERATING}
-                                      src={content?.image} loading="lazy"
-                                      containerClassName="mt-6"
-                                      className="object-cover object-center aspect-video w-full lg:h-[264px]" />
-                                  :
-                                  ''
+                                  image ?
+                                    <ImageEl
+                                        showLoading={imageStatus === PostStatus.GENERATING}
+                                        src={image || changeImageUrl("/images/today-post.png")} loading="lazy"
+                                        containerClassName="mt-6"
+                                        className="object-cover object-center aspect-video w-full lg:h-[264px]" />
+                                    : imageStatus === PostStatus.GENERATING ?
+                                    <ImageEl
+                                        showLoading={imageStatus === PostStatus.GENERATING}
+                                        src="" alt="No Image" loading="lazy"
+                                        containerClassName="mt-6"
+                                        className="object-cover object-center aspect-video w-full lg:h-[264px]" />
+                                      : ''
+
+                                  // content?.image ?
+                                  // <ImageEl
+                                  //     showLoading={imageStatus === PostStatus.GENERATING}
+                                  //     src={content?.image} loading="lazy"
+                                  //     containerClassName="mt-6"
+                                  //     className="object-cover object-center aspect-video w-full lg:h-[264px]" />
+                                  // :
+                                  // ''
                                 }
                                 {
                                     scheduled &&
@@ -185,12 +253,27 @@ export default function PostViewSection({ className, heading, contentClassName, 
                             {/* Buttons  */}
                             <GrBorderBox className="p-[1px] absolute w-full bottom-0 left-0 ">
                                 <div className="bg-gr-purple backdrop-blur-3xl p-5 flex items-center gap-4">
-                                    <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3 w-1/2">
-                                        Regenerate Image
+                                    <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3 w-1/2"
+                                      disabled={imageStatus === PostStatus.GENERATING}
+                                    >
+                                        {image ? 'Regenerate Image' : 'Generate Image'}
                                     </SecondaryBtn>
+                                    {/*
                                     <PrimaryBtn className="py-3 w-1/2 h-full">
                                         Send Now
                                     </PrimaryBtn>
+                                      */}
+                                    {
+                                      sendStatus === '' ?
+                                        <PrimaryBtn className="py-3 w-1/2 h-full" onClick={onClickSendNow}>
+                                            Send Now
+                                        </PrimaryBtn>
+                                        : sendStatus === 'sending' ? 
+                                          <PrimaryBtn disabled={true} className="py-3 w-1/2 h-full">
+                                              Sending...
+                                          </PrimaryBtn>
+                                        : ''
+                                    }
                                 </div>
                             </GrBorderBox>
                         </div>
@@ -209,9 +292,11 @@ type ScheduleListItemProps = {
     className?: string;
     onItemClick?: () => void;
     items?: Array<any>;
+    deleteNumber?: number
+    setDeleteNumber?: (n: number) => void
 }
 
-export function ScheduleListItem({ leading, className, onItemClick, items }: ScheduleListItemProps) {
+export function ScheduleListItem({ leading, className, onItemClick, items, deleteNumber, setDeleteNumber }: ScheduleListItemProps) {
     // const pageData: any = useLoaderData();
     // console.log({pageData});
 
@@ -247,7 +332,7 @@ export function ScheduleListItem({ leading, className, onItemClick, items }: Sch
                         },
                     ]}
                     itemRenderer={(item) => (
-                        <SmallSchedulePostEl onClick={onItemClick} text={item.text} icon={item.icon} content={item.content} />
+                        <SmallSchedulePostEl onClick={onItemClick} text={item.text} icon={item.icon} content={item.content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber} />
                     )}
                     overflowRenderer={(items) => (
                         <SmallSchedulePostEl hasPost={false} text={`+${items.length}`} keepVisible />
@@ -266,9 +351,11 @@ type SmallSchedulePostElProps = {
     onClick?: () => void;
     hasPost?: boolean;
     content?: any;
+    deleteNumber?: number
+    setDeleteNumber?: (n: number) => void
 }
 
-export function SmallSchedulePostEl({ text, icon, onClick, hasPost = true, keepVisible, content }: SmallSchedulePostElProps) {
+export function SmallSchedulePostEl({ text, icon, onClick, hasPost = true, keepVisible, content, deleteNumber, setDeleteNumber }: SmallSchedulePostElProps) {
     // hidden xs:inline-flex first:inline-flex last:inline-flex
     return (
         hasPost ?
@@ -291,6 +378,7 @@ export function SmallSchedulePostEl({ text, icon, onClick, hasPost = true, keepV
                     </PrimaryBtnNeon>
                 )}
               content={content}
+              deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber}
             />
             :
             <PrimaryBtnNeon onClick={onClick} className="text-base text-th-gray">

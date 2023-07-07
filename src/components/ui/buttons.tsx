@@ -12,14 +12,16 @@ type Props = {
 }
 
 
-export function SecondaryBtn({ className, children, filled = true, onClick }: Props) {
+export function SecondaryBtn({ className, children, filled = true, onClick, disabled = false }: Props) {
     return (
         <button type="button" onClick={onClick} className={cn(
             "border border-white/5 transition-all duration-300 hover:bg-white/20 rounded-lg py-[8px] px-4 outline-none",
             filled && "bg-white/[0.06]",
             "inline-flex items-center gap-2 text-white text-xs font-semibold justify-center",
             className
-        )}>
+        )}
+          disabled={disabled}
+        >
             {children}
         </button>
     )

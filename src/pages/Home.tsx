@@ -141,7 +141,7 @@ export default function HomePage() {
                             <div className="max-h-full overflow-y-auto">
                                 {
                                   // pageData?.latestContents ? <ScheduleList scheduledContents={pageData?.latestContents} /> :
-                                  scheduleList ? <ScheduleList scheduledContents={scheduleList} /> :
+                                  scheduleList ? <ScheduleList scheduledContents={scheduleList} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber} /> :
                                     <>
                                       <div className="md:px-[30px]">
                                           <h6 className="px-5 md:px-0 text-sm font-normal text-white">Today</h6>
@@ -186,33 +186,41 @@ type HScheduleListItemProps = {
     active?: boolean;
     time?: string;
     items?: Array<any>;
+    deleteNumber?: number
+    setDeleteNumber?: (n: number) => void
 }
 
-function HScheduleListItem({ active, time, items }: HScheduleListItemProps) {
+function HScheduleListItem({ active, time, items, deleteNumber, setDeleteNumber }: HScheduleListItemProps) {
+    // const [isActive, setIsActive] = useState<boolean>(active === undefined? false: active);
+
     return (
         <ScheduleListItem
             leading={
                 <p className="inline-flex w-full min-w-max items-center gap-2 font-jakarta text-sm text-white font-normal mr-[10px] max-w-[120px] overflow-x-hidden">
-                    {/*
+                   {/*
                     <span className="w-4 h-4 aspect-square">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className={cn(active ? "fill-th-green-3" : "fill-white/30")}>
                             <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z" />
                         </svg>
                     </span>
-                      */}
+                     */}
                     {time || '9:30 AM'}
                 </p>
             }
           items={items}
+          deleteNumber={deleteNumber}
+          setDeleteNumber={setDeleteNumber}
         />
     )
 }
 
 type ScheduleListProps = {
     scheduledContents: any;
+    deleteNumber?: number
+    setDeleteNumber?: (n: number) => void
 }
 
-function ScheduleList({ scheduledContents }: ScheduleListProps) {
+function ScheduleList({ scheduledContents, deleteNumber, setDeleteNumber }: ScheduleListProps) {
   const m = sortScheduledContents(scheduledContents);
   console.log(m);
 
@@ -232,7 +240,7 @@ function ScheduleList({ scheduledContents }: ScheduleListProps) {
         });
       }
       hsScheduleList.push(
-        <HScheduleListItem key={tk} items={items} time={tk}/>
+        <HScheduleListItem key={tk} items={items} time={tk} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber}/>
       );
     }
 

@@ -823,7 +823,9 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
                                                     }
                                                 </div>
                                                 <div className="flex items-center justify-start">
-                                                    <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3 px-5">
+                                                    <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3 px-5"
+                                                      disabled={imageStatus === PostStatus.GENERATING}
+                                                    >
                                                       { image ? 'Regenerate Image' : 'Generate Image' }
                                                     </SecondaryBtn>
                                                 </div>

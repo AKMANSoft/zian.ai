@@ -52,8 +52,8 @@ export default function PostViewPopup({ trigger, content, deleteNumber, setDelet
           // console.log(r);
           setImage(r.imageUrl);
           if (deleteNumber !== undefined) {
-            let lastNumber = deleteNumber + 1;
-            setDeleteNumber && setDeleteNumber(lastNumber);
+            deleteNumber = deleteNumber + 1;
+            setDeleteNumber && setDeleteNumber(deleteNumber);
             // console.log('update deleteNumber');
           }
         }).finally(() => {
@@ -236,7 +236,9 @@ export default function PostViewPopup({ trigger, content, deleteNumber, setDelet
                                                         />
                                                     </div>
                                                     <div className="hidden md:flex items-center gap-4">
-                                                        <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3">
+                                                        <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3"
+                                                          disabled={imageStatus === PostStatus.GENERATING}
+                                                        >
                                                           {image ? 'Regenerate Image' : 'Generate Image'}
                                                         </SecondaryBtn>
                                                         {
