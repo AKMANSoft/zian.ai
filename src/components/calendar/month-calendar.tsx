@@ -1,13 +1,20 @@
 import { CalendarGridEl, CalendarHeader, CalendarPostEl } from "./calendar-view";
 import { weekdayNamesShort, CalendarProps, formatNumberto0, monthNamesLong, getWeeksInMonth } from "./defaults";
 import { cn } from "../../lib/utils";
-import { useState } from "react";
+import { useState, useContext } from "react";
+
+import {
+  scheduledContentsContext,
+} from '@/App'
 
 type MonthCalendarProps = CalendarProps
 
 
 
 export default function MonthCalendarView({ mode, onModeChange, onPostSelect }: MonthCalendarProps) {
+    const {scheduleMap, setScheduleMap, deleteNumber, setDeleteNumber, setContent}: any = useContext(scheduledContentsContext);
+    const [firstSchedule, setFirstSchedule] = useState({});
+
     const [currentMonth, setCurrentMonth] = useState({
         month: (new Date()).getMonth(),
         year: (new Date()).getFullYear(),
@@ -30,6 +37,31 @@ export default function MonthCalendarView({ mode, onModeChange, onPostSelect }: 
             year: dateObj.getFullYear(),
             weeks: getWeeksInMonth(dateObj)
         })
+    }
+
+    function getFirstSchedule(date: Date) {
+      let schedule:any = {};
+      const dateStr = date.toLocaleDateString();
+      // console.log(`dateStr: ${dateStr}`);
+
+      const timeContentMap = scheduleMap.get(dateStr);
+      if (timeContentMap) {
+        console.log(`timeContentMap for date(${dateStr}):`);
+        // console.log(timeContentMap);
+        for (let entry of timeContentMap) {
+          // console.log(`time: ${entry[0]}`);
+          schedule.time = entry[0];
+          schedule.content = entry[1][0];
+          // break;
+          // console.log('schedule:');
+          // console.log(schedule);
+          // setFirstSchedule(schedule);
+          return schedule
+        }
+        // console.log('schedule:');
+        // console.log(schedule);
+        // setFirstSchedule(schedule);
+      }
     }
 
     return (
@@ -57,7 +89,7 @@ export default function MonthCalendarView({ mode, onModeChange, onPostSelect }: 
                                                 content={
                                                     <div className='w-full'>
                                                         <div className='text-center mb-2'>
-                                                            {
+                                                            { // show week flag on calendar first row
                                                                 wIndex === 0 &&
                                                                 <p className={cn(
                                                                     'text-white font-semibold font-jakarta mb-2 uppercase',
@@ -71,9 +103,12 @@ export default function MonthCalendarView({ mode, onModeChange, onPostSelect }: 
                                                                 {formatNumberto0(date.getDate())}
                                                             </span>
                                                         </div>
-                                                        {
-                                                            index % 5 === 0 &&
-                                                            <CalendarPostEl onClick={onPostSelect} />
+                                                        { // show content on some date grid
+                                                            // index % 5 === 0 &&
+                                                            <CalendarPostEl key={date.toLocaleDateString()} onClick={onPostSelect}
+                                                              contentEntry={getFirstSchedule(date)}
+                                                              setContent={setContent}
+                                                            />
                                                         }
                                                     </div>
                                                 }

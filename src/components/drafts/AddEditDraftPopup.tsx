@@ -39,9 +39,10 @@ type Props = {
     newWords?: string | undefined
     className?: string | undefined
     hasParent?: boolean | undefined
+    disabled?: boolean | undefined
 }
 
-export default function AddEditDraftPopup({ variant = "add", content, deleteNumber, setDeleteNumber, hasWord, newWords, className, hasParent = true }: Props) {
+export default function AddEditDraftPopup({ variant = "add", content, deleteNumber, setDeleteNumber, hasWord, newWords, className, hasParent = true, disabled = false }: Props) {
     const [isOpen, setIsOpen] = useState(false);
     const [imageStatus, setImageStatus] = useState<PostStatus>(PostStatus.GENERATED);
 
@@ -625,16 +626,16 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
                 <div className="py-2 w-full md:col-span-2 lg:col-span-1 min-w-max flex justify-end">
                     {
                         variant === "add" ?
-                            <PrimaryBtn onClick={openModal} className={ className || "h-11 px-5 w-full" }>
+                            <PrimaryBtn disabled={disabled} onClick={openModal} className={ className || "h-11 px-5 w-full" }>
                               { newWords ||  'Add New' }
                             </PrimaryBtn>
                             : hasWord ?
-                              <SecondaryBtn onClick={openModal} className={ className || "px-2 xs:px-4" }>
+                              <SecondaryBtn disabled={disabled} onClick={openModal} className={ className || "px-2 xs:px-4" }>
                                 <FontAwesomeIcon icon={faEdit} />
                                 { newWords ||  'Edit' }
                               </SecondaryBtn>
                               :
-                              <SecondaryBtn onClick={openModal} className={ className || "p-3" }>
+                              <SecondaryBtn disabled={disabled} onClick={openModal} className={ className || "p-3" }>
                                 <FontAwesomeIcon icon={faEdit} />
                               </SecondaryBtn>
                     }
@@ -642,16 +643,16 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
                 </div>
               : 
                   variant === "add" ?
-                      <PrimaryBtn onClick={openModal} className={ className || "h-11 px-5 w-full" }>
+                      <PrimaryBtn disabled={disabled} onClick={openModal} className={ className || "h-11 px-5 w-full" }>
                         { newWords ||  'Add New' }
                       </PrimaryBtn>
                       : hasWord ?
-                        <SecondaryBtn onClick={openModal} className={ className || "px-2 xs:px-4" }>
+                        <SecondaryBtn disabled={disabled} onClick={openModal} className={ className || "px-2 xs:px-4" }>
                           <FontAwesomeIcon icon={faEdit} />
                           { newWords ||  'Edit' }
                         </SecondaryBtn>
                         :
-                        <SecondaryBtn onClick={openModal} className={ className || "p-3" }>
+                        <SecondaryBtn disabled={disabled} onClick={openModal} className={ className || "p-3" }>
                           <FontAwesomeIcon icon={faEdit} />
                         </SecondaryBtn>
             }

@@ -45,6 +45,7 @@ import {
 export const UserContext = createContext(null);
 export const twitterUserContext = createContext(null);
 export const profileContext = createContext(null);
+export const scheduledContentsContext = createContext({});
 
 const router = createBrowserRouter([
   {
@@ -111,7 +112,81 @@ const router = createBrowserRouter([
       <Suspense>
         <CalendarPage />
       </Suspense>
-    )
+    ),
+    errorElement: <ErrorPage />,
+    loader: async () => {
+      let pageData: any = {};
+
+      // get user
+      let lastResult = null;
+      await userApiClient.usersList().then((result) => {
+        lastResult = result.results;
+        console.log(result.results);
+      });
+
+      if (lastResult) {
+        // return lastResult[0];
+        pageData.user = lastResult[0];
+      } else {
+        // return null;
+        pageData.user = null;
+      }
+
+      // get topics
+      // const topicsList = await topicApiClient.topicsList().then((r) => {
+      //   console.log(r);
+      //   return r;
+      // });
+      // if (topicsList) {
+      //   topicsList.push({text: noTopicString});
+      //   topicsList.push({text: allTopicString});
+      // }
+      // pageData.topicsList = topicsList;
+
+      // get Twitter account
+      const twitterUsersList = await twitterUserApiClient.twitterUsersList().then((r) => {
+        console.log(r);
+        return r;
+      });
+      pageData.twitterUsersList = twitterUsersList;
+
+      // get profile
+      const profile = await profileApiClient.profilesList().then((r) => {
+        console.log(r);
+        return r.results[0];
+      });
+      pageData.profile = profile;
+
+      // const contentsList = await contentApiClient.contentsList({topic: topicsList[0].text}).then((r) => {
+      //   // console.log('Contents list');
+      //   // console.log(r.results);
+      //   // return r.results;
+      //
+      //   // console.log(r);
+      //   return r;
+      // });
+      // pageData.contentsList = contentsList;
+
+      // const statusList = await contentApiClient.contentsStatus({id: '360'}).then((r) => {
+      // // const statusList = await projectStatusListApiClient.projectStatusListList().then((r) => {
+      //   console.log(r);
+      //   // console.log(r.results);
+      //   return r;
+      // });
+      //
+      const scheduledContents = await contentReadApiClient.contentsReadScheduled().then((r) => {
+        console.log('scheduledContents:');
+        console.log(r);
+        // return r;
+        return r;
+      }).catch((e) => {
+        console.log(e);
+        throw e;
+      });
+      pageData.scheduledContents = scheduledContents;
+
+      return pageData;
+    }
   },
   {
     path: "/drafts",

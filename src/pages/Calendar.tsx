@@ -5,15 +5,68 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import CalendarView from "../components/calendar/calendar-view";
 import { cn } from "../lib/utils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { changeImageUrl, sortScheduledContents } from '@/lib/utils'
+
+import {
+  useLoaderData,
+} from 'react-router-dom'
+
+import {
+  twitterUserContext,
+  profileContext,
+  scheduledContentsContext,
+} from '@/App'
+
+import {
+  contentReadApiClient,
+} from '@/api.env'
 
 
 
 export default function CalendarPage() {
     const [post, setPost] = useState(false);
+    const pageData: any = useLoaderData();
+    // const [scheduleList, setScheduleList] = useState<any[]>(pageData.scheduledContents);
+    const [scheduleMap, setScheduleMap] = useState<any>(sortScheduledContents(pageData.scheduledContents));
+    const [deleteNumber, setDeleteNumber] = useState<number>(0);
+    const [content, setContent] = useState<any>(null);
+
+    useEffect(() => {
+        async function startFetching() {
+          // setContentResult(null);
+          let result = null;
+          // result = await contentApiClient.contentsScheduled().then((r) => {
+          result = await contentReadApiClient.contentsReadScheduled().then((r) => {
+            // console.log(r);
+            // return r;
+            return r;
+          }).catch((e) => {
+            console.log(e);
+          });
+
+          if (!ignore) {
+            if (result) {
+              setScheduleMap(sortScheduledContents(result));
+              // console.log(`Sorted scheduled contents:`);
+              // console.log(sortScheduledContents(result));
+            }
+          }
+        }
+
+      let ignore = false;
+      startFetching();
+      return () => {
+        ignore = true;
+      }
+    }, [deleteNumber]);
+
     return (
-        <MainLayout heading="Calendar">
+        <scheduledContentsContext.Provider value={{scheduleMap, setScheduleMap, deleteNumber, setDeleteNumber, setContent}}>
+        <profileContext.Provider value={pageData.profile}>
+        <twitterUserContext.Provider value={pageData.twitterUsersList}>
+        <MainLayout heading="Calendar" user={pageData.user}>
             <h2 className="text-[32px] leading-9 text-white font-nebula font-normal mb-4 text-center lg:text-start xl:hidden">
                 Calendar
             </h2>
@@ -38,14 +91,24 @@ export default function CalendarPage() {
                                 <FontAwesomeIcon icon={faTwitter} />
                                 Twitter Post
                             </h5>
+                            {/*
                             <button type="button" onClick={() => setPost(false)}
                                 className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-pointer">
-                                <FontAwesomeIcon icon={faXmark} />
+                              <FontAwesomeIcon icon={faXmark} />
                             </button>
+                              */}
                         </div>
-                    } />
+                    }
+                  deleteNumber={deleteNumber}
+                  setDeleteNumber={setDeleteNumber}
+                  content={content}
+                  tips={'Please select one draft'}
+                />
             </div>
         </MainLayout>
+        </twitterUserContext.Provider>
+        </profileContext.Provider>
+        </scheduledContentsContext.Provider>
     );
 }
 

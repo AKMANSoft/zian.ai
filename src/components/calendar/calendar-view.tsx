@@ -101,12 +101,20 @@ export function CalendarGridEl({ content, className }: CalendarGridElProps) {
 type CalendarPostElProps = {
     onlyIcon?: boolean;
     onClick?: () => void;
+    contentEntry?: any
+    setContent?: any
 }
 
 
-export function CalendarPostEl({ onlyIcon, onClick }: CalendarPostElProps) {
+export function CalendarPostEl({ onlyIcon, onClick, contentEntry, setContent }: CalendarPostElProps) {
+    function onClickCalendarGrid() {
+      setContent(contentEntry?.content);
+      // onClick && onClick();
+    }
+
     return (
-        <button type='button' onClick={onClick} className={cn(
+        contentEntry &&
+        <button type='button' onClick={onClickCalendarGrid} className={cn(
             "w-full text-start cursor-pointer bg-radial-gr-purple rounded-md border h-auto border-primary/40",
             "py-1 xl:py-2 px-[10px] xl:px-3"
         )}>
@@ -116,25 +124,26 @@ export function CalendarPostEl({ onlyIcon, onClick }: CalendarPostElProps) {
 
             {
                 !onlyIcon &&
-                <>
-                    <h5 className={cn(
-                        "text-white text-xs font-bold font-jakarta items-center gap-1",
-                        "hidden xl:inline-flex"
-                    )}>
-                        <FontAwesomeIcon icon={faTwitter} />
-                        <span className={cn(
-                            "max-w-[35px] xl:max-w-[45px] 2xl:max-w-[50%] 3xl:max-w-[200px] overflow-hidden text-ellipsis line-clamp-1",
-                        )}>
-                            @moonlanding
-                        </span>
-                    </h5>
-                    <p className={cn(
-                        "text-white text-xs font-normal font-jakarta mt-[6px]",
-                        "hidden xl:block",
-                    )}>
-                        9:30pm
-                    </p>
-                </>
+                  <>
+                      <h5 className={cn(
+                          "text-white text-xs font-bold font-jakarta items-center gap-1",
+                          "hidden xl:inline-flex"
+                      )}>
+                          <FontAwesomeIcon icon={faTwitter} />
+                          <span className={cn(
+                              "max-w-[35px] xl:max-w-[45px] 2xl:max-w-[50%] 3xl:max-w-[200px] overflow-hidden text-ellipsis line-clamp-1",
+                          )}>
+                            { contentEntry?.content?.twitterUsername }
+                          </span>
+                      </h5>
+                      <p className={cn(
+                          "text-white text-xs font-normal font-jakarta mt-[6px]",
+                          "hidden xl:block",
+                      )}>
+                        {/*9:30pm*/}
+                        {contentEntry?.time}
+                      </p>
+                  </>
             }
         </button>
     );

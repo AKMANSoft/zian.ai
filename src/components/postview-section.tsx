@@ -36,10 +36,11 @@ type PostViewSectionProps = {
     content?: any
     deleteNumber?: number
     setDeleteNumber?: (n: number) => void
+    tips?: string
 }
 
 
-export default function PostViewSection({ className, heading, contentClassName, customContent = null, scheduled = true, content, deleteNumber, setDeleteNumber }: PostViewSectionProps) {
+export default function PostViewSection({ className, heading, contentClassName, customContent = null, scheduled = true, content, deleteNumber, setDeleteNumber, tips }: PostViewSectionProps) {
     const [imageStatus, setImageStatus] = useState<PostStatus>(PostStatus.GENERATED);
     const [image, setImage] = useState<any>(content?.image);
     const [sendStatus, setSendStatus] = useState<string>('');
@@ -157,7 +158,7 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                 <p className="mt-7 font-light text-base text-th-gray font-jakarta">
                                   {/* pageData?.page === 'home' ? pageData?.latestContents[0]?.text || 'No any content' : '' */}
                                   {/* pageData?.page === 'home' && pageData?.latestContents[0]?.text && setContent(pageData?.latestContents[0]) */}
-                                  { content?.text || 'No any content' }
+                                  { content?.text || tips || 'No any content' }
                                 </p>
                                 {
                                   // pageData?.page === 'home' && pageData?.latestContents[0]?.image ?
@@ -219,10 +220,12 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                               newWords={'Reschedule'}
                                               className={"px-2 xs:px-4"}
                                               hasParent={false}
+                                              disabled={content ? false : true }
                                             />
                                             <AddEditDraftPopup variant="edit" content={content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber} hasWord={true}
                                               className={"px-2 xs:px-4"}
                                               hasParent={false}
+                                              disabled={content ? false : true }
                                             />
 
                                            {/*
@@ -238,7 +241,7 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                                 negativeText="Cancel"
                                                 positiveText="Yes, Delete"
                                                 trigger={({ open }) => (
-                                                    <SecondaryBtn onClick={open} className="p-3">
+                                                    <SecondaryBtn disabled={content ? false : true } onClick={open} className="p-3">
                                                         <FontAwesomeIcon icon={faTrash} />
                                                         Delete
                                                     </SecondaryBtn>
@@ -254,7 +257,7 @@ export default function PostViewSection({ className, heading, contentClassName, 
                             <GrBorderBox className="p-[1px] absolute w-full bottom-0 left-0 ">
                                 <div className="bg-gr-purple backdrop-blur-3xl p-5 flex items-center gap-4">
                                     <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3 w-1/2"
-                                      disabled={imageStatus === PostStatus.GENERATING}
+                                      disabled={imageStatus === PostStatus.GENERATING || ! content}
                                     >
                                         {image ? 'Regenerate Image' : 'Generate Image'}
                                     </SecondaryBtn>
@@ -265,7 +268,7 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                       */}
                                     {
                                       sendStatus === '' ?
-                                        <PrimaryBtn className="py-3 w-1/2 h-full" onClick={onClickSendNow}>
+                                        <PrimaryBtn disabled={content ? false : true } className="py-3 w-1/2 h-full" onClick={onClickSendNow}>
                                             Send Now
                                         </PrimaryBtn>
                                         : sendStatus === 'sending' ? 
