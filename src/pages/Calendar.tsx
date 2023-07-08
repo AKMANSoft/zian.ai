@@ -51,6 +51,22 @@ export default function CalendarPage() {
               setScheduleMap(sortScheduledContents(result));
               // console.log(`Sorted scheduled contents:`);
               // console.log(sortScheduledContents(result));
+
+              // get the newest content after changing
+              if (content) {
+                let flag = false;
+                for (let e of result) {
+                  if (e.id === content.id) {
+                    setContent(e);
+                    flag = true;
+                    break
+                  }
+                }
+                if (! flag) {
+                  setContent(null); // cannot find it, maybe because it was deleted
+                }
+              }
+
             }
           }
         }

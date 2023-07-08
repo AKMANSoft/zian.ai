@@ -43,6 +43,7 @@ type PostViewSectionProps = {
 export default function PostViewSection({ className, heading, contentClassName, customContent = null, scheduled = true, content, deleteNumber, setDeleteNumber, tips }: PostViewSectionProps) {
     const [imageStatus, setImageStatus] = useState<PostStatus>(PostStatus.GENERATED);
     const [image, setImage] = useState<any>(content?.image);
+    setImage(content?.image);
     const [sendStatus, setSendStatus] = useState<string>('');
     // const [isGenerateImage, setIsGenerateImage] = useState<boolean>(false);
     // const [content, setContent] = useState<any>(null);
