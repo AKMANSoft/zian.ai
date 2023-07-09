@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { cn } from '../../lib/utils';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useState, useContext } from 'react';
 import { calendarViewModes } from './defaults';
 import WeekCalendarView from './week-calendar';
 import MonthCalendarView from './month-calendar';
@@ -10,6 +10,11 @@ import DayCalendarView from './day-calendar';
 import SelectEl from '../ui/selectel';
 import { faCalendar, faChevronLeft, faChevronRight, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { CalendarProps } from './defaults';
+import AddEditDraftPopup from "@/components/drafts/AddEditDraftPopup";
+
+import {
+  scheduledContentsContext,
+} from '@/App'
 
 
 
@@ -30,6 +35,7 @@ export function CalendarHeader({
     onPrevClick, onNextClick,
     mode, onModeChange
 }: CalendarHeaderProps) {
+    const {deleteNumber, setDeleteNumber}: any = useContext(scheduledContentsContext);
     return (
         <div className={cn(
             "border-b border-primary px-5 md:px-8 pt-7 pb-6",
@@ -49,9 +55,15 @@ export function CalendarHeader({
                     <FontAwesomeIcon icon={faCalendar} />
                 </h4>
                 <div className='inline-flex items-center md:gap-6'>
+                    {/*
                     <button className='w-7 h-auto px-1 text-sm text-white font-semibold aspect-square rounded-full border-2 border-white'>
-                        <FontAwesomeIcon icon={faPlus} />
+                      <FontAwesomeIcon icon={faPlus} />
                     </button>
+                      */}
+                    <AddEditDraftPopup variant="edit" deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber} hasParent={false}
+                      customFace={<FontAwesomeIcon icon={faPlus} />}
+                      customClass={'w-7 h-auto px-1 text-sm text-white font-semibold aspect-square rounded-full border-2 border-white'}
+                    />
                     <SelectEl
                         className='py-2 rounded-[4px] hidden md:flex'
                         optClassName='py-2'
