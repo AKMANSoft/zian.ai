@@ -298,9 +298,10 @@ type ScheduleListItemProps = {
     items?: Array<any>;
     deleteNumber?: number
     setDeleteNumber?: (n: number) => void
+    setContent?: (content: any) => void
 }
 
-export function ScheduleListItem({ leading, className, onItemClick, items, deleteNumber, setDeleteNumber }: ScheduleListItemProps) {
+export function ScheduleListItem({ leading, className, onItemClick, items, deleteNumber, setDeleteNumber, setContent }: ScheduleListItemProps) {
     // const pageData: any = useLoaderData();
     // console.log({pageData});
 
@@ -336,7 +337,12 @@ export function ScheduleListItem({ leading, className, onItemClick, items, delet
                         },
                     ]}
                     itemRenderer={(item) => (
-                        <SmallSchedulePostEl onClick={onItemClick} text={item.text} icon={item.icon} content={item.content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber} />
+                        <SmallSchedulePostEl onClick={onItemClick} text={item.text} icon={item.icon} content={item.content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber}
+                          onClickBtn={() => {
+                            console.log('Set content');
+                            setContent && setContent(item.content);
+                          }}
+                        />
                     )}
                     overflowRenderer={(items) => (
                         <SmallSchedulePostEl hasPost={false} text={`+${items.length}`} keepVisible />
@@ -357,30 +363,31 @@ type SmallSchedulePostElProps = {
     content?: any;
     deleteNumber?: number
     setDeleteNumber?: (n: number) => void
+    onClickBtn?: () => void;
 }
 
-export function SmallSchedulePostEl({ text, icon, onClick, hasPost = true, keepVisible, content, deleteNumber, setDeleteNumber }: SmallSchedulePostElProps) {
+export function SmallSchedulePostEl({ text, icon, onClick, hasPost = true, keepVisible, content, deleteNumber, setDeleteNumber, onClickBtn }: SmallSchedulePostElProps) {
     // hidden xs:inline-flex first:inline-flex last:inline-flex
     return (
         hasPost ?
             <PostViewPopup
                 trigger={({ open }) => (
-                    <PrimaryBtnNeon onClick={open} className="text-base text-th-gray">
-                        {
-                            icon && <FontAwesomeIcon icon={icon} />
-                        }
-                        {
-                            text &&
-                            <span className={cn(
-                                "max-w-[100px] md:max-w-[200px] min-w-[20px]",
-                                !keepVisible && "overflow-hidden text-ellipsis whitespace-nowrap"
-                                // !keepVisible && "hidden md:inline text-ellipsis overflow-hidden"
-                            )}>
-                                {text}
-                            </span>
-                        }
-                    </PrimaryBtnNeon>
-                )}
+                  <PrimaryBtnNeon onClick={onClickBtn ? onClickBtn : open} className="text-base text-th-gray">
+                          {
+                              icon && <FontAwesomeIcon icon={icon} />
+                          }
+                          {
+                              text &&
+                              <span className={cn(
+                                  "max-w-[100px] md:max-w-[200px] min-w-[20px]",
+                                  !keepVisible && "overflow-hidden text-ellipsis whitespace-nowrap"
+                                  // !keepVisible && "hidden md:inline text-ellipsis overflow-hidden"
+                              )}>
+                                  {text}
+                              </span>
+                          }
+                      </PrimaryBtnNeon>
+                  )}
               content={content}
               deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber}
             />

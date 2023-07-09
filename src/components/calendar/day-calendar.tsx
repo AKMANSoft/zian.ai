@@ -114,6 +114,7 @@ export default function DayCalendarView({ mode, onModeChange, onPostSelect }: Ca
                                   deleteNumber={deleteNumber}
                                   setDeleteNumber={setDeleteNumber}
                                   items={getItems(currentDate, hour)}
+                                  setContent={setContent}
                                 />
                                 ))
                     }
@@ -131,10 +132,11 @@ type HourRowElProps = {
     deleteNumber?: number
     setDeleteNumber?: any
     items?: any
+    setContent?: (content: any) => void
 }
 
 
-function HourRowEl({ text, onItemClick, deleteNumber, setDeleteNumber, items }: HourRowElProps) {
+function HourRowEl({ text, onItemClick, deleteNumber, setDeleteNumber, items, setContent }: HourRowElProps) {
     return (
         <ScheduleListItem
             className="bg-transparent border-b-[0.5px] border-white/10 last:border-none px-3 pt-3 pb-5 place-items-start !rounded-none"
@@ -149,6 +151,7 @@ function HourRowEl({ text, onItemClick, deleteNumber, setDeleteNumber, items }: 
           items={items}
           deleteNumber={deleteNumber}
           setDeleteNumber={setDeleteNumber}
+          setContent={setContent}
         />
         // <div className={cn(
         //     "w-full border-b-[0.5px] border-white/10 last:border-none px-3 pt-3 pb-5",
