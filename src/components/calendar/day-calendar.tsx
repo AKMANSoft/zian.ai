@@ -24,7 +24,7 @@ export default function DayCalendarView({ mode, onModeChange, onPostSelect }: Ca
 
 
     return (
-        <div className='text-white' >
+        <div className='text-white h-full flex flex-col' >
             {/* Calendar Header  */}
             <CalendarHeader
                 mode={mode}
@@ -36,7 +36,8 @@ export default function DayCalendarView({ mode, onModeChange, onPostSelect }: Ca
             />
             {/* Calendar Body */}
             {/* [&>*:nth-last-child(-n+7)]:border-b-0 */}
-            <div className=''>
+            {/*<div className=''>*/}
+            <div className="h-full max-h-full overflow-y-auto">
                 <div className="w-full border-b-[0.5px] border-white/10 px-8 py-4">
                     <div className={cn(
                         "block aspect-square rounded-full bg-primary px-4 py-2 w-[70px] h-[70px]",

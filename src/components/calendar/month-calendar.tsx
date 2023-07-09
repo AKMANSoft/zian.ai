@@ -13,7 +13,6 @@ type MonthCalendarProps = CalendarProps
 
 export default function MonthCalendarView({ mode, onModeChange, onPostSelect }: MonthCalendarProps) {
     const {scheduleMap, setScheduleMap, deleteNumber, setDeleteNumber, setContent}: any = useContext(scheduledContentsContext);
-    const [firstSchedule, setFirstSchedule] = useState({});
 
     const [currentMonth, setCurrentMonth] = useState({
         month: (new Date()).getMonth(),
@@ -55,12 +54,10 @@ export default function MonthCalendarView({ mode, onModeChange, onPostSelect }: 
           // break;
           // console.log('schedule:');
           // console.log(schedule);
-          // setFirstSchedule(schedule);
           return schedule
         }
         // console.log('schedule:');
         // console.log(schedule);
-        // setFirstSchedule(schedule);
       }
     }
 

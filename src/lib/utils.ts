@@ -16,6 +16,13 @@ export function changeImageUrl(name: string, prefix: string = '/static') {
     return name
 }
 
+export function formatDateToHour(date: Date) {
+  let hours = date.getHours();
+  let strTime = `${hours}:00`
+
+  return strTime
+}
+
 export function formatDate(date: Date) {
   let hours = date.getHours();
   let minutes = date.getMinutes();
@@ -30,19 +37,29 @@ export function formatDate(date: Date) {
   return strTime
 }
 
-export function sortScheduledContents(scheduledContents: any, useCreatedTime: boolean = false) {
+export function sortScheduledContents(scheduledContents: any, useCreatedTime: boolean = false, useOnlyHour: boolean = false) {
   let result = new Map();
   for (const content of scheduledContents) {
     let date: string, time: string;
     if (useCreatedTime) {
       date = content.createdTime.toLocaleDateString();
       // const time = content.createdTime.toLocaleTimeString();
-      time = formatDate(content.createdTime);
+      if (useOnlyHour) {
+        // time = `${content.createdTime.getHours}:00`;
+        time = formatDateToHour(content.createdTime);
+      } else {
+        time = formatDate(content.createdTime);
+      }
     } else {
       // console.log(content.scheduleTime);
       date = content.scheduleTime.toLocaleDateString();
       // const time = content.scheduleTime.toLocaleTimeString();
-      time = formatDate(content.scheduleTime);
+      if (useOnlyHour) {
+        // time = `${content.scheduleTime.getHours}:00`;
+        time = formatDateToHour(content.scheduleTime);
+      } else {
+        time = formatDate(content.scheduleTime);
+      }
     }
 
     if (result.has(date)) {
