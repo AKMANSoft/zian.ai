@@ -3,6 +3,7 @@ import { cn } from "../../lib/utils";
 import { CalendarGridEl, CalendarHeader, CalendarPostEl } from "./calendar-view";
 import { monthNamesShort, weekdayNamesShort, CalendarProps, formatNumberto0, getWeekAllDays, CalendarWeek } from "./defaults";
 import { formatDate } from '@/lib/utils'
+import { changeImageUrl, sortScheduledContents } from '@/lib/utils'
 
 import {
   scheduledContentsContext,
@@ -35,7 +36,7 @@ function getWeekFromDate(date: Date, reverse = false): CalendarWeek {
 
 export default function WeekCalendarView({ mode, onModeChange, onPostSelect }: CalendarProps) {
     const [windowWidth, setWindowWidth] = useState(-1);
-    const {scheduleMap, setScheduleMap, deleteNumber, setDeleteNumber, setContent}: any = useContext(scheduledContentsContext);
+    const {scheduleContents, setScheduleContents, deleteNumber, setDeleteNumber, setContent}: any = useContext(scheduledContentsContext);
 
     useEffect(() => {
         setWindowWidth(window.innerWidth);
@@ -66,7 +67,9 @@ export default function WeekCalendarView({ mode, onModeChange, onPostSelect }: C
       const dateStr = date.toLocaleDateString();
       // console.log(`dateStr: ${dateStr}`);
 
-      const timeContentMap = scheduleMap.get(dateStr);
+      // const timeContentMap = scheduleMap.get(dateStr);
+      const timeContentMap = sortScheduledContents(scheduleContents, false, true).get(dateStr);
+      // console.log('timeContentMap', timeContentMap);
       if (timeContentMap) {
         // console.log(`timeContentMap for date(${dateStr}):`);
         // console.log(timeContentMap);

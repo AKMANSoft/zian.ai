@@ -2,6 +2,7 @@ import { CalendarGridEl, CalendarHeader, CalendarPostEl } from "./calendar-view"
 import { weekdayNamesShort, CalendarProps, formatNumberto0, monthNamesLong, getWeeksInMonth } from "./defaults";
 import { cn } from "../../lib/utils";
 import { useState, useContext } from "react";
+import { changeImageUrl, sortScheduledContents } from '@/lib/utils'
 
 import {
   scheduledContentsContext,
@@ -12,7 +13,7 @@ type MonthCalendarProps = CalendarProps
 
 
 export default function MonthCalendarView({ mode, onModeChange, onPostSelect }: MonthCalendarProps) {
-    const {scheduleMap, setScheduleMap, deleteNumber, setDeleteNumber, setContent}: any = useContext(scheduledContentsContext);
+    const {scheduleContents, setScheduleContents, deleteNumber, setDeleteNumber, setContent}: any = useContext(scheduledContentsContext);
 
     const [currentMonth, setCurrentMonth] = useState({
         month: (new Date()).getMonth(),
@@ -43,9 +44,12 @@ export default function MonthCalendarView({ mode, onModeChange, onPostSelect }: 
       const dateStr = date.toLocaleDateString();
       // console.log(`dateStr: ${dateStr}`);
 
-      const timeContentMap = scheduleMap.get(dateStr);
+      // const timeContentMap = scheduleMap.get(dateStr);
+      // console.log('getFirstSchedule', scheduleContents);
+      const timeContentMap = sortScheduledContents(scheduleContents).get(dateStr);
+      // console.log('timeContentMap', timeContentMap);
       if (timeContentMap) {
-        console.log(`timeContentMap for date(${dateStr}):`);
+        // console.log(`timeContentMap for date(${dateStr}):`);
         // console.log(timeContentMap);
         for (let entry of timeContentMap) {
           // console.log(`time: ${entry[0]}`);

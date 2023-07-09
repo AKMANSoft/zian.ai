@@ -154,11 +154,13 @@ export function CalendarPostEl({ onlyIcon, onClick, contentEntry, setContent }: 
 
 type CalendarViewProps = {
     onPostSelect?: () => void
-    calendarMode: { text: string, value: string, disabled: boolean },
-    setCalendarMode: (e: any) => void
+    // calendarMode: { text: string, value: string, disabled: boolean },
+    // setCalendarMode: (e: any) => void
 }
 
-export default function CalendarView({ onPostSelect, calendarMode, setCalendarMode }: CalendarViewProps) {
+// export default function CalendarView({ onPostSelect, calendarMode, setCalendarMode }: CalendarViewProps) {
+export default function CalendarView({ onPostSelect }: CalendarViewProps) {
+    const [calendarMode, setCalendarMode] = useState(calendarViewModes[0]);
     switch (calendarMode) {
         case calendarViewModes[1]:
             return <WeekCalendarView mode={calendarMode} onPostSelect={onPostSelect} onModeChange={setCalendarMode} />;

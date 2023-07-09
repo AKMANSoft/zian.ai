@@ -31,10 +31,11 @@ export default function CalendarPage() {
     const [post, setPost] = useState(false);
     const pageData: any = useLoaderData();
     // const [scheduleList, setScheduleList] = useState<any[]>(pageData.scheduledContents);
-    const [scheduleMap, setScheduleMap] = useState<any>(sortScheduledContents(pageData.scheduledContents));
+    // const [scheduleMap, setScheduleMap] = useState<any>(sortScheduledContents(pageData.scheduledContents));
+    const [scheduleContents, setScheduleContents] = useState<any>(pageData.scheduledContents);
     const [deleteNumber, setDeleteNumber] = useState<number>(0);
     const [content, setContent] = useState<any>(null);
-    const [calendarMode, setCalendarMode] = useState(calendarViewModes[0]);
+    // const [calendarMode, setCalendarMode] = useState(calendarViewModes[0]);
 
     useEffect(() => {
         async function startFetching() {
@@ -51,21 +52,23 @@ export default function CalendarPage() {
 
           if (!ignore) {
             if (result) {
-              switch (calendarMode) {
-                  case calendarViewModes[1]:  // WeekCalendarView
-                      // useOnlyHour = true
-                      setScheduleMap(sortScheduledContents(result, false, true));
-                      console.log('WeekCalendarView');
-                      console.log(sortScheduledContents(result, false, true));
-                      break;
-                  case calendarViewModes[2]: // DayCalendarView
-                      setScheduleMap(sortScheduledContents(result));
-                      break;
-                  case calendarViewModes[0]:  // MonthCalendarView
-                  default:
-                      setScheduleMap(sortScheduledContents(result));
-              }
+              // switch (calendarMode) {
+              //     case calendarViewModes[1]:  // WeekCalendarView
+              //         // useOnlyHour = true
+              //         setScheduleMap(sortScheduledContents(result, false, true));
+              //         console.log('WeekCalendarView');
+              //         console.log(sortScheduledContents(result, false, true));
+              //         break;
+              //     case calendarViewModes[2]: // DayCalendarView
+              //         setScheduleMap(sortScheduledContents(result));
+              //         break;
+              //     case calendarViewModes[0]:  // MonthCalendarView
+              //     default:
+              //         setScheduleMap(sortScheduledContents(result));
+              // }
               // setScheduleMap(sortScheduledContents(result));
+              // console.log('result', result);
+              setScheduleContents(result);
               // console.log(`Sorted scheduled contents:`);
               // console.log(sortScheduledContents(result));
 
@@ -93,10 +96,10 @@ export default function CalendarPage() {
       return () => {
         ignore = true;
       }
-    }, [deleteNumber, calendarMode]);
+    }, [deleteNumber]);
 
     return (
-        <scheduledContentsContext.Provider value={{scheduleMap, setScheduleMap, deleteNumber, setDeleteNumber, setContent}}>
+        <scheduledContentsContext.Provider value={{scheduleContents, setScheduleContents, deleteNumber, setDeleteNumber, setContent}}>
         <profileContext.Provider value={pageData.profile}>
         <twitterUserContext.Provider value={pageData.twitterUsersList}>
         <MainLayout heading="Calendar" user={pageData.user}>
@@ -106,7 +109,7 @@ export default function CalendarPage() {
             <div className="pb-5 flex flex-col lg:flex-row gap-5 h-full">
                 <GrBorderBox className="w-full p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)]" type="lg">
                     <div className="h-full min-h-[500px] bg-gr-purple-light rounded-20 relative overflow-hidden">
-                        <CalendarView onPostSelect={() => setPost(true)} calendarMode={calendarMode} setCalendarMode={setCalendarMode} />
+                        <CalendarView onPostSelect={() => setPost(true)} />
                     </div>
                 </GrBorderBox>
                 <PostViewSection
