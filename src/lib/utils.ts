@@ -18,7 +18,7 @@ export function changeImageUrl(name: string, prefix: string = '/static') {
 
 export function formatDateToHour(date: Date) {
   let hours = date.getHours();
-  let strTime = `${hours}:00`
+  let strTime = hours > 9 ? `${hours}:00` :`0${hours}:00`
 
   return strTime
 }
