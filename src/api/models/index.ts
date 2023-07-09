@@ -9,6 +9,7 @@ export * from './Profile';
 export * from './ProfilesList200Response';
 export * from './Project';
 export * from './ProjectsList200Response';
+export * from './Question';
 export * from './ScheduleForTwitterPost';
 export * from './SchedulesList200Response';
 export * from './Timezone';

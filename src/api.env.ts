@@ -10,6 +10,7 @@ import {
   SchedulesApi,
   ImagesApi,
   ContentsReadApi,
+  QuestionsApi,
   // ProjectStatusListApi,
 } from './api/index'
 
@@ -34,6 +35,7 @@ export const profileApiClient = new ProfilesApi(apiConf);
 export const timezoneApiClient = new TimezonesApi(apiConf);
 export const scheduleApiClient = new SchedulesApi(apiConf);
 export const imageApiClient = new ImagesApi(apiConf);
+export const questionApiClient = new QuestionsApi(apiConf);
 // export const projectStatusListApiClient = new ProjectStatusListApi(apiConf);
 
 // console.log(cookies.get('csrftoken'));

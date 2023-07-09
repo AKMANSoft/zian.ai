@@ -3,6 +3,7 @@ apis/ContentsReadApi.ts
 apis/ImagesApi.ts
 apis/ProfilesApi.ts
 apis/ProjectsApi.ts
+apis/QuestionsApi.ts
 apis/SchedulesApi.ts
 apis/TimezonesApi.ts
 apis/TopicsApi.ts
@@ -19,6 +20,7 @@ models/Profile.ts
 models/ProfilesList200Response.ts
 models/Project.ts
 models/ProjectsList200Response.ts
+models/Question.ts
 models/ScheduleForTwitterPost.ts
 models/SchedulesList200Response.ts
 models/Timezone.ts

@@ -10,7 +10,7 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from 'react-router-dom'
-import { changeImageUrl, sortScheduledContents } from '@/lib/utils'
+import { changeImageUrl, sortScheduledContents, sortQuestions } from '@/lib/utils'
 import {
   Configuration,
   UsersApi,
@@ -26,6 +26,7 @@ import {
   topicApiClient,
   profileApiClient,
   timezoneApiClient,
+  questionApiClient,
   // projectStatusListApiClient,
 } from '@/api.env'
 import { createContext, useContext } from 'react';
@@ -40,6 +41,10 @@ import {
   noTopicString,
   allTopicString,
 } from '@/pages/Drafts'
+
+import {
+  basicTopicString,
+} from '@/pages/GenerateContent'
 
 
 export const UserContext = createContext(null);
@@ -104,7 +109,60 @@ const router = createBrowserRouter([
       <Suspense>
         <GenerateContentPage />
       </Suspense>
-    )
+    ),
+    errorElement: <ErrorPage />,
+    loader: async () => {
+      let pageData: any = {};
+
+      // get user
+      let lastResult = null;
+      await userApiClient.usersList().then((result) => {
+        lastResult = result.results;
+        console.log(result.results);
+      });
+
+      if (lastResult) {
+        // return lastResult[0];
+        pageData.user = lastResult[0];
+      } else {
+        // return null;
+        pageData.user = null;
+      }
+
+      // get topics
+      const topicsList = await topicApiClient.topicsList().then((r) => {
+        console.log(r);
+        return r;
+      });
+      const lastTopicsList = [{text: basicTopicString}, ...topicsList]
+      pageData.topicsList = lastTopicsList;
+
+      // get Twitter account
+      const twitterUsersList = await twitterUserApiClient.twitterUsersList().then((r) => {
+        console.log(r);
+        return r;
+      });
+      pageData.twitterUsersList = twitterUsersList;
+
+      // get profile
+      const profile = await profileApiClient.profilesList().then((r) => {
+        console.log(r);
+        return r.results[0];
+      });
+      pageData.profile = profile;
+
+      // get questions
+      const questions = await questionApiClient.questionsAll().then((r) => {
+        console.log(r);
+
+        let questions = sortQuestions(r);
+        console.log(questions);
+        return questions;
+      });
+      pageData.questions = questions;
+
+      return pageData;
+    }
   },
   {
     path: "/calendar",

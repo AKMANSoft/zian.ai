@@ -9,6 +9,22 @@ import { useState } from "react";
 import LoadingSparkle from "@/components/LoadingSparkle";
 import { changeImageUrl } from '@/lib/utils'
 
+import {
+  useLoaderData,
+} from 'react-router-dom'
+
+import {
+  userApiClient,
+  twitterUserApiClient,
+  contentApiClient,
+  imageApiClient,
+} from '@/api.env'
+
+import {
+  twitterUserContext,
+  profileContext,
+} from '@/App'
+
 
 
 
@@ -35,6 +51,7 @@ const Topics = [
     "Promotions",
 ]
 
+export const basicTopicString = 'Basic';
 
 
 export enum PostStatus {
@@ -48,6 +65,13 @@ export default function GenerateContentPage() {
     const [selTopic, setSelTop] = useState(0);
     const [postStatus, setPostStatus] = useState<PostStatus>(PostStatus.NOT_GENERATED);
 
+    const pageData: any = useLoaderData();
+    // console.log(pageData);
+
+    const [topic, setTopic] = useState(pageData.topicsList[0].text);
+    const [topics, setTopics] = useState<any[]>(pageData.topicsList);
+    const [questions, setQuestions] = useState<any>(pageData.questions);
+
     const onPostGenerateClicked = () => {
         setPostStatus(PostStatus.GENERATING);
         setTimeout(() => {
@@ -56,7 +80,7 @@ export default function GenerateContentPage() {
     }
 
     return (
-        <MainLayout heading="Generate Content">
+        <MainLayout heading="Generate Content" user={pageData.user}>
             <div className="pb-5 flex flex-col lg:flex-row gap-5 min-h-[calc(100vh_-_130px)]">
                 <GrBorderBox className="w-full p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)]" type="lg">
                     <div className="h-full min-h-[500px] bg-gr-purple-light backdrop-blur-[10px] opacity-90 rounded-20 relative overflow-hidden">
@@ -69,16 +93,17 @@ export default function GenerateContentPage() {
                             </div>
                             <div className="hidden lg:flex lg:w-[65%] xl:w-[70%] border-b-4 border-primary px-5 py-4 max-h-[70px] items-center">
                                 <p className="font-jakarta text-sm font-normal leading-7 text-white/70">
-                                    Please answer these questions lorem ipsum dolor imit
+                                    Please answer these questions. Basic topic questions are required, other topic questions are optional.
                                 </p>
                             </div>
                             <div className="w-full lg:w-[35%] xl:w-[30%] border-r border-primary lg:h-full lg:max-h-[calc(100%_-_70px)] overflow-y-auto">
                                 <div className="w-full px-3 lg:px-5 py-4 gap-3 flex flex-row lg:flex-col max-w-full overflow-x-auto lg:overflow-hidden no-scrollbar">
                                     {
-                                        Topics.map((topic, index) => (
+                                        // Topics.map((topic, index) => (
+                                        topics.map((topic, index) => (
                                             <PrimaryWithNeon onClick={() => setSelTop(index)} active={selTopic === index}
                                                 className="w-full min-w-max lg:min-w-0 block text-[15px] leading-6 font-medium overflow-hidden text-start text-ellipsis max-w-full whitespace-nowrap ">
-                                                {topic}
+                                              {topic.text === basicTopicString ? <>{basicTopicString} <span className="text-red-500" style={{verticalAlign : 'middle'}}>*</span></> : topic.text}
                                             </PrimaryWithNeon>
                                         ))
                                     }
@@ -87,10 +112,11 @@ export default function GenerateContentPage() {
                             <div className="w-full lg:w-[65%] xl:w-[70%] lg:h-full pb-3 lg:pb-10 gap-5 max-h-[calc(100%_-_70px)] overflow-y-auto">
                                 <div>
                                     <div className="p-3 lg:p-5 lg:pt-8 space-y-4">
-                                        <InputEl label="Question 1" placeholder="Write your answer here" />
-                                        <InputEl label="Question 2" placeholder="Write your answer here" />
-                                        <InputEl label="Question 3" placeholder="Write your answer here" />
-                                        <InputEl label="Question 4" placeholder="Write your answer here" />
+                                        {
+                                          questions.get(topics[selTopic].text)?.map((question: any, index: number) => (
+                                            <InputEl label={question.text} placeholder="Write your answer here" />
+                                          )) || <span className="text-sm font-semibold font-jakarta text-white">No questions, please just click the button to generate content</span>
+                                        }
                                     </div>
                                 </div>
                                 <div className="flex justify-end p-3 lg:p-6">

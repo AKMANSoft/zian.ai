@@ -77,3 +77,23 @@ export function sortScheduledContents(scheduledContents: any, useCreatedTime: bo
   }
   return result;
 }
+
+export function sortQuestions(questions: any[]) {
+  let topicQuestions = new Map();
+  let topic = '';
+
+  for (const q of questions) {
+    if (q.typeText === 'Basic') {
+      topic = q.typeText;
+    } else {
+      topic = q.topic;
+    }
+
+    if (topicQuestions.has(topic)) {
+      topicQuestions.get(topic).push(q);
+    } else {
+      topicQuestions.set(topic, [q])
+    }
+  }
+  return topicQuestions;
+}

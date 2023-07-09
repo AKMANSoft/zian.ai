@@ -32,7 +32,7 @@ export interface TopicsReadRequest {
 export class TopicsApi extends runtime.BaseAPI {
 
     /**
-     * This viewset automatically provides `list`, `create`, `retrieve`, `update` and `destroy` actions.
+     * This viewset automatically provides `list`, `retrieve` actions.
      */
     async topicsListRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Topic>>> {
         const queryParameters: any = {};
@@ -53,7 +53,7 @@ export class TopicsApi extends runtime.BaseAPI {
     }
 
     /**
-     * This viewset automatically provides `list`, `create`, `retrieve`, `update` and `destroy` actions.
+     * This viewset automatically provides `list`, `retrieve` actions.
      */
     async topicsList(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Topic>> {
         const response = await this.topicsListRaw(initOverrides);
@@ -61,7 +61,7 @@ export class TopicsApi extends runtime.BaseAPI {
     }
 
     /**
-     * This viewset automatically provides `list`, `create`, `retrieve`, `update` and `destroy` actions.
+     * This viewset automatically provides `list`, `retrieve` actions.
      */
     async topicsReadRaw(requestParameters: TopicsReadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Topic>> {
         if (requestParameters.text === null || requestParameters.text === undefined) {
@@ -86,7 +86,7 @@ export class TopicsApi extends runtime.BaseAPI {
     }
 
     /**
-     * This viewset automatically provides `list`, `create`, `retrieve`, `update` and `destroy` actions.
+     * This viewset automatically provides `list`, `retrieve` actions.
      */
     async topicsRead(requestParameters: TopicsReadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Topic> {
         const response = await this.topicsReadRaw(requestParameters, initOverrides);
