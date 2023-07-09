@@ -4,12 +4,14 @@ import { cn } from "../lib/utils";
 import { PrimaryWithNeon, SecondaryBtn } from "../components/ui/buttons";
 import PostViewSection from "../components/postview-section";
 import { InputEl } from "../components/ui/input";
+import { TextAreaEl } from "../components/ui/textarea";
 import SparkleButton from "@/components/ui/sparkle-btn";
 import { useState } from "react";
 import LoadingSparkle from "@/components/LoadingSparkle";
 import { changeImageUrl } from '@/lib/utils'
 
 import {
+  Form,
   useLoaderData,
 } from 'react-router-dom'
 
@@ -71,6 +73,7 @@ export default function GenerateContentPage() {
     const [topic, setTopic] = useState(pageData.topicsList[0].text);
     const [topics, setTopics] = useState<any[]>(pageData.topicsList);
     const [questions, setQuestions] = useState<any>(pageData.questions);
+    const [answers, setAnswers] = useState<any>(pageData.answers);
 
     const onPostGenerateClicked = () => {
         setPostStatus(PostStatus.GENERATING);
@@ -93,7 +96,8 @@ export default function GenerateContentPage() {
                             </div>
                             <div className="hidden lg:flex lg:w-[65%] xl:w-[70%] border-b-4 border-primary px-5 py-4 max-h-[70px] items-center">
                                 <p className="font-jakarta text-sm font-normal leading-7 text-white/70">
-                                    Please answer these questions. Basic topic questions are required, other topic questions are optional.
+                                  {/*Please answer these questions. Basic topic questions are required, other topic questions are optional.*/}
+                                  Basic topic questions are required to answer, other topic questions are optional.
                                 </p>
                             </div>
                             <div className="w-full lg:w-[35%] xl:w-[30%] border-r border-primary lg:h-full lg:max-h-[calc(100%_-_70px)] overflow-y-auto">
@@ -110,11 +114,22 @@ export default function GenerateContentPage() {
                                 </div>
                             </div>
                             <div className="w-full lg:w-[65%] xl:w-[70%] lg:h-full pb-3 lg:pb-10 gap-5 max-h-[calc(100%_-_70px)] overflow-y-auto">
+                              <Form method="post" id="question-form">
                                 <div>
                                     <div className="p-3 lg:p-5 lg:pt-8 space-y-4">
                                         {
                                           questions.get(topics[selTopic].text)?.map((question: any, index: number) => (
-                                            <InputEl label={question.text} placeholder="Write your answer here" />
+                                            // <InputEl id={question.id} label={question.text} placeholder="Write your answer here" value={ answers.get(question.id)?.text } />
+                                            <TextAreaEl id={question.id} label={question.text} placeholder="Write your answer here" value={ answers.get(question.id)?.text }
+                                              rows={2} cols={10}
+                                              maxLength={1000}
+                                              textAreaClassName={cn(
+                                                "text-white h-full text-start font-jakarta font-light text-sm leading-6 py-3 px-5",
+                                                "border border-white/10 appearance-none rounded-10 w-full bg-transparent mt-2",
+                                                "focus:bg-th-gray/10 outline-none transition-all placeholder:text-white/70"
+                                              )}
+                                            />
+  
                                           )) || <span className="text-sm font-semibold font-jakarta text-white">No questions, please just click the button to generate content</span>
                                         }
                                     </div>
@@ -124,6 +139,7 @@ export default function GenerateContentPage() {
                                         Generate
                                     </SparkleButton>
                                 </div>
+                              </Form>
                             </div>
                         </div>
                     </div>

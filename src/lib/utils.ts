@@ -97,3 +97,14 @@ export function sortQuestions(questions: any[]) {
   }
   return topicQuestions;
 }
+
+export function sortAnswers(answers: any[]) {
+  let newAnswers = new Map();
+
+  for (const a of answers) {
+    if (! newAnswers.has(a.question)) {
+      newAnswers.set(a.question, a)
+    }
+  }
+  return newAnswers;
+}

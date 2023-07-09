@@ -10,7 +10,7 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from 'react-router-dom'
-import { changeImageUrl, sortScheduledContents, sortQuestions } from '@/lib/utils'
+import { changeImageUrl, sortScheduledContents, sortQuestions, sortAnswers } from '@/lib/utils'
 import {
   Configuration,
   UsersApi,
@@ -27,6 +27,7 @@ import {
   profileApiClient,
   timezoneApiClient,
   questionApiClient,
+  answerApiClient,
   // projectStatusListApiClient,
 } from '@/api.env'
 import { createContext, useContext } from 'react';
@@ -156,10 +157,20 @@ const router = createBrowserRouter([
         console.log(r);
 
         let questions = sortQuestions(r);
-        console.log(questions);
+        console.log('questions:', questions);
         return questions;
       });
       pageData.questions = questions;
+
+      // get answers
+      const answers = await answerApiClient.answersCurrentProject().then((r) => {
+        console.log(r);
+
+        let answers = sortAnswers(r);
+        console.log('answers:' , answers);
+        return answers;
+      });
+      pageData.answers = answers;
 
       return pageData;
     }

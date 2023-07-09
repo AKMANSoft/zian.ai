@@ -1,3 +1,4 @@
+apis/AnswersApi.ts
 apis/ContentsApi.ts
 apis/ContentsReadApi.ts
 apis/ImagesApi.ts
@@ -11,6 +12,7 @@ apis/TwitterUsersApi.ts
 apis/UsersApi.ts
 apis/index.ts
 index.ts
+models/Answer.ts
 models/ContentForTwitterPost.ts
 models/ContentForTwitterPostSchedule.ts
 models/ContentsList200Response.ts

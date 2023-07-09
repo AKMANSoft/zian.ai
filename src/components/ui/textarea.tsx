@@ -15,6 +15,7 @@ type InputElProps = {
   rows?: number;
   cols?: number;
   maxLength?: number;
+  textAreaClassName?: string;
 }
 
 // function TextAreaEl({
@@ -27,7 +28,7 @@ type InputElProps = {
 const TextAreaEl = React.forwardRef(({
   label, placeholder = "", labelNode = null,
   id = "", endIcon, value,
-  onChange, className,
+  onChange, className, textAreaClassName,
   rows = 5, cols = 10,
   maxLength = 280,
 }: InputElProps, ref: any) => {
@@ -53,7 +54,7 @@ const TextAreaEl = React.forwardRef(({
         value={value}
         maxLength={maxLength}
         onChange={(e) => onChange?.call(null, e.target.value)}
-        className={cn(
+        className={textAreaClassName  || cn(
           "text-white h-full resize-none min-h-[200px] text-start font-jakarta font-light text-sm leading-6 py-3 px-5",
           "border border-white/10 appearance-none rounded-10 w-full bg-transparent mt-2",
           "focus:bg-th-gray/10 outline-none transition-all placeholder:text-white/70"

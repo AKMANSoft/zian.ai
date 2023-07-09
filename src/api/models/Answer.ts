@@ -16,75 +16,70 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface Question
+ * @interface Answer
  */
-export interface Question {
+export interface Answer {
     /**
      * 
      * @type {number}
-     * @memberof Question
+     * @memberof Answer
      */
     readonly id?: number;
     /**
      * 
      * @type {string}
-     * @memberof Question
+     * @memberof Answer
      */
     text: string;
     /**
      * 
      * @type {number}
-     * @memberof Question
+     * @memberof Answer
      */
-    type: number;
+    question: number;
     /**
      * 
      * @type {string}
-     * @memberof Question
+     * @memberof Answer
      */
-    readonly typeText?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Question
-     */
-    topic?: string | null;
+    readonly questionText?: string;
     /**
      * 
      * @type {number}
-     * @memberof Question
+     * @memberof Answer
      */
-    industry?: number | null;
+    project: number;
     /**
      * 
      * @type {string}
-     * @memberof Question
+     * @memberof Answer
      */
-    readonly industryText?: string;
+    readonly projectText?: string;
     /**
      * 
      * @type {Date}
-     * @memberof Question
+     * @memberof Answer
      */
     readonly createdTime?: Date;
 }
 
 /**
- * Check if a given object implements the Question interface.
+ * Check if a given object implements the Answer interface.
  */
-export function instanceOfQuestion(value: object): boolean {
+export function instanceOfAnswer(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "text" in value;
-    isInstance = isInstance && "type" in value;
+    isInstance = isInstance && "question" in value;
+    isInstance = isInstance && "project" in value;
 
     return isInstance;
 }
 
-export function QuestionFromJSON(json: any): Question {
-    return QuestionFromJSONTyped(json, false);
+export function AnswerFromJSON(json: any): Answer {
+    return AnswerFromJSONTyped(json, false);
 }
 
-export function QuestionFromJSONTyped(json: any, ignoreDiscriminator: boolean): Question {
+export function AnswerFromJSONTyped(json: any, ignoreDiscriminator: boolean): Answer {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -92,16 +87,15 @@ export function QuestionFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'text': json['text'],
-        'type': json['type'],
-        'typeText': !exists(json, 'type_text') ? undefined : json['type_text'],
-        'topic': !exists(json, 'topic') ? undefined : json['topic'],
-        'industry': !exists(json, 'industry') ? undefined : json['industry'],
-        'industryText': !exists(json, 'industry_text') ? undefined : json['industry_text'],
+        'question': json['question'],
+        'questionText': !exists(json, 'question_text') ? undefined : json['question_text'],
+        'project': json['project'],
+        'projectText': !exists(json, 'project_text') ? undefined : json['project_text'],
         'createdTime': !exists(json, 'created_time') ? undefined : (new Date(json['created_time'])),
     };
 }
 
-export function QuestionToJSON(value?: Question | null): any {
+export function AnswerToJSON(value?: Answer | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -111,9 +105,8 @@ export function QuestionToJSON(value?: Question | null): any {
     return {
         
         'text': value.text,
-        'type': value.type,
-        'topic': value.topic,
-        'industry': value.industry,
+        'question': value.question,
+        'project': value.project,
     };
 }
 
