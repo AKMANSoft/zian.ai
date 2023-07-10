@@ -7,16 +7,19 @@ type Props = {
     children?: ReactNode;
     className?: string;
     onClick?: () => void
+    type?: 'button' | 'submit' | 'reset' | undefined;
 }
 
-export default function SparkleButton({ children, className, onClick }: Props) {
+export default function SparkleButton({ children, className, onClick, type }: Props) {
     return (
         <div className="sp">
 
             <button className={cn(
                 "sparkle-button text-white font-semibold text-sm leading-10",
                 className
-            )} onClick={onClick}>
+            )} onClick={onClick}
+              type={type}
+            >
                 <span className="spark"></span>
 
                 <span className="backdrop"></span>

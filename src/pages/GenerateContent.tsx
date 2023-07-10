@@ -20,6 +20,8 @@ import {
   twitterUserApiClient,
   contentApiClient,
   imageApiClient,
+  questionApiClient,
+  answerApiClient,
 } from '@/api.env'
 
 import {
@@ -62,6 +64,19 @@ export enum PostStatus {
     NOT_GENERATED
 }
 
+export async function action({ request, params }: any) {
+  const formData = await request.formData();
+  const updates = Object.fromEntries(formData);
+
+  console.log('formData', formData);
+  console.log('updates', updates);
+
+  // await updateContact(params.contactId, updates);
+  // return redirect(`/contacts/${params.contactId}`);
+
+  return null;
+}
+
 
 export default function GenerateContentPage() {
     const [selTopic, setSelTop] = useState(0);
@@ -70,16 +85,140 @@ export default function GenerateContentPage() {
     const pageData: any = useLoaderData();
     // console.log(pageData);
 
-    const [topic, setTopic] = useState(pageData.topicsList[0].text);
+    // const [topic, setTopic] = useState(pageData.topicsList[0].text);
     const [topics, setTopics] = useState<any[]>(pageData.topicsList);
     const [questions, setQuestions] = useState<any>(pageData.questions);
     const [answers, setAnswers] = useState<any>(pageData.answers);
+    const [currentAnswers, setCurrentAnswers] = useState<any>(() => {
+      let ans = new Map();
+      for (const a of answers) {
+        ans.set(a[0], a[1].text);
+      }
+      console.log('ans:', ans);
+      return ans
+    });
+
+    const [values, setValues] = useState<any>(new Map());
+
+    const [message, setMessage] = useState<string>('');
+    const [messageClass, setMessageClass] = useState<string>('');
+
+    const [errorMessage, setErrorMessage] = useState<string>('');
 
     const onPostGenerateClicked = () => {
         setPostStatus(PostStatus.GENERATING);
         setTimeout(() => {
             setPostStatus(PostStatus.GENERATED);
         }, 4000);
+    }
+
+    function onSubmit(e: any) {
+      e.preventDefault();
+      setMessage('');
+      setMessageClass('');
+      setErrorMessage('');
+
+      const formData = new FormData(e.target);
+      // const updates = Object.fromEntries(formData);
+
+      let lastData = new Map();
+      for (const entry of formData) {
+        const question_id = parseInt(entry[0]);
+        const answer = entry[1].toString().trim();
+        if (answer) {
+          lastData.set(question_id, answer);
+        } else {
+          const msg_class = 'text-red-500';
+          const message = `Please answer all questions`;
+          setMessage(message);
+          setMessageClass(msg_class);
+          return;
+        }
+      }
+      console.log('formData onSubmit', formData);
+      console.log('lastData onSubmit', lastData);
+      // console.log('updates onSubmit', updates);
+
+      // save answers or generate content
+      if (lastData.size === 0) {
+        // no questions, just generate content
+        console.log('no questions, just generate content');
+      } else {
+        const topicObj = topics[selTopic];
+        console.log('topicObj', topicObj);
+        const topic = topicObj.text
+        console.log(`Create or update answers for topic: ${topic}`);
+
+        for (const [question_id, answer] of lastData) {
+          // console.log(question_id, answer);
+          const existing_answer = answers.get(question_id);
+          if (existing_answer) { // there was an answer for this project, update existing answer
+            const answerObj = {
+              id: existing_answer.id,
+              text: answer,
+              question: question_id,
+              project: existing_answer.project,
+            }
+            const answersUpdateRequest = {
+              id: existing_answer.id,
+              data: answerObj,
+            }
+
+            answerApiClient.answersUpdate(answersUpdateRequest).then((r) => {
+              console.log('Updated one answer', r);
+
+              currentAnswers.set(r.question,  r.text);
+              setCurrentAnswers(new Map([...currentAnswers.entries()]));
+
+              const msg_class = 'text-green-500';
+              // const message = `Updated answer for question: ${question_id}`;
+              const message = `Updated answers successfully`;
+              setMessage(message);
+              setMessageClass(msg_class);
+            }).catch((e) => {
+              const msg_class = 'text-red-500';
+              // const message = `Failed to update answer for question: ${question_id}`;
+              const message = `Failed to update answers`;
+              setMessage(message);
+              setErrorMessage(message);
+              setMessageClass(msg_class);
+
+              console.log('Failed update request', answersUpdateRequest);
+            });
+          } else {  // create new answer
+            const answerObj = {
+              text: answer,
+              question: question_id,
+              project: pageData.profile.currentProject,
+            }
+            const answersCreateRequest = {
+              data: answerObj,
+            }
+
+            answerApiClient.answersCreate(answersCreateRequest).then((r) => {
+              console.log('Created one answer', r);
+
+              currentAnswers.set(r.question,  r.text);
+              setCurrentAnswers(new Map([...currentAnswers.entries()]));
+
+              const msg_class = 'text-green-500';
+              // const message = `Created answer for question: ${question_id}`;
+              const message = `Created answers successfully`;
+              setMessage(message);
+              setMessageClass(msg_class);
+            }).catch((e) => {
+              const msg_class = 'text-red-500';
+              // const message = `Failed to create answer for question: ${question_id}`;
+              const message = `Failed to create answers`;
+              setMessage(message);
+              setErrorMessage(message);
+              setMessageClass(msg_class);
+
+              console.log('Failed update request', answersCreateRequest);
+            });
+          }
+        }
+      }
     }
 
     return (
@@ -105,7 +244,12 @@ export default function GenerateContentPage() {
                                     {
                                         // Topics.map((topic, index) => (
                                         topics.map((topic, index) => (
-                                            <PrimaryWithNeon onClick={() => setSelTop(index)} active={selTopic === index}
+                                            <PrimaryWithNeon onClick={() => {
+                                                setSelTop(index);
+                                                setMessage('');
+                                                setMessageClass('');
+                                              }}
+                                              active={selTopic === index}
                                                 className="w-full min-w-max lg:min-w-0 block text-[15px] leading-6 font-medium overflow-hidden text-start text-ellipsis max-w-full whitespace-nowrap ">
                                               {topic.text === basicTopicString ? <>{basicTopicString} <span className="text-red-500" style={{verticalAlign : 'middle'}}>*</span></> : topic.text}
                                             </PrimaryWithNeon>
@@ -114,15 +258,30 @@ export default function GenerateContentPage() {
                                 </div>
                             </div>
                             <div className="w-full lg:w-[65%] xl:w-[70%] lg:h-full pb-3 lg:pb-10 gap-5 max-h-[calc(100%_-_70px)] overflow-y-auto">
-                              <Form method="post" id="question-form">
+                              <Form method="post" id="question-form"
+                                onSubmit={onSubmit}
+                              >
                                 <div>
                                     <div className="p-3 lg:p-5 lg:pt-8 space-y-4">
                                         {
                                           questions.get(topics[selTopic].text)?.map((question: any, index: number) => (
                                             // <InputEl id={question.id} label={question.text} placeholder="Write your answer here" value={ answers.get(question.id)?.text } />
-                                            <TextAreaEl id={question.id} label={question.text} placeholder="Write your answer here" value={ answers.get(question.id)?.text }
+                                            <TextAreaEl id={`q${question.id}`} name={`${question.id}`}
+                                              label={question.text}
+                                              placeholder="Write your answer here"
+                                              // value={ answers.get(question.id)?.text }
+                                              value={ currentAnswers.get(question.id) }
+                                              // defaultValue ={ answers.get(question.id)?.text }
                                               rows={2} cols={10}
                                               maxLength={1000}
+                                              required={false}
+                                              onChange={(e: any) => {
+                                                // console.log(e);
+                                                // console.log(e.target);
+                                                // console.log(e.target.value);
+                                                currentAnswers.set(question.id,  e.target.value);
+                                                setCurrentAnswers(new Map([...currentAnswers.entries()]));
+                                              }}
                                               textAreaClassName={cn(
                                                 "text-white h-full text-start font-jakarta font-light text-sm leading-6 py-3 px-5",
                                                 "border border-white/10 appearance-none rounded-10 w-full bg-transparent mt-2",
@@ -135,11 +294,20 @@ export default function GenerateContentPage() {
                                     </div>
                                 </div>
                                 <div className="flex justify-end p-3 lg:p-6">
-                                    <SparkleButton onClick={onPostGenerateClicked} className="px-10 h-12">
+                                  {/*<SparkleButton onClick={onPostGenerateClicked} className="px-10 h-12" type={'submit'}>*/}
+                                    <SparkleButton className="px-10 h-12" type={'submit'}>
                                         Generate
                                     </SparkleButton>
                                 </div>
                               </Form>
+                              <div className="p-3 lg:p-5 lg:pt-8 space-y-4">
+                                {
+                                  errorMessage ? 
+                                  <p className="text-red-500">{errorMessage}</p>
+                                  :
+                                  <p className={messageClass}>{message}</p>
+                                }
+                              </div>
                             </div>
                         </div>
                     </div>

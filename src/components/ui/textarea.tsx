@@ -11,11 +11,15 @@ type InputElProps = {
   id?: string;
   endIcon?: IconDefinition;
   value?: string;
-  onChange?: (value: string) => void,
+  defaultValue?: string;
+  // onChange?: (value: string) => void,
+  onChange?: (value: any) => void,
   rows?: number;
   cols?: number;
   maxLength?: number;
   textAreaClassName?: string;
+  name?: string;
+  required?: boolean;
 }
 
 // function TextAreaEl({
@@ -27,8 +31,9 @@ type InputElProps = {
 // }: InputElProps) {
 const TextAreaEl = React.forwardRef(({
   label, placeholder = "", labelNode = null,
-  id = "", endIcon, value,
+  id = "", endIcon, value, defaultValue,
   onChange, className, textAreaClassName,
+  name, required,
   rows = 5, cols = 10,
   maxLength = 280,
 }: InputElProps, ref: any) => {
@@ -52,8 +57,12 @@ const TextAreaEl = React.forwardRef(({
         rows={rows}
         cols={cols}
         value={value}
+        defaultValue={defaultValue}
+        name={name}
+        required={required}
         maxLength={maxLength}
-        onChange={(e) => onChange?.call(null, e.target.value)}
+        // onChange={(e) => onChange?.call(null, e.target.value)}
+        onChange={(e) => onChange?.call(null, e)}
         className={textAreaClassName  || cn(
           "text-white h-full resize-none min-h-[200px] text-start font-jakarta font-light text-sm leading-6 py-3 px-5",
           "border border-white/10 appearance-none rounded-10 w-full bg-transparent mt-2",

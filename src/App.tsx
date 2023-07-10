@@ -45,6 +45,7 @@ import {
 
 import {
   basicTopicString,
+  action as generateContentAction,
 } from '@/pages/GenerateContent'
 
 
@@ -112,6 +113,7 @@ const router = createBrowserRouter([
       </Suspense>
     ),
     errorElement: <ErrorPage />,
+    action: generateContentAction,
     loader: async () => {
       let pageData: any = {};
 
@@ -164,7 +166,7 @@ const router = createBrowserRouter([
 
       // get answers
       const answers = await answerApiClient.answersCurrentProject().then((r) => {
-        console.log(r);
+        console.log('answers:', r);
 
         let answers = sortAnswers(r);
         console.log('answers:' , answers);
