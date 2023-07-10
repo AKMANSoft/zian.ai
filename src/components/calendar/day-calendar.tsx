@@ -152,6 +152,7 @@ function HourRowEl({ text, onItemClick, deleteNumber, setDeleteNumber, items, se
           deleteNumber={deleteNumber}
           setDeleteNumber={setDeleteNumber}
           setContent={setContent}
+          hasClickBtn={true}
         />
         // <div className={cn(
         //     "w-full border-b-[0.5px] border-white/10 last:border-none px-3 pt-3 pb-5",

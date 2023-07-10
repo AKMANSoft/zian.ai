@@ -113,7 +113,7 @@ const router = createBrowserRouter([
       </Suspense>
     ),
     errorElement: <ErrorPage />,
-    action: generateContentAction,
+    // action: generateContentAction,
     loader: async () => {
       let pageData: any = {};
 

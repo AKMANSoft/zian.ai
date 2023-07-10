@@ -342,15 +342,16 @@ type SingleTableRowProps = {
     content?: any
     deleteNumber: number
     setDeleteNumber: any
+    key?: any
 }
 
 
-function SingleTableRow({ onClick, num, content, deleteNumber, setDeleteNumber }: SingleTableRowProps) {
+function SingleTableRow({ onClick, num, content, deleteNumber, setDeleteNumber, key }: SingleTableRowProps) {
     const [imageStatus, setImageStatus] = useState<string>('');
 
     const imageUrl = content?.image;
     const [image, setImage] = useState<any>(imageUrl);
-    // setImage(imageUrl);
+    setImage(imageUrl);
 
     function onDeleteContent(): void {
       if (content) {
@@ -369,21 +370,21 @@ function SingleTableRow({ onClick, num, content, deleteNumber, setDeleteNumber }
       // contentApiClient.contentsCreateImage({id: content.id}).then((r) => {
       console.log(`imageUrl before: ${image}`);
       imageApiClient.imagesCreateImage({id: content.id}).then((r) => {
-        // console.log(r);
+        console.log('generate image: ', r);
         setImage(r.imageUrl);
-        // console.log(`imageUrl after: ${image}`);
-        // if (deleteNumber !== undefined) {
-        //   deleteNumber = deleteNumber + 1;
-        //   setDeleteNumber && setDeleteNumber(deleteNumber);
-        //   // console.log('update deleteNumber');
-        // }
+        console.log(`imageUrl after: ${image}`);
+        if (deleteNumber !== undefined) {
+          deleteNumber = deleteNumber + 1;
+          setDeleteNumber && setDeleteNumber(deleteNumber);
+          // console.log('update deleteNumber');
+        }
       }).finally(() => {
           setImageStatus('');
       });
     }
 
     return (
-        <div className="flex flex-wrap xl:justify-between lg:flex-nowrap lg:gap-3 items-center lg:min-w-max" role="button" onClick={onClick}>
+        <div key={key} className="flex flex-wrap xl:justify-between lg:flex-nowrap lg:gap-3 items-center lg:min-w-max" role="button" onClick={onClick}>
             <span className="hidden lg:block text-white py-3 min-h-[50px] text-start w-[50px] overflow-hidden lg:ps-4">
                 {formatNumberto0(num)}
             </span>

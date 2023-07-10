@@ -299,9 +299,10 @@ type ScheduleListItemProps = {
     deleteNumber?: number
     setDeleteNumber?: (n: number) => void
     setContent?: (content: any) => void
+    hasClickBtn?: boolean | undefined;
 }
 
-export function ScheduleListItem({ leading, className, onItemClick, items, deleteNumber, setDeleteNumber, setContent }: ScheduleListItemProps) {
+export function ScheduleListItem({ leading, className, onItemClick, items, deleteNumber, setDeleteNumber, setContent, hasClickBtn = false }: ScheduleListItemProps) {
     // const pageData: any = useLoaderData();
     // console.log({pageData});
 
@@ -338,10 +339,12 @@ export function ScheduleListItem({ leading, className, onItemClick, items, delet
                     ]}
                     itemRenderer={(item) => (
                         <SmallSchedulePostEl onClick={onItemClick} text={item.text} icon={item.icon} content={item.content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber}
-                          onClickBtn={() => {
-                            console.log('Set content');
-                            setContent && setContent(item.content);
-                          }}
+                          onClickBtn= {
+                            hasClickBtn ? () => {
+                              console.log('Set content');
+                              setContent && setContent(item.content);
+                            } : undefined
+                          }
                         />
                     )}
                     overflowRenderer={(items) => (

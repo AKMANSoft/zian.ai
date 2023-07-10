@@ -210,6 +210,7 @@ function HScheduleListItem({ active, time, items, deleteNumber, setDeleteNumber 
           items={items}
           deleteNumber={deleteNumber}
           setDeleteNumber={setDeleteNumber}
+          hasClickBtn={undefined}
         />
     )
 }
