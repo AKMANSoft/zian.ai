@@ -6,7 +6,7 @@ import PostViewSection from "../components/postview-section";
 import { InputEl } from "../components/ui/input";
 import { TextAreaEl } from "../components/ui/textarea";
 import SparkleButton from "@/components/ui/sparkle-btn";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LoadingSparkle from "@/components/LoadingSparkle";
 import { changeImageUrl } from '@/lib/utils'
 
@@ -16,11 +16,8 @@ import {
 } from 'react-router-dom'
 
 import {
-  userApiClient,
-  twitterUserApiClient,
   contentApiClient,
-  imageApiClient,
-  questionApiClient,
+  contentGenerateApiClient,
   answerApiClient,
 } from '@/api.env'
 
@@ -98,12 +95,18 @@ export default function GenerateContentPage() {
       return ans
     });
 
+    const [deleteNumber, setDeleteNumber] = useState<number>(0);
+    const [content, setContent] = useState<any>(null);
+
     const [values, setValues] = useState<any>(new Map());
 
     const [message, setMessage] = useState<string>('');
     const [messageClass, setMessageClass] = useState<string>('');
-
     const [errorMessage, setErrorMessage] = useState<string>('');
+
+    const [createMessage, setCreateMessage] = useState<string>('');
+    const [createMessageClass, setCreateMessageClass] = useState<string>('');
+    const [createErrorMessage, setCreateErrorMessage] = useState<string>('');
 
     const onPostGenerateClicked = () => {
         setPostStatus(PostStatus.GENERATING);
@@ -112,11 +115,51 @@ export default function GenerateContentPage() {
         }, 4000);
     }
 
+    useEffect(() => {
+        async function startFetching() {
+          let result = null;
+          const contentsListRequest = {
+            id: content.id,
+            status: 1,
+          }
+          result = await contentApiClient.contentsList(contentsListRequest).then((r) => {
+            console.log('Content:', r);
+            return r.results;
+          }).catch((e) => {
+            console.log(e);
+          });
+
+          if (!ignore) {
+            if (result && result?.length > 0) {
+              setContent(result[0]);
+            } else {
+              setContent(null);
+              setPostStatus(PostStatus.NOT_GENERATED);
+            }
+          }
+        }
+
+      let ignore = false;
+      if (content) {
+        startFetching();
+        return () => {
+          ignore = true;
+        }
+      }
+    }, [deleteNumber]);
+
     function onSubmit(e: any) {
       e.preventDefault();
       setMessage('');
       setMessageClass('');
       setErrorMessage('');
+
+      setCreateMessage('');
+      setCreateMessageClass('');
+      setCreateErrorMessage('');
+
+      let isGenerated = true;
+      setPostStatus(PostStatus.GENERATING);
 
       const formData = new FormData(e.target);
       // const updates = Object.fromEntries(formData);
@@ -135,24 +178,36 @@ export default function GenerateContentPage() {
           return;
         }
       }
-      console.log('formData onSubmit', formData);
+      // console.log('formData onSubmit', formData);
       console.log('lastData onSubmit', lastData);
       // console.log('updates onSubmit', updates);
 
       // save answers or generate content
+      const topicObj = topics[selTopic];
+      console.log('topicObj', topicObj);
+      const topic = topicObj.text
+      console.log(`Create or update answers for topic: ${topic}`);
+
+      let isAnswerChanged = false;
       if (lastData.size === 0) {
         // no questions, just generate content
         console.log('no questions, just generate content');
+        isAnswerChanged = true;
       } else {
-        const topicObj = topics[selTopic];
-        console.log('topicObj', topicObj);
-        const topic = topicObj.text
-        console.log(`Create or update answers for topic: ${topic}`);
+        let areAnswersChanged = false;
+        let isCreate = false;
 
         for (const [question_id, answer] of lastData) {
           // console.log(question_id, answer);
           const existing_answer = answers.get(question_id);
           if (existing_answer) { // there was an answer for this project, update existing answer
+            if (existing_answer.text.trim() === answer.trim()) {
+              console.log(`The answers is not changed: ${answer}`);
+              continue;
+            }
+            isAnswerChanged = true;
+            areAnswersChanged = true;
+
             const answerObj = {
               id: existing_answer.id,
               text: answer,
@@ -175,6 +230,9 @@ export default function GenerateContentPage() {
               const message = `Updated answers successfully`;
               setMessage(message);
               setMessageClass(msg_class);
+
+              // check if answers are changed
+              // Generate content
             }).catch((e) => {
               const msg_class = 'text-red-500';
               // const message = `Failed to update answer for question: ${question_id}`;
@@ -186,6 +244,9 @@ export default function GenerateContentPage() {
               console.log('Failed update request', answersUpdateRequest);
             });
           } else {  // create new answer
+            isAnswerChanged = true;
+            isCreate = true;
+
             const answerObj = {
               text: answer,
               question: question_id,
@@ -206,6 +267,8 @@ export default function GenerateContentPage() {
               const message = `Created answers successfully`;
               setMessage(message);
               setMessageClass(msg_class);
+
+              // Generate content
             }).catch((e) => {
               const msg_class = 'text-red-500';
               // const message = `Failed to create answer for question: ${question_id}`;
@@ -217,6 +280,52 @@ export default function GenerateContentPage() {
               console.log('Failed update request', answersCreateRequest);
             });
           }
+        }
+
+        if ((! isCreate) && (! areAnswersChanged)) {
+          // no changing, no creating
+          const msg_class = 'text-green-500';
+          // const message = `Created answer for question: ${question_id}`;
+          const message = `No answers changed`;
+          setMessage(message);
+          setMessageClass(msg_class);
+
+          setPostStatus(PostStatus.NOT_GENERATED);
+          isGenerated = false;
+        }
+      }
+
+      if (isAnswerChanged) {
+        // generate new content because of changing answers
+        console.log('Generating content for changing answers');
+        const contentsGenerateGenerateContentRequest = {
+          topic: topic,
+          project: pageData.profile.currentProject,
+        }
+        contentGenerateApiClient.contentsGenerateGenerateContent(contentsGenerateGenerateContentRequest).then((r) => {
+          console.log(r);
+          if (r.length > 0) {
+            setContent(r[0]);
+          }
+
+          const msg_class = 'text-green-500';
+          const message = `Created ${r.length} content successfully`;
+          setCreateMessage(message);
+          setCreateMessageClass(msg_class);
+        }).catch((e) => {
+          console.log('Error:', e);
+
+          const msg_class = 'text-red-500';
+          const message = `Failed to create content`;
+          setCreateMessage(message);
+          setCreateErrorMessage(message);
+          setCreateMessageClass(msg_class);
+        }).finally(() => {
+          setPostStatus(PostStatus.GENERATED);
+        });
+      } else {
+        if (isGenerated) {
+          setPostStatus(PostStatus.GENERATED);
         }
       }
     }
@@ -246,8 +355,16 @@ export default function GenerateContentPage() {
                                         topics.map((topic, index) => (
                                             <PrimaryWithNeon onClick={() => {
                                                 setSelTop(index);
+
                                                 setMessage('');
                                                 setMessageClass('');
+                                                setErrorMessage('');
+
+                                                setCreateMessage('');
+                                                setCreateMessageClass('');
+                                                setCreateErrorMessage('');
+
+                                                setPostStatus(PostStatus.NOT_GENERATED);
                                               }}
                                               active={selTopic === index}
                                                 className="w-full min-w-max lg:min-w-0 block text-[15px] leading-6 font-medium overflow-hidden text-start text-ellipsis max-w-full whitespace-nowrap ">
@@ -295,7 +412,7 @@ export default function GenerateContentPage() {
                                 </div>
                                 <div className="flex justify-end p-3 lg:p-6">
                                   {/*<SparkleButton onClick={onPostGenerateClicked} className="px-10 h-12" type={'submit'}>*/}
-                                    <SparkleButton className="px-10 h-12" type={'submit'}>
+                                    <SparkleButton className="px-10 h-12" type={'submit'} disabled={postStatus === PostStatus.GENERATING}>
                                         Generate
                                     </SparkleButton>
                                 </div>
@@ -306,6 +423,12 @@ export default function GenerateContentPage() {
                                   <p className="text-red-500">{errorMessage}</p>
                                   :
                                   <p className={messageClass}>{message}</p>
+                                }
+                                {
+                                  createErrorMessage ? 
+                                  <p className="text-red-500">{createErrorMessage}</p>
+                                  :
+                                  <p className={createMessageClass}>{createMessage}</p>
                                 }
                               </div>
                             </div>
@@ -326,6 +449,9 @@ export default function GenerateContentPage() {
                             ? null
                             : <EmptyPostContent loading={postStatus === PostStatus.GENERATING} />
                     }
+                    deleteNumber={deleteNumber}
+                    setDeleteNumber={setDeleteNumber}
+                    content={content}
                 />
             </div>
         </MainLayout>
@@ -370,10 +496,11 @@ function EmptyPostContent({ loading = false }: EmptyPostContentProps) {
                                 className="w-[70px] h-auto aspect-square"
                                 alt="" />
                             <h4 className="text-xl leading-7 font-semibold font-jakarta mt-[10px] text-white">
-                                Your content will be shown here
+                                The new content will be shown here
                             </h4>
                             <p className="text-sm font-normal font-jakarta text-white/70 mt-2">
-                                Sed consectetur imperdiet facilisis. Nulla maa.
+                              {/*Sed consectetur imperdiet facilisis. Nulla maa.*/}
+                              If you want to check the generated content, please go to page "Drafts"
                             </p>
                         </>
                 }

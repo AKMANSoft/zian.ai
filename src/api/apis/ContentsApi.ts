@@ -39,12 +39,16 @@ export interface ContentsDeleteRequest {
 
 export interface ContentsLatestRequest {
     topic?: string;
+    status?: number;
+    id?: number;
     untopic?: string;
     page?: number;
 }
 
 export interface ContentsListRequest {
     topic?: string;
+    status?: number;
+    id?: number;
     untopic?: string;
     page?: number;
 }
@@ -60,6 +64,8 @@ export interface ContentsReadRequest {
 
 export interface ContentsScheduledRequest {
     topic?: string;
+    status?: number;
+    id?: number;
     untopic?: string;
     page?: number;
 }
@@ -189,6 +195,14 @@ export class ContentsApi extends runtime.BaseAPI {
             queryParameters['topic'] = requestParameters.topic;
         }
 
+        if (requestParameters.status !== undefined) {
+            queryParameters['status'] = requestParameters.status;
+        }
+
+        if (requestParameters.id !== undefined) {
+            queryParameters['id'] = requestParameters.id;
+        }
+
         if (requestParameters.untopic !== undefined) {
             queryParameters['untopic'] = requestParameters.untopic;
         }
@@ -228,6 +242,14 @@ export class ContentsApi extends runtime.BaseAPI {
 
         if (requestParameters.topic !== undefined) {
             queryParameters['topic'] = requestParameters.topic;
+        }
+
+        if (requestParameters.status !== undefined) {
+            queryParameters['status'] = requestParameters.status;
+        }
+
+        if (requestParameters.id !== undefined) {
+            queryParameters['id'] = requestParameters.id;
         }
 
         if (requestParameters.untopic !== undefined) {
@@ -342,6 +364,14 @@ export class ContentsApi extends runtime.BaseAPI {
 
         if (requestParameters.topic !== undefined) {
             queryParameters['topic'] = requestParameters.topic;
+        }
+
+        if (requestParameters.status !== undefined) {
+            queryParameters['status'] = requestParameters.status;
+        }
+
+        if (requestParameters.id !== undefined) {
+            queryParameters['id'] = requestParameters.id;
         }
 
         if (requestParameters.untopic !== undefined) {

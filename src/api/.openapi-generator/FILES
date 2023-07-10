@@ -1,5 +1,6 @@
 apis/AnswersApi.ts
 apis/ContentsApi.ts
+apis/ContentsGenerateApi.ts
 apis/ContentsReadApi.ts
 apis/ImagesApi.ts
 apis/ProfilesApi.ts

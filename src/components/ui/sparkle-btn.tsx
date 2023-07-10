@@ -8,9 +8,10 @@ type Props = {
     className?: string;
     onClick?: () => void
     type?: 'button' | 'submit' | 'reset' | undefined;
+    disabled?: boolean | undefined
 }
 
-export default function SparkleButton({ children, className, onClick, type }: Props) {
+export default function SparkleButton({ children, className, onClick, type, disabled }: Props) {
     return (
         <div className="sp">
 
@@ -19,6 +20,7 @@ export default function SparkleButton({ children, className, onClick, type }: Pr
                 className
             )} onClick={onClick}
               type={type}
+              disabled={disabled}
             >
                 <span className="spark"></span>
 
