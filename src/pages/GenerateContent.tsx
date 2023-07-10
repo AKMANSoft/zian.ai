@@ -316,7 +316,7 @@ export default function GenerateContentPage() {
           console.log('Error:', e);
 
           const msg_class = 'text-red-500';
-          const message = `Failed to create content`;
+          const message = `Failed to create content, please make sure all other topic questions above this topic are answered`;
           setCreateMessage(message);
           setCreateErrorMessage(message);
           setCreateMessageClass(msg_class);
