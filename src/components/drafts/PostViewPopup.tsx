@@ -36,6 +36,7 @@ export default function PostViewPopup({ trigger, content, deleteNumber, setDelet
     const [message, setMessage] = useState<string>('');
     const [messageClass, setMessageClass] = useState<string>('');
     const [sendStatus, setSendStatus] = useState<string>('');
+    const [whichBtn, setWhichBtn] = useState<string>('');
 
     // const onRegenerateClicked = () => {
     //     setImageStatus(PostStatus.GENERATING);
@@ -46,6 +47,7 @@ export default function PostViewPopup({ trigger, content, deleteNumber, setDelet
 
     const onRegenerateClicked = () => {
         setImageStatus(PostStatus.GENERATING);
+        setWhichBtn('fast');
 
         // contentApiClient.contentsCreateImage({id: content.id}).then((r) => {
         imageApiClient.imagesCreateImage({id: content.id}).then((r) => {
@@ -58,11 +60,37 @@ export default function PostViewPopup({ trigger, content, deleteNumber, setDelet
           }
         }).finally(() => {
             setImageStatus(PostStatus.GENERATED);
+            setWhichBtn('');
         });
 
         // setTimeout(() => {
         //     setImageStatus(PostStatus.GENERATED);
         // }, 4000);
+    }
+
+    function onGenerateBeautifulImage(): void {
+      setImageStatus(PostStatus.GENERATING);
+      setWhichBtn('slow');
+
+      // contentApiClient.contentsCreateImage({id: content.id}).then((r) => {
+      console.log(`imageUrl before: ${image}`);
+      const imagesCreateImageVarRequest = {
+        content: content.id,
+        method: 'midjourney',
+      }
+      imageApiClient.imagesCreateImageVar(imagesCreateImageVarRequest).then((r) => {
+        console.log('generate image: ', r);
+        setImage(r[0].imageUrl);
+        console.log(`imageUrl after: ${image}`);
+        if (deleteNumber !== undefined) {
+          deleteNumber = deleteNumber + 1;
+          setDeleteNumber && setDeleteNumber(deleteNumber);
+          // console.log('update deleteNumber');
+        }
+      }).finally(() => {
+          setImageStatus(PostStatus.GENERATED);
+          setWhichBtn('');
+      });
     }
 
     function closeModal() {
@@ -236,10 +264,21 @@ export default function PostViewPopup({ trigger, content, deleteNumber, setDelet
                                                         />
                                                     </div>
                                                     <div className="hidden md:flex items-center gap-4">
+                                                        <SecondaryBtn onClick={onGenerateBeautifulImage} filled={false} className="border-white/10 py-3"
+                                                          disabled={imageStatus === PostStatus.GENERATING}
+                                                        >
+                                                          {
+                                                            imageStatus === PostStatus.GENERATING &&  whichBtn === 'slow' ? 'Generating...' :
+                                                              image ? 'Regenerate Beautiful Image' : 'Generate Beautiful Image'
+                                                          }
+                                                        </SecondaryBtn>
                                                         <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3"
                                                           disabled={imageStatus === PostStatus.GENERATING}
                                                         >
-                                                          {image ? 'Regenerate Image' : 'Generate Image'}
+                                                          {
+                                                            imageStatus === PostStatus.GENERATING &&  whichBtn === 'fast' ? 'Generating...' :
+                                                              image ? 'Regenerate General Image' : 'Generate General Image'
+                                                          }
                                                         </SecondaryBtn>
                                                         {
                                                           sendStatus === '' ?
@@ -260,12 +299,39 @@ export default function PostViewPopup({ trigger, content, deleteNumber, setDelet
                                         </div>
                                     </div>
                                     <div className="w-full min-h-[20px] bg-gr-purple-dark p-4 md:p-5 flex md:hidden items-center gap-3 justify-end">
-                                        <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3 px-8 w-full md:w-auto">
-                                            Regenerate Image
+                                        <SecondaryBtn onClick={onGenerateBeautifulImage} filled={false} className="border-white/10 py-3 px-8 w-full md:w-auto"
+                                          disabled={imageStatus === PostStatus.GENERATING}
+                                        >
+                                          {
+                                            imageStatus === PostStatus.GENERATING &&  whichBtn === 'slow' ? 'Generating...' :
+                                              image ? 'Regenerate Beautiful Image' : 'Generate Beautiful Image'
+                                          }
                                         </SecondaryBtn>
+                                        <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3 px-8 w-full md:w-auto"
+                                          disabled={imageStatus === PostStatus.GENERATING}
+                                        >
+                                          {
+                                            imageStatus === PostStatus.GENERATING &&  whichBtn === 'fast' ? 'Generating...' :
+                                              image ? 'Regenerate General Image' : 'Generate General Image'
+                                          }
+                                        </SecondaryBtn>
+
+                                        {/*
                                         <PrimaryBtn className="py-3 h-full px-8 w-full md:w-auto">
                                             Send Now
                                         </PrimaryBtn>
+                                          */}
+                                        {
+                                          sendStatus === '' ?
+                                            <PrimaryBtn className="py-3 h-full px-8 w-full md:w-auto" onClick={onClickSendNow}>
+                                                Send Now
+                                            </PrimaryBtn>
+                                            : sendStatus === 'sending' ? 
+                                              <PrimaryBtn disabled={true} className="py-3 h-full px-8 w-full md:w-auto">
+                                                  Send Now
+                                              </PrimaryBtn>
+                                            : ''
+                                        }
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>
