@@ -16,13 +16,10 @@
 import * as runtime from '../runtime';
 import type {
   ImageForTwitterPost,
-  ImagesList200Response,
 } from '../models';
 import {
     ImageForTwitterPostFromJSON,
     ImageForTwitterPostToJSON,
-    ImagesList200ResponseFromJSON,
-    ImagesList200ResponseToJSON,
 } from '../models';
 
 export interface ImagesCreateRequest {
@@ -33,12 +30,18 @@ export interface ImagesCreateImageRequest {
     id: string;
 }
 
+export interface ImagesCreateImageVarRequest {
+    method?: string;
+    content?: string;
+}
+
 export interface ImagesDeleteRequest {
     id: string;
 }
 
 export interface ImagesListRequest {
-    page?: number;
+    method?: string;
+    content?: string;
 }
 
 export interface ImagesPartialUpdateRequest {
@@ -130,6 +133,43 @@ export class ImagesApi extends runtime.BaseAPI {
     }
 
     /**
+     * Create image for content using parameters
+     */
+    async imagesCreateImageVarRaw(requestParameters: ImagesCreateImageVarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ImageForTwitterPost>>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.method !== undefined) {
+            queryParameters['method'] = requestParameters.method;
+        }
+
+        if (requestParameters.content !== undefined) {
+            queryParameters['content'] = requestParameters.content;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/images/create_image_var/`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ImageForTwitterPostFromJSON));
+    }
+
+    /**
+     * Create image for content using parameters
+     */
+    async imagesCreateImageVar(requestParameters: ImagesCreateImageVarRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ImageForTwitterPost>> {
+        const response = await this.imagesCreateImageVarRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * This viewset automatically provides `list`, `create`, `retrieve`, `update` and `destroy` actions.
      */
     async imagesDeleteRaw(requestParameters: ImagesDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -164,11 +204,15 @@ export class ImagesApi extends runtime.BaseAPI {
     /**
      * This viewset automatically provides `list`, `create`, `retrieve`, `update` and `destroy` actions.
      */
-    async imagesListRaw(requestParameters: ImagesListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ImagesList200Response>> {
+    async imagesListRaw(requestParameters: ImagesListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ImageForTwitterPost>>> {
         const queryParameters: any = {};
 
-        if (requestParameters.page !== undefined) {
-            queryParameters['page'] = requestParameters.page;
+        if (requestParameters.method !== undefined) {
+            queryParameters['method'] = requestParameters.method;
+        }
+
+        if (requestParameters.content !== undefined) {
+            queryParameters['content'] = requestParameters.content;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -183,13 +227,13 @@ export class ImagesApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ImagesList200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ImageForTwitterPostFromJSON));
     }
 
     /**
      * This viewset automatically provides `list`, `create`, `retrieve`, `update` and `destroy` actions.
      */
-    async imagesList(requestParameters: ImagesListRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ImagesList200Response> {
+    async imagesList(requestParameters: ImagesListRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ImageForTwitterPost>> {
         const response = await this.imagesListRaw(requestParameters, initOverrides);
         return await response.value();
     }

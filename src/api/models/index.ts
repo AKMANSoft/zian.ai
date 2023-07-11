@@ -5,7 +5,6 @@ export * from './ContentForTwitterPost';
 export * from './ContentForTwitterPostSchedule';
 export * from './ContentsList200Response';
 export * from './ImageForTwitterPost';
-export * from './ImagesList200Response';
 export * from './Profile';
 export * from './ProfilesList200Response';
 export * from './Project';

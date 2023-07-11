@@ -205,7 +205,8 @@ export default function DraftsPage() {
                                 <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden">Username</span>
                                 <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden">Created Date</span>
                                 <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden min-w-[200px]">Actions</span>
-                                <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden lg:pr-4">Image</span>
+                                <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden lg:pr-4">General Image</span>
+                                <span className="block text-white py-3 min-h-[50px] text-start w-[150px] overflow-hidden lg:pr-4">Beautiful Image</span>
                             </div>
                             {
                               // pageData?.contentsList?.results && pageData?.contentsList.results.map( (content: any) =>
@@ -348,6 +349,7 @@ type SingleTableRowProps = {
 
 function SingleTableRow({ onClick, num, content, deleteNumber, setDeleteNumber, key }: SingleTableRowProps) {
     const [imageStatus, setImageStatus] = useState<string>('');
+    const [whichBtn, setWhichBtn] = useState<string>('');
 
     const imageUrl = content?.image;
     const [image, setImage] = useState<any>(imageUrl);
@@ -366,6 +368,7 @@ function SingleTableRow({ onClick, num, content, deleteNumber, setDeleteNumber, 
 
     function onGenerateImage(): void {
       setImageStatus('generating');
+      setWhichBtn('fast');
 
       // contentApiClient.contentsCreateImage({id: content.id}).then((r) => {
       console.log(`imageUrl before: ${image}`);
@@ -380,6 +383,32 @@ function SingleTableRow({ onClick, num, content, deleteNumber, setDeleteNumber, 
         }
       }).finally(() => {
           setImageStatus('');
+          setWhichBtn('');
+      });
+    }
+
+    function onGenerateBeautifulImage(): void {
+      setImageStatus('generating');
+      setWhichBtn('slow');
+
+      // contentApiClient.contentsCreateImage({id: content.id}).then((r) => {
+      console.log(`imageUrl before: ${image}`);
+      const imagesCreateImageVarRequest = {
+        content: content.id,
+        method: 'midjourney',
+      }
+      imageApiClient.imagesCreateImageVar(imagesCreateImageVarRequest).then((r) => {
+        console.log('generate image: ', r);
+        setImage(r[0].imageUrl);
+        console.log(`imageUrl after: ${image}`);
+        if (deleteNumber !== undefined) {
+          deleteNumber = deleteNumber + 1;
+          setDeleteNumber && setDeleteNumber(deleteNumber);
+          // console.log('update deleteNumber');
+        }
+      }).finally(() => {
+          setImageStatus('');
+          setWhichBtn('');
       });
     }
 
@@ -456,8 +485,21 @@ function SingleTableRow({ onClick, num, content, deleteNumber, setDeleteNumber, 
                       disabled={imageStatus === 'generating' ? true : false}
                     >
                       {
-                        imageStatus === 'generating' ? 'Generating...' :
-                          image ? 'Regenerate' :  'Generate'
+                        imageStatus === 'generating' &&  whichBtn === 'fast' ? 'Generating...' :
+                          image ? 'Regenerate' :  'Fast generate'
+                      }
+                    </PrimaryBtnNeon>
+                </div>
+            </span>
+            <span className="block text-white py-1 lg:py-3 lg:min-h-[50px] text-start w-[calc(100%_-_200px)] lg:w-[150px] overflow-hidden lg:pr-4">
+                <div className="flex items-center justify-end lg:justify-start">
+                    <PrimaryBtnNeon className="max-w-[400px] py-3 h-10 px-3 font-medium text-[15px] inline-flex items-center justify-center w-full lg:w-auto"
+                      onClick={onGenerateBeautifulImage}
+                      disabled={imageStatus === 'generating' ? true : false}
+                    >
+                      {
+                        imageStatus === 'generating' &&  whichBtn === 'slow' ? 'Generating...' :
+                          image ? 'Regenerate' :  'Slow generate'
                       }
                     </PrimaryBtnNeon>
                 </div>

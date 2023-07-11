@@ -18,7 +18,6 @@ models/ContentForTwitterPost.ts
 models/ContentForTwitterPostSchedule.ts
 models/ContentsList200Response.ts
 models/ImageForTwitterPost.ts
-models/ImagesList200Response.ts
 models/Profile.ts
 models/ProfilesList200Response.ts
 models/Project.ts
