@@ -72,6 +72,29 @@ export default function PostViewSection({ className, heading, contentClassName, 
         // }, 4000);
     }
 
+    function onGenerateBeautifulImage(): void {
+      setImageStatus(PostStatus.GENERATING);
+
+      // contentApiClient.contentsCreateImage({id: content.id}).then((r) => {
+      console.log(`imageUrl before: ${image}`);
+      const imagesCreateImageVarRequest = {
+        content: content.id,
+        method: 'midjourney',
+      }
+      imageApiClient.imagesCreateImageVar(imagesCreateImageVarRequest).then((r) => {
+        console.log('generate image: ', r);
+        setImage(r[0].imageUrl);
+        console.log(`imageUrl after: ${image}`);
+        if (deleteNumber !== undefined) {
+          deleteNumber = deleteNumber + 1;
+          setDeleteNumber && setDeleteNumber(deleteNumber);
+          // console.log('update deleteNumber');
+        }
+      }).finally(() => {
+          setImageStatus(PostStatus.GENERATED);
+      });
+    }
+
     // const onRegenerateClicked = () => {
     //     setImageStatus(PostStatus.GENERATING);
     //     setTimeout(() => {
@@ -257,7 +280,7 @@ export default function PostViewSection({ className, heading, contentClassName, 
                             {/* Buttons  */}
                             <GrBorderBox className="p-[1px] absolute w-full bottom-0 left-0 ">
                                 <div className="bg-gr-purple backdrop-blur-3xl p-5 flex items-center gap-4">
-                                    <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3 w-1/2"
+                                    <SecondaryBtn onClick={onGenerateBeautifulImage} filled={false} className="border-white/10 py-3 w-1/2"
                                       disabled={imageStatus === PostStatus.GENERATING || ! content}
                                     >
                                         {image ? 'Regenerate Image' : 'Generate Image'}
