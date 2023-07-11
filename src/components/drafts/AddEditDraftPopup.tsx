@@ -52,6 +52,7 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
     const [schedule, setSchedule] = useState<any>(null);
     // const imageUrl = content?.image;
     const [image, setImage] = useState<any>('');
+    const [whichBtn, setWhichBtn] = useState<string>('');
 
     const [localContent, setLocalContent] = useState<any>(content);
 
@@ -85,6 +86,7 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
           onSubmit();
           if (contentText && contentText.trim()) {  // there is content
             setImageStatus(PostStatus.GENERATING);
+            setWhichBtn('fast');
 
             // contentApiClient.contentsCreateImage({id: content.id}).then((r) => {
             imageApiClient.imagesCreateImage({id: content.id}).then((r) => {
@@ -97,6 +99,7 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
               }
             }).finally(() => {
                 setImageStatus(PostStatus.GENERATED);
+                setWhichBtn('');
             });
 
             // setTimeout(() => {
@@ -125,6 +128,68 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
             setMessageClass(msg_class);
           }
         }
+    }
+
+    function onGenerateBeautifulImage(): void {
+      const contentText = textRef.current?.value;
+
+      if (content) {  // update existing content
+        console.log('Generate image for existing content');
+
+        // first submit content
+        onSubmit();
+        if (contentText && contentText.trim()) {  // there is content
+          setImageStatus(PostStatus.GENERATING);
+          setWhichBtn('slow');
+
+          console.log(`imageUrl before: ${image}`);
+          const imagesCreateImageVarRequest = {
+            content: content.id,
+            method: 'midjourney',
+          }
+          imageApiClient.imagesCreateImageVar(imagesCreateImageVarRequest).then((r) => {
+            console.log('generate image: ', r);
+            setImage(r[0].imageUrl);
+            console.log(`imageUrl after: ${image}`);
+            if (deleteNumber !== undefined) {
+              // deleteNumber = deleteNumber + 1;
+              // setDeleteNumber && setDeleteNumber(deleteNumber);
+
+              updateNumber.current = updateNumber.current + 1;
+              setDeleteNumber && setDeleteNumber(updateNumber.current);
+              // console.log('update deleteNumber');
+            }
+          }).finally(() => {
+              setImageStatus(PostStatus.GENERATED);
+              setWhichBtn('');
+          });
+
+          // setTimeout(() => {
+          //     setImageStatus(PostStatus.GENERATED);
+          // }, 4000);
+        } else {
+          console.log('No content');
+
+          const msg_class = 'text-red-500';
+          const message = 'No any content, please input some';
+          setMessage(message);
+          setMessageClass(msg_class);
+        }
+      } else { // create new content
+        console.log('Save draft and generate image for new content');
+        if (contentText && contentText.trim()) {  // there is content
+          isGenerateImage.current = true;
+          // console.log(`isGenerateImage before: ${isGenerateImage.current}`);
+          onSubmit();
+        } else {
+          console.log('No content');
+
+          const msg_class = 'text-red-500';
+          const message = 'No any content, please input some';
+          setMessage(message);
+          setMessageClass(msg_class);
+        }
+      }
     }
 
     function closeModal() {
@@ -839,10 +904,23 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
                                                     }
                                                 </div>
                                                 <div className="flex items-center justify-start">
+                                                    <SecondaryBtn onClick={onGenerateBeautifulImage} filled={false} className="border-white/10 py-3 px-5"
+                                                      disabled={imageStatus === PostStatus.GENERATING}
+                                                    >
+                                                      {
+                                                        imageStatus === PostStatus.GENERATING &&  whichBtn === 'slow' ? 'Generating...' :
+                                                          image ? 'Regenerate Beautiful Image' : 'Generate Beautiful Image'
+                                                      }
+                                                    </SecondaryBtn>
+                                                </div>
+                                                <div className="flex items-center justify-start">
                                                     <SecondaryBtn onClick={onRegenerateClicked} filled={false} className="border-white/10 py-3 px-5"
                                                       disabled={imageStatus === PostStatus.GENERATING}
                                                     >
-                                                      { image ? 'Regenerate Image' : 'Generate Image' }
+                                                      {
+                                                        imageStatus === PostStatus.GENERATING &&  whichBtn === 'fast' ? 'Generating...' :
+                                                          image ? 'Regenerate General Image' : 'Generate General Image'
+                                                      }
                                                     </SecondaryBtn>
                                                 </div>
                                             </div>
