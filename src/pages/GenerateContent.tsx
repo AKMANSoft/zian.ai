@@ -86,7 +86,7 @@ export default function GenerateContentPage() {
                             <div className="w-full lg:w-[65%] xl:w-[70%] lg:h-full pb-3 lg:pb-10 gap-5 max-h-[calc(100%_-_70px)] overflow-y-auto">
                                 <div>
                                     <div className="p-3 lg:p-5 lg:pt-8 space-y-4">
-                                        <InputEl label="Question 1" placeholder="Write your answer here" />
+                                        {/* <InputEl label="Question 1" placeholder="Write your answer here" /> */}
                                         <InputEl label="Question 2" placeholder="Write your answer here" />
                                         <InputEl label="Question 3" placeholder="Write your answer here" />
                                         <InputEl label="Question 4" placeholder="Write your answer here" />
