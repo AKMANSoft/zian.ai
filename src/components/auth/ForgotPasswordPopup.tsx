@@ -99,7 +99,7 @@ export default function ForgotPassword({ trigger }: Props) {
                                         <div className="lg:p-5 lg:pt-8 space-y-4 md:text-sm text-xs pt-4 lg:px-0 px-1">
                                             <InputEl label="Email" placeholder="" />
                                         </div>
-                                        <div className="flex justify-between mx-5 lg:pt-0 pt-5">
+                                        <div className="flex justify-between md:mx-0 mx-1 lg:pt-0 pt-5">
                                             <div></div>
                                             <div>
                                                 <PrimaryBtn className=" h-full w-full md:w-auto px-8 py-3">
