@@ -1,43 +1,17 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import MainLayout from "../components/layout";
 import GrBorderBox from "../components/ui/gr-border-box";
-import { faChevronLeft, faChevronRight, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { cn } from "../lib/utils";
-import { PrimaryBtnNeon, SecondaryBtn } from "../components/ui/buttons";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { formatNumberto0 } from "@/components/calendar/defaults";
-import PostViewPopup from "@/components/drafts/PostViewPopup";
-import AddEditDraftPopup from "@/components/drafts/AddEditDraftPopup";
-import WarningPopup from "@/components/WarningPopup";
-
-
-
-// const filters = [
-//     "Announcements",
-//     "Giveaways",
-//     "Engagement Questions",
-//     "Engagement Questions",
-//     "Promotions",
-// ]
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function DashboardArticleLoaded() {
-    // const [activeTab, setActiveTab] = useState(0);
-    // const tabsContainerRef = useRef<HTMLDivElement>(null);
-
-    // const onTabsScrollClick = (reverse = false) => {
-    //     tabsContainerRef.current?.scrollBy({
-    //         behavior: "smooth",
-    //         left: 300 * (reverse ? -1 : 1)
-    //     })
-    // }
 
     return (
         <MainLayout heading="Drafts">
             <GrBorderBox className="p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)] " type="lg">
                 <div className="h-full w-full flex flex-col backdrop-blur-[10px] bg-gr-purple-light opacity-90 rounded-20">
-                    {/* Tabs List View  */}
-
                     {/* Drafts Table  */}
                     <div className="-mt-px bg-gr-purple-light border w-full h-full border-primary rounded-10 flex flex-col overflow-hidden">
                         <div className="max-h-full max-w-full overflow-auto divide-y  lg:bg-transparent divide-white/10 space-y-5 lg:divide-y-0 px-5 lg:px-0">
@@ -170,24 +144,7 @@ function SingleTableRow({ onClick, num }: SingleTableRowProps) {
 
 
 
-type TabItemProps = {
-    text: string;
-    className?: string;
-    active?: boolean;
-    onClick?: () => void
-}
 
-function TabItem({ text, className, active = false, onClick }: TabItemProps) {
-    return (
-        <button type="button" onClick={onClick} className={cn(
-            "min-w-max h-full px-6 rounded-t-10 text-white border transition-all duration-500",
-            active ? "bg-[#664f8e] border-primary border-b-[#664f8e]" : "bg-transparent border-transparent",
-            className
-        )}>
-            {text}
-        </button>
-    );
-}
 
 
 

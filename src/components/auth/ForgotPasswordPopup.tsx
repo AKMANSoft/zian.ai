@@ -1,15 +1,11 @@
 import { Fragment, ReactNode, useState } from "react"
 import { PrimaryBtn, SecondaryBtn } from "../ui/buttons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { Dialog, Transition } from "@headlessui/react"
-// import { SmallSchedulePostEl } from "../postview-section"
-// import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons"
 import { cn } from "@/lib/utils"
-// import { PostStatus } from "@/pages/GenerateContent"
-// import ImageEl from "../ImageEl"
 import { TriggerFunProps } from "../WarningPopup"
 import { InputEl } from "../ui/input"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 
 
 
