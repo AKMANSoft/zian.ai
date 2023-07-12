@@ -1,13 +1,14 @@
 import React, { Suspense } from "react"
 import HomePage from "./pages/Home"
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import axios from 'axios'
-import apiConfig from "./config/api.config";
-import api from "./api";
+
 
 const GenerateContentPage = React.lazy(() => import("./pages/GenerateContent"));
 const CalendarPage = React.lazy(() => import("./pages/Calendar"));
 const DraftsPage = React.lazy(() => import("./pages/Drafts"));
+const DashboardFirstTime = React.lazy(() => import("./pages/DashboardFirstTime"));
+const DashboardArticleLoaded = React.lazy(() => import("./pages/DashboardArticleLoaded"));
+
 
 
 
@@ -39,29 +40,28 @@ const router = createBrowserRouter([
         <DraftsPage />
       </Suspense>
     )
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <Suspense>
+        <DashboardFirstTime />
+      </Suspense>
+    )
+  },
+  {
+    path: "/article",
+    element: (
+      <Suspense>
+        <DashboardArticleLoaded />
+      </Suspense>
+    )
   }
 ])
 
-const accessToken = "1476836f1c448bd0991ecd9c88f452e08ae7496d4e0f23ee879ae701ba2616e1"
-axios.defaults.baseURL = apiConfig.basepath
-axios.defaults.headers.common["Authorization"] = accessToken
+
+
 function App() {
-
-
-  React.useEffect(() => {
-    // api.user.login("testing123@gmail.com", "test123")
-    // api.other.industryByKeyword({
-    //   type: "industry_id",
-    //   industry_id: 8,
-    //   keyword: "modern luxury interior design, contemporary luxury interior design, living room luxury interior design, luxury interior design bedroom, luxury interior design living room",
-    //   filter: false
-    // }).then((res) => {
-    //   console.log(res.data)
-    // })
-    api.other.generate().then(res => {
-      console.log(res.data)
-    })
-  }, [])
 
   return (
     <div className="bg-primary-image-mobile lg:bg-primary-image bg-no-repeat overflow-hidden h-auto min-h-screen relative">

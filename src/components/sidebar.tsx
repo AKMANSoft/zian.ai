@@ -7,6 +7,20 @@ import { cn } from "../lib/utils";
 import { GrSeperator } from "./ui/seperator";
 import { useLocation } from "react-router-dom";
 import UserDropdownMenu from "./dropmenus/UserDropMenu";
+import LoginPopup from "@/components/auth/LoginPopup";
+import { SecondaryBtn } from "./ui/buttons"
+import ForgotPassword from "./auth/ForgotPasswordPopup";
+import InstructionsSentPopup from "./auth/InstructionsSentPopup";
+import CreateNewPasswordPopup from "./auth/CreateNewPasswordPopup";
+import NewPasswordCreatedPopup from "./auth/NewPasswordCreatedPopup";
+import OnboardingPopup from "./auth/OnboardingPopup";
+import PasswordUpdatedPopup from "./auth/PasswordUpdatedPopup";
+import EmailErrorPopup from "./auth/EmailErrorPopup";
+import ChangePasswordPopup from "./auth/ChangePasswordPopup";
+import EditProfilePopup from "./auth/EditProfilePopup";
+import ArticleViewPopup from "./auth/ArticleViewPopup";
+
+
 
 
 
@@ -63,6 +77,52 @@ export default function SideBar({ expanded = false }: Props) {
                         text="Settings"
                         icon={<FontAwesomeIcon icon={faSliders} />} />
                     <GrSeperator />
+                    <SecondaryBtn className="p-3">
+                        <LoginPopup />
+                    </SecondaryBtn>
+                    <SecondaryBtn>
+                        <ForgotPassword
+                        />
+                    </SecondaryBtn>
+                    <SecondaryBtn>
+                        <InstructionsSentPopup
+                        />
+                    </SecondaryBtn>
+                    <SecondaryBtn>
+                        <CreateNewPasswordPopup
+                        />
+                    </SecondaryBtn>
+                    <SecondaryBtn>
+                        <NewPasswordCreatedPopup
+                        />
+                    </SecondaryBtn>
+                    <SecondaryBtn>
+                        <OnboardingPopup
+                        />
+                    </SecondaryBtn>
+                    <SecondaryBtn>
+                        <PasswordUpdatedPopup
+                        />
+                    </SecondaryBtn>
+                    <SecondaryBtn>
+                        <EmailErrorPopup
+                        />
+                    </SecondaryBtn>
+                    <SecondaryBtn>
+                        <ChangePasswordPopup
+                        />
+                    </SecondaryBtn>
+                    <SecondaryBtn>
+                        <EditProfilePopup
+                        />
+                    </SecondaryBtn>
+                    <SecondaryBtn>
+                        <ArticleViewPopup
+                        />
+                    </SecondaryBtn>
+                   
+
+                    
                 </div>
             </div>
             <div className="w-full px-12">
