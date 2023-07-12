@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script>
+
+        const data = {
+            "email": "test1234@gmail.com",
+            "password": "test1234",
+            "phone": "0857678345",
+            "name": "Test 1234"
+        }
+
+        // const formdata = new FormData();
+
+        // formdata.set("email", data.email)
+        // formdata.set("password", data.password)
+        // formdata.set("phone", data.phone)
+        // formdata.set("name", data.name)
+
+        const config = {
+            "url": "https://seo.zian.ai/api/register",
+            "method": "POST",
+            "timeout": 0,
+            "processData": false,
+            "mimeType": "application/json",
+            "contentType": false,
+            "data": data
+        }
+        const response = $.ajax(config).promise()
+            .then((response) => {
+                console.log(response)
+            }, (error) => {
+                console.log(error)
+            })
+    </script>
+</body>
+
+</html>

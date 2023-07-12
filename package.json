@@ -26,6 +26,8 @@
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@tanstack/react-table": "^8.9.2",
+    "@types/jquery": "^3.5.16",
+    "axios": "^1.4.0",
     "class-variance-authority": "^0.6.0",
     "clsx": "^1.2.1",
     "cmdk": "^0.2.0",
