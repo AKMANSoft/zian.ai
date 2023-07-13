@@ -1,15 +1,11 @@
 import { Fragment, ReactNode, useState } from "react"
 import { PrimaryBtn, SecondaryBtn } from "../ui/buttons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { Dialog, Transition } from "@headlessui/react"
-// import { SmallSchedulePostEl } from "../postview-section"
-// import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons"
 import { cn } from "@/lib/utils"
-// import { PostStatus } from "@/pages/GenerateContent"
-// import ImageEl from "../ImageEl"
 import { TriggerFunProps } from "../WarningPopup"
 import { InputEl } from "../ui/input"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 
 
 
@@ -103,7 +99,7 @@ export default function ForgotPassword({ trigger }: Props) {
                                         <div className="lg:p-5 lg:pt-8 space-y-4 md:text-sm text-xs pt-4 lg:px-0 px-1">
                                             <InputEl label="Email" placeholder="" />
                                         </div>
-                                        <div className="flex justify-between mx-5 lg:pt-0 pt-5">
+                                        <div className="flex justify-between md:mx-0 mx-1 lg:pt-0 pt-5">
                                             <div></div>
                                             <div>
                                                 <PrimaryBtn className=" h-full w-full md:w-auto px-8 py-3">

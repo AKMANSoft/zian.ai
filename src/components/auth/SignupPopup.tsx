@@ -1,11 +1,7 @@
 import { Fragment, ReactNode, useState } from "react"
 import { PrimaryBtn } from "../ui/buttons"
 import { Dialog, Transition } from "@headlessui/react"
-// import { SmallSchedulePostEl } from "../postview-section"
-// import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons"
 import { cn } from "@/lib/utils"
-// import { PostStatus } from "@/pages/GenerateContent"
-// import ImageEl from "../ImageEl"
 import { TriggerFunProps } from "../WarningPopup"
 import { InputEl } from "../ui/input"
 

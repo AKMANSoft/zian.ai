@@ -4,8 +4,8 @@ import * as React from "react"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 
 import { cn } from "@/lib/utils"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 const Dialog = DialogPrimitive.Root
 
