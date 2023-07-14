@@ -35,6 +35,7 @@ export default function PopupPage() {
                 <div className="flex gap-8">
                     <Anchor href="/login">Login</Anchor>
                     <Anchor href="/signup">Sign Up</Anchor>
+                    <Anchor href="/dashboard">Dashboard Page (login to see articles loaded on dashboard page)</Anchor>
                 </div>
             </div>
         </MainLayout>
