@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faHome, faCreditCard,
-    faFile, faSignOut
+    faFile, faSignOut, faExternalLink
 } from '@fortawesome/free-solid-svg-icons';
 import { cn } from "../lib/utils";
 import { GrSeperator } from "./ui/seperator";
@@ -66,9 +66,9 @@ export default function SideBar({ expanded = false }: Props) {
                         icon={<FontAwesomeIcon icon={faSignOut} />} />
                     <NavigationItem
                         href="/popup" active={pathname === "/popup"}
-                        className="my-0.5" text="Popup"
-                        icon={<FontAwesomeIcon icon={faSignOut} />} />
-                  
+                        className="my-0.5" text="Links"
+                        icon={<FontAwesomeIcon icon={faExternalLink} />} />
+
 
                 </div>
             </div>
