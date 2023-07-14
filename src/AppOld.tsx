@@ -24,7 +24,7 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <Suspense>
-        <DashboardFirstTime />
+        <DashboardArticleLoaded />
       </Suspense>
     )
   },
@@ -61,6 +61,14 @@ const router = createBrowserRouter([
     )
   },
   {
+    path: "/article",
+    element: (
+      <Suspense>
+        <DashboardArticleLoaded />
+      </Suspense>
+    )
+  },
+  {
     path: "/signup",
     element: (
       <Suspense>
@@ -77,7 +85,7 @@ const router = createBrowserRouter([
     )
   },
   {
-    path: "/integrate",
+    path: "/integeration",
     element: (
       <Suspense>
         <ApiIntegrationPage />
