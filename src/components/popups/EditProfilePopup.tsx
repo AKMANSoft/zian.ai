@@ -4,8 +4,9 @@ import { Dialog, Transition } from "@headlessui/react"
 import { cn } from "@/lib/utils"
 import { TriggerFunProps } from "../WarningPopup"
 import { InputEl } from "../ui/input"
-import { faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faUser, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { NavigationItem } from "../sidebar"
 
 
 
@@ -28,20 +29,10 @@ export default function EditProfilePopup({ trigger }: Props) {
 
     return (
         <>
-            {
-                trigger ?
-                    trigger?.({
-                        open: openModal,
-                        close: closeModal
-                    })
-                    :
-                    <SecondaryBtn onClick={openModal} className="p-3">
-                        Edit Profile Popup
-                    </SecondaryBtn>
-            }
-
-
-
+            <NavigationItem
+                        onClick={openModal} active={isOpen}
+                        className="my-0.5" text="Edit Profile"
+                        icon={<FontAwesomeIcon icon={faUser} />} />
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-50" onClose={closeModal}>
                     <Transition.Child

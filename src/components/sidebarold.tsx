@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faHome, faArrowRight, faCreditCard,
-    faCalendar, faSliders, faBook, faFile, faPen, faBookAtlas, faUser, faSignOut
+    faCalendar, faSliders, faBook, faFile
 } from '@fortawesome/free-solid-svg-icons';
 import { cn } from "../lib/utils";
 import { GrSeperator } from "./ui/seperator";
@@ -57,27 +57,26 @@ export default function SideBar({ expanded = false }: Props) {
                         icon={<FontAwesomeIcon icon={faHome} />} />
                     <GrSeperator className="mt-6 mb-2" />
                     <NavigationItem
-                        href="/customize" active={pathname === "/customize"}
+                        href="/generate" active={pathname === "/generate"}
                         className="my-0.5"
-                        text="Customize"
-                        icon={<FontAwesomeIcon icon={faPen} />} />
-                    <NavigationItem
-                        href="/integrate" active={pathname === "/integrate"}
-                        className="my-0.5"
-                        text="Integrate API"
+                        text="Generate Content"
                         icon={<FontAwesomeIcon icon={faFile} />} />
-                    <GrSeperator className="my-2" />
-                    <EditProfilePopup/>
                     <NavigationItem
-                        href="/billing" active={pathname === "/billing"}
+                        href="/calendar" active={pathname === "/calendar"}
+                        className="my-0.5"
+                        text="Calendar"
+                        icon={<FontAwesomeIcon icon={faCalendar} />} />
+                    <NavigationItem
+                        href="/drafts" active={pathname === "/drafts"}
+                        className="my-0.5" text="Drafts"
+                        icon={<FontAwesomeIcon icon={faBook} />} />
+                    <GrSeperator className="my-2" />
+                    <NavigationItem
+                        href="/settings" active={pathname === "/settings"}
                         className="mb-3"
-                        text="Billing & Plan"
-                        icon={<FontAwesomeIcon icon={faCreditCard} />} />
-                    <GrSeperator className="my-2" />
-                    <NavigationItem
-                        href="/logout" active={pathname === "/logout"}
-                        className="my-0.5" text="Log out"
-                        icon={<FontAwesomeIcon icon={faSignOut} />} />
+                        text="Settings"
+                        icon={<FontAwesomeIcon icon={faSliders} />} />
+                    <GrSeperator />
                     {/* <SecondaryBtn className="p-3">
                         <LoginPopup />
                     </SecondaryBtn>
@@ -124,7 +123,25 @@ export default function SideBar({ expanded = false }: Props) {
                      */}
                 </div>
             </div>
-
+            <div className="w-full px-12">
+                <h5 className="text-sm font-bold text-white inline-flex items-center gap-3">
+                    <FontAwesomeIcon icon={faCreditCard} />
+                    Plan Name
+                </h5>
+                <span className="mt-7 block w-full h-1 bg-th-gray rounded-full">
+                    <span className="block h-full w-1/2 bg-primary rounded-full"></span>
+                </span>
+                <div className="mt-2 flex items-center justify-between gap-3">
+                    <p className="text-xs font-normal text-white">Credits used</p>
+                    <p className="text-xs font-normal text-white">14 / 32</p>
+                </div>
+                <h5 className="mt-7 w-full text-sm font-bold text-white inline-flex items-center justify-between gap-3">
+                    Manage Plan
+                    <a href="#">
+                        <FontAwesomeIcon icon={faArrowRight} />
+                    </a>
+                </h5>
+            </div>
         </div>
     );
 }
@@ -137,12 +154,11 @@ type NavigationItemProps = {
     icon: React.ReactNode
     active?: boolean;
     className?: string;
-    onClick?: ()=> void;
 }
 
-export function NavigationItem({ text, className, icon, onClick, active = false, href = "#" }: NavigationItemProps) {
+function NavigationItem({ text, className, icon, active = false, href = "#" }: NavigationItemProps) {
     return (
-        <a href={href} onClick={onClick} className={cn(
+        <a href={href} className={cn(
             "font-bold text-sm transition-all duration-300 rounded-full lg:rounded-none lg:rounded-r-full",
             "inline-flex gap-3 items-center py-5 px-12 w-full",
             active ? "shadow-navigation-item" : "hover:shadow-navigation-item",
