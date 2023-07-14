@@ -1,13 +1,15 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faHome, faCreditCard,
-    faFile, faPen, faSignOut
+    faFile, faSignOut
 } from '@fortawesome/free-solid-svg-icons';
 import { cn } from "../lib/utils";
 import { GrSeperator } from "./ui/seperator";
 import { useLocation } from "react-router-dom";
 import UserDropdownMenu from "./dropmenus/UserDropMenu";
 import EditProfilePopup from "./popups/EditProfilePopup";
+import CustomizePopup from "./popups/CustomizePopup";
+import { SecondaryBtn } from "./ui/buttons";
 
 
 
@@ -45,18 +47,14 @@ export default function SideBar({ expanded = false }: Props) {
                         text="Home"
                         icon={<FontAwesomeIcon icon={faHome} />} />
                     <GrSeperator className="mt-6 mb-2" />
-                    <NavigationItem
-                        href="/customize" active={pathname === "/customize"}
-                        className="my-0.5"
-                        text="Customize"
-                        icon={<FontAwesomeIcon icon={faPen} />} />
+                    <CustomizePopup />
                     <NavigationItem
                         href="/integrate" active={pathname === "/integrate"}
                         className="my-0.5"
                         text="Integrate API"
                         icon={<FontAwesomeIcon icon={faFile} />} />
                     <GrSeperator className="my-2" />
-                    <EditProfilePopup/>
+                    <EditProfilePopup />
                     <NavigationItem
                         href="/billing" active={pathname === "/billing"}
                         className="mb-3"
@@ -67,50 +65,12 @@ export default function SideBar({ expanded = false }: Props) {
                         href="/logout" active={pathname === "/logout"}
                         className="my-0.5" text="Log out"
                         icon={<FontAwesomeIcon icon={faSignOut} />} />
-                    {/* <SecondaryBtn className="p-3">
-                        <LoginPopup />
-                    </SecondaryBtn>
-                    <SecondaryBtn>
-                        <ForgotPassword
-                        />
-                    </SecondaryBtn>
-                    <SecondaryBtn>
-                        <InstructionsSentPopup
-                        />
-                    </SecondaryBtn>
-                    <SecondaryBtn>
-                        <CreateNewPasswordPopup
-                        />
-                    </SecondaryBtn>
-                    <SecondaryBtn>
-                        <NewPasswordCreatedPopup
-                        />
-                    </SecondaryBtn>
-                    <SecondaryBtn>
-                        <OnboardingPopup
-                        />
-                    </SecondaryBtn>
-                    <SecondaryBtn>
-                        <PasswordUpdatedPopup
-                        />
-                    </SecondaryBtn>
-                    <SecondaryBtn>
-                        <EmailErrorPopup
-                        />
-                    </SecondaryBtn>
-                    <SecondaryBtn>
-                        <ChangePasswordPopup
-                        />
-                    </SecondaryBtn>
-                    <SecondaryBtn>
-                        <EditProfilePopup
-                        />
-                    </SecondaryBtn>
-                    <SecondaryBtn>
-                        <ArticleViewPopup
-                        />
-                    </SecondaryBtn>
-                     */}
+                    <NavigationItem
+                        href="/popup" active={pathname === "/popup"}
+                        className="my-0.5" text="Popup"
+                        icon={<FontAwesomeIcon icon={faSignOut} />} />
+                  
+
                 </div>
             </div>
 
@@ -126,7 +86,7 @@ type NavigationItemProps = {
     icon: React.ReactNode
     active?: boolean;
     className?: string;
-    onClick?: ()=> void;
+    onClick?: () => void;
 }
 
 export function NavigationItem({ text, className, icon, onClick, active = false, href = "#" }: NavigationItemProps) {

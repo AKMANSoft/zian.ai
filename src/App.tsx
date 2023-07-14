@@ -12,8 +12,11 @@ const CalendarPage = React.lazy(() => import("./pages/Calendar"));
 const DraftsPage = React.lazy(() => import("./pages/Drafts"));
 const DashboardFirstTime = React.lazy(() => import("./pages/DashboardFirstTime"));
 const DashboardArticleLoaded = React.lazy(() => import("./pages/DashboardArticleLoaded"));
+const BillingPage = React.lazy(() => import("./pages/BillingPage"));
 const SignUpPage = React.lazy(() => import("./pages/SignUp"));
 const LoginPage = React.lazy(() => import("./pages/Login"));
+const CustomizePage = React.lazy(() => import("./components/popups/CustomizePopup"));
+const PopupPage = React.lazy(() => import("./pages/PopupPage"));
 
 
 
@@ -80,6 +83,30 @@ const router = createBrowserRouter([
     element: (
       <Suspense>
         <ApiIntegrationPage />
+      </Suspense>
+    )
+  },
+  {
+    path: "/customize",
+    element: (
+      <Suspense>
+        <CustomizePage />
+      </Suspense>
+    )
+  },
+  {
+    path: "/billing",
+    element: (
+      <Suspense>
+        <BillingPage />
+      </Suspense>
+    )
+  },
+  {
+    path: "/popup",
+    element: (
+      <Suspense>
+        <PopupPage />
       </Suspense>
     )
   }
