@@ -1,7 +1,6 @@
 import MainLayout from "../components/layout";
 import GrBorderBox from "../components/ui/gr-border-box";
-import { cn } from "@/lib/utils";
-import { Input, InputEl } from "@/components/ui/input";
+import { Input } from "@/components/ui/input";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import JSONPretty from 'react-json-pretty';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
