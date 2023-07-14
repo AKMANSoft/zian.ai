@@ -1,24 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faHome, faArrowRight, faCreditCard,
-    faCalendar, faSliders, faBook, faFile, faPen, faBookAtlas, faUser, faSignOut
+    faHome, faCreditCard,
+    faFile, faPen, faSignOut
 } from '@fortawesome/free-solid-svg-icons';
 import { cn } from "../lib/utils";
 import { GrSeperator } from "./ui/seperator";
 import { useLocation } from "react-router-dom";
 import UserDropdownMenu from "./dropmenus/UserDropMenu";
-import LoginPopup from "@/components/popups/LoginPopup";
-import { SecondaryBtn } from "./ui/buttons"
-import ForgotPassword from "./popups/ForgotPasswordPopup";
-import InstructionsSentPopup from "./popups/InstructionsSentPopup";
-import CreateNewPasswordPopup from "./popups/CreateNewPasswordPopup";
-import NewPasswordCreatedPopup from "./popups/NewPasswordCreatedPopup";
-import OnboardingPopup from "./popups/OnboardingPopup";
-import PasswordUpdatedPopup from "./popups/PasswordUpdatedPopup";
-import EmailErrorPopup from "./popups/EmailErrorPopup";
-import ChangePasswordPopup from "./popups/ChangePasswordPopup";
 import EditProfilePopup from "./popups/EditProfilePopup";
-import ArticleViewPopup from "./popups/ArticleViewPopup";
 
 
 

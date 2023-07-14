@@ -1,5 +1,4 @@
 import React, { Suspense, useEffect } from "react"
-import HomePage from "./pages/Home"
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import axios from "axios";
 import apiConfig from "./config/api.config";

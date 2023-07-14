@@ -1,8 +1,7 @@
-import { Fragment, ReactNode, useState } from "react"
+import { Fragment, useState } from "react"
 import { PrimaryBtn, SecondaryBtn } from "../ui/buttons"
 import { Dialog, Transition } from "@headlessui/react"
 import { cn } from "@/lib/utils"
-import { TriggerFunProps } from "../WarningPopup"
 import { InputEl } from "../ui/input"
 import { faUser, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -11,12 +10,10 @@ import { NavigationItem } from "../sidebar"
 
 
 
-type Props = {
-    trigger?: ({ close, open }: TriggerFunProps) => ReactNode
-}
 
 
-export default function EditProfilePopup({ trigger }: Props) {
+
+export default function EditProfilePopup() {
     const [isOpen, setIsOpen] = useState(false);
 
     function closeModal() {
