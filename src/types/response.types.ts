@@ -3,11 +3,10 @@
 export interface ApiResponse<T = unknown> {
     data: T | null;
     message: string;
-    status: boolean;
+    success: boolean;
 }
 
-
-export type LoginApiResponse = ApiResponse<{
+export type AuthUser = {
     authorization: string;
     created: Date;
     email: string;
@@ -15,9 +14,12 @@ export type LoginApiResponse = ApiResponse<{
     package: string;
     phone: string;
     quota: number;
-}>
+}
 
-export type RegisterApiResponse = ApiResponse<{ authorization: string }>
+
+export type LoginApiResponse = ApiResponse<AuthUser>
+
+export type SignUpApiResponse = ApiResponse<string>
 
 
 export type IndustryListApiResponse = ApiResponse<Array<{
@@ -43,7 +45,7 @@ export type Article = {
     id: number;
     headline: string;
     summary: string;
-    article: string;
+    body: string;
     image: string;
     timestamp: Date;
 }

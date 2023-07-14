@@ -7,18 +7,18 @@ import { cn } from "../lib/utils";
 import { GrSeperator } from "./ui/seperator";
 import { useLocation } from "react-router-dom";
 import UserDropdownMenu from "./dropmenus/UserDropMenu";
-import LoginPopup from "@/components/auth/LoginPopup";
+import LoginPopup from "@/components/popups/LoginPopup";
 import { SecondaryBtn } from "./ui/buttons"
-import ForgotPassword from "./auth/ForgotPasswordPopup";
-import InstructionsSentPopup from "./auth/InstructionsSentPopup";
-import CreateNewPasswordPopup from "./auth/CreateNewPasswordPopup";
-import NewPasswordCreatedPopup from "./auth/NewPasswordCreatedPopup";
-import OnboardingPopup from "./auth/OnboardingPopup";
-import PasswordUpdatedPopup from "./auth/PasswordUpdatedPopup";
-import EmailErrorPopup from "./auth/EmailErrorPopup";
-import ChangePasswordPopup from "./auth/ChangePasswordPopup";
-import EditProfilePopup from "./auth/EditProfilePopup";
-import ArticleViewPopup from "./auth/ArticleViewPopup";
+import ForgotPassword from "./popups/ForgotPasswordPopup";
+import InstructionsSentPopup from "./popups/InstructionsSentPopup";
+import CreateNewPasswordPopup from "./popups/CreateNewPasswordPopup";
+import NewPasswordCreatedPopup from "./popups/NewPasswordCreatedPopup";
+import OnboardingPopup from "./popups/OnboardingPopup";
+import PasswordUpdatedPopup from "./popups/PasswordUpdatedPopup";
+import EmailErrorPopup from "./popups/EmailErrorPopup";
+import ChangePasswordPopup from "./popups/ChangePasswordPopup";
+import EditProfilePopup from "./popups/EditProfilePopup";
+import ArticleViewPopup from "./popups/ArticleViewPopup";
 
 
 
@@ -77,7 +77,7 @@ export default function SideBar({ expanded = false }: Props) {
                         text="Settings"
                         icon={<FontAwesomeIcon icon={faSliders} />} />
                     <GrSeperator />
-                    <SecondaryBtn className="p-3">
+                    {/* <SecondaryBtn className="p-3">
                         <LoginPopup />
                     </SecondaryBtn>
                     <SecondaryBtn>
@@ -120,9 +120,7 @@ export default function SideBar({ expanded = false }: Props) {
                         <ArticleViewPopup
                         />
                     </SecondaryBtn>
-                   
-
-                    
+                     */}
                 </div>
             </div>
             <div className="w-full px-12">

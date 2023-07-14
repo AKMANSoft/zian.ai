@@ -17,7 +17,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <input
         type={type}
         className={cn(
-          "flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+          // "flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+          "text-white text-start font-jakarta font-semibold text-sm leading-6 py-3 px-5",
+          "border border-white/10 appearance-none rounded-10 w-full bg-transparent mt-2",
+          "focus:bg-th-gray/10 outline-none transition-all placeholder:text-white/70",
           className
         )}
         ref={ref}
@@ -30,19 +33,17 @@ Input.displayName = "Input"
 
 
 
-type InputElProps = {
-  className?: string;
+type InputElProps = InputProps & {
   type?: React.HTMLInputTypeAttribute;
   label?: string;
   labelNode?: React.ReactNode
   placeholder?: string;
   id?: string;
   endIcon?: IconDefinition;
-  value?: string;
-  onChange?: (value: string) => void
+  onValueChange?: (value: string) => void
 }
 
-function InputEl({ label, placeholder = "", labelNode = null, id = "", endIcon, type = "text", value, onChange, className }: InputElProps) {
+function InputEl({ label, placeholder = "", labelNode = null, id = "", endIcon, type = "text", value, onValueChange, className }: InputElProps) {
 
   return (
     <div className={cn(
@@ -61,7 +62,7 @@ function InputEl({ label, placeholder = "", labelNode = null, id = "", endIcon, 
       }
       <input type={type} id={id} placeholder={placeholder}
         value={value}
-        onChange={(e) => onChange?.call(null, e.target.value)}
+        onChange={(e) => onValueChange?.(e.target.value)}
         className={cn(
           "text-white text-start font-jakarta font-semibold text-sm leading-6 py-3 px-5",
           "border border-white/10 appearance-none rounded-10 w-full bg-transparent mt-2",

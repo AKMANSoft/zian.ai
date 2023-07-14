@@ -2,28 +2,22 @@
 import apiConfig from "@/config/api.config";
 import { definedMessages } from "@/lib/constants";
 import { CustomError } from "@/types/error";
-import { LoginApiRequest, RegisterApiRequest } from "@/types/request.types";
-import { LoginApiResponse, RegisterApiResponse } from "@/types/response.types";
+import { LoginFormSchema, SignUpFormSchema } from "@/types/forms.types";
+import { LoginApiRequest } from "@/types/request.types";
+import { LoginApiResponse, SignUpApiResponse } from "@/types/response.types";
 import axios from "axios";
 
 
 
-// const data = {
-//     "email": "testing1236@gmail.com",
-//     "password": "test123",
-//     "phone": "0857678345",
-//     "name": "Test 123"
-// }
 
-
-export async function register(data: RegisterApiRequest): Promise<RegisterApiResponse> {
+export async function signup(data: SignUpFormSchema): Promise<SignUpApiResponse> {
     try {
         const res = await axios.post(apiConfig.endpoints.register, data)
         if (res.status === 200 && res.data.status) {
             console.log(res)
             return {
                 message: res.data.message ?? "",
-                status: res.data.status ?? false,
+                success: res.data.status ?? false,
                 data: res.data.authorization
             }
         }
@@ -32,18 +26,18 @@ export async function register(data: RegisterApiRequest): Promise<RegisterApiRes
         console.error(error)
         return {
             message: ((error instanceof CustomError) ? error.message : error?.response?.data?.message) ?? "",
-            status: false,
+            success: false,
             data: null
         }
     }
 }
-export async function login(data: LoginApiRequest): Promise<LoginApiResponse> {
+export async function login(data: LoginFormSchema): Promise<LoginApiResponse> {
     try {
         const res = await axios.post(apiConfig.endpoints.login, data)
         if (res.status === 200 && res.data.status) {
             return {
                 message: res.data.message ?? "",
-                status: res.data.status ?? false,
+                success: res.data.status ?? false,
                 data: (res.data.account && {
                     ...res.data.account,
                     created: new Date(res.data.account.created)
@@ -55,7 +49,7 @@ export async function login(data: LoginApiRequest): Promise<LoginApiResponse> {
         console.error(error)
         return {
             message: ((error instanceof CustomError) ? error.message : error?.response?.data?.message) ?? "",
-            status: false,
+            success: false,
             data: null
         }
     }

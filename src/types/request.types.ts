@@ -19,8 +19,6 @@ export type ArticlesApiRequest = {
     offset: number;
 }
 
-
-
 export type KeywordApiRequest = {
     keyword: string;
     filter: boolean;

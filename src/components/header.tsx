@@ -9,16 +9,23 @@ import NotificationsDropMenu from "./dropmenus/NotificationsDropMenu";
 
 type Props = {
     heading: string;
+    description?: string;
     menuExpanded?: boolean;
     onToggleMenu: () => void;
 }
 
-export default function Header({ heading, onToggleMenu, menuExpanded = false }: Props) {
+export default function Header({ heading, description, onToggleMenu, menuExpanded = false }: Props) {
     return (
         <header className="mt-4 lg:mt-7 mb-9 flex items-start lg:items-center justify-between w-full">
-            <h2 className="hidden xl:inline text-[32px] leading-9 text-white font-nebula font-normal">
-                {heading}
-            </h2>
+            <div className="hidden xl:block">
+                <h2 className="text-[32px] leading-9 text-white font-nebula font-normal">
+                    {heading}
+                </h2>
+                {
+                    description &&
+                    <p className="text-base font-jakarta">{description}</p>
+                }
+            </div>
             <img src="/images/avatar.png" loading="lazy" width={60} height={60}
                 className={cn(
                     "w-[60px] h-auto aspect-square rounded-full overflow-hidden xl:hidden"

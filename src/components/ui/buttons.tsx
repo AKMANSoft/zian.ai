@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { cn } from "../../lib/utils";
 
 
-type Props = {
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     className?: string;
     children: ReactNode;
     filled?: boolean;
@@ -11,7 +11,7 @@ type Props = {
 }
 
 
-export function SecondaryBtn({ className, children, filled = true, onClick }: Props) {
+export function SecondaryBtn({ className, children, filled = true, onClick }: ButtonProps) {
     return (
         <button type="button" onClick={onClick} className={cn(
             "border border-white/5 transition-all duration-300 hover:bg-white/20 rounded-lg py-[8px] px-4 outline-none",
@@ -27,14 +27,15 @@ export function SecondaryBtn({ className, children, filled = true, onClick }: Pr
 
 
 
-export function PrimaryBtn({ className, children, onClick }: Props) {
+export function PrimaryBtn({ className, children, onClick, ...props }: ButtonProps) {
     return (
         <button type="button" onClick={onClick} className={cn(
             "primary-btn bg-primary shadow-primary-btn hover:shadow-primary-btn-lg outline-none",
             "transition-all duration-300 rounded-lg py-[8px] px-4",
             "inline-flex items-center gap-2 text-white text-sm font-semibold justify-center",
+            "disabled:opacity-70",
             className
-        )}>
+        )} {...props}>
             {children}
         </button>
     )
@@ -43,10 +44,10 @@ export function PrimaryBtn({ className, children, onClick }: Props) {
 
 
 
-export function PrimaryBtnNeon({ className, children, onClick }: Props) {
+export function PrimaryBtnNeon({ className, children, onClick }: ButtonProps) {
     return (
         <button type="button" onClick={onClick} className={cn(
-            "primary-btn-neon outline-none",
+            "primary-btn-neon outline-none justify-center",
             className
         )}>
             {children}
@@ -55,7 +56,7 @@ export function PrimaryBtnNeon({ className, children, onClick }: Props) {
 }
 
 
-export function PrimaryWithNeon({ className, children, onClick, active }: Props) {
+export function PrimaryWithNeon({ className, children, onClick, active }: ButtonProps) {
     return (
         <button type="button" onClick={onClick} className={cn(
             "primary-btn-neon outline-none transition-all duration-300",

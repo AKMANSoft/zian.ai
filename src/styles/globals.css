@@ -1,8 +1,16 @@
 @tailwind base;
 
 @layer base {
+
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+  }
+
   html {
     font-family: "Inter", sans-serif;
+    color: #fff;
   }
 }
 
@@ -107,11 +115,17 @@ input[type='date']::-webkit-calendar-picker-indicator {
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;
-  background: rgba(255, 255, 255, 0.1);
+  background: transparent;
+  /* background: rgba(255, 255, 255, 0.1); */
+}
+
+.scrollbar-2::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.271);
+  background: #E945D0;
   border-radius: 50px;
 }
 
