@@ -8,6 +8,8 @@ import { GrSeperator } from "./ui/seperator";
 import { useLocation } from "react-router-dom";
 import UserDropdownMenu from "./dropmenus/UserDropMenu";
 import EditProfilePopup from "./popups/EditProfilePopup";
+import { SecondaryBtn } from "./ui/buttons";
+import CustomizePopup from "./popups/CustomizePopup";
 
 
 
@@ -45,18 +47,14 @@ export default function SideBar({ expanded = false }: Props) {
                         text="Home"
                         icon={<FontAwesomeIcon icon={faHome} />} />
                     <GrSeperator className="mt-6 mb-2" />
-                    <NavigationItem
-                        href="/customize" active={pathname === "/customize"}
-                        className="my-0.5"
-                        text="Customize"
-                        icon={<FontAwesomeIcon icon={faPen} />} />
+                    <CustomizePopup/>
                     <NavigationItem
                         href="/integrate" active={pathname === "/integrate"}
                         className="my-0.5"
                         text="Integrate API"
                         icon={<FontAwesomeIcon icon={faFile} />} />
                     <GrSeperator className="my-2" />
-                    <EditProfilePopup/>
+                    <EditProfilePopup />
                     <NavigationItem
                         href="/billing" active={pathname === "/billing"}
                         className="mb-3"
@@ -111,6 +109,9 @@ export default function SideBar({ expanded = false }: Props) {
                         />
                     </SecondaryBtn>
                      */}
+                    {/* <SecondaryBtn>
+                        <CustomizePopup />
+                    </SecondaryBtn> */}
                 </div>
             </div>
 
@@ -126,7 +127,7 @@ type NavigationItemProps = {
     icon: React.ReactNode
     active?: boolean;
     className?: string;
-    onClick?: ()=> void;
+    onClick?: () => void;
 }
 
 export function NavigationItem({ text, className, icon, onClick, active = false, href = "#" }: NavigationItemProps) {
