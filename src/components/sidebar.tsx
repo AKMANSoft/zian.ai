@@ -9,6 +9,7 @@ import { useLocation } from "react-router-dom";
 import UserDropdownMenu from "./dropmenus/UserDropMenu";
 import EditProfilePopup from "./popups/EditProfilePopup";
 import CustomizePopup from "./popups/CustomizePopup";
+import { SecondaryBtn } from "./ui/buttons";
 
 
 
@@ -46,7 +47,7 @@ export default function SideBar({ expanded = false }: Props) {
                         text="Home"
                         icon={<FontAwesomeIcon icon={faHome} />} />
                     <GrSeperator className="mt-6 mb-2" />
-                    <CustomizePopup/>
+                    <CustomizePopup />
                     <NavigationItem
                         href="/integrate" active={pathname === "/integrate"}
                         className="my-0.5"
@@ -64,53 +65,14 @@ export default function SideBar({ expanded = false }: Props) {
                         href="/logout" active={pathname === "/logout"}
                         className="my-0.5" text="Log out"
                         icon={<FontAwesomeIcon icon={faSignOut} />} />
-                    {/* <SecondaryBtn className="p-3">
-                        <LoginPopup />
-                    </SecondaryBtn>
-                    <SecondaryBtn>
-                        <ForgotPassword
-                        />
-                    </SecondaryBtn>
-                    <SecondaryBtn>
-                        <InstructionsSentPopup
-                        />
-                    </SecondaryBtn>
-                    <SecondaryBtn>
-                        <CreateNewPasswordPopup
-                        />
-                    </SecondaryBtn>
-                    <SecondaryBtn>
-                        <NewPasswordCreatedPopup
-                        />
-                    </SecondaryBtn>
-                    <SecondaryBtn>
-                        <OnboardingPopup
-                        />
-                    </SecondaryBtn>
-                    <SecondaryBtn>
-                        <PasswordUpdatedPopup
-                        />
-                    </SecondaryBtn>
-                    <SecondaryBtn>
-                        <EmailErrorPopup
-                        />
-                    </SecondaryBtn>
-                    <SecondaryBtn>
-                        <ChangePasswordPopup
-                        />
-                    </SecondaryBtn>
-                    <SecondaryBtn>
-                        <EditProfilePopup
-                        />
-                    </SecondaryBtn>
-                    <SecondaryBtn>
-                        <ArticleViewPopup
-                        />
-                    </SecondaryBtn>
-                     */}
-                    {/* <SecondaryBtn>
-                        <CustomizePopup />
-                    </SecondaryBtn> */}
+                    <NavigationItem
+                        href="/popup" active={pathname === "/popup"}
+                        className="my-0.5" text="Popup"
+                        icon={<FontAwesomeIcon icon={faSignOut} />} />
+                  
+
+
+
                 </div>
             </div>
 

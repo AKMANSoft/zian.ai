@@ -16,6 +16,7 @@ const BillingPage = React.lazy(() => import("./pages/BillingPage"));
 const SignUpPage = React.lazy(() => import("./pages/SignUp"));
 const LoginPage = React.lazy(() => import("./pages/Login"));
 const CustomizePage = React.lazy(() => import("./components/popups/CustomizePopup"));
+const PopupPage = React.lazy(() => import("./pages/PopupPage"));
 
 
 
@@ -98,6 +99,14 @@ const router = createBrowserRouter([
     element: (
       <Suspense>
         <BillingPage />
+      </Suspense>
+    )
+  },
+  {
+    path: "/popup",
+    element: (
+      <Suspense>
+        <PopupPage />
       </Suspense>
     )
   }
