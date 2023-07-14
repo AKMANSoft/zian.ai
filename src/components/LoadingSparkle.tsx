@@ -3,12 +3,14 @@ import { cn } from "@/lib/utils";
 
 type Props = {
     spark?: boolean;
+    variant?: "small" | "medium" | "large";
 }
 
-export default function LoadingSparkle({ spark = false }: Props) {
+export default function LoadingSparkle({ spark = false, variant = "small" }: Props) {
     return (
         <div className={cn(
-            "loading-sparkles scale-[2]",
+            "loading-sparkles",
+            variant === "small" ? "scale-[2]" : variant === "medium" ? "scale-[3]" : "scale-[5]",
             spark && "active"
         )}>
             <svg className="sparkle" viewBox="0 0 24 24" fill="none" x="http://www.w3.org/2000/svg">

@@ -12,13 +12,6 @@ import PostViewSection, { ScheduleListItem } from "../components/postview-sectio
 export default function HomePage() {
     return (
         <MainLayout heading="Welcome, Mike">
-            
-            <h2 className="text-[32px] leading-9 text-white font-nebula font-normal mb-4 text-center lg:text-start xl:hidden">
-                Welcome, Mike
-            </h2>
-            {/* <div>
-                <LoginPopup/>
-            </div> */}
             <div className="flex flex-col lg:flex-row gap-5 pb-5 min-h-[calc(100vh_-_100px)]">
                 <PostViewSection className="w-full h-full lg:w-2/5" heading={
                     <h5 className="text-xl text-white font-nebula font-normal text-shadow">

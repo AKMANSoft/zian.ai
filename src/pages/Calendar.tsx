@@ -14,9 +14,6 @@ export default function CalendarPage() {
     const [post, setPost] = useState(false);
     return (
         <MainLayout heading="Calendar">
-            <h2 className="text-[32px] leading-9 text-white font-nebula font-normal mb-4 text-center lg:text-start xl:hidden">
-                Calendar
-            </h2>
             <div className="pb-5 flex flex-col lg:flex-row gap-5 h-full">
                 <GrBorderBox className="w-full p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)]" type="lg">
                     <div className="h-full min-h-[500px] bg-gr-purple-light rounded-20 relative overflow-hidden">

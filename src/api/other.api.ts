@@ -14,7 +14,7 @@ export async function getIndustryList(): Promise<IndustryListApiResponse> {
         if (res.status === 200 && res.data.status) {
             return {
                 message: "",
-                status: res.data.status ?? false,
+                success: res.data.status ?? false,
                 data: res.data.industry
             }
         }
@@ -23,7 +23,7 @@ export async function getIndustryList(): Promise<IndustryListApiResponse> {
         console.error(error)
         return {
             message: ((error instanceof CustomError) ? error.message : error?.response?.data?.message) ?? "",
-            status: false,
+            success: false,
             data: null
         }
     }
@@ -35,7 +35,7 @@ export async function industryByKeyword(reqData: KeywordApiRequest): Promise<Key
         if (res.status === 200 && res.data.status) {
             return {
                 message: "",
-                status: res.data.status ?? false,
+                success: res.data.status ?? false,
                 data: res.data.message
             }
         }
@@ -44,7 +44,7 @@ export async function industryByKeyword(reqData: KeywordApiRequest): Promise<Key
         console.error(error)
         return {
             message: ((error instanceof CustomError) ? error.message : error?.response?.data?.message) ?? "",
-            status: false,
+            success: false,
             data: null
         }
     }
@@ -56,7 +56,7 @@ export async function generate(): Promise<GenerateApiResponse> {
         if (res.status === 200 && res.data.status) {
             return {
                 message: "",
-                status: res.data.status ?? false,
+                success: res.data.status ?? false,
                 data: res.data.generated
             }
         }
@@ -65,7 +65,7 @@ export async function generate(): Promise<GenerateApiResponse> {
         console.error(error)
         return {
             message: ((error instanceof CustomError) ? error.message : error?.response?.data?.generated) ?? "",
-            status: false,
+            success: false,
             data: null
         }
     }
@@ -82,8 +82,8 @@ export async function getArticles(
         if (res.status === 200 && res.data.status) {
             return {
                 message: res.data.message ?? "",
-                status: res.data.status ?? false,
-                data: res.data.articles?.map((article: any) => ({ ...article, timestamp: new Date(article.timestamp) }))
+                success: res.data.status ?? false,
+                data: res.data.articles?.map((article: any) => ({ ...article, timestamp: new Date(article.timestamp), body: article.article }))
             }
         }
         throw new CustomError(definedMessages.UNKNOWN_ERROR_TRY_AGAIN)
@@ -91,7 +91,7 @@ export async function getArticles(
         console.error(error)
         return {
             message: ((error instanceof CustomError) ? error.message : error?.response?.data?.message) ?? "",
-            status: false,
+            success: false,
             data: null
         }
     }
