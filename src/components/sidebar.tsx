@@ -1,14 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faHome, faCreditCard,
-    faFile, faPen, faSignOut
+    faFile, faSignOut
 } from '@fortawesome/free-solid-svg-icons';
 import { cn } from "../lib/utils";
 import { GrSeperator } from "./ui/seperator";
 import { useLocation } from "react-router-dom";
 import UserDropdownMenu from "./dropmenus/UserDropMenu";
 import EditProfilePopup from "./popups/EditProfilePopup";
-import { SecondaryBtn } from "./ui/buttons";
 import CustomizePopup from "./popups/CustomizePopup";
 
 
