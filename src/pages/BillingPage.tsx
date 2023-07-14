@@ -3,6 +3,7 @@ import MainLayout from "../components/layout";
 import { PrimaryBtn } from "@/components/ui/buttons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark, faCreditCard, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export default function BillingPage() {
     return (
@@ -33,10 +34,20 @@ export default function BillingPage() {
                     </div>
 
                     <div>
-                        <PrimaryBtn>
-                            Upgrade
-                        </PrimaryBtn>
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <PrimaryBtn>
+                                        Upgrade
+                                    </PrimaryBtn>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Add to library</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
                     </div>
+
                 </div>
                 <div className="p-7 space-y-6 border border-primary rounded-[20px] w-[40%] bg-gr-purple-dark">
                     <div className="flex justify-between">
@@ -78,7 +89,17 @@ export default function BillingPage() {
 
 
             <GrBorderBox className="w-full p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)]" type="lg">
-                {/* other content */}
+                <div className="h-full w-full flex flex-col backdrop-blur-[10px] bg-gr-purple-light opacity-90 rounded-20">
+                    {/* Drafts Table  */}
+                    <div className="w-full h-full rounded-20 flex flex-col overflow-hidden">
+                        <div className="border-b-[5px] text-xs font-semibold w-full hidden lg:flex xl:justify-between items-center py-5 border-primary z-[1] gap-3">
+                            <span className="block text-start w-[50px] overflow-hidden lg:ps-4">Invoice</span>
+                            <span className="block text-start w-[100px] overflow-hidden">Billing Date</span>
+                            <span className="block text-start w-[20%] overflow-hidden min-w-[200px]">Amount</span>
+                            <span className="block text-start w-[40%] overflow-hidden">Plan</span>
+                        </div>
+                    </div>
+                </div>
             </GrBorderBox>
         </MainLayout>
     );

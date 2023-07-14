@@ -33,7 +33,7 @@ export default function DashboardAr() {
     // // }
 
     return (
-        <MainLayout heading="Drafts">
+        <MainLayout >
             <GrBorderBox className="p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)] " type="lg">
                 <div className="p-3 md:p-5 h-full w-full flex flex-col backdrop-blur-[10px] bg-gr-purple-light opacity-90 rounded-20">
                     <div className="flex md:h-screen w-full justify-center items-center">
