@@ -49,22 +49,22 @@ export default function SideBar({ expanded = false, user }: Props) {
                         icon={<FontAwesomeIcon icon={faHome} />} />
                     <GrSeperator className="mt-6 mb-2" />
                     <NavigationItem
-                        href="/generate" active={pathname === "/generate"}
+                        href="/generate" active={pathname === "/generate/"}
                         className="my-0.5"
                         text="Generate Content"
                         icon={<FontAwesomeIcon icon={faFile} />} />
                     <NavigationItem
-                        href="/calendar" active={pathname === "/calendar"}
+                        href="/calendar" active={pathname === "/calendar/"}
                         className="my-0.5"
                         text="Calendar"
                         icon={<FontAwesomeIcon icon={faCalendar} />} />
                     <NavigationItem
-                        href="/drafts" active={pathname === "/drafts"}
+                        href="/drafts" active={pathname === "/drafts/"}
                         className="my-0.5" text="Drafts"
                         icon={<FontAwesomeIcon icon={faBook} />} />
                     <GrSeperator className="my-2" />
                     <NavigationItem
-                        href="/settings" active={pathname === "/settings"}
+                        href="/settings" active={pathname === "/settings/"}
                         className="mb-3"
                         text="Settings"
                         icon={<FontAwesomeIcon icon={faSliders} />} />
