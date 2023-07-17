@@ -1,12 +1,10 @@
 import { Fragment, ReactNode, useState } from "react"
-import { PrimaryBtn, SecondaryBtn } from "../ui/buttons"
-import { faEye } from "@fortawesome/free-solid-svg-icons"
+import { PrimaryBtn } from "../ui/buttons"
 import { Dialog, Transition } from "@headlessui/react"
 import { cn } from "@/lib/utils"
 import { TriggerFunProps } from "../WarningPopup"
 import { InputEl } from "../ui/input"
 import SignupPopup from "./SignupPopup"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 
 
