@@ -173,7 +173,7 @@ export default function SignUpPage() {
                 </GrBorderBox>
                 <div className="max-w-sm mt-5">
                     <p className="text-sm text-center font-jakarta">
-                        By signing up or using Zian AI service, you agree to be bound by the <Anchor href="#">Terms of Service</Anchor> and <Anchor href="#">Privacy Policy</Anchor>
+                        By signing up or using Zian AI service, you agree to be bound by the <Anchor href="/terms">Terms of Service</Anchor> and <Anchor href="#">Privacy Policy</Anchor>
                     </p>
                 </div>
             </div>

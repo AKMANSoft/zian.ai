@@ -79,7 +79,7 @@ export default function InstructionsSentPopup({ trigger }: Props) {
 
                                     </div>
 
-                                    <div className="md:px-8 px-6 pb-[50px] max-h-[calc(100vh_-_200px)] overflow-y-auto">
+                                    <div className="md:px-8 px-6 b md:pb-[50px] max-h-[calc(100vh_-_200px)] overflow-y-auto">
                                         {/* content */}
                                         <img src="/images/instructions-logo.png" width={80} height={80} loading="lazy"
                                             className={cn(
@@ -91,7 +91,7 @@ export default function InstructionsSentPopup({ trigger }: Props) {
                                             Instructions sent
                                         </div>
                                         <div>
-                                            <p className="md:text-sm text-xs font-normal font-jakarta text-white/70 text-center md:my-4 my-2">
+                                            <p className="md:text-sm text-xs font-normal font-jakarta text-white/70 text-center py-2 md:py-4">
                                                 We have sent the instructions to your email. Please follow those instructions to reset your password
                                             </p>
                                         </div>

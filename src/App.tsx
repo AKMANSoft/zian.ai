@@ -6,6 +6,7 @@ import useAuthUserStore from "./lib/zustand/authUserStore";
 import ApiIntegrationPage from "./pages/ApiIntegration";
 import ShadcnProviders from "./components/ui/shadcn-providers";
 import LoadingSparkle from "./components/LoadingSparkle";
+import TermsPage from "./pages/Terms";
 
 
 const GenerateContentPage = React.lazy(() => import("./pages/GenerateContent"));
@@ -18,6 +19,7 @@ const SignUpPage = React.lazy(() => import("./pages/SignUp"));
 const LoginPage = React.lazy(() => import("./pages/Login"));
 const CustomizePage = React.lazy(() => import("./components/popups/CustomizePopup"));
 const PopupPage = React.lazy(() => import("./pages/PopupPage"));
+// const TermsPage = React.lazy(() => import("./pages/TermsPage"));
 
 
 
@@ -152,6 +154,22 @@ const router = createBrowserRouter([
         </div>
       }>
         <PopupPage />
+      </Suspense>
+    )
+  },
+  {
+    path: "/terms",
+    element: (
+      <Suspense>
+        <TermsPage />
+      </Suspense>
+    )
+  },
+  {
+    path: "/privacy",
+    element: (
+      <Suspense>
+        <TermsPage />
       </Suspense>
     )
   }

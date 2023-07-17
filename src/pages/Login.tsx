@@ -114,7 +114,7 @@ export default function LoginPage() {
                                             title={"Heads Up!"}
                                             message={uiState.state.message} />
                                     }
-                                    <div className="flex justify-between mb-[30px] mt-8">
+                                    <div className="flex justify-between mt-8 md:mb-[30px]">
                                         <div className="">
                                             <p className="font-jakarta md:text-sm text-xs font-bold text-white">
                                                 Don't have an account?
