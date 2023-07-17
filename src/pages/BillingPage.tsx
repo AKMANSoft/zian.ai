@@ -3,11 +3,8 @@ import MainLayout from "../components/layout";
 import { PrimaryBtn, PrimaryBtnNeon } from "@/components/ui/buttons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark, faCreditCard, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
-import {Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/ui/tooltip"
+import CustomTooltip from "@/components/custom-tooltip";
+
 
 export default function BillingPage() {
     return (
@@ -31,24 +28,12 @@ export default function BillingPage() {
                                 Weekly quota: 6 / 10
                             </p>
                         </div>
-                        <div>
-                            <TooltipProvider>
-                                <Tooltip>
-                                    <TooltipTrigger>
-                                        <PrimaryBtn>
-                                            Upgrade
-                                        </PrimaryBtn>
-                                    </TooltipTrigger>
-                                    <TooltipContent>
-                                        <p className="text-base font-normal bg-gr-purple font-jakarta">
-                                            To change your plan or increase your weekly quota, please email hello@zian.ai
-                                        </p>
-                                    </TooltipContent>
-                                </Tooltip>
-                            </TooltipProvider>
+                        <div className="bg-white w-full h-1">
+                            <div className="bg-primary w-[60%] h-full">
+                            </div>
                         </div>
                     </div>
-
+                    <CustomTooltip/>
 
 
                 </div>
