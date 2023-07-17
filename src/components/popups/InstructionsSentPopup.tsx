@@ -1,5 +1,5 @@
 import { Fragment, ReactNode, useState } from "react"
-import {  SecondaryBtn } from "../ui/buttons"
+import { PrimaryBtn, SecondaryBtn } from "../ui/buttons"
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import { Dialog, Transition } from "@headlessui/react"
 import { cn } from "@/lib/utils"
@@ -34,9 +34,9 @@ export default function InstructionsSentPopup({ trigger }: Props) {
                         close: closeModal
                     })
                     :
-                    <SecondaryBtn onClick={openModal} className="p-3">
-                        Instructions Sent
-                    </SecondaryBtn>
+                    <PrimaryBtn className=" h-full w-full md:w-auto px-8 py-3" onClick={openModal}>
+                        Submit
+                    </PrimaryBtn>
             }
 
 

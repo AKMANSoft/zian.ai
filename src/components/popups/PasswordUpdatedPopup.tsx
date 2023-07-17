@@ -34,9 +34,9 @@ export default function PasswordUpdatedPopup({ trigger }: Props) {
                         close: closeModal
                     })
                     :
-                    <SecondaryBtn onClick={openModal} className="p-3">
-                        Password updated
-                    </SecondaryBtn>
+                    <PrimaryBtn className=" h-full w-auto px-6 py-3" onClick={openModal}>
+                        Update Password
+                    </PrimaryBtn>
             }
 
 

@@ -6,6 +6,7 @@ import { TriggerFunProps } from "../WarningPopup"
 import { InputEl } from "../ui/input"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
+import InstructionsSentPopup from "./InstructionsSentPopup"
 
 
 
@@ -35,9 +36,9 @@ export default function ForgotPassword({ trigger }: Props) {
                         close: closeModal
                     })
                     :
-                    <SecondaryBtn onClick={openModal} className="p-3">
-                        ForgotPassword
-                    </SecondaryBtn>
+                    <p className="font-jakarta md:text-sm text-xs font-normal text-white" onClick={openModal}>
+                        Forgot password?
+                    </p>
             }
 
 
@@ -102,9 +103,8 @@ export default function ForgotPassword({ trigger }: Props) {
                                         <div className="flex justify-between md:mx-0 mx-1 lg:pt-0 pt-5">
                                             <div></div>
                                             <div>
-                                                <PrimaryBtn className=" h-full w-full md:w-auto px-8 py-3">
-                                                    Submit
-                                                </PrimaryBtn>
+                                                <InstructionsSentPopup
+                                                />
                                             </div>
                                         </div>
 

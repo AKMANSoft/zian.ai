@@ -14,6 +14,7 @@ import { AutoHideAlert } from "@/components/ui/alert";
 import { useNavigate } from "react-router-dom";
 import useAuthUserStore from "@/lib/zustand/authUserStore";
 import GrBorderBox from "@/components/ui/gr-border-box";
+import ForgotPassword from "@/components/popups/ForgotPasswordPopup";
 
 
 export default function LoginPage() {
@@ -101,11 +102,9 @@ export default function LoginPage() {
                                         />
                                     </div>
                                     <div className="flex justify-end mt-3 lg:mt-0">
-                                        <div>
-                                            <p className="font-jakarta md:text-sm text-xs font-normal text-white">
-                                                Forgot password?
-                                            </p>
-                                        </div>
+                                        <button>
+                                            <ForgotPassword/>
+                                        </button>
                                     </div>
                                     {
                                         !uiState?.state?.success && uiState?.state?.message &&

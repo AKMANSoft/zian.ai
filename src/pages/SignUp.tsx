@@ -15,6 +15,7 @@ import { AutoHideAlert } from "@/components/ui/alert";
 import { useNavigate } from "react-router-dom";
 import useAuthUserStore from "@/lib/zustand/authUserStore";
 import GrBorderBox from "@/components/ui/gr-border-box";
+import OnboardingPopup from "@/components/popups/OnboardingPopup";
 
 
 export default function SignUpPage() {
@@ -161,8 +162,7 @@ export default function SignUpPage() {
                                                     uiState?.processing ?
                                                         <Spinner />
                                                         :
-                                                        <span>Sign Up</span>
-                                                }
+                                                        <OnboardingPopup />                                               }
                                             </PrimaryBtn>
                                         </div>
                                     </div>

@@ -36,11 +36,11 @@ export default function LoginPopup({ trigger }: Props) {
                         close: closeModal
                     })
                     :
-                    <SecondaryBtn onClick={openModal} className="p-3">
-                        <FontAwesomeIcon icon={faEye} />
-                    </SecondaryBtn>
+                    <PrimaryBtn className="py-3 h-full px-6 w-auto" onClick={openModal}>
+                        Login
+                    </PrimaryBtn>
             }
-        
+
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-50" onClose={closeModal}>
                     <Transition.Child

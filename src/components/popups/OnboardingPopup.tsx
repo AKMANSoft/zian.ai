@@ -1,5 +1,5 @@
 import { Fragment, ReactNode, useState } from "react"
-import { PrimaryBtn, SecondaryBtn } from "../ui/buttons"
+import { PrimaryBtn } from "../ui/buttons"
 import { Dialog, Transition } from "@headlessui/react"
 import { cn } from "@/lib/utils"
 import { TriggerFunProps } from "../WarningPopup"
@@ -35,9 +35,8 @@ export default function OnboardingPopup({ trigger }: Props) {
                         close: closeModal
                     })
                     :
-                    <SecondaryBtn onClick={openModal} className="p-3">
-                        Onbaorading Dashboard
-                    </SecondaryBtn>
+                    <span onClick={openModal}>Sign Up</span>
+
             }
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-50" onClose={closeModal}>

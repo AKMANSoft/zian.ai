@@ -1,9 +1,10 @@
 import { Fragment, ReactNode, useState } from "react"
-import { PrimaryBtn, SecondaryBtn } from "../ui/buttons"
+import { SecondaryBtn } from "../ui/buttons"
 import { Dialog, Transition } from "@headlessui/react"
 import { cn } from "@/lib/utils"
 import { TriggerFunProps } from "../WarningPopup"
 import { InputEl } from "../ui/input"
+import NewPasswordCreatedPopup from "./NewPasswordCreatedPopup"
 
 
 
@@ -90,9 +91,7 @@ export default function CreateNewPasswordPopup({ trigger }: Props) {
                                             <div>
                                             </div>
                                             <div className="">
-                                                <PrimaryBtn className=" h-full w-full md:w-auto px-6 py-3">
-                                                    Submit
-                                                </PrimaryBtn>
+                                                <NewPasswordCreatedPopup/>
                                             </div>
                                         </div>
 
