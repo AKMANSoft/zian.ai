@@ -14,11 +14,14 @@
   }
 }
 
+
+
+
 @tailwind components;
 
 @layer components {
   .primary-btn-neon {
-    @apply border-2 border-primary/70 rounded-10 transition-all h-10 py-2 px-[14px] inline-flex items-center gap-[10px] text-white;
+    @apply border-2 border-primary/70 rounded-10 transition-all h-10 py-2 px-[14px] inline-flex items-center gap-[10px] text-white disabled:opacity-50;
     --green: rgba(233, 69, 208, 1);
     position: relative;
     overflow: hidden;
@@ -31,7 +34,7 @@
       0 0 9px 3px rgba(233, 69, 208, 0.1);
   }
 
-  .primary-btn-neon:hover {
+  .primary-btn-neon:not(:disabled):hover {
     box-shadow: inset 0 0 10px rgba(233, 69, 208, 0.6),
       0 0 9px 3px rgba(233, 69, 208, 0.2);
   }
@@ -51,7 +54,7 @@
         transparent 100%);
   }
 
-  .primary-btn-neon:hover:before {
+  .primary-btn-neon:not(:disabled):hover:before {
     transform: translateX(15em);
   }
 }

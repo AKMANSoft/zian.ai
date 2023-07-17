@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import { cn } from "../../lib/utils";
 
 
@@ -27,7 +27,7 @@ export function SecondaryBtn({ className, children, filled = true, onClick }: Bu
 
 
 
-export function PrimaryBtn({ className, children, onClick, ...props }: ButtonProps) {
+export const PrimaryBtn = React.forwardRef<HTMLButtonElement, ButtonProps>(({ className, children, onClick, ...props }, ref) => {
     return (
         <button type="button" onClick={onClick} className={cn(
             "primary-btn bg-primary shadow-primary-btn hover:shadow-primary-btn-lg outline-none",
@@ -35,11 +35,11 @@ export function PrimaryBtn({ className, children, onClick, ...props }: ButtonPro
             "inline-flex items-center gap-2 text-white text-sm font-semibold justify-center",
             "disabled:opacity-70",
             className
-        )} {...props}>
+        )} {...props} ref={ref}>
             {children}
         </button>
     )
-}
+})
 
 
 

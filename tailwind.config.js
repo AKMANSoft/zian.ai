@@ -18,6 +18,7 @@ export default {
         "th-gray": "rgba(242, 228, 241, 1)",
         "th-gray-2": "rgba(242, 228, 241, 1)",
         "th-green-3": "#6FCF97",
+        "th-green": "#7CE69A",
         "dark": "#1E162E",
         "body": "#F2E4F1"
       },

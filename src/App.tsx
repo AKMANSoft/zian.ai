@@ -5,6 +5,7 @@ import apiConfig from "./config/api.config";
 import useAuthUserStore from "./lib/zustand/authUserStore";
 import { Toaster } from "./components/ui/toaster";
 import ApiIntegrationPage from "./pages/ApiIntegration";
+import ShadcnProviders from "./components/ui/shadcn-providers";
 
 
 const GenerateContentPage = React.lazy(() => import("./pages/GenerateContent"));
@@ -131,7 +132,7 @@ function App() {
         <img src="/images/moon.png" className="w-[270px] h-auto" alt="" />
       </div>
       <RouterProvider router={router} />
-      <Toaster />
+      <ShadcnProviders />
     </div>
   )
 }

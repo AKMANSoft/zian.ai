@@ -3,11 +3,10 @@ import MainLayout from "../components/layout";
 import { PrimaryBtn, PrimaryBtnNeon } from "@/components/ui/buttons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark, faCreditCard, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
-import {Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+
 
 export default function BillingPage() {
     return (
@@ -31,21 +30,11 @@ export default function BillingPage() {
                                 Weekly quota: 6 / 10
                             </p>
                         </div>
-                        <div>
-                            <TooltipProvider>
-                                <Tooltip>
-                                    <TooltipTrigger>
-                                        <PrimaryBtn>
-                                            Upgrade
-                                        </PrimaryBtn>
-                                    </TooltipTrigger>
-                                    <TooltipContent>
-                                        <p className="text-base font-normal bg-gr-purple font-jakarta">
-                                            To change your plan or increase your weekly quota, please email hello@zian.ai
-                                        </p>
-                                    </TooltipContent>
-                                </Tooltip>
-                            </TooltipProvider>
+                        <div className="block">
+                            <Popover>
+                                <PopoverTrigger>Open</PopoverTrigger>
+                                <PopoverContent side="top">Place content for the popover here.</PopoverContent>
+                            </Popover>
                         </div>
                     </div>
 
