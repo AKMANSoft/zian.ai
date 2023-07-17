@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import useAuthUserStore from "@/lib/zustand/authUserStore";
 import GrBorderBox from "@/components/ui/gr-border-box";
 import ForgotPassword from "@/components/popups/ForgotPasswordPopup";
+  
 
 
 export default function LoginPage() {
@@ -103,7 +104,7 @@ export default function LoginPage() {
                                     </div>
                                     <div className="flex justify-end mt-3 lg:mt-0">
                                         <button>
-                                            <ForgotPassword/>
+                                            <ForgotPassword />
                                         </button>
                                     </div>
                                     {
@@ -135,6 +136,7 @@ export default function LoginPage() {
                                                 }
                                             </PrimaryBtn>
                                         </div>
+                        
                                     </div>
                                 </div>
                             </form>

@@ -1,11 +1,9 @@
 import GrBorderBox from "../components/ui/gr-border-box";
 import MainLayout from "../components/layout";
-import { PrimaryBtn, PrimaryBtnNeon } from "@/components/ui/buttons";
+import {  PrimaryBtnNeon } from "@/components/ui/buttons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark, faCreditCard, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Button } from "@/components/ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import CustomTooltip from "@/components/custom-tooltip";
 
 
 export default function BillingPage() {
@@ -30,14 +28,12 @@ export default function BillingPage() {
                                 Weekly quota: 6 / 10
                             </p>
                         </div>
-                        <div className="block">
-                            <Popover>
-                                <PopoverTrigger>Open</PopoverTrigger>
-                                <PopoverContent side="top">Place content for the popover here.</PopoverContent>
-                            </Popover>
+                        <div className="bg-white w-full h-1">
+                            <div className="bg-primary w-[60%] h-full">
+                            </div>
                         </div>
                     </div>
-
+                    <CustomTooltip />
 
 
                 </div>
