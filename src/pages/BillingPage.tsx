@@ -1,6 +1,6 @@
 import GrBorderBox from "../components/ui/gr-border-box";
 import MainLayout from "../components/layout";
-import {  PrimaryBtnNeon } from "@/components/ui/buttons";
+import { PrimaryBtnNeon } from "@/components/ui/buttons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark, faCreditCard, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
 import CustomTooltip from "@/components/custom-tooltip";
@@ -34,8 +34,6 @@ export default function BillingPage() {
                         </div>
                     </div>
                     <CustomTooltip />
-
-
                 </div>
                 <div className="p-7 space-y-6 border border-primary rounded-[20px] w-[40%] bg-gr-purple-dark">
                     <div className="flex justify-between">

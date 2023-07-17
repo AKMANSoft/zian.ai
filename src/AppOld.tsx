@@ -10,7 +10,7 @@ import ApiIntegrationPage from "./pages/ApiIntegration";
 const GenerateContentPage = React.lazy(() => import("./pages/GenerateContent"));
 const CalendarPage = React.lazy(() => import("./pages/Calendar"));
 const DraftsPage = React.lazy(() => import("./pages/Drafts"));
-const DashboardFirstTime = React.lazy(() => import("./pages/DashboardFirstTime"));
+const DashboardFirstTime = React.lazy(() => import("./pages/Dashboard"));
 const DashboardArticleLoaded = React.lazy(() => import("./pages/DashboardArticleLoaded"));
 const SignUpPage = React.lazy(() => import("./pages/SignUp"));
 const LoginPage = React.lazy(() => import("./pages/Login"));

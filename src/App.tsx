@@ -3,15 +3,15 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import axios from "axios";
 import apiConfig from "./config/api.config";
 import useAuthUserStore from "./lib/zustand/authUserStore";
-import { Toaster } from "./components/ui/toaster";
 import ApiIntegrationPage from "./pages/ApiIntegration";
 import ShadcnProviders from "./components/ui/shadcn-providers";
+import LoadingSparkle from "./components/LoadingSparkle";
 
 
 const GenerateContentPage = React.lazy(() => import("./pages/GenerateContent"));
 const CalendarPage = React.lazy(() => import("./pages/Calendar"));
 const DraftsPage = React.lazy(() => import("./pages/Drafts"));
-const DashboardFirstTime = React.lazy(() => import("./pages/DashboardFirstTime"));
+const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const DashboardArticleLoaded = React.lazy(() => import("./pages/DashboardArticleLoaded"));
 const BillingPage = React.lazy(() => import("./pages/BillingPage"));
 const SignUpPage = React.lazy(() => import("./pages/SignUp"));
@@ -26,15 +26,23 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <Suspense>
-        <DashboardFirstTime />
+      <Suspense fallback={
+        <div className="w-full h-screen flex items-center justify-center">
+          <LoadingSparkle spark variant="large" />
+        </div>
+      }>
+        <Dashboard />
       </Suspense>
     )
   },
   {
     path: "/generate",
     element: (
-      <Suspense>
+      <Suspense fallback={
+        <div className="w-full h-screen flex items-center justify-center">
+          <LoadingSparkle spark variant="large" />
+        </div>
+      }>
         <GenerateContentPage />
       </Suspense>
     )
@@ -42,7 +50,11 @@ const router = createBrowserRouter([
   {
     path: "/calendar",
     element: (
-      <Suspense>
+      <Suspense fallback={
+        <div className="w-full h-screen flex items-center justify-center">
+          <LoadingSparkle spark variant="large" />
+        </div>
+      }>
         <CalendarPage />
       </Suspense>
     )
@@ -50,7 +62,11 @@ const router = createBrowserRouter([
   {
     path: "/drafts",
     element: (
-      <Suspense>
+      <Suspense fallback={
+        <div className="w-full h-screen flex items-center justify-center">
+          <LoadingSparkle spark variant="large" />
+        </div>
+      }>
         <DraftsPage />
       </Suspense>
     )
@@ -58,7 +74,11 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      <Suspense>
+      <Suspense fallback={
+        <div className="w-full h-screen flex items-center justify-center">
+          <LoadingSparkle spark variant="large" />
+        </div>
+      }>
         <DashboardArticleLoaded />
       </Suspense>
     )
@@ -66,7 +86,11 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: (
-      <Suspense>
+      <Suspense fallback={
+        <div className="w-full h-screen flex items-center justify-center">
+          <LoadingSparkle spark variant="large" />
+        </div>
+      }>
         <SignUpPage />
       </Suspense>
     )
@@ -74,7 +98,11 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: (
-      <Suspense>
+      <Suspense fallback={
+        <div className="w-full h-screen flex items-center justify-center">
+          <LoadingSparkle spark variant="large" />
+        </div>
+      }>
         <LoginPage />
       </Suspense>
     )
@@ -82,7 +110,11 @@ const router = createBrowserRouter([
   {
     path: "/integrate",
     element: (
-      <Suspense>
+      <Suspense fallback={
+        <div className="w-full h-screen flex items-center justify-center">
+          <LoadingSparkle spark variant="large" />
+        </div>
+      }>
         <ApiIntegrationPage />
       </Suspense>
     )
@@ -90,7 +122,11 @@ const router = createBrowserRouter([
   {
     path: "/customize",
     element: (
-      <Suspense>
+      <Suspense fallback={
+        <div className="w-full h-screen flex items-center justify-center">
+          <LoadingSparkle spark variant="large" />
+        </div>
+      }>
         <CustomizePage />
       </Suspense>
     )
@@ -98,7 +134,11 @@ const router = createBrowserRouter([
   {
     path: "/billing",
     element: (
-      <Suspense>
+      <Suspense fallback={
+        <div className="w-full h-screen flex items-center justify-center">
+          <LoadingSparkle spark variant="large" />
+        </div>
+      }>
         <BillingPage />
       </Suspense>
     )
@@ -106,7 +146,11 @@ const router = createBrowserRouter([
   {
     path: "/popup",
     element: (
-      <Suspense>
+      <Suspense fallback={
+        <div className="w-full h-screen flex items-center justify-center">
+          <LoadingSparkle spark variant="large" />
+        </div>
+      }>
         <PopupPage />
       </Suspense>
     )

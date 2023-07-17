@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 
 
-export default function DashboardAr() {
+export default function Dashboard() {
     const { uiState, setUiData, setProcessing } = useUiState<GenerateApiResponse>()
 
 
@@ -49,16 +49,19 @@ export default function DashboardAr() {
                                         uiState?.processing ?
                                             <LoadingSparkle variant="tiny" spark={true} />
                                             :
-                                            <span>Generate Example</span>
+                                            uiState?.state?.success && uiState.state.data ?
+                                                <span>Refresh</span>
+                                                :
+                                                <span>Generate Example</span>
                                     }
                                 </PrimaryBtnNeon>
                             </div>
-                            <div className="text-start">
+                            <div className="text-start mt-5">
                                 {
                                     uiState?.state?.success ?
                                         <p className="text-sm font-medium flex items-start gap-3">
                                             <FontAwesomeIcon icon={faCircleCheck} className="text-th-green mt-1" />
-                                            Success! We&apos;re crafting your examples. Check back in 2-5 mins for the results
+                                            Success! We&apos;re crafting your examples. Check back in 2-5 mins for the results.
                                         </p>
                                         :
                                         (
