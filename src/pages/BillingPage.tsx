@@ -1,6 +1,6 @@
 import GrBorderBox from "../components/ui/gr-border-box";
 import MainLayout from "../components/layout";
-import { PrimaryBtn, PrimaryBtnNeon } from "@/components/ui/buttons";
+import {  PrimaryBtnNeon } from "@/components/ui/buttons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark, faCreditCard, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
 import CustomTooltip from "@/components/custom-tooltip";
