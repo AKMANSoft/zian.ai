@@ -37,12 +37,12 @@ export default function DashboardAr() {
             <GrBorderBox className="p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)] " type="lg">
                 <div className="p-3 md:p-5 h-full w-full flex flex-col backdrop-blur-[10px] bg-gr-purple-light opacity-90 rounded-20">
                     <div className="flex md:h-screen w-full justify-center items-center">
-                        <div className="flex flex-col text-center justify-center items-center max-w-xl">
-                            <div className="mx-[7px] md:mx-0">
-                                <h1 className="font-nebula md:text-[32px] text-2xl font-normal text-white">
+                        <div className="flex flex-col text-center justify-center items-center max-w-xl pt-8 pb-[50px]">
+                            <div className="px-[7px] md:px-0">
+                                <h1 className="font-nebula text-2xl font-normal text-white md:text-[32px]">
                                     Welcome, Mike
                                 </h1>
-                                <h2 className="font-jakarta md:text-2xl text-base font-normal text-white">
+                                <h2 className="font-jakarta  text-base font-normal text-white pt-2 md:text-2xl">
                                     To get started, click "GENERATE EXAMPLE" below!
                                 </h2>
                                 <p className="font-jakarta md:text-base  text-sm font-normal text-white/80 py-5">

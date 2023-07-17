@@ -91,14 +91,14 @@ export default function LoginPopup({ trigger }: Props) {
                                             <InputEl label="Email" placeholder="" />
                                             <InputEl label="Password" placeholder="" />
                                         </div>
-                                        <div className="flex justify-end md:mx-5 mt-4 lg:mt-0">
+                                        <div className="flex justify-end mt-4 md:px-5">
                                             <div>
                                                 <p className="font-jakarta md:text-sm text-xs font-normal text-white">
                                                     Forgot password?
                                                 </p>
                                             </div>
                                         </div>
-                                        <div className="flex justify-between my-[30px] md:mx-5">
+                                        <div className="flex justify-between mt-[30px] md:mb-[30px] md:px-5">
                                             <div className="">
                                                 <p className="font-jakarta md:text-sm text-xs font-bold text-white">
                                                     Don’t have an account?
@@ -108,7 +108,7 @@ export default function LoginPopup({ trigger }: Props) {
                                                 </p>
                                             </div>
                                             <div>
-                                                <PrimaryBtn className="py-3 h-full px-8  md:w-auto">
+                                                <PrimaryBtn className="py-3 h-full px-8 md:w-auto">
                                                     Login
                                                 </PrimaryBtn>
                                             </div>

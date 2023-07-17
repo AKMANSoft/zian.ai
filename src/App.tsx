@@ -5,6 +5,7 @@ import apiConfig from "./config/api.config";
 import useAuthUserStore from "./lib/zustand/authUserStore";
 import { Toaster } from "./components/ui/toaster";
 import ApiIntegrationPage from "./pages/ApiIntegration";
+import TermsPage from "./pages/Terms";
 
 
 const GenerateContentPage = React.lazy(() => import("./pages/GenerateContent"));
@@ -17,6 +18,7 @@ const SignUpPage = React.lazy(() => import("./pages/SignUp"));
 const LoginPage = React.lazy(() => import("./pages/Login"));
 const CustomizePage = React.lazy(() => import("./components/popups/CustomizePopup"));
 const PopupPage = React.lazy(() => import("./pages/PopupPage"));
+// const TermsPage = React.lazy(() => import("./pages/TermsPage"));
 
 
 
@@ -107,6 +109,22 @@ const router = createBrowserRouter([
     element: (
       <Suspense>
         <PopupPage />
+      </Suspense>
+    )
+  },
+  {
+    path: "/terms",
+    element: (
+      <Suspense>
+        <TermsPage />
+      </Suspense>
+    )
+  },
+  {
+    path: "/privacy",
+    element: (
+      <Suspense>
+        <TermsPage />
       </Suspense>
     )
   }
