@@ -1,10 +1,11 @@
 import { Fragment, ReactNode, useState } from "react"
-import { PrimaryBtn, SecondaryBtn } from "../ui/buttons"
+import { PrimaryBtn } from "../ui/buttons"
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import { Dialog, Transition } from "@headlessui/react"
 import { cn } from "@/lib/utils"
 import { TriggerFunProps } from "../WarningPopup"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import LoginPopup from "./LoginPopup"
 
 
 
@@ -34,9 +35,9 @@ export default function NewPasswordCreatedPopup({ trigger }: Props) {
                         close: closeModal
                     })
                     :
-                    <SecondaryBtn onClick={openModal} className="p-3">
-                        NewPasswordCreatedPopup
-                    </SecondaryBtn>
+                    <PrimaryBtn className=" h-full w-full md:w-auto px-6 py-3" onClick={openModal}>
+                        Submit
+                    </PrimaryBtn>
             }
 
 
@@ -96,9 +97,7 @@ export default function NewPasswordCreatedPopup({ trigger }: Props) {
                                             </p>
                                         </div>
                                         <div className="text-center md:mt-0 mt-5">
-                                            <PrimaryBtn className="py-3 h-full px-6 w-auto">
-                                                Login
-                                            </PrimaryBtn>
+                                            <LoginPopup />
                                         </div>
                                     </div>
                                 </Dialog.Panel>

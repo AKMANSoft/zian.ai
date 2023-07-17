@@ -1,12 +1,10 @@
 import { Fragment, ReactNode, useState } from "react"
-import { PrimaryBtn, SecondaryBtn } from "../ui/buttons"
-import { faEye } from "@fortawesome/free-solid-svg-icons"
+import { PrimaryBtn } from "../ui/buttons"
 import { Dialog, Transition } from "@headlessui/react"
 import { cn } from "@/lib/utils"
 import { TriggerFunProps } from "../WarningPopup"
 import { InputEl } from "../ui/input"
 import SignupPopup from "./SignupPopup"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 
 
@@ -36,11 +34,11 @@ export default function LoginPopup({ trigger }: Props) {
                         close: closeModal
                     })
                     :
-                    <SecondaryBtn onClick={openModal} className="p-3">
-                        <FontAwesomeIcon icon={faEye} />
-                    </SecondaryBtn>
+                    <PrimaryBtn className="py-3 h-full px-6 w-auto" onClick={openModal}>
+                        Login
+                    </PrimaryBtn>
             }
-        
+
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-50" onClose={closeModal}>
                     <Transition.Child

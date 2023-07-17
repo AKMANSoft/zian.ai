@@ -1,9 +1,13 @@
 import GrBorderBox from "../components/ui/gr-border-box";
 import MainLayout from "../components/layout";
-import { PrimaryBtn } from "@/components/ui/buttons";
+import { PrimaryBtn, PrimaryBtnNeon } from "@/components/ui/buttons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark, faCreditCard, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 export default function BillingPage() {
     return (
@@ -27,26 +31,25 @@ export default function BillingPage() {
                                 Weekly quota: 6 / 10
                             </p>
                         </div>
-                        <div className="bg-white w-full h-1">
-                            <div className="bg-primary w-[60%] h-full">
-                            </div>
+                        <div>
+                            <TooltipProvider>
+                                <Tooltip>
+                                    <TooltipTrigger>
+                                        <PrimaryBtn>
+                                            Upgrade
+                                        </PrimaryBtn>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p className="text-base font-normal bg-gr-purple font-jakarta">
+                                            To change your plan or increase your weekly quota, please email hello@zian.ai
+                                        </p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
                         </div>
                     </div>
 
-                    <div>
-                        <TooltipProvider>
-                            <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <PrimaryBtn>
-                                        Upgrade
-                                    </PrimaryBtn>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                    <p>Add to library</p>
-                                </TooltipContent>
-                            </Tooltip>
-                        </TooltipProvider>
-                    </div>
+
 
                 </div>
                 <div className="p-7 space-y-6 border border-primary rounded-[20px] w-[40%] bg-gr-purple-dark">
@@ -91,19 +94,60 @@ export default function BillingPage() {
             <GrBorderBox className="w-full p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)]" type="lg">
                 <div className="h-full w-full flex flex-col backdrop-blur-[10px] bg-gr-purple-light opacity-90 rounded-20">
                     {/* Drafts Table  */}
-                    <div className="w-full h-full rounded-20 flex flex-col overflow-hidden">
-                        <div className="border-b-[5px] text-xs font-semibold w-full hidden lg:flex xl:justify-between items-center py-5 border-primary z-[1] gap-3">
-                            <span className="block text-start w-[50px] overflow-hidden lg:ps-4">Invoice</span>
-                            <span className="block text-start w-[100px] overflow-hidden">Billing Date</span>
-                            <span className="block text-start w-[20%] overflow-hidden min-w-[200px]">Amount</span>
-                            <span className="block text-start w-[40%] overflow-hidden">Plan</span>
+                    <div className="w-full h-full rounded-20 flex flex-col ">
+                        <div className="border-b-[5px] text-xs font-semibold px-4 w-full hidden px-auto lg:flex  items-center py-5 border-primary z-[1] gap-x-10">
+                            <span className="block text-start xl:w-[58%] lg:w-[48%]">Invoice</span>
+                            <span className="block text-start min-w-[100px]">Billing Date</span>
+                            <span className="block text-start  min-w-[100px]">Amount</span>
+                            <span className="block text-start  min-w-[100px]">Plan</span>
                         </div>
+                        <div >
+                            <SingleBiillingRow />
+                            <SingleBiillingRow />
+                        </div>
+
+
                     </div>
                 </div>
             </GrBorderBox>
         </MainLayout>
     );
 }
+
+
+
+function SingleBiillingRow() {
+    return (
+        <div className="flex flex-wrap xl:justify-between lg:flex-nowrap lg:gap-3 items-center w-full" >
+            <span className="hidden lg:block text-sm py-3 min-h-[50px] text-start overflow-hidden lg:ps-4 lg:w-[56%]">
+                Invoice #007 - May 2023
+            </span>
+            <span className="block py-3 lg:min-h-[50px] text-start overflow-hidden md:min-w-[100px] px-2">
+                <p className="w-full line-clamp-4 text-xs md:text-sm">
+                    May 1, 2023
+                </p>
+            </span>
+            <span className="block py-3 lg:min-h-[50px] text-start  overflow-hidden md:min-w-[100px] px-2">
+                <p className="w-full line-clamp-4 text-xs md:text-sm">
+                    $30.00
+                </p>
+            </span>
+            <span className="hidden lg:block py-3 lg:min-h-[50px] text-start  overflow-hidden min-w-[100px] px-2">
+                <p className="w-full line-clamp-2 text-xs md:text-sm">
+                    Basic Plan
+                </p>
+            </span>
+            <span className="block text-white py-1 lg:py-3 lg:min-h-[50px] text-start  lg:w-[150px] overflow-hidden lg:pr-4">
+                <div className="flex items-center justify-end lg:justify-start">
+                    <PrimaryBtnNeon className=" py-3 h-10 px-10 font-medium text-[15px] inline-flex items-center justify-center w-full">
+                        Download
+                    </PrimaryBtnNeon>
+                </div>
+            </span>
+        </div>
+    );
+}
+
 
 
 

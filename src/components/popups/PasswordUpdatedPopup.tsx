@@ -1,5 +1,5 @@
 import { Fragment, ReactNode, useState } from "react"
-import { PrimaryBtn, SecondaryBtn } from "../ui/buttons"
+import { PrimaryBtn } from "../ui/buttons"
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import { Dialog, Transition } from "@headlessui/react"
 import { cn } from "@/lib/utils"
@@ -34,9 +34,9 @@ export default function PasswordUpdatedPopup({ trigger }: Props) {
                         close: closeModal
                     })
                     :
-                    <SecondaryBtn onClick={openModal} className="p-3">
-                        Password updated
-                    </SecondaryBtn>
+                    <PrimaryBtn className=" h-full w-auto px-6 py-3" onClick={openModal}>
+                        Update Password
+                    </PrimaryBtn>
             }
 
 
