@@ -11,7 +11,7 @@ const PopoverTrigger = PopoverPrimitive.Trigger
 const PopoverContent = React.forwardRef<
   React.ElementRef<typeof PopoverPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>
->(({ className, align = "center", sideOffset = 4, ...props }, ref) => (
+>(({ className, children, align = "center", sideOffset = 4, ...props }, ref) => (
   <PopoverPrimitive.Portal>
     <PopoverPrimitive.Content
       ref={ref}
@@ -22,8 +22,11 @@ const PopoverContent = React.forwardRef<
         className
       )}
       {...props}
-    />
-  </PopoverPrimitive.Portal>
+    >
+      {children}
+      <div className="bg-purple-500 rotate-45 h-6 w-6 absolute left-2 bottom-0" />
+    </PopoverPrimitive.Content>
+  </PopoverPrimitive.Portal >
 ))
 PopoverContent.displayName = PopoverPrimitive.Content.displayName
 

@@ -1,4 +1,5 @@
 import TermsPrivacyComponent from "@/components/TermsPrivacyComponent";
+import GrBorderBox from "@/components/ui/gr-border-box";
 
 
 
@@ -7,86 +8,91 @@ import TermsPrivacyComponent from "@/components/TermsPrivacyComponent";
 export default function PrivacyPage() {
 
     return (
-
-        <div className="rounded-20 max-w-5xl  px-8 py-5 bg-gr-purple-dark text-white flex flex-col items-center justify-center mx-auto space-y-7">
-            <div>
-                <img src="/images/avatar.png" alt="" />
-            </div>
-            <div>
-                <h1 className="text-3xl font-normal font-nebula">
-                    Zian AI Terms of Service
-                </h1>
-            </div>
-            <div className="space-y-[30px] overflow-y-auto">
-                <TermsPrivacyComponent
-                    heading="Introduction"
-                    content={
-                        <>
-                            This is a contract between you (the User) and Envisionaires Media Pty Ltd., the provider of Zian AI, a sophisticated AI marketing tool. Please read these terms and conditions carefully before using the service.
-                        </>
-                    } />
-                <TermsPrivacyComponent
-                    heading="Acceptance of Terms"
-                    content={
-                        <>
-                            By using Zian AI, you agree to be bound by these terms and conditions. If you disagree with these terms and conditions or any part of these terms and conditions, you must not use the service. By using this service you agree to be within a jurisdiction we support, you confirm that by using this you will not break any laws, and you agree that you are over 18 years old.
-                        </>
-                    } />
-                <TermsPrivacyComponent
-                    heading="Service Provision"
-                    content={
-                        <>
-                            Zian AI is provided 'as is' and 'as available', without any representations or warranties, express or implied. We make no representations or warranties about the reliability, availability, timeliness, security, accuracy, sufficiency, suitability, fitness for a particular purpose, or completeness of Zian AI and expressly disclaim any warranties of merchantability or fitness for a particular purpose. Zian makes no claims or guarantees of any particular results, sales, or numbers that a User may or may not gain.
-                        </>
-                    } />
-                <TermsPrivacyComponent
-                    heading="Limitation of Liability"
-                    content={
-                        <>
-                            In no event shall Zian AI, Envisionaires Media Pty Ltd., or its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of or inability to access or use the service.
-                        </>
-                    } />
-                <TermsPrivacyComponent
-                    heading="Intellectual Property & Data Rights"
-                    content={
-                        <>
-                            All intellectual property rights related to the software and the data generated or collected through the use of Zian AI are the exclusive property of Envisionaires Media Pty Ltd. You are granted a limited, non-exclusive, non-transferable, revocable license to use the service and any material created from the use of this service. This license does not include any rights to reproduce, duplicate, copy, sell, resell or exploit any portion of the service. If your subscription is terminated, you agree to immediately delete all data and content obtained from Zian AI. The User has rights to use the material created for that User, in any way they like, so long as they maintain an active paying subscription. Canceling a paying subscription will cancel rights to use that content and must be deleted from their website, social media and all hosted or public material immediately. Use of a free account grants access / rights to temporarily use only the material created in that free plan with limited quantity. User has no rights to use any Zian AI branded material. Zian AI retains the right to display, share or present any of the User’s or User’s brands or logos, for the purpose for any marketing material or marketing activities. Any and all lead or contact information, including names, emails, phone numbers, including customer and client contact details, created or passed through Zian AI will grant Envisionaires Media PTY LTD irrevocable rights to use those databases as they wish.
-                        </>
-                    } />
-                <TermsPrivacyComponent
-                    heading="Governing Law & Jurisdiction"
-                    content={
-                        <>
-                            This agreement is governed by the laws of Victoria, Australia. You agree to submit to the exclusive jurisdiction of the courts of Victoria, Australia, to resolve any dispute arising out of your use of Zian AI or this agreement. Any dispute arising from this agreement will take place in the courts of Victoria, Australia.
-                        </>
-                    } />
-                
-            </div>
-            <div>
-                <h1 className="text-xl font-bold font-jkarta text-white">
-                By using Zian AI, or creating or paying for an account, or accessing any of the webpages hosted on zian.ai, you acknowledge that you have read, understood, and agreed to be bound by these terms.
-                </h1>
-            </div>
+        <div className="h-screen py-10 overflow-y-auto">
+            <GrBorderBox className="max-w-5xl mx-4 lg:mx-auto">
+                <div className="flex flex-col rounded-20 items-center bg-gr-purple-dark text-white space-y-7 py-5 pb-20 px-4 md:px-8">
+                    <div>
+                        <img src="/images/avatar.png" alt="" />
+                    </div>
+                    <div>
+                        <h1 className="text-2xl font-normal font-nebula md:text-3xl w-full">
+                            Privacy Policy for Zian AI
+                        </h1>
+                    </div>
+                    <div className="space-y-3 overflow-y-auto md:space-y-[30px] ">
+                        <TermsPrivacyComponent
+                            heading="Introduction"
+                            content={
+                                <>
+                                    This Privacy Policy explains how Zian AI ("we", "us", or "our") collects, uses, and discloses information about you when you access or use our Services.                                </>
+                            } />
+                        <TermsPrivacyComponent
+                            heading="Personal Information Collection"
+                            content={
+                                <>
+                                    We collect personal information that you provide to us directly when you use our Services. This includes information you provide when you create an account, make a purchase, or communicate with us. The types of information we collect may include your name, email address, postal address, and payment information. In addition, we collect information about your interactions with our Services.
+                                </>
+                            } />
+                        <TermsPrivacyComponent
+                            heading="Purpose of Data Collection"
+                            content={
+                                <>
+                                    We use the information we collect to provide, maintain, and improve our Services. We also use the information we collect to personalize your experience, to send you information about our Services, respond to your inquiries, and for other customer service purposes.
+                                </>
+                            } />
+                        <TermsPrivacyComponent
+                            heading="Data Sharing and Disclosure"
+                            content={
+                                <>
+                                    We may share your information with third-party vendors, consultants, and other service providers who perform services or functions on our behalf. We may also share your information to comply with the law, to protect the rights and property of Zian AI, our users, and others, or in connection with a sale or transfer of assets.
+                                </>
+                            } />
+                        <TermsPrivacyComponent
+                            heading="Data Storage and Security"
+                            content={
+                                <>
+                                    We take reasonable measures to protect your personal information from loss, theft, misuse, unauthorized access, disclosure, alteration, and destruction. However, the Internet is not 100% secure and we cannot guarantee the security of your information.
+                                </>
+                            } />
+                        <TermsPrivacyComponent
+                            heading="User Rights and Choices"
+                            content={
+                                <>
+                                    You may update, correct, or delete your account information at any time by contacting us. Please note that we may retain certain information as required by law or as necessary for our business purposes.
+                                </>
+                            } />
+                        <TermsPrivacyComponent
+                            heading="Use of Cookies and Other Technologies"
+                            content={
+                                <>
+                                    We use cookies and other tracking technologies to collect information about your use of our Services. We use this information to improve our Services, to analyze trends, to administer our Services, and to understand how users interact with our Services.
+                                </>
+                            } />
+                        <TermsPrivacyComponent
+                            heading="Children's Privacy"
+                            content={
+                                <>
+                                    Our Services are not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13.
+                                </>
+                            } />
+                        <TermsPrivacyComponent
+                            heading="Changes to Privacy Policy"
+                            content={
+                                <>
+                                    We may change this Privacy Policy from time to time. If we make changes, we will notify you by revising the date at the top of this policy and, in some cases, we may provide additional notice.
+                                </>
+                            } />
+                        <TermsPrivacyComponent
+                            heading="Contact Information"
+                            content={
+                                <>
+                                    If you have any questions about this Privacy Policy, please contact us at: hello@zian.ai
+                                </>
+                            } />
+                    </div>
+                </div>
+            </GrBorderBox>
         </div>
 
     );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

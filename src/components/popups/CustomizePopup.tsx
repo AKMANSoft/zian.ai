@@ -9,6 +9,7 @@ import { NavigationItem } from "../sidebar"
 import SelectEl from "../ui/selectel"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
+import CustomTooltip from "../custom-tooltip"
 
 
 
@@ -113,9 +114,13 @@ export default function CustomizePopup() {
                                                 </p>
                                             </div>
                                             <div>
-                                                <PrimaryBtn className="py-4 px-5">
-                                                    Increase Article Volume
-                                                </PrimaryBtn>
+                                                <CustomTooltip
+                                                    title="Increase Article Volume"
+                                                    content={
+                                                        <>
+                                                            To increase articles volume, please email hello@zian.ai
+                                                        </>
+                                                    } />
                                             </div>
                                             <div className="flex justify-between pt-8 md:mt-28">
                                                 <div></div>

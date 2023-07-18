@@ -33,7 +33,13 @@ export default function BillingPage() {
                             </div>
                         </div>
                     </div>
-                    <CustomTooltip />
+                    <CustomTooltip
+                        title="Upgrade"
+                        content={
+                            <>
+                                To change your plan or increase your weekly quota, please email hello@zian.ai
+                            </>
+                        } />
                 </div>
                 <div className="p-7 space-y-6 border border-primary rounded-[20px] w-[40%] bg-gr-purple-dark">
                     <div className="flex justify-between">
@@ -88,15 +94,12 @@ export default function BillingPage() {
                             <SingleBiillingRow />
                             <SingleBiillingRow />
                         </div>
-
-
                     </div>
                 </div>
             </GrBorderBox>
         </MainLayout>
     );
 }
-
 
 
 function SingleBiillingRow() {

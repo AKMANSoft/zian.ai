@@ -9,17 +9,17 @@ export default function TermsPage() {
 
     return (
         <div className="h-screen py-10 overflow-y-auto">
-            <GrBorderBox className="max-w-5xl mx-auto">
-                <div className="flex flex-col rounded-20 items-center bg-gr-purple-dark text-white space-y-7 py-5 pb-16 px-8">
+            <GrBorderBox className="max-w-5xl mx-4 lg:mx-auto">
+                <div className="flex flex-col rounded-20 items-center bg-gr-purple-dark text-white space-y-7 py-5 pb-16 px-4 md:px-8">
                     <div>
                         <img src="/images/avatar.png" alt="" />
                     </div>
                     <div>
-                        <h1 className="text-3xl font-normal font-nebula">
+                        <h1 className="text-2xl font-normal font-nebula md:text-3xl w-full">
                             Zian AI Terms of Service
                         </h1>
                     </div>
-                    <div className="space-y-[30px] overflow-y-auto">
+                    <div className="space-y-3 overflow-y-auto md:space-y-[30px] ">
                         <TermsPrivacyComponent
                             heading="Introduction"
                             content={
@@ -198,7 +198,7 @@ export default function TermsPage() {
                             } />
                     </div>
                     <div>
-                        <h1 className="text-xl font-bold font-jkarta text-white">
+                        <h1 className="text-base font-bold font-jkarta text-white md:text-xl">
                             By using Zian AI, or creating or paying for an account, or accessing any of the webpages hosted on zian.ai, you acknowledge that you have read, understood, and agreed to be bound by these terms.
                         </h1>
                     </div>

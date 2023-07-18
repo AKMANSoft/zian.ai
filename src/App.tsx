@@ -19,6 +19,7 @@ const LoginPage = React.lazy(() => import("./pages/Login"));
 const CustomizePage = React.lazy(() => import("./components/popups/CustomizePopup"));
 const PopupPage = React.lazy(() => import("./pages/PopupPage"));
 const TermsPage = React.lazy(() => import("./pages/Terms"));
+const PrivacyPage = React.lazy(() => import("./pages/Privacy"));
 
 
 
@@ -168,7 +169,7 @@ const router = createBrowserRouter([
     path: "/privacy",
     element: (
       <Suspense>
-        <TermsPage />
+        <PrivacyPage />
       </Suspense>
     )
   }
