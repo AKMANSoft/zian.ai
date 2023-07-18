@@ -4,9 +4,12 @@ import { PrimaryBtnNeon } from "@/components/ui/buttons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark, faCreditCard, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
 import CustomTooltip from "@/components/custom-tooltip";
+import { useState } from 'react';
 
 
 export default function BillingPage() {
+     const [activeIndex, setActiveIndex] = useState(1); 
+
     return (
         <MainLayout heading="Billing & plan">
             <div className="flex space-x-5 pb-8">
@@ -15,8 +18,10 @@ export default function BillingPage() {
                         <h1 className="text-xl font-jakarta font-bold text-white">
                             Basic Plan
                         </h1>
-                        <p className="text-base font-normal font-jakarta text-white">
-                            $30
+                        <p className="text-base font-normal font-jakarta text-white space-x-1">
+                            <span>
+                                $30
+                            </span>
                             <span className="text-white/70">
                                 per week
                             </span>
@@ -46,8 +51,13 @@ export default function BillingPage() {
                         <h1 className="text-xl font-jakarta font-bold text-white">
                             Payment method
                         </h1>
-                        <p className="text-base font-normal font-jakarta text-primary">
-                            +Add New
+                        <p className="text-base font-normal font-jakarta text-primary space-x-1">
+                            <span>
+                                +
+                            </span>
+                            <span>
+                                Add New
+                            </span>
                         </p>
                     </div>
                     <div className="flex justify-between">
@@ -57,9 +67,9 @@ export default function BillingPage() {
                                 Visa ending in 1234
                             </span>
                         </h1>
-                        <p className="bg-transparent">
+                        <button className="bg-transparent"  disabled={activeIndex !== 1}>
                             <FontAwesomeIcon icon={faXmarkCircle} />
-                        </p>
+                        </button>
                     </div>
                     <div className="flex justify-between">
                         <h1 className="text-sm font-jakarta font-bold text-white">
@@ -68,12 +78,12 @@ export default function BillingPage() {
                                 Mastercard ending in 1234
                             </span>
                         </h1>
-                        <p className="bg-transparent">
+                        <button className="bg-transparent" disabled={activeIndex !== 2}>
                             <FontAwesomeIcon icon={faCircleXmark} />
-                        </p>
+                        </button>
                     </div>
 
-
+                      
 
                 </div>
 
@@ -133,6 +143,7 @@ function SingleBiillingRow() {
         </div>
     );
 }
+
 
 
 

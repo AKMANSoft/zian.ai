@@ -67,10 +67,10 @@ export default function EditProfilePopup() {
                                         </button>
                                     </div>
 
-                                    <div className="pb-[50px] max-h-[calc(100vh_-_200px)] overflow-y-auto flex flex-col">
+                                    <div className="pb-4 max-h-[calc(100vh_-_200px)] overflow-y-auto flex flex-col space-y-6">
                                         {/* content */}
                                         <div className="mx-7 md:space-y-7 space-y-3">
-                                            <div className="font-jakarta text-white text-[32px] font-bold">
+                                            <div className="font-jakarta text-white text-[32px] font-bold ">
                                                 Edit Profile
                                             </div>
                                             <div className="space-y-4  md:text-sm text-xs">
@@ -84,14 +84,14 @@ export default function EditProfilePopup() {
                                             </div>
                                         </div>
 
-                                        <div className="flex justify-between md:mx-11 mx-7 my-6">
+                                        <div className="flex justify-between md:px-[30px] px-7 ">
                                             <div></div>
                                             <div className="space-x-[10px]">
                                                 <SecondaryBtn className="border-white/10 py-4 px-10 md:text-sm">
                                                     Cancel
                                                 </SecondaryBtn>
-                                                <PrimaryBtn className=" h-full w-auto py-3">
-                                                    Update Password
+                                                <PrimaryBtn className=" h-full w-auto py-3 px-12">
+                                                    Save
                                                 </PrimaryBtn>
                                             </div>
                                         </div>

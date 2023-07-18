@@ -3,13 +3,14 @@ import { PrimaryBtn, SecondaryBtn } from "../ui/buttons"
 import { Dialog, Transition } from "@headlessui/react"
 import { cn } from "@/lib/utils"
 import { InputElWChips } from "../ui/input"
-import { faPen, faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faPen,  faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { NavigationItem } from "../sidebar"
 import SelectEl from "../ui/selectel"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import CustomTooltip from "../custom-tooltip"
+import GrBorderBox from "../ui/gr-border-box"
 
 
 
