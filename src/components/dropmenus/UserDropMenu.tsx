@@ -5,7 +5,6 @@ import { cn } from '@/lib/utils'
 
 
 
-
 type Props = {
   className?: string;
   user?: any;
@@ -16,6 +15,18 @@ type Props = {
 export default function UserDropdownMenu({ className, user }: Props) {
   // console.log('UserDropdownMenu');
   // console.log({user});
+  function onClickProfileMenu() {
+    window.location.href = '/user/profile/'
+  }
+
+  function onClickBillMenu() {
+    window.location.href = '/bill/'
+  }
+
+  function onClickLogoutMenu() {
+    window.location.href = '/user/logout/'
+  }
+
   return (
     <Menu as="div" className="relative block text-left z-50 h-auto">
       {({ open }) => (
@@ -47,6 +58,7 @@ export default function UserDropdownMenu({ className, user }: Props) {
                       'group flex w-full items-center px-5 py-4 font-jakarta text-sm text-white transition-all',
                       active && 'bg-white/5'
                     )}
+                    onClick={onClickProfileMenu}
                   >
                     Edit Profile
                   </button>
@@ -59,6 +71,7 @@ export default function UserDropdownMenu({ className, user }: Props) {
                       'group flex w-full items-center px-5 py-4 font-jakarta text-sm text-white transition-all',
                       active && 'bg-white/5'
                     )}
+                    onClick={onClickBillMenu}
                   >
                     Billing
                   </button>
@@ -71,6 +84,7 @@ export default function UserDropdownMenu({ className, user }: Props) {
                       'group flex w-full items-center px-5 py-4 font-jakarta text-sm text-white transition-all',
                       active && 'bg-white/5'
                     )}
+                    onClick={onClickLogoutMenu}
                   >
                     Logout
                   </button>

@@ -64,7 +64,8 @@ export default function SideBar({ expanded = false, user }: Props) {
                         icon={<FontAwesomeIcon icon={faBook} />} />
                     <GrSeperator className="my-2" />
                     <NavigationItem
-                        href="/settings" active={pathname === "/settings/"}
+                        // href="/settings" active={pathname === "/settings/"}
+                        href="/project" active={pathname === "/settings/"}
                         className="mb-3"
                         text="Settings"
                         icon={<FontAwesomeIcon icon={faSliders} />} />
