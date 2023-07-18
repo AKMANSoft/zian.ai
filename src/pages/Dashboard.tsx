@@ -22,8 +22,8 @@ export default function Dashboard() {
     }
 
     return (
-        <MainLayout >
-            <GrBorderBox className="p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)] " type="lg">
+        <MainLayout>
+            <GrBorderBox className="p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)]" type="lg">
                 <div className="px-3 md:px-5 pt-[30px] pb-20 h-full w-full flex flex-col backdrop-blur-[10px] bg-gr-purple-light opacity-90 rounded-20">
                     <div className="flex md:h-screen w-full justify-center items-center">
                         <div className="flex flex-col text-center justify-center items-center max-w-2xl">
@@ -75,7 +75,7 @@ export default function Dashboard() {
                                         (
                                             uiState?.state?.message &&
                                             <p className="text-sm font-medium flex items-start gap-3">
-                                                <FontAwesomeIcon icon={faExclamationCircle} className="text-red-500 mt-1" />
+                                                <FontAwesomeIcon icon={faExclamationCircle} className="text-red-500 mt-[3px]" />
                                                 {uiState?.state?.message}
                                             </p>
                                         )
