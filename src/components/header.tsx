@@ -12,7 +12,7 @@ type Props = {
     onToggleMenu: () => void;
 }
 
-export default function Header({ heading, description, onToggleMenu, menuExpanded = false }: Props) {
+export default function Header({ heading, description }: Props) {
     return (
         <header className="mt-4 lg:mt-7 mb-9 flex items-start lg:items-center justify-between w-full">
             <div className="hidden xl:block">
@@ -168,17 +168,17 @@ export function UserHeaderComponent({ className, toggleClassName, dropdownOpen }
 //     )
 // }
 
-function SearchEl() {
-    return (
-        <GrBorderBox className="rounded-20 h-full">
-            <div className={cn(
-                "box-gr-border aspect-square lg:aspect-auto",
-                "h-full w-auto md:w-[300px] bg-gr-purple backdrop-blur-[10px] rounded-20",
-                "flex items-center justify-center lg:justify-start gap-3 p-[10px] lg:p-3 text-white"
-            )}>
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
-                <input type="text" className='hidden md:inline bg-transparent w-full text-sm font-normal h-full outline-none border-none text-white placeholder:text-th-gray' placeholder='Search' />
-            </div>
-        </GrBorderBox>
-    );
-}
+// function SearchEl() {
+//     return (
+//         <GrBorderBox className="rounded-20 h-full">
+//             <div className={cn(
+//                 "box-gr-border aspect-square lg:aspect-auto",
+//                 "h-full w-auto md:w-[300px] bg-gr-purple backdrop-blur-[10px] rounded-20",
+//                 "flex items-center justify-center lg:justify-start gap-3 p-[10px] lg:p-3 text-white"
+//             )}>
+//                 <FontAwesomeIcon icon={faMagnifyingGlass} />
+//                 <input type="text" className='hidden md:inline bg-transparent w-full text-sm font-normal h-full outline-none border-none text-white placeholder:text-th-gray' placeholder='Search' />
+//             </div>
+//         </GrBorderBox>
+//     );
+// }
