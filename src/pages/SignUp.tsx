@@ -162,7 +162,7 @@ export default function SignUpPage() {
                                                     uiState?.processing ?
                                                         <Spinner />
                                                         :
-                                                        <OnboardingPopup />                                               }
+                                                        <OnboardingPopup />}
                                             </PrimaryBtn>
                                         </div>
                                     </div>
@@ -180,4 +180,5 @@ export default function SignUpPage() {
         </MainLayout>
     );
 }
+
 
