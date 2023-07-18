@@ -84,13 +84,13 @@ export default function EditProfilePopup() {
                                             </div>
                                         </div>
 
-                                        <div className="flex justify-between md:px-[30px] px-7 ">
+                                        <div className="flex justify-between md:px-[30px] px-7">
                                             <div></div>
                                             <div className="space-x-[10px]">
-                                                <SecondaryBtn className="border-white/10 py-4 px-10 md:text-sm">
+                                                <SecondaryBtn className="border-white/10 py-4 px-6 md:px-10 md:text-sm">
                                                     Cancel
                                                 </SecondaryBtn>
-                                                <PrimaryBtn className=" h-full w-auto py-3 px-12">
+                                                <PrimaryBtn className=" h-full w-auto py-3 md:px-12 px-6">
                                                     Save
                                                 </PrimaryBtn>
                                             </div>
