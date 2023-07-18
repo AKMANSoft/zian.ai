@@ -43,7 +43,7 @@ export default function SignUpPage() {
 
 
     return (
-        <MainLayout >
+        <MainLayout secure={false}>
             <div className="flex flex-col items-center justify-center py-20">
                 <GrBorderBox className="p-[2px] rounded-20 w-full max-w-[500px] shadow-xl">
                     <div className={cn(
