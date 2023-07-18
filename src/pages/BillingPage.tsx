@@ -4,11 +4,9 @@ import { PrimaryBtnNeon } from "@/components/ui/buttons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark, faCreditCard, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
 import CustomTooltip from "@/components/custom-tooltip";
-import { useState } from 'react';
 
 
 export default function BillingPage() {
-     const [activeIndex, setActiveIndex] = useState(1); 
 
     return (
         <MainLayout heading="Billing & plan">
@@ -67,7 +65,7 @@ export default function BillingPage() {
                                 Visa ending in 1234
                             </span>
                         </h1>
-                        <button className="bg-transparent"  disabled={activeIndex !== 1}>
+                        <button className="bg-transparent"  >
                             <FontAwesomeIcon icon={faXmarkCircle} />
                         </button>
                     </div>
@@ -78,7 +76,7 @@ export default function BillingPage() {
                                 Mastercard ending in 1234
                             </span>
                         </h1>
-                        <button className="bg-transparent" disabled={activeIndex !== 2}>
+                        <button className="bg-transparent">
                             <FontAwesomeIcon icon={faCircleXmark} />
                         </button>
                     </div>
