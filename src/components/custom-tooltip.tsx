@@ -3,18 +3,21 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { PrimaryBtn } from "./ui/buttons";
 
 
-
-export default function CustomTooltip() {
+type Props = {
+  title: string;
+  content: React.ReactNode;
+}
+export default function CustomTooltip({title,content}:Props) {
   const [open, setOpen] = useState(false);
   return (
     <Popover open={open} onOpenChange={(value) => setOpen(value)}>
       <PopoverTrigger>
         <PrimaryBtn onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
-          Upgrade
+          {title}
         </PrimaryBtn>
       </PopoverTrigger>
-      <PopoverContent className="bg-purple-500 font-base font-normal font-jakarta text-white">
-        To change your plan or increase your weekly quota, please email hello@zian.ai
+      <PopoverContent className="bg-purple-500 font-base font-normal font-jakarta text-white" align="start" side="top" >
+        {content}
       </PopoverContent>
     </Popover>
   )

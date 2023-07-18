@@ -1,12 +1,13 @@
 import MainLayout from "../components/layout";
 import GrBorderBox from "../components/ui/gr-border-box";
-import { PrimaryBtn, PrimaryBtnNeon } from "../components/ui/buttons";
+import {  PrimaryBtnNeon } from "../components/ui/buttons";
 import { GenerateApiResponse } from "@/types/response.types";
 import useUiState from "@/components/hooks/useUiState";
 import LoadingSparkle from "@/components/LoadingSparkle";
 import api from "@/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import CustomTooltip from "@/components/custom-tooltip";
 
 
 export default function Dashboard() {
@@ -38,30 +39,30 @@ export default function Dashboard() {
                                 </p>
                             </div>
                             <div className="flex flex-row flex-wrap items-center justify-center my-5 gap-3">
-                                <PrimaryBtn disabled={uiState?.processing} className=" w-full max-w-[80%] md:w-auto">
+                                {/* <PrimaryBtn disabled={uiState?.processing} className=" w-full max-w-[80%] md:w-auto">
                                     Upgrade
-                                </PrimaryBtn>
-                                {
-                                    uiState?.state?.success && uiState.state.data ?
-                                        <PrimaryBtnNeon
-                                            onClick={() => window.location.reload()}
-                                            className="w-full max-w-[80%] md:w-auto">
-                                            Refresh
-                                        </PrimaryBtnNeon>
-                                        :
-                                        <PrimaryBtnNeon
-                                            onClick={handleGenerateExample}
-                                            disabled={uiState?.processing}
-                                            className="w-full max-w-[80%] md:w-auto">
-                                            {
-                                                uiState?.processing ?
-                                                    <LoadingSparkle variant="tiny" spark={true} />
-                                                    :
-                                                    <span>Generate Example</span>
-                                            }
-                                        </PrimaryBtnNeon>
-
-                                }
+                                </PrimaryBtn> */}
+                                <CustomTooltip
+                                    title="Upgrade"
+                                    content={
+                                        <>
+                                            To change your plan or increase your weekly quota, please email hello@zian.ai
+                                        </>
+                                    } />
+                                <PrimaryBtnNeon
+                                    onClick={handleGenerateExample}
+                                    disabled={uiState?.processing}
+                                    className="w-full max-w-[80%] md:w-auto">
+                                    {
+                                        uiState?.processing ?
+                                            <LoadingSparkle variant="tiny" spark={true} />
+                                            :
+                                            uiState?.state?.success && uiState.state.data ?
+                                                <span>Refresh</span>
+                                                :
+                                                <span>Generate Example</span>
+                                    }
+                                </PrimaryBtnNeon>
                             </div>
                             <div className="text-start mt-5">
                                 {
