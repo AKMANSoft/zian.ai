@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faChevronDown, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { cn } from '../lib/utils';
 import GrBorderBox from "./ui/gr-border-box";
 
@@ -12,7 +12,7 @@ type Props = {
     onToggleMenu: () => void;
 }
 
-export default function Header({ heading, description }: Props) {
+export default function Header({ heading, description, menuExpanded, onToggleMenu }: Props) {
     return (
         <header className="mt-4 lg:mt-7 mb-9 flex items-start lg:items-center justify-between w-full">
             <div className="hidden xl:block">
@@ -32,7 +32,7 @@ export default function Header({ heading, description }: Props) {
             <div className='flex items-center gap-2 h-[50px]'>
                 {/* <SearchEl />
                 <NotificationsDropMenu />
-                <UserDropdownMenu className="h-12 hidden md:block" />
+                <UserDropdownMenu className="h-12 hidden md:block" /> */}
                 <GrBorderBox className={cn(
                     "rounded-20 block xl:hidden z-50",
                     menuExpanded ? "fixed lg:static top-4 right-4 h-12" : "h-full"
@@ -40,7 +40,7 @@ export default function Header({ heading, description }: Props) {
                     <button onClick={onToggleMenu} type="button" className='box-gr-border backdrop-blur-[10px] text-lg px-[10px] lg:px-3 h-full w-auto aspect-square text-white bg-gr-purple rounded-20'>
                         <FontAwesomeIcon icon={menuExpanded ? faXmark : faBars} />
                     </button>
-                </GrBorderBox> */}
+                </GrBorderBox>
             </div>
         </header>
     );

@@ -15,6 +15,7 @@ export default function ApiIntegrationPage() {
     const videoRef = useRef<HTMLVideoElement>(null);
 
     const handleVideoClick = () => {
+    
         if (!videoRef.current) return;
         if (!videoRef.current.paused) {
             videoRef.current.pause();
