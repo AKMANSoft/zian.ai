@@ -32,7 +32,7 @@ export default function Header({ heading, description, onToggleMenu, menuExpande
                 )}
                 alt="" />
             <div className='flex items-center gap-2 h-[50px]'>
-                <SearchEl />
+                {/* <SearchEl />
                 <NotificationsDropMenu />
                 <UserDropdownMenu className="h-12 hidden md:block" />
                 <GrBorderBox className={cn(
@@ -42,7 +42,7 @@ export default function Header({ heading, description, onToggleMenu, menuExpande
                     <button onClick={onToggleMenu} type="button" className='box-gr-border backdrop-blur-[10px] text-lg px-[10px] lg:px-3 h-full w-auto aspect-square text-white bg-gr-purple rounded-20'>
                         <FontAwesomeIcon icon={menuExpanded ? faXmark : faBars} />
                     </button>
-                </GrBorderBox>
+                </GrBorderBox> */}
             </div>
         </header>
     );
