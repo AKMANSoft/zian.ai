@@ -1,9 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faChevronDown, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { cn } from '../lib/utils';
 import GrBorderBox from "./ui/gr-border-box";
-import UserDropdownMenu from "./dropmenus/UserDropMenu";
-import NotificationsDropMenu from "./dropmenus/NotificationsDropMenu";
 
 
 
