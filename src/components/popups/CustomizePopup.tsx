@@ -94,6 +94,17 @@ export default function CustomizePopup() {
                                                         value: "",
                                                         disabled: false
                                                     },
+                                                    {
+                                                        text: "Sales",
+                                                        value: "",
+                                                        disabled: false
+                                                    },
+                                                    {
+                                                        text: "Carporate",
+                                                        value: "",
+                                                        disabled: false
+                                                    }
+                                                 
                                                 ]} />
                                             <InputElWChips
                                                 placeholder="Add keyword"
