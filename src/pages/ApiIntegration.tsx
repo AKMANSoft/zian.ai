@@ -1,15 +1,26 @@
 import MainLayout from "../components/layout";
 import GrBorderBox from "../components/ui/gr-border-box";
 import { Input } from "@/components/ui/input";
-import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import { faCopy, faPlay } from "@fortawesome/free-solid-svg-icons";
 import JSONPretty from 'react-json-pretty';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRef } from "react";
+import { cn } from "@/lib/utils";
 
 
 
 
 
 export default function ApiIntegrationPage() {
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    const handleVideoClick = () => {
+    
+        if (!videoRef.current) return;
+        if (!videoRef.current.paused) {
+            videoRef.current.pause();
+        }
+    };
 
 
     return (
@@ -26,7 +37,7 @@ export default function ApiIntegrationPage() {
                                     value={'a5ddddc6343e7b1e1f1b4393a8dcce689e0055bb66742e14295f0343ad3046b3'}
                                     placeholder="Copy" />
                                 <button className="absolute text-sm font-semibold font-jakarta top-1/2 right-5 -translate-y-1/2">
-                                   <FontAwesomeIcon className="pr-2" icon={faCopy}/> Copy 
+                                    <FontAwesomeIcon className="pr-2" icon={faCopy} /> Copy
                                 </button>
                             </div>
 
@@ -50,13 +61,24 @@ export default function ApiIntegrationPage() {
                                 </li>
                             </ul>
                             <div className="space-y-[10px]">
-                                <div>
-                                    <video src="/videos/test_video.mp4" controls width={500} height={300} className="rounded-[20px] w-auto aspect-video bg-cover bg-no-repeat md:w-[500px] md:h-[300px]"></video>
+                                <div className="" onClick={handleVideoClick}>
+                                    <div className="md:w-[500px] w-auto relative">
+                                        <video ref={videoRef} src="/videos/test_video.mp4" width={500} height={300} className="rounded-[20px] w-auto aspect-video bg-cover bg-no-repeat md:w-[500px] md:h-[300px] relative" />
+                                        <button onClick={async () => {
+                                            await videoRef.current?.play()
+                                        }} className={cn(
+                                            "px-4 py-3 bg-transparent/60 flex items-center justify-center border rounded-full absolute top-1/2 right-1/2 -translate-y-1/2",
+                                            videoRef.current?.paused && "hidden"
+                                        )}>
+                                            <FontAwesomeIcon className="text-3xl text-white " icon={faPlay} />
+                                        </button>
+                                    </div>
                                 </div>
                                 <div>
-                                    <a className="text-base font-jakarta font-bold text-white md:text-xl">
+                                    <a className="text-base font-jakarta font-bold text-white underline  md:text-xl cursor-pointer">
                                         Installing Zian AI into Your WordPress Website 🚀 - Watch Video
                                     </a>
+                                    
                                 </div>
                             </div>
                         </div>

@@ -6,6 +6,7 @@ import { InputEl } from "../ui/input"
 import { faUser, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { NavigationItem } from "../sidebar"
+import GrBorderBox from "../ui/gr-border-box"
 
 
 
@@ -27,9 +28,9 @@ export default function EditProfilePopup() {
     return (
         <>
             <NavigationItem
-                        onClick={openModal} active={isOpen}
-                        className="my-0.5" text="Edit Profile"
-                        icon={<FontAwesomeIcon icon={faUser} />} />
+                onClick={openModal} active={isOpen}
+                className="my-0.5" text="Edit Profile"
+                icon={<FontAwesomeIcon icon={faUser} />} />
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-50" onClose={closeModal}>
                     <Transition.Child
@@ -66,14 +67,13 @@ export default function EditProfilePopup() {
                                             <FontAwesomeIcon icon={faXmark} />
                                         </button>
                                     </div>
-
                                     <div className="pb-4 max-h-[calc(100vh_-_200px)] overflow-y-auto flex flex-col space-y-6">
                                         {/* content */}
                                         <div className="mx-7 md:space-y-7 space-y-3">
-                                            <div className="font-jakarta text-white text-[32px] font-bold ">
+                                            <div className="font-jakarta text-white text-[32px] font-bold">
                                                 Edit Profile
                                             </div>
-                                            <div className="space-y-4  md:text-sm text-xs">
+                                            <div className="space-y-4  md:text-sm font-normal font-jakarta text-xs">
                                                 <InputEl label="Name" placeholder="Mike Males" />
                                                 <InputEl label="Email" placeholder="mike@gmail.com" />
                                                 <InputEl label="Phone" placeholder="+61 00 000 00" />
@@ -83,20 +83,19 @@ export default function EditProfilePopup() {
                                                 </SecondaryBtn>
                                             </div>
                                         </div>
-
-                                        <div className="flex justify-between md:px-[30px] px-7 ">
-                                            <div></div>
-                                            <div className="space-x-[10px]">
-                                                <SecondaryBtn className="border-white/10 py-4 px-10 md:text-sm">
-                                                    Cancel
-                                                </SecondaryBtn>
-                                                <PrimaryBtn className=" h-full w-auto py-3 px-12">
-                                                    Save
-                                                </PrimaryBtn>
+                                        <GrBorderBox className="md:p-[1px] w-full">
+                                            <div className="flex  md:px-[30px] px-7 bg-gr-purple-dark pt-4 justify-end ">
+                                                <div className="space-x-[10px]">
+                                                    <SecondaryBtn className="border-white/10 py-4 px-6 md:px-10 md:text-sm">
+                                                        Cancel
+                                                    </SecondaryBtn>
+                                                    <PrimaryBtn className=" h-full w-auto py-3 md:px-12 px-6">
+                                                        Save
+                                                    </PrimaryBtn>
+                                                </div>
                                             </div>
-                                        </div>
-
-                                    </div>
+                                        </GrBorderBox>
+                                   </div>
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

@@ -6,13 +6,14 @@ import { PrimaryBtn } from "./ui/buttons";
 type Props = {
   title: string;
   content: React.ReactNode;
+  className:string;
 }
-export default function CustomTooltip({title,content}:Props) {
+export default function CustomTooltip({title,content ,className}:Props) {
   const [open, setOpen] = useState(false);
   return (
     <Popover open={open} onOpenChange={(value) => setOpen(value)}>
       <PopoverTrigger>
-        <PrimaryBtn onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+        <PrimaryBtn  className={className}  onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
           {title}
         </PrimaryBtn>
       </PopoverTrigger>

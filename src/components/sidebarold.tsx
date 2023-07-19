@@ -6,7 +6,7 @@ import {
 import { cn } from "../lib/utils";
 import { GrSeperator } from "./ui/seperator";
 import { useLocation } from "react-router-dom";
-import UserDropdownMenu from "./dropmenus/UserDropMenu";
+// import UserDropdownMenu from "./dropmenus/UserDropMenu";
 
 
 
@@ -37,7 +37,7 @@ export default function SideBar({ expanded = false }: Props) {
                 <div className="mt-16 md:mt-4 w-full">
                     <div className="py-3">
                         {/* <UserHeaderComponent expandable className="lg:hidden" toggleClassName="h-[71px]" /> */}
-                        <UserDropdownMenu className="h-[71px] md:hidden" />
+                        {/* <UserDropdownMenu className="h-[71px] md:hidden" /> */}
                     </div>
                     <NavigationItem
                         href="/" active={pathname === "/"}
