@@ -5,6 +5,7 @@ import { Dialog, Transition } from "@headlessui/react"
 import { cn } from "@/lib/utils"
 import { TriggerFunProps } from "../WarningPopup"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import GrBorderBox from "../ui/gr-border-box"
 
 
 
@@ -67,35 +68,35 @@ export default function InstructionsSentPopup({ trigger }: Props) {
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <Dialog.Panel className={cn(
-                                    "w-full max-w-[500px] transform overflow-hidden rounded-20 bg-gr-purple-dark shadow-xl transition-all",
+                                    "w-full max-w-[500px] transform overflow-hidden shadow-xl transition-all",
                                     "relative"
                                 )}>
-                                    <div className="w-full flex flex-row  items-center justify-between px-5 mt-5">
-                                        <button type="button" onClick={closeModal}
-                                            className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-pointer">
-                                            <FontAwesomeIcon icon={faXmark} />
-                                        </button>
-                                        <div></div>
-
-                                    </div>
-
-                                    <div className="md:px-8 px-6 b md:pb-[50px] max-h-[calc(100vh_-_200px)] overflow-y-auto">
-                                        {/* content */}
-                                        <img src="/images/instructions-logo.png" width={80} height={80} loading="lazy"
-                                            className={cn(
-                                                "w-[80px] h-auto aspect-square rounded-full overflow-hidden mx-auto",
-                                                "block"
-                                            )}
-                                            alt="" />
-                                        <div className="font-nebula text-white text-center text-2xl font-normal mt-5">
-                                            Instructions sent
+                                    <GrBorderBox>
+                                        <div className="px-6  pb-9 space-y-[10px] rounded-20 bg-gr-purple-dark  max-h-[calc(100vh_-_200px)] overflow-y-auto md:pb-[50px] md:px-8 md:space-y-0">
+                                            {/* content */}
+                                            <div className="w-full flex flex-row  items-center justify-between px-4 pt-5 md:px-5">
+                                                <button type="button" onClick={closeModal}
+                                                    className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-pointer">
+                                                    <FontAwesomeIcon icon={faXmark} />
+                                                </button>
+                                                <div></div>
+                                            </div>
+                                            <img src="/images/instructions-logo.png" width={80} height={80} loading="lazy"
+                                                className={cn(
+                                                    "w-[80px] h-auto aspect-square rounded-full overflow-hidden mx-auto",
+                                                    "block"
+                                                )}
+                                                alt="" />
+                                            <div className="font-nebula text-white text-center text-2xl font-normal md:pt-7">
+                                                Instructions sent
+                                            </div>
+                                            <div>
+                                                <p className="md:text-sm text-xs font-normal font-jakarta text-white/70 text-center md:py-4">
+                                                    We have sent the instructions to your email. Please follow those instructions to reset your password
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <p className="md:text-sm text-xs font-normal font-jakarta text-white/70 text-center py-2 md:py-4">
-                                                We have sent the instructions to your email. Please follow those instructions to reset your password
-                                            </p>
-                                        </div>
-                                    </div>
+                                    </GrBorderBox>
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

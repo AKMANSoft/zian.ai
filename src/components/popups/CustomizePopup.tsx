@@ -3,13 +3,14 @@ import { PrimaryBtn, SecondaryBtn } from "../ui/buttons"
 import { Dialog, Transition } from "@headlessui/react"
 import { cn } from "@/lib/utils"
 import { InputElWChips } from "../ui/input"
-import { faPen,  faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faPen, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { NavigationItem } from "../sidebar"
 import SelectEl from "../ui/selectel"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import CustomTooltip from "../custom-tooltip"
+import GrBorderBox from "../ui/gr-border-box"
 
 
 
@@ -75,79 +76,77 @@ export default function CustomizePopup() {
 
                                     <div className="max-h-[calc(100vh_-_200px)] overflow-y-auto flex flex-col space-y-32">
                                         {/* content */}
-                                        <div className="px-7 md:space-y-7 space-y-3">
-                                            <div className="font-jakarta text-white text-[32px] font-bold">
-                                                Customize
-                                            </div>
-                                            <SelectEl
-                                                className="w-full"
-                                                labelNode={
-                                                    <label className="w-full flex items-center justify-between text-start flex-wrap gap-1 mb-2">
-                                                        <p className="text-white font-bold text-sm">
-                                                            Industry
-                                                        </p>
-                                                    </label>
-                                                }
-                                                options={[
-                                                    {
-                                                        text: "Marketing",
-                                                        value: "",
-                                                        disabled: false
-                                                    },
-                                                    {
-                                                        text: "Sales",
-                                                        value: "",
-                                                        disabled: false
-                                                    },
-                                                    {
-                                                        text: "Carporate",
-                                                        value: "",
-                                                        disabled: false
+                                            <div className="pb-4 space-y-5 px-7 md:pb-8 md:space-y-7">
+                                                <div className="font-jakarta text-white text-[32px] font-bold">
+                                                    Customize
+                                                </div>
+                                                <SelectEl
+                                                    className="w-full"
+                                                    labelNode={
+                                                        <label className="w-full flex items-center justify-between text-start flex-wrap gap-1 mb-2">
+                                                            <p className="text-white font-bold text-sm">
+                                                                Industry
+                                                            </p>
+                                                        </label>
                                                     }
-                                                 
-                                                ]} />
-                                            <InputElWChips
-                                                placeholder="Add keyword"
-                                                labelNode={
-                                                    <label className="w-full flex items-center justify-between">
-                                                        <p className="text-white text-sm font-bold font-jakarta">
-                                                            Keywords
-                                                        </p>
-                                                    </label>
-                                                } />
-                                            <div className="flex space-x-3">
-                                                <div className="flex items-center space-x-2">
-                                                    <Switch id="airplane-mode" />
-                                                    <Label htmlFor="airplane-mode"></Label>
-                                                </div>
-                                                <p className="text-sm font-normal font-jakarta text-white">
-                                                    Skip topics about 3rd party brands - <span className="text-white/70">Yes</span>
-                                                </p>
-                                            </div>
-                                            <div>
-                                                <CustomTooltip
-                                                    title="Increase Article Volume"
-                                                    content={
-                                                        <>
-                                                            To increase articles volume, please email hello@zian.ai
-                                                        </>
-                                                    } />
-                                            </div>
-                                            <div className="flex justify-between pt-8 md:mt-28">
-                                                <div></div>
-                                                <div className="space-x-[10px] py-5">
-                                                    <SecondaryBtn className="text-sm py-3">
-                                                        Cancel
-                                                    </SecondaryBtn>
-                                                    <PrimaryBtn className=" h-full w-auto px-12 py-3">
-                                                        Save
-                                                    </PrimaryBtn>
+                                                    options={[
+                                                        {
+                                                            text: "Marketing",
+                                                            value: "",
+                                                            disabled: false
+                                                        },
+                                                        {
+                                                            text: "Sales",
+                                                            value: "",
+                                                            disabled: false
+                                                        },
+                                                        {
+                                                            text: "Carporate",
+                                                            value: "",
+                                                            disabled: false
+                                                        }
 
+                                                    ]} />
+                                                <InputElWChips
+                                                    placeholder="Add keyword"
+                                                    labelNode={
+                                                        <label className="w-full flex items-center justify-between">
+                                                            <p className="text-white text-sm font-bold font-jakarta">
+                                                                Keywords
+                                                            </p>
+                                                        </label>
+                                                    } />
+                                                <div className="flex space-x-3">
+                                                    <div className="flex items-center space-x-2">
+                                                        <Switch id="airplane-mode" />
+                                                        <Label htmlFor="airplane-mode"></Label>
+                                                    </div>
+                                                    <p className="text-sm font-normal font-jakarta text-white">
+                                                        Skip topics about 3rd party brands - <span className="text-white/70">Yes</span>
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <CustomTooltip
+                                                        title="Increase Article Volume"
+                                                        content={
+                                                            <>
+                                                                To increase articles volume, please email hello@zian.ai
+                                                            </>
+                                                        } />
                                                 </div>
                                             </div>
-                                        </div>
 
                                     </div>
+                                    <GrBorderBox className="mt-4 md:mt-24 rounded-none ">
+                                        <div className="flex justify-end bg-gr-purple-dark space-x-[10px] py-2 md:py-5 px-7">
+                                            <SecondaryBtn className="text-sm py-3">
+                                                Cancel
+                                            </SecondaryBtn>
+                                            <PrimaryBtn className=" h-full w-auto px-12 py-3">
+                                                Save
+                                            </PrimaryBtn>
+                                        </div>
+                                    </GrBorderBox>
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

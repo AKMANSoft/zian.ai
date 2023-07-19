@@ -17,7 +17,6 @@ import GrBorderBox from "@/components/ui/gr-border-box";
 import ForgotPassword from "@/components/popups/ForgotPasswordPopup";
 
 
-
 export default function LoginPage() {
     const form = useForm<LoginFormSchema>({
         resolver: zodResolver(loginFormSchema),
@@ -44,7 +43,7 @@ export default function LoginPage() {
 
     return (
         <MainLayout secure={false}>
-            <div className="flex flex-col items-center justify-center  py-20">
+            <div className="flex flex-col items-center justify-center py-20">
                 <GrBorderBox className="p-[2px] rounded-20 w-full max-w-[500px] shadow-xl">
                     <div className={cn(
                         "transform overflow-hidden rounded-20 bg-gr-purple-dark",

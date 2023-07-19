@@ -75,9 +75,10 @@ export default function ApiIntegrationPage() {
                                     </div>
                                 </div>
                                 <div>
-                                    <a className="text-base font-jakarta font-bold text-white md:text-xl">
+                                    <a className="text-base font-jakarta font-bold text-white underline  md:text-xl cursor-pointer">
                                         Installing Zian AI into Your WordPress Website 🚀 - Watch Video
                                     </a>
+                                    
                                 </div>
                             </div>
                         </div>

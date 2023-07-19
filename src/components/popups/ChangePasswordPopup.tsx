@@ -1,5 +1,5 @@
 import { Fragment, ReactNode, useState } from "react"
-import { SecondaryBtn } from "../ui/buttons"
+import {  SecondaryBtn } from "../ui/buttons"
 import { Dialog, Transition } from "@headlessui/react"
 import { cn } from "@/lib/utils"
 import { TriggerFunProps } from "../WarningPopup"
@@ -7,6 +7,7 @@ import { InputEl } from "../ui/input"
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import PasswordUpdatedPopup from "./PasswordUpdatedPopup"
+import GrBorderBox from "../ui/gr-border-box"
 
 
 
@@ -80,9 +81,9 @@ export default function ChangePasswordPopup({ trigger }: Props) {
                                         </button>
                                     </div>
 
-                                    <div className="pb-[50px] max-h-[calc(100vh_-_200px)] overflow-y-auto flex flex-col">
+                                    <div className="max-h-[calc(100vh_-_200px)] overflow-y-auto flex flex-col">
                                         {/* content */}
-                                        <div className="mx-7 md:space-y-7 space-y-3">
+                                        <div className="mx-7 md:space-y-7 space-y-3 pb-24 md:pb-80">
                                             <div className="font-jakarta text-white text-[32px] font-bold">
                                                 Update Password
                                             </div>
@@ -91,18 +92,18 @@ export default function ChangePasswordPopup({ trigger }: Props) {
                                                 <InputEl label="Enter new password" placeholder="" />
                                             </div>
                                         </div>
-
-                                        <div className="flex justify-between md:mx-11 mx-8 md:mt-[308px] mt-24">
-                                            <div></div>
-                                            <div className="space-x-[10px]">
-                                                <SecondaryBtn className="py-4 text-sm">
-                                                    Cancel
-                                                </SecondaryBtn>
-                                                <PasswordUpdatedPopup />
+                                        <GrBorderBox className="p-px md:p-[2px] overflow-hidden w-full rounded-none">
+                                            <div className="flex justify-end bg-gr-purple-dark px-5 py-2 md:py-4 md:px-6">
+                                                <div className="space-x-[10px]">
+                                                    <SecondaryBtn className="py-4 text-sm">
+                                                        Cancel
+                                                    </SecondaryBtn>
+                                                    <PasswordUpdatedPopup />
+                                                </div>
                                             </div>
-                                        </div>
-
+                                        </GrBorderBox>
                                     </div>
+                 
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

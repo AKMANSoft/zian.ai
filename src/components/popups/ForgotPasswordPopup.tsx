@@ -6,6 +6,7 @@ import { InputEl } from "../ui/input"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import InstructionsSentPopup from "./InstructionsSentPopup"
+import GrBorderBox from "../ui/gr-border-box"
 
 
 
@@ -68,45 +69,45 @@ export default function ForgotPassword({ trigger }: Props) {
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <Dialog.Panel className={cn(
-                                    "w-full max-w-[500px] transform overflow-hidden rounded-20 bg-gr-purple-dark shadow-xl transition-all",
+                                    "w-full max-w-[500px] transform overflow-hidden shadow-xl transition-all",
                                     "relative"
                                 )}>
-                                    <div className="w-full flex flex-row  items-center justify-between px-5 mt-5">
-                                        <button type="button" onClick={closeModal}
-                                            className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-pointer">
-                                            <FontAwesomeIcon icon={faArrowLeft} />
-                                        </button>
-                                        <div></div>
 
-                                    </div>
-
-                                    <div className="px-5 pb-10 max-h-[calc(100vh_-_200px)] overflow-y-auto md:px-8 md:pb-[50px]">
-                                        {/* content */}
-                                        <img src="/images/avatar.png" width={100} height={100} loading="lazy"
-                                            className={cn(
-                                                "w-[100px] h-auto aspect-square rounded-full overflow-hidden mx-auto",
-                                                "block"
-                                            )}
-                                            alt="" />
-                                        <div className="font-nebula text-white text-center text-2xl font-normal mt-5">
-                                            Forgot Password?
-                                        </div>
-                                        <div>
-                                            <p className="md:text-sm text-xs font-normal font-jakarta text-white/70 text-center mt-4">
-                                                We got this. Please enter your registered email below and we will send instructions to reset your password
-                                            </p>
-                                        </div>
-                                        <div className="lg:p-5 lg:pt-8 space-y-4 md:text-sm text-xs pt-4 lg:px-0 px-1">
-                                            <InputEl label="Email" placeholder="" />
-                                        </div>
-                                        <div className="flex justify-between md:px-0 px-1 lg:pt-0 pt-5">
-                                            <div></div>
+                                    <GrBorderBox>
+                                        <div className="px-5 pb-10 max-h-[calc(100vh_-_200px)] overflow-y-auto md:px-8 md:pb-[50px] rounded-20 bg-gr-purple-dark ">
+                                            {/* content */}
+                                            <div className="w-full flex flex-row  items-center justify-between px-5 mt-5 ">
+                                                <button type="button" onClick={closeModal}
+                                                    className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-pointer">
+                                                    <FontAwesomeIcon icon={faArrowLeft} />
+                                                </button>
+                                                <div></div>
+                                            </div>
+                                            <img src="/images/avatar.png" width={100} height={100} loading="lazy"
+                                                className={cn(
+                                                    "w-[100px] h-auto aspect-square rounded-full overflow-hidden mx-auto",
+                                                    "block"
+                                                )}
+                                                alt="" />
+                                            <div className="font-nebula text-white text-center text-2xl font-normal mt-5">
+                                                Forgot Password?
+                                            </div>
                                             <div>
-                                                <InstructionsSentPopup />
+                                                <p className="md:text-sm text-xs font-normal font-jakarta text-white/70 text-center mt-4">
+                                                    We got this. Please enter your registered email below and we will send instructions to reset your password
+                                                </p>
+                                            </div>
+                                            <div className="lg:p-5 lg:pt-8 space-y-4 md:text-sm text-xs pt-4 lg:px-0 px-1">
+                                                <InputEl label="Email" placeholder="" />
+                                            </div>
+                                            <div className="flex justify-between md:px-0 px-1 lg:pt-0 pt-5">
+                                                <div></div>
+                                                <div>
+                                                    <InstructionsSentPopup />
+                                                </div>
                                             </div>
                                         </div>
-
-                                    </div>
+                                    </GrBorderBox>
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

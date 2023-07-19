@@ -20,7 +20,7 @@ export default {
         "th-green-3": "#6FCF97",
         "th-green": "#7CE69A",
         "dark": "#1E162E",
-        "body": "#F2E4F1"
+        "body": "#F2E4F1",
       },
       backdropGrayscale: {
         "input": "rgba(6, 18, 32, 0.1)"

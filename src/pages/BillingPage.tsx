@@ -79,9 +79,7 @@ export default function BillingPage() {
                         <button className="bg-transparent">
                             <FontAwesomeIcon icon={faCircleXmark} />
                         </button>
-                    </div>
-
-                      
+                    </div>   
 
                 </div>
 
