@@ -128,6 +128,7 @@ export default function CustomizePopup() {
                                                 <div>
                                                     <CustomTooltip
                                                         title="Increase Article Volume"
+                                                        className=""
                                                         content={
                                                             <>
                                                                 To increase articles volume, please email hello@zian.ai

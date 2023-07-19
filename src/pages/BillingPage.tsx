@@ -38,6 +38,7 @@ export default function BillingPage() {
                     </div>
                     <CustomTooltip
                         title="Upgrade"
+                        className=""
                         content={
                             <>
                                 To change your plan or increase your weekly quota, please email hello@zian.ai
