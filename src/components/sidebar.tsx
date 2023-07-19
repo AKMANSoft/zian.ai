@@ -23,7 +23,7 @@ export default function SideBar({ expanded = false }: Props) {
     const { pathname } = useLocation();
     return (
         <div className={cn(
-            "min-w-[280px] w-full lg:max-w-[400px] xl:max-w-[300px] min-h-screen pt-5 pb-10",
+            "min-w-[280px] w-full lg:max-w-[400px] xl:max-w-[300px] min-h-screen pt-32 pb-10",
             "flex flex-col gap-20 lg:gap-10 justify-between z-50 px-6 lg:pl-0",
             "fixed top-0 -left-full xl:static bg-[#1E162E] xl:bg-transparent",
             "max-h-screen overflow-y-auto transition-all",
