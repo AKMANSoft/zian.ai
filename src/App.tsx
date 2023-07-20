@@ -6,6 +6,7 @@ import React, { Suspense } from "react"
 // import { CookiesProvider } from "react-cookie";
 import HomePage from "./pages/Home"
 import ErrorPage from "./pages/Error"
+import SocialAccountsPage from "./pages/SocialAccounts"
 import {
   RouterProvider,
   createBrowserRouter,
@@ -326,6 +327,42 @@ const router = createBrowserRouter([
       //   // console.log(r.results);
       //   return r;
       // });
+
+      return pageData;
+    }
+  },
+  {
+    path: "/social-accounts",
+    element: (
+        <Suspense>
+          <SocialAccountsPage />
+        </Suspense>
+    ),
+    errorElement: <ErrorPage />,
+    loader: async () => {
+      let pageData: any = {};
+
+      // get user
+      let lastResult = null;
+      await userApiClient.usersList().then((result) => {
+        lastResult = result.results;
+        console.log(result.results);
+      });
+
+      if (lastResult) {
+        // return lastResult[0];
+        pageData.user = lastResult[0];
+      } else {
+        // return null;
+        pageData.user = null;
+      }
+
+      // get Twitter account
+      const twitterUsersList = await twitterUserApiClient.twitterUsersList().then((r) => {
+        console.log(r);
+        return r;
+      });
+      pageData.twitterUsersList = twitterUsersList;
 
       return pageData;
     }

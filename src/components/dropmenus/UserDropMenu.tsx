@@ -23,6 +23,11 @@ export default function UserDropdownMenu({ className, user }: Props) {
     window.location.href = '/bill/'
   }
 
+  function onClickSocialAccountsMenu() {
+    // window.location.href = '/user/social-accounts/'
+    window.location.href = '/social-accounts/'
+  }
+
   function onClickLogoutMenu() {
     window.location.href = '/user/logout/'
   }
@@ -74,6 +79,19 @@ export default function UserDropdownMenu({ className, user }: Props) {
                     onClick={onClickBillMenu}
                   >
                     Billing
+                  </button>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <button
+                    className={cn(
+                      'group flex w-full items-center px-5 py-4 font-jakarta text-sm text-white transition-all',
+                      active && 'bg-white/5'
+                    )}
+                    onClick={onClickSocialAccountsMenu}
+                  >
+                    Social Accounts
                   </button>
                 )}
               </Menu.Item>
