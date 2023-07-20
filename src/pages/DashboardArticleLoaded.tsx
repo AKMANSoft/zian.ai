@@ -3,7 +3,7 @@ import GrBorderBox from "../components/ui/gr-border-box";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { b64Image, cn } from "../lib/utils";
 import { useEffect, useState } from "react";
-import { formatNumberto0 } from "@/components/calendar/defaults";
+import { formatNumberto0 } from "@/lib/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PrimaryBtnNeon } from "@/components/ui/buttons";
 import ArticleViewPopup from "@/components/popups/ArticleViewPopup";
