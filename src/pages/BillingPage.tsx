@@ -2,7 +2,7 @@ import GrBorderBox from "../components/ui/gr-border-box";
 import MainLayout from "../components/layout";
 import { PrimaryBtnNeon } from "@/components/ui/buttons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCreditCard } from "@fortawesome/free-solid-svg-icons";
+import { faCreditCard, faIdCard } from "@fortawesome/free-solid-svg-icons";
 import CustomTooltip from "@/components/custom-tooltip";
 import { CrossCircledIcon } from '@radix-ui/react-icons'
 
@@ -16,11 +16,11 @@ export default function BillingPage() {
                         <h1 className="text-xl font-jakarta font-bold text-white">
                             Basic Plan
                         </h1>
-                        <p className="text-base font-normal font-jakarta text-white space-x-1">
-                            <span>
+                        <p className=" font-normal font-jakarta text-white space-x-1">
+                            <span className="text-base font-bold md:text-xl">
                                 $30
                             </span>
-                            <span className="text-white/70">
+                            <span className="text-white/70 text-sm md:text-base">
                                 per week
                             </span>
                         </p>
@@ -50,7 +50,7 @@ export default function BillingPage() {
                         <h1 className="text-xl font-jakarta font-bold text-white">
                             Payment method
                         </h1>
-                        <p className="text-base font-normal font-jakarta text-primary space-x-1">
+                        <p className="text-xs font-bold font-jakarta text-primary space-x-1 md:text-sm">
                             <span>
                                 +
                             </span>
