@@ -2,17 +2,17 @@ import GrBorderBox from "../components/ui/gr-border-box";
 import MainLayout from "../components/layout";
 import { PrimaryBtnNeon } from "@/components/ui/buttons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark, faCreditCard, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCreditCard } from "@fortawesome/free-solid-svg-icons";
 import CustomTooltip from "@/components/custom-tooltip";
-
+import { CrossCircledIcon } from '@radix-ui/react-icons'
 
 export default function BillingPage() {
 
     return (
         <MainLayout heading="Billing & plan">
-            <div className="flex space-x-5 pb-8">
-                <div className="p-7 space-y-10 border border-primary bg-gr-purple-dark rounded-[20px] w-[60%]">
-                    <div className="flex justify-between">
+            <div className="flex flex-col lg:flex-row gap-5 pb-8">
+                <div className="p-7 space-y-6 lg:space-y-10 border border-primary bg-gr-purple-dark rounded-[20px] w-full lg:w-[60%]">
+                    <div className="flex w-full flex-col lg:flex-row justify-between lg:items-center gap-3">
                         <h1 className="text-xl font-jakarta font-bold text-white">
                             Basic Plan
                         </h1>
@@ -38,14 +38,14 @@ export default function BillingPage() {
                     </div>
                     <CustomTooltip
                         title="Upgrade"
-                        className=""
+                        className="py-3 w-full lg:w-auto"
                         content={
                             <>
                                 To change your plan or increase your weekly quota, please email hello@zian.ai
                             </>
                         } />
                 </div>
-                <div className="p-7 space-y-6 border border-primary rounded-[20px] w-[40%] bg-gr-purple-dark">
+                <div className="p-7 space-y-6 border border-primary rounded-[20px] w-full lg:w-[40%] bg-gr-purple-dark">
                     <div className="flex justify-between">
                         <h1 className="text-xl font-jakarta font-bold text-white">
                             Payment method
@@ -59,28 +59,28 @@ export default function BillingPage() {
                             </span>
                         </p>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between items-center">
                         <h1 className="text-sm font-jakarta font-bold text-white">
                             <FontAwesomeIcon icon={faCreditCard} />
-                            <span className="pl-1">
-                                Visa ending in 1234
+                            <span className="pl-[10px]">
+                                Visa ending in
                             </span>
                         </h1>
-                        <button className="bg-transparent"  >
-                            <FontAwesomeIcon icon={faXmarkCircle} />
+                        <button className="bg-transparent text-white/40">
+                            <CrossCircledIcon className="w-5 h-5" />
                         </button>
                     </div>
                     <div className="flex justify-between">
                         <h1 className="text-sm font-jakarta font-bold text-white">
                             <FontAwesomeIcon icon={faCreditCard} />
-                            <span className="pl-1">
+                            <span className="pl-[10px]">
                                 Mastercard ending in 1234
                             </span>
                         </h1>
                         <button className="bg-transparent">
-                            <FontAwesomeIcon icon={faCircleXmark} />
+                            <CrossCircledIcon className="w-5 h-5" />
                         </button>
-                    </div>   
+                    </div>
 
                 </div>
 
@@ -91,13 +91,16 @@ export default function BillingPage() {
                 <div className="h-full w-full flex flex-col backdrop-blur-[10px] bg-gr-purple-light opacity-90 rounded-20">
                     {/* Drafts Table  */}
                     <div className="w-full h-full rounded-20 flex flex-col ">
-                        <div className="border-b-[5px] text-xs font-semibold px-4 w-full hidden px-auto lg:flex  items-center py-5 border-primary z-[1] gap-x-10">
-                            <span className="block text-start xl:w-[58%] lg:w-[48%]">Invoice</span>
-                            <span className="block text-start min-w-[100px]">Billing Date</span>
-                            <span className="block text-start  min-w-[100px]">Amount</span>
-                            <span className="block text-start  min-w-[100px]">Plan</span>
+                        <div className="border-b-[5px] text-xs font-semibold px-4 w-full hidden lg:flex justify-between items-center py-5 border-primary lg:gap-3">
+                            <div className="flex items-center justify-between w-full">
+                                <span className="block text-start lg:w-2/3">Invoice</span>
+                                <span className="block text-start min-w-[120px]">Billing Date</span>
+                                <span className="block text-start min-w-[80px]">Amount</span>
+                                <span className="block text-start min-w-[80px]">Plan</span>
+                            </div>
+                            <span className="block text-start min-w-[170px]"></span>
                         </div>
-                        <div >
+                        <div className="lg:py-0 divide-y divide-white/10 px-4">
                             <SingleBiillingRow />
                             <SingleBiillingRow />
                         </div>
@@ -111,31 +114,37 @@ export default function BillingPage() {
 
 function SingleBiillingRow() {
     return (
-        <div className="flex flex-wrap xl:justify-between lg:flex-nowrap lg:gap-3 items-center w-full" >
-            <span className="hidden lg:block text-sm py-3 min-h-[50px] text-start overflow-hidden lg:ps-4 lg:w-[56%]">
-                Invoice #007 - May 2023
-            </span>
-            <span className="block py-3 lg:min-h-[50px] text-start overflow-hidden md:min-w-[100px] px-2">
-                <p className="w-full line-clamp-4 text-xs md:text-sm">
-                    May 1, 2023
-                </p>
-            </span>
-            <span className="block py-3 lg:min-h-[50px] text-start  overflow-hidden md:min-w-[100px] px-2">
-                <p className="w-full line-clamp-4 text-xs md:text-sm">
-                    $30.00
-                </p>
-            </span>
-            <span className="hidden lg:block py-3 lg:min-h-[50px] text-start  overflow-hidden min-w-[100px] px-2">
-                <p className="w-full line-clamp-2 text-xs md:text-sm">
-                    Basic Plan
-                </p>
-            </span>
-            <span className="block text-white py-1 lg:py-3 lg:min-h-[50px] text-start  lg:w-[150px] overflow-hidden lg:pr-4">
-                <div className="flex items-center justify-end lg:justify-start">
-                    <PrimaryBtnNeon className=" py-3 h-10 px-10 font-medium text-[15px] inline-flex items-center justify-center w-full">
-                        Download
-                    </PrimaryBtnNeon>
-                </div>
+        <div className="flex items-center justify-between w-full lg:gap-3 py-5" >
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between w-full gap-3 lg:gap-0">
+                <span className="block text-sm lg:py-3 text-start overflow-hidden lg:w-2/3">
+                    Invoice #007 - May 2023
+                </span>
+                <span className="flex items-center gap-2 lg:block lg:py-3 text-start overflow-hidden md:min-w-[120px]">
+                    <p className="lg:w-full text-xs md:text-sm">
+                        May 1, 2023
+                    </p>
+                    <span className="block lg:hidden w-1 h-1 bg-white rounded-full" />
+                    {/* For responsive add ammount here  */}
+                    <p className="lg:hidden text-xs md:text-sm">
+                        $30.00
+                    </p>
+                </span>
+                {/* This ammount will only be visible on desktop */}
+                <span className="hidden lg:block lg:py-3 text-start  overflow-hidden md:min-w-[80px]">
+                    <p className="w-full line-clamp-1 text-xs md:text-sm">
+                        $30.00
+                    </p>
+                </span>
+                <span className="block lg:py-3 text-start overflow-hidden min-w-[80px]">
+                    <p className="w-full line-clamp-1 text-xs md:text-sm">
+                        Basic Plan
+                    </p>
+                </span>
+            </div>
+            <span className="block text-white py-1 lg:py-3 text-start min-w-max lg:min-w-[170px] overflow-hidden">
+                <PrimaryBtnNeon className=" py-3 h-10 px-5 lg:px-10 font-medium text-[15px] inline-flex items-center justify-center w-auto lg:w-full">
+                    Download
+                </PrimaryBtnNeon>
             </span>
         </div>
     );

@@ -13,6 +13,8 @@ import api from "@/api";
 import LoadingSparkle from "@/components/LoadingSparkle";
 import { format } from "date-fns";
 import CONSTANTS from "@/lib/constants";
+
+
 export default function DashboardArticleLoaded() {
     const { uiState, setUiData } = useUiState<ArticlesApiResponse>()
 
@@ -34,7 +36,7 @@ export default function DashboardArticleLoaded() {
                             <span className="block text-start w-[20%] overflow-hidden min-w-[200px]">Headline</span>
                             <span className="block text-start w-[40%] overflow-hidden">Preview</span>
                             <span className="block text-start w-[150px] overflow-hidden">Created Date</span>
-                            <span className="block text-start w-[50px] overflow-hidden"></span>
+                            <span className="block text-start w-[100px] overflow-hidden"></span>
                         </div>
                         <div className="max-h-full max-w-full h-screen lg:overflow-y-auto divide-y lg:bg-transparent divide-white/10 space-y-5 lg:divide-y-0 px-5 lg:px-0">
                             {
