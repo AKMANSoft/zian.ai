@@ -71,7 +71,7 @@ export default function CreateNewPasswordPopup({ trigger }: Props) {
                                     "relative"
                                 )}>
                                     <GrBorderBox>
-                                        <div className="px-8 pt-[30px] pb-[50px] max-h-[calc(100vh_-_200px)] rounded-20 bg-gr-purple-dark overflow-y-auto">
+                                        <div className="px-8 pt-[30px] pb-[50px] max-h-[calc(100vh_-_200px)] rounded-20 bg-gr-purple-dark">
                                             {/* content */}
                                             <img src="/images/avatar.png" width={100} height={100} loading="lazy"
                                                 className={cn(

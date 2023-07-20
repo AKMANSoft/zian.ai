@@ -72,7 +72,7 @@ export default function InstructionsSentPopup({ trigger }: Props) {
                                     "relative"
                                 )}>
                                     <GrBorderBox>
-                                        <div className="px-6  pb-9 space-y-[10px] rounded-20 bg-gr-purple-dark  max-h-[calc(100vh_-_200px)] overflow-y-auto md:pb-[50px] md:px-8 md:space-y-0">
+                                        <div className="px-6  pb-9 space-y-[10px] rounded-20 bg-gr-purple-dark md:pb-[50px] md:px-8 md:space-y-0">
                                             {/* content */}
                                             <div className="w-full flex flex-row  items-center justify-between px-4 pt-5 md:px-5">
                                                 <button type="button" onClick={closeModal}
@@ -90,8 +90,8 @@ export default function InstructionsSentPopup({ trigger }: Props) {
                                             <div className="font-nebula text-white text-center text-2xl font-normal md:pt-7">
                                                 Instructions sent
                                             </div>
-                                            <div>
-                                                <p className="md:text-sm text-xs font-normal font-jakarta text-white/70 text-center md:py-4">
+                                            <div className="flex justify-center">
+                                                <p className="md:text-sm text-xs font-normal font-jakarta text-white/70 text-center md:py-4 max-w-full md:max-w-[80%]">
                                                     We have sent the instructions to your email. Please follow those instructions to reset your password
                                                 </p>
                                             </div>
