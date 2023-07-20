@@ -72,6 +72,8 @@ export default function NewPasswordCreatedPopup({ trigger }: Props) {
                                     "w-full max-w-[500px] transform overflow-hidden shadow-xl transition-all",
                                     "relative"
                                 )}>
+                                    {/* content */}
+
 
                                     <GrBorderBox>
 
@@ -84,7 +86,6 @@ export default function NewPasswordCreatedPopup({ trigger }: Props) {
                                                 <div></div>
                                             </div>
                                             <div className=" px-6 pb-[50px] md:px-8">
-                                                {/* content */}
 
                                                 <img src="/images/resetpassword.png" width={80} height={80} loading="lazy"
                                                     className={cn(
