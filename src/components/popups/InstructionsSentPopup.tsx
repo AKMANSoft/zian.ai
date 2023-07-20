@@ -72,7 +72,7 @@ export default function InstructionsSentPopup({ trigger }: Props) {
                                     "relative"
                                 )}>
                                     <GrBorderBox>
-                                        <div className="px-6  pb-9 space-y-[10px] rounded-20 bg-gr-purple-dark  max-h-[calc(100vh_-_200px)] overflow-y-auto md:pb-[50px] md:px-8 md:space-y-0">
+                                        <div className="px-6  pb-9 space-y-[10px] rounded-20 bg-gr-purple-dark md:pb-[50px] md:px-8 md:space-y-0">
                                             {/* content */}
                                             <div className="w-full flex flex-row  items-center justify-between px-4 pt-5 md:px-5">
                                                 <button type="button" onClick={closeModal}
