@@ -6,15 +6,7 @@ import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LoginFormSchema, loginFormSchema } from "@/types/forms.types";
-import { Spinner } from "@/components/ui/spinner";
-import useUiState from "@/components/hooks/useUiState";
-import { LoginApiResponse } from "@/types/response.types";
-import api from "@/api";
-import { AutoHideAlert } from "@/components/ui/alert";
-import { useNavigate } from "react-router-dom";
-import useAuthUserStore from "@/lib/zustand/authUserStore";
 import GrBorderBox from "@/components/ui/gr-border-box";
-import ForgotPassword from "@/components/popups/ForgotPasswordPopup";
 
 
 export default function LoginPage() {
@@ -23,22 +15,7 @@ export default function LoginPage() {
         mode: "all",
         reValidateMode: "onChange"
     })
-    const navigate = useNavigate();
-    const { uiState, setProcessing, setUiData } = useUiState<LoginApiResponse>()
-    const { setAuthUser } = useAuthUserStore();
 
-    const handleFormSubmit = async (values: LoginFormSchema) => {
-        setProcessing(true)
-        const response = await api.user.login(values)
-
-        if (response.success && response.data) {
-            setAuthUser(response.data.authorization, response.data)
-            navigate("/")
-        }
-
-        setUiData(response)
-        setProcessing(false)
-    }
 
 
     return (
@@ -50,7 +27,7 @@ export default function LoginPage() {
                         "relative"
                     )}>
                         <Form {...form}>
-                            <form method="POST" onSubmit={form.handleSubmit(handleFormSubmit)}>
+                            <form method="POST">
                                 <div className="px-4 md:px-8 py-[30px] ">
                                     {/* content */}
                                     <img src="/images/avatar.png" width={100} height={100} loading="lazy"
@@ -102,17 +79,10 @@ export default function LoginPage() {
                                         />
                                     </div>
                                     <div className="flex justify-end mt-3 lg:mt-0">
-                                        <button>
-                                            <ForgotPassword />
-                                        </button>
+                                        <a href="/forgot-password" className="font-jakarta md:text-sm text-xs font-normal text-white">
+                                            Forgot password?
+                                        </a>
                                     </div>
-                                    {
-                                        !uiState?.state?.success && uiState?.state?.message &&
-                                        <AutoHideAlert
-                                            containerClassName="py-5"
-                                            title={"Heads Up!"}
-                                            message={uiState.state.message} />
-                                    }
                                     <div className="flex justify-between mt-8 md:mb-[30px]">
                                         <div className="">
                                             <p className="font-jakarta md:text-sm text-xs font-bold text-white">
@@ -124,15 +94,9 @@ export default function LoginPage() {
                                         </div>
                                         <div>
                                             <PrimaryBtn
-                                                type="submit"
-                                                disabled={uiState?.processing}
+                                                type="button"
                                                 className="py-3 h-full px-6 md:w-auto">
-                                                {
-                                                    uiState?.processing ?
-                                                        <Spinner />
-                                                        :
-                                                        <span>Login</span>
-                                                }
+                                                Login
                                             </PrimaryBtn>
                                         </div>
 

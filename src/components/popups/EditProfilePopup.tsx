@@ -7,6 +7,7 @@ import { faUser, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { NavigationItem } from "../sidebar"
 import GrBorderBox from "../ui/gr-border-box"
+import ChangePasswordPopup from "./ChangePasswordPopup"
 
 
 
@@ -78,12 +79,16 @@ export default function EditProfilePopup() {
                                                 <InputEl label="Email" placeholder="mike@gmail.com" />
                                                 <InputEl label="Phone" placeholder="+61 00 000 00" />
                                                 <InputEl label="Website" placeholder="https://www.website.com" />
-                                                <SecondaryBtn className="border-white/10 py-4 md:text-sm">
-                                                    Update Password
-                                                </SecondaryBtn>
+                                                <ChangePasswordPopup
+                                                    trigger={({ open }) => (
+                                                        <SecondaryBtn onClick={open} className="border-white/10 py-4 md:text-sm">
+                                                            Update Password
+                                                        </SecondaryBtn>
+                                                    )}
+                                                />
                                             </div>
                                         </div>
-                                        <GrBorderBox className="md:p-[1px] w-full">
+                                        <GrBorderBox className="md:p-[1px] w-full rounded-none">
                                             <div className="flex  md:px-[30px] px-7 bg-gr-purple-dark pt-4 justify-end ">
                                                 <div className="space-x-[10px]">
                                                     <SecondaryBtn className="border-white/10 py-4 px-6 md:px-10 md:text-sm">
@@ -95,7 +100,7 @@ export default function EditProfilePopup() {
                                                 </div>
                                             </div>
                                         </GrBorderBox>
-                                   </div>
+                                    </div>
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

@@ -100,7 +100,7 @@ export default function BillingPage() {
                             </div>
                             <span className="block text-start min-w-[170px]"></span>
                         </div>
-                        <div className="lg:py-0 divide-y divide-white/10 px-4">
+                        <div className="lg:py-0 divide-y divide-white/10 px-4 lg:px-0">
                             <SingleBiillingRow />
                             <SingleBiillingRow />
                         </div>
@@ -114,7 +114,7 @@ export default function BillingPage() {
 
 function SingleBiillingRow() {
     return (
-        <div className="flex items-center justify-between w-full lg:gap-3 py-5" >
+        <div className="flex items-center justify-between w-full lg:gap-3 py-5 lg:px-4" >
             <div className="flex flex-col lg:flex-row lg:items-center justify-between w-full gap-3 lg:gap-0">
                 <span className="block text-sm lg:py-3 text-start overflow-hidden lg:w-2/3">
                     Invoice #007 - May 2023
