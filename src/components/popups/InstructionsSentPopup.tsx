@@ -72,8 +72,7 @@ export default function InstructionsSentPopup({ trigger }: Props) {
                                     "relative"
                                 )}>
                                     <GrBorderBox>
-                                        <div className="px-6  pb-9 space-y-[10px] rounded-20 bg-gr-purple-dark  max-h-[calc(100vh_-_200px)] overflow-y-auto md:pb-[50px] md:px-8 md:space-y-0">
-                                            {/* content */}
+                                        <div className="rounded-20 bg-gr-purple-dark">
                                             <div className="w-full flex flex-row  items-center justify-between px-4 pt-5 md:px-5">
                                                 <button type="button" onClick={closeModal}
                                                     className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-pointer">
@@ -81,19 +80,23 @@ export default function InstructionsSentPopup({ trigger }: Props) {
                                                 </button>
                                                 <div></div>
                                             </div>
-                                            <img src="/images/instructions-logo.png" width={80} height={80} loading="lazy"
-                                                className={cn(
-                                                    "w-[80px] h-auto aspect-square rounded-full overflow-hidden mx-auto",
-                                                    "block"
-                                                )}
-                                                alt="" />
-                                            <div className="font-nebula text-white text-center text-2xl font-normal md:pt-7">
-                                                Instructions sent
-                                            </div>
-                                            <div>
-                                                <p className="md:text-sm text-xs font-normal font-jakarta text-white/70 text-center md:py-4">
-                                                    We have sent the instructions to your email. Please follow those instructions to reset your password
-                                                </p>
+                                            <div className="px-6  pb-9 space-y-[10px]  md:pb-[50px] md:px-8 md:space-y-0">
+                                                {/* content */}
+
+                                                <img src="/images/instructions-logo.png" width={80} height={80} loading="lazy"
+                                                    className={cn(
+                                                        "w-[80px] h-auto aspect-square rounded-full overflow-hidden mx-auto",
+                                                        "block"
+                                                    )}
+                                                    alt="" />
+                                                <div className="font-nebula text-white text-center text-2xl font-normal md:pt-7">
+                                                    Instructions sent
+                                                </div>
+                                                <div className="flex justify-center">
+                                                    <p className="md:text-sm text-xs font-normal font-jakarta text-white/70 text-center md:py-4 max-w-full md:max-w-[80%]">
+                                                        We have sent the instructions to your email. Please follow those instructions to reset your password
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </GrBorderBox>

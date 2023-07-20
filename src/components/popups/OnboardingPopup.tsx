@@ -107,7 +107,7 @@ export default function OnboardingPopup({ trigger }: Props) {
                                                             </p>
                                                         </label>
                                                     }
-                                                    value="Enter keyword and press enter" />
+                                                    placeholder="Enter keyword and press enter" />
                                                 <div className="flex justify-between">
                                                     <div></div>
                                                     <div>

@@ -33,7 +33,7 @@ export const PrimaryBtn = React.forwardRef<HTMLButtonElement, ButtonProps>(({ cl
             "primary-btn bg-primary shadow-primary-btn hover:shadow-primary-btn-lg outline-none",
             "transition-all duration-300 rounded-lg py-[8px] px-4",
             "inline-flex items-center gap-2 text-white text-sm font-semibold justify-center",
-            "disabled:opacity-70",
+            "disabled:opacity-70 focus-visible:!outline-none",
             className
         )} {...props} ref={ref}>
             {children}
