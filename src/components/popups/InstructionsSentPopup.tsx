@@ -90,8 +90,8 @@ export default function InstructionsSentPopup({ trigger }: Props) {
                                             <div className="font-nebula text-white text-center text-2xl font-normal md:pt-7">
                                                 Instructions sent
                                             </div>
-                                            <div>
-                                                <p className="md:text-sm text-xs font-normal font-jakarta text-white/70 text-center md:py-4">
+                                            <div className="flex justify-center">
+                                                <p className="md:text-sm text-xs font-normal font-jakarta text-white/70 text-center md:py-4 max-w-full md:max-w-[80%]">
                                                     We have sent the instructions to your email. Please follow those instructions to reset your password
                                                 </p>
                                             </div>
