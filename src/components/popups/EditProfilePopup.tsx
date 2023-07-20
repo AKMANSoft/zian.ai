@@ -88,7 +88,7 @@ export default function EditProfilePopup() {
                                                 />
                                             </div>
                                         </div>
-                                        <GrBorderBox className="md:p-[1px] w-full rounded-none">
+                                        <GrBorderBox className="p-px md:p-[2px] w-full rounded-none">
                                             <div className="flex  md:px-[30px] px-7 bg-gr-purple-dark pt-4 justify-end ">
                                                 <div className="space-x-[10px]">
                                                     <SecondaryBtn className="border-white/10 py-4 px-6 md:px-10 md:text-sm">
