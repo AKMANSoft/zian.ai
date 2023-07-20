@@ -14,7 +14,7 @@ import SelectEl from "@/components/ui/selectel";
 
 
 export default function SignUpPage() {
-    const [currentStep, setCurrentStep] = useState<"SIGNUP" | "ONBOARDING">()
+    const [currentStep, setCurrentStep] = useState<"SIGNUP" | "ONBOARDING">("SIGNUP")
     const form = useForm<SignUpFormSchema>({
         resolver: zodResolver(signUpFormSchema),
         mode: "all",
@@ -33,7 +33,7 @@ export default function SignUpPage() {
                         {
                             currentStep === "ONBOARDING" ?
                                 <GrBorderBox>
-                                    <div className="md:px-8 py-[30px] max-h-[calc(100vh_-_200px)] rounded-20 bg-gr-purple-dark">
+                                    <div className="md:px-8 py-[30px] rounded-20 bg-gr-purple-dark">
                                         {/* content */}
                                         <img src="/images/avatar.png" width={100} height={100} loading="lazy"
                                             className={cn(
