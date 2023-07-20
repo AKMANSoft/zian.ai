@@ -14,7 +14,7 @@ import SelectEl from "@/components/ui/selectel";
 
 
 export default function SignUpPage() {
-    const [currentStep, setCurrentStep] = useState<"SIGNUP" | "ONBOARDING">()
+    const [currentStep, setCurrentStep] = useState<"SIGNUP" | "ONBOARDING">("SIGNUP")
     const form = useForm<SignUpFormSchema>({
         resolver: zodResolver(signUpFormSchema),
         mode: "all",
