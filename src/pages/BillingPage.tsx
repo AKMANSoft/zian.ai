@@ -61,7 +61,7 @@ export default function BillingPage() {
                     </div>
                     <div className="flex justify-between items-center">
                         <h1 className="text-sm font-jakarta font-bold text-white">
-                            <FontAwesomeIcon icon={faCreditCard} />
+                            <FontAwesomeIcon icon={faCreditCard}  className="text-white/70"/>
                             <span className="pl-[10px]">
                                 Visa ending in
                             </span>
@@ -72,7 +72,7 @@ export default function BillingPage() {
                     </div>
                     <div className="flex justify-between">
                         <h1 className="text-sm font-jakarta font-bold text-white">
-                            <FontAwesomeIcon icon={faCreditCard} />
+                            <FontAwesomeIcon icon={faCreditCard}  className="text-white/70"/>
                             <span className="pl-[10px]">
                                 Mastercard ending in 1234
                             </span>
