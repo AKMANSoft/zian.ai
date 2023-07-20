@@ -8,9 +8,6 @@ import ShadcnProviders from "./components/ui/shadcn-providers";
 import LoadingSparkle from "./components/LoadingSparkle";
 
 
-const GenerateContentPage = React.lazy(() => import("./pages/GenerateContent"));
-const CalendarPage = React.lazy(() => import("./pages/Calendar"));
-const DraftsPage = React.lazy(() => import("./pages/Drafts"));
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const DashboardArticleLoaded = React.lazy(() => import("./pages/DashboardArticleLoaded"));
 const BillingPage = React.lazy(() => import("./pages/BillingPage"));
@@ -34,42 +31,6 @@ const router = createBrowserRouter([
         </div>
       }>
         <Dashboard />
-      </Suspense>
-    )
-  },
-  {
-    path: "/generate",
-    element: (
-      <Suspense fallback={
-        <div className="w-full h-screen flex items-center justify-center">
-          <LoadingSparkle spark variant="large" />
-        </div>
-      }>
-        <GenerateContentPage />
-      </Suspense>
-    )
-  },
-  {
-    path: "/calendar",
-    element: (
-      <Suspense fallback={
-        <div className="w-full h-screen flex items-center justify-center">
-          <LoadingSparkle spark variant="large" />
-        </div>
-      }>
-        <CalendarPage />
-      </Suspense>
-    )
-  },
-  {
-    path: "/drafts",
-    element: (
-      <Suspense fallback={
-        <div className="w-full h-screen flex items-center justify-center">
-          <LoadingSparkle spark variant="large" />
-        </div>
-      }>
-        <DraftsPage />
       </Suspense>
     )
   },
@@ -180,8 +141,6 @@ axios.defaults.baseURL = apiConfig.basepath
 function App() {
   const { authUser } = useAuthUserStore()
 
-
-  console.log(authUser)
 
   useEffect(() => {
     if (authUser?.token) {
