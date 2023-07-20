@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { faCopy, faPlay } from "@fortawesome/free-solid-svg-icons";
 import JSONPretty from 'react-json-pretty';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 
@@ -12,15 +12,7 @@ import { cn } from "@/lib/utils";
 
 
 export default function ApiIntegrationPage() {
-    const videoRef = useRef<HTMLVideoElement>(null);
 
-    const handleVideoClick = () => {
-    
-        if (!videoRef.current) return;
-        if (!videoRef.current.paused) {
-            videoRef.current.pause();
-        }
-    };
 
 
     return (
@@ -61,24 +53,12 @@ export default function ApiIntegrationPage() {
                                 </li>
                             </ul>
                             <div className="space-y-[10px]">
-                                <div className="" onClick={handleVideoClick}>
-                                    <div className="md:w-[500px] w-auto relative">
-                                        <video ref={videoRef} src="/videos/test_video.mp4" width={500} height={300} className="rounded-[20px] w-auto aspect-video bg-cover bg-no-repeat md:w-[500px] md:h-[300px] relative" />
-                                        <button onClick={async () => {
-                                            await videoRef.current?.play()
-                                        }} className={cn(
-                                            "px-4 py-3 bg-transparent/60 flex items-center justify-center border rounded-full absolute top-1/2 right-1/2 -translate-y-1/2",
-                                            videoRef.current?.paused && "hidden"
-                                        )}>
-                                            <FontAwesomeIcon className="text-3xl text-white " icon={faPlay} />
-                                        </button>
-                                    </div>
-                                </div>
+                                <VideoComponent />
                                 <div>
                                     <a className="text-base font-jakarta font-bold text-white underline  md:text-xl cursor-pointer">
                                         Installing Zian AI into Your WordPress Website 🚀 - Watch Video
                                     </a>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -207,5 +187,43 @@ export default function ApiIntegrationPage() {
 }
 
 
+
+
+
+function VideoComponent() {
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const [showBtn, setShowBtn] = useState(false);
+
+
+    useEffect(() => {
+        videoRef.current?.addEventListener("play", function () {
+            if (!videoRef.current) return;
+            setShowBtn(!videoRef.current.paused)
+        })
+    }, [videoRef])
+
+
+    const onPlayVideoClicked = async () => {
+        if (!videoRef.current) return;
+        await videoRef.current.play()
+        videoRef.current.controls = true;
+    }
+
+    return (
+        <div className="">
+            <div className="relative w-full md:w-[500px]">
+                <video ref={videoRef} src="/videos/test_video.mp4" width={500} height={300} className="rounded-20 overflow-hidden w-full h-auto aspect-video object-cover" />
+                <button onClick={onPlayVideoClicked} className={cn(
+                    "aspect-square px-4 bg-transparent/60 flex items-center justify-center border rounded-full",
+                    "absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2",
+                    showBtn && "hidden"
+                )}>
+                    <FontAwesomeIcon className="text-lg text-white " icon={faPlay} />
+                </button>
+            </div>
+        </div>
+    )
+
+}
 
 

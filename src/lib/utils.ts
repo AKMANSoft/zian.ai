@@ -10,3 +10,8 @@ export function cn(...inputs: ClassValue[]) {
 export function b64Image(image: string) {
   return `data:image/png;base64,${image}`
 }
+
+
+export function formatNumberto0(num: number): string {
+  return num >= 10 ? `${num}` : `0${num}`;
+}
