@@ -8,7 +8,7 @@ import { TextAreaEl } from "../components/ui/textarea";
 import SparkleButton from "@/components/ui/sparkle-btn";
 import { useState, useEffect, useRef } from "react";
 import LoadingSparkle from "@/components/LoadingSparkle";
-import { changeImageUrl, useOnScreen, useIntersection, useIsVisible } from '@/lib/utils'
+import { changeImageUrl, useOnScreen } from '@/lib/utils'
 
 import {
   Form,
@@ -117,13 +117,6 @@ export default function GenerateContentPage() {
 
     const ref = useRef<HTMLButtonElement>(null);
     const isVisible = useOnScreen(ref);
-    // const isVisible = useIntersection(ref, '-10px');
-    // const isVisible = useIsVisible(ref);
-    if (isVisible) {
-      console.log('Visible');
-    } else {
-      console.log('Invisible');
-    }
 
     useEffect(() => {
         async function startFetching() {
