@@ -283,7 +283,7 @@ export default function PostViewPopup({ trigger, content, deleteNumber, setDelet
                                                         {
                                                           sendStatus === '' ?
                                                             <PrimaryBtn className="py-3 h-full" onClick={onClickSendNow}>
-                                                                Send Now
+                                                                Post Now
                                                             </PrimaryBtn>
                                                             : sendStatus === 'sending' ? 
                                                               <PrimaryBtn disabled={true} className="py-3 h-full">
@@ -318,17 +318,17 @@ export default function PostViewPopup({ trigger, content, deleteNumber, setDelet
 
                                         {/*
                                         <PrimaryBtn className="py-3 h-full px-8 w-full md:w-auto">
-                                            Send Now
+                                            Post Now
                                         </PrimaryBtn>
                                           */}
                                         {
                                           sendStatus === '' ?
                                             <PrimaryBtn className="py-3 h-full px-8 w-full md:w-auto" onClick={onClickSendNow}>
-                                                Send Now
+                                                Post Now
                                             </PrimaryBtn>
                                             : sendStatus === 'sending' ? 
                                               <PrimaryBtn disabled={true} className="py-3 h-full px-8 w-full md:w-auto">
-                                                  Send Now
+                                                  Post Now
                                               </PrimaryBtn>
                                             : ''
                                         }

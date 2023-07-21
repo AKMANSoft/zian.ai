@@ -37,13 +37,13 @@ type PostViewSectionProps = {
     deleteNumber?: number
     setDeleteNumber?: (n: number) => void
     tips?: string
+    contents?: any[]
 }
 
 
-export default function PostViewSection({ className, heading, contentClassName, customContent = null, scheduled = true, content, deleteNumber, setDeleteNumber, tips }: PostViewSectionProps) {
+export default function PostViewSection({ className, heading, contentClassName, customContent = null, scheduled = true, content, deleteNumber, setDeleteNumber, tips, contents }:
+  PostViewSectionProps) {
     const [imageStatus, setImageStatus] = useState<PostStatus>(PostStatus.GENERATED);
-    const [image, setImage] = useState<any>(content?.image);
-    setImage(content?.image);
     const [sendStatus, setSendStatus] = useState<string>('');
     // const [isGenerateImage, setIsGenerateImage] = useState<boolean>(false);
     // const [content, setContent] = useState<any>(null);
@@ -51,13 +51,87 @@ export default function PostViewSection({ className, heading, contentClassName, 
     const pageData: any = useLoaderData();
     // console.log({pageData});
 
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
+    const [currentContent, setCurrentContent] = useState<any>(content);
+    setCurrentContent(content);
+
+    if (contents && contents.length > 0) {
+      if (contents.indexOf(content) > -1) {
+        setCurrentIndex(contents.indexOf(content));
+      } else {
+        content = contents[currentIndex];
+        setCurrentContent(content);
+      }
+    }
+
+    const [image, setImage] = useState<any>(content?.image);
+    if (contents) {
+      setImage(currentContent?.image);
+    } else {
+      setImage(content?.image);
+    }
+
+    function onClickLeftArrowBtn() {
+      let newIndex = currentIndex - 1;
+      if (newIndex < 0 && contents) {
+        newIndex = contents.length - 1;
+      }
+      setCurrentIndex(newIndex);
+      // console.log('Clicked left arrow: ', currentIndex);
+
+      if (contents) {
+        const newContent = contents[currentIndex]
+        setCurrentContent(newContent);
+        let newImage = newContent.image;
+        setImage(newImage);
+      }
+    }
+
+    function onClickRightArrowBtn() {
+      let newIndex = currentIndex + 1;
+      if (contents && newIndex > contents.length - 1) {
+        newIndex = 0;
+      }
+      setCurrentIndex(newIndex);
+      // console.log('Clicked right arrow: ', currentIndex);
+
+      if (contents) {
+        const newContent = contents[currentIndex]
+        setCurrentContent(newContent);
+        let newImage = newContent.image;
+        setImage(newImage);
+        // console.log('Current image: ', image);
+        // console.log('content image: ', newContent.image);
+      }
+    }
+
     const onRegenerateClicked = () => {
         setImageStatus(PostStatus.GENERATING);
 
         // contentApiClient.contentsCreateImage({id: content.id}).then((r) => {
-        imageApiClient.imagesCreateImage({id: content.id}).then((r) => {
+        imageApiClient.imagesCreateImage({id: currentContent.id}).then((r) => {
           // console.log(r);
-          setImage(r.imageUrl);
+          let newImage = r.imageUrl;
+          setImage(newImage);
+          // setCurrentContent(r);
+          // console.log('Current image: ', image);
+          // console.log('result image: ', newImage);
+
+          if (contents) {
+            // console.log(`contents before changing:`, contents);
+
+            let newContent = contents[currentIndex];
+            newContent.image = r.imageUrl;
+            contents[currentIndex] = newContent;
+            setCurrentContent(newContent);
+
+            // console.log('new Content: ', newContent);
+            // console.log('Current image: ', image);
+            // console.log('content image: ', newContent.image);
+            //
+            // console.log(`contents after changing:`, contents);
+          }
+
           if (deleteNumber !== undefined) {
             let lastNumber = deleteNumber + 1;
             setDeleteNumber && setDeleteNumber(lastNumber);
@@ -75,16 +149,32 @@ export default function PostViewSection({ className, heading, contentClassName, 
     function onGenerateBeautifulImage(): void {
       setImageStatus(PostStatus.GENERATING);
 
-      // contentApiClient.contentsCreateImage({id: content.id}).then((r) => {
-      console.log(`imageUrl before: ${image}`);
+      // contentApiClient.contentsCreateImage({id: currentContent.id}).then((r) => {
+      // console.log(`imageUrl before: ${image}`);
       const imagesCreateImageVarRequest = {
-        content: content.id,
+        content: currentContent.id,
         method: 'midjourney',
       }
       imageApiClient.imagesCreateImageVar(imagesCreateImageVarRequest).then((r) => {
-        console.log('generate image: ', r);
+        // console.log('generate image: ', r);
         setImage(r[0].imageUrl);
-        console.log(`imageUrl after: ${image}`);
+        // console.log('Current image: ', image);
+
+        if (contents) {
+          // console.log(`contents before changing:`, contents);
+
+          let newContent = contents[currentIndex];
+          newContent.image = r[0].imageUrl;
+          contents[currentIndex] = newContent;
+          setCurrentContent(newContent);
+
+          // console.log('Current image: ', image);
+          // console.log('content image: ', newContent.image);
+          //
+          // console.log(`contents after changing:`, contents);
+        }
+        // console.log(`imageUrl after: ${image}`);
+
         if (deleteNumber !== undefined) {
           deleteNumber = deleteNumber + 1;
           setDeleteNumber && setDeleteNumber(deleteNumber);
@@ -103,9 +193,9 @@ export default function PostViewSection({ className, heading, contentClassName, 
     // }
 
     function onDeleteContent(): void {
-      if (content) {
-        console.log(`Delete content: ${content.id}`);
-        contentApiClient.contentsDelete({id: content.id}).then((r) => {
+      if (currentContent) {
+        console.log(`Delete content: ${currentContent.id}`);
+        contentApiClient.contentsDelete({id: currentContent.id}).then((r) => {
           // console.log(r);
           // contentApiClient.contentsScheduled().then((r) => {
           //   // console.log(r.results);
@@ -118,6 +208,26 @@ export default function PostViewSection({ className, heading, contentClassName, 
           //   // return r.results;
           // });
 
+          if (contents && contents.length > 0) {
+            // remove current content
+            contents.splice(currentIndex, 1);
+
+            // check remaining content list
+            if (contents.length <= 0) {
+              // get new current content
+              setCurrentContent(null);
+              setImage(null);
+            } else {
+              if (currentIndex >= contents.length - 1) {
+                setCurrentIndex(0);
+              }
+
+              // get new current content
+              setCurrentContent(contents[currentIndex]);
+              setImage(contents[currentIndex].image);
+            }
+          }
+
           if (deleteNumber !== undefined) {
             deleteNumber = deleteNumber + 1;
             setDeleteNumber && setDeleteNumber(deleteNumber);
@@ -128,11 +238,11 @@ export default function PostViewSection({ className, heading, contentClassName, 
     }
 
     function onClickSendNow(): void {
-      if (content) {
+      if (currentContent) {
         setSendStatus('sending');
 
-        console.log(`Send content: ${content.id}`);
-        contentApiClient.contentsSend({id: content.id}).then((r) => {
+        console.log(`Send content: ${currentContent.id}`);
+        contentApiClient.contentsSend({id: currentContent.id}).then((r) => {
           console.log(r);
 
           const msg_class = 'text-green-500';
@@ -141,6 +251,26 @@ export default function PostViewSection({ className, heading, contentClassName, 
           // setMessageClass(msg_class);
           // setSendStatus('sent');
           setSendStatus('');
+
+          if (contents && contents.length > 0) {
+            // remove current content
+            contents.splice(currentIndex, 1);
+
+            // check remaining content list
+            if (contents.length <= 0) {
+              // get new current content
+              setCurrentContent(null);
+              setImage(null);
+            } else {
+              if (currentIndex >= contents.length - 1) {
+                setCurrentIndex(0);
+              }
+
+              // get new current content
+              setCurrentContent(contents[currentIndex]);
+              setImage(contents[currentIndex].image);
+            }
+          }
 
           if (setDeleteNumber && deleteNumber != undefined) {
             deleteNumber = deleteNumber + 1;
@@ -168,8 +298,31 @@ export default function PostViewSection({ className, heading, contentClassName, 
                 contentClassName
             )}>
                 <div id="hello" data-expanded="true">
-
                 </div>
+
+                { contents && contents.length > 0 &&
+                  <div className="flex justify-between">
+                    {/* left arrow */}
+                      {/*<button className="absolute top-4 left-6">*/}
+                    <button className="" onClick={onClickLeftArrowBtn} disabled={imageStatus === PostStatus.GENERATING}>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 stroke-white fill-white opacity-70">
+                        <path fillRule="evenodd" d="M7.28 7.72a.75.75 0 010 1.06l-2.47 2.47H21a.75.75 0 010 1.5H4.81l2.47 2.47a.75.75 0 11-1.06 1.06l-3.75-3.75a.75.75 0 010-1.06l3.75-3.75a.75.75 0 011.06 0z" clipRule="evenodd" />
+                      </svg>
+                    </button>
+
+                    <span className="text-white opacity-70">
+                      {`(${currentIndex + 1} of ${contents.length})`}
+                    </span>
+
+                    {/* right arrow */}
+                    <button className="" onClick={onClickRightArrowBtn} disabled={imageStatus === PostStatus.GENERATING}>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 stroke-white fill-white opacity-70">
+                        <path fillRule="evenodd" d="M16.72 7.72a.75.75 0 011.06 0l3.75 3.75a.75.75 0 010 1.06l-3.75 3.75a.75.75 0 11-1.06-1.06l2.47-2.47H3a.75.75 0 010-1.5h16.19l-2.47-2.47a.75.75 0 010-1.06z" clipRule="evenodd" />
+                      </svg>
+                    </button>
+                  </div>
+                }
+
                 {/* Top Center Stick Design  */}
                 <div className="absolute -top-[1px] left-1/2 -translate-x-1/2 bg-primary w-[80%] h-[8px] stick-shadow"></div>
                 {/* Main Content  */}
@@ -180,9 +333,9 @@ export default function PostViewSection({ className, heading, contentClassName, 
                             <div className="">
                                 {heading}
                                 <p className="mt-7 font-light text-base text-th-gray font-jakarta">
-                                  {/* pageData?.page === 'home' ? pageData?.latestContents[0]?.text || 'No any content' : '' */}
+                                  {/* pageData?.page === 'home' ? pageData?.latestContents[0]?.text || 'No content' : '' */}
                                   {/* pageData?.page === 'home' && pageData?.latestContents[0]?.text && setContent(pageData?.latestContents[0]) */}
-                                  { content?.text || tips || 'No any content' }
+                                  { currentContent?.text || tips || 'No content' }
                                 </p>
                                 {
                                   // pageData?.page === 'home' && pageData?.latestContents[0]?.image ?
@@ -224,7 +377,7 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                             <span>Date: </span>
                                             {/*<span className="font-medium">{ pageData?.page === 'home' ? pageData?.latestContents[0]?.createdTime?.toLocaleString() || '' : '' }</span>*/}
                                             {/*<span className="font-medium">{ content?.createdTime?.toLocaleString() || '' }</span>*/}
-                                            <span className="font-medium">{ content?.scheduleTime?.toLocaleString() || '' }</span>
+                                            <span className="font-medium">{ currentContent?.scheduleTime?.toLocaleString() || '' }</span>
                                           
                                         </p>
                                         <Seperator />
@@ -240,16 +393,16 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                             </SecondaryBtn>
                                               */}
 
-                                            <AddEditDraftPopup variant="edit" content={content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber} hasWord={true}
+                                            <AddEditDraftPopup variant="edit" content={currentContent} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber} hasWord={true}
                                               newWords={'Reschedule'}
                                               className={"px-2 xs:px-4"}
                                               hasParent={false}
-                                              disabled={content ? false : true }
+                                              disabled={currentContent ? false : true }
                                             />
-                                            <AddEditDraftPopup variant="edit" content={content} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber} hasWord={true}
+                                            <AddEditDraftPopup variant="edit" content={currentContent} deleteNumber={deleteNumber} setDeleteNumber={setDeleteNumber} hasWord={true}
                                               className={"px-2 xs:px-4"}
                                               hasParent={false}
-                                              disabled={content ? false : true }
+                                              disabled={currentContent ? false : true }
                                             />
 
                                            {/*
@@ -260,12 +413,12 @@ export default function PostViewSection({ className, heading, contentClassName, 
                                              */}
                                             <WarningPopup
                                                 heading="Are you sure you want to delete this post?"
-                                                // description={ pageData?.page === 'home' ? pageData?.latestContents[0]?.text || 'No any content' : '' }
-                                                description={ content?.text || 'No any content' }
+                                                // description={ pageData?.page === 'home' ? pageData?.latestContents[0]?.text || 'No content' : '' }
+                                                description={ currentContent?.text || 'No content' }
                                                 negativeText="Cancel"
                                                 positiveText="Yes, Delete"
                                                 trigger={({ open }) => (
-                                                    <SecondaryBtn disabled={content ? false : true } onClick={open} className="p-3">
+                                                    <SecondaryBtn disabled={currentContent ? false : true } onClick={open} className="p-3">
                                                         <FontAwesomeIcon icon={faTrash} />
                                                         Delete
                                                     </SecondaryBtn>
@@ -281,19 +434,19 @@ export default function PostViewSection({ className, heading, contentClassName, 
                             <GrBorderBox className="p-[1px] absolute w-full bottom-0 left-0 ">
                                 <div className="bg-gr-purple backdrop-blur-3xl p-5 flex items-center gap-4">
                                     <SecondaryBtn onClick={onGenerateBeautifulImage} filled={false} className="border-white/10 py-3 w-1/2"
-                                      disabled={imageStatus === PostStatus.GENERATING || ! content}
+                                      disabled={imageStatus === PostStatus.GENERATING || ! currentContent}
                                     >
                                         {image ? 'Regenerate Image' : 'Generate Image'}
                                     </SecondaryBtn>
                                     {/*
                                     <PrimaryBtn className="py-3 w-1/2 h-full">
-                                        Send Now
+                                        Post Now
                                     </PrimaryBtn>
                                       */}
                                     {
                                       sendStatus === '' ?
-                                        <PrimaryBtn disabled={content ? false : true } className="py-3 w-1/2 h-full" onClick={onClickSendNow}>
-                                            Send Now
+                                        <PrimaryBtn disabled={(currentContent ? false : true) ||  (imageStatus === PostStatus.GENERATING)} className="py-3 w-1/2 h-full" onClick={onClickSendNow}>
+                                            Post Now
                                         </PrimaryBtn>
                                         : sendStatus === 'sending' ? 
                                           <PrimaryBtn disabled={true} className="py-3 w-1/2 h-full">

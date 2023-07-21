@@ -97,6 +97,7 @@ export default function GenerateContentPage() {
 
     const [deleteNumber, setDeleteNumber] = useState<number>(0);
     const [content, setContent] = useState<any>(null);
+    const [contents, setContents] = useState<any[]>([]);
 
     const [values, setValues] = useState<any>(new Map());
 
@@ -135,8 +136,10 @@ export default function GenerateContentPage() {
           if (!ignore) {
             if (result && result?.length > 0) {
               setContent(result[0]);
+              // setContents(result);
             } else {
               setContent(null);
+              // setContents([]);
               setPostStatus(PostStatus.NOT_GENERATED);
             }
           }
@@ -309,6 +312,7 @@ export default function GenerateContentPage() {
           console.log(r);
           if (r.length > 0) {
             setContent(r[0]);
+            setContents(r);
           }
 
           const msg_class = 'text-green-500';
@@ -469,7 +473,8 @@ export default function GenerateContentPage() {
                     }
                     deleteNumber={deleteNumber}
                     setDeleteNumber={setDeleteNumber}
-                    content={content}
+                    // content={content}
+                    contents={contents}
                 />
             </div>
         </MainLayout>
@@ -499,14 +504,16 @@ function EmptyPostContent({ loading = false }: EmptyPostContentProps) {
                         <div className="w-full flex flex-col items-center justify-center text-center">
                             <LoadingSparkle spark />
                             <h4 className="text-lg font-semibold font-jakarta mt-5 text-white">
-                                Regenerating content
+                                Generating content
                             </h4>
+                            {/*
                             <p className="text-sm font-normal font-jakarta text-white/70 mt-">
                                 Sed consectetur imperdiet facilisis. Nulla maa.
                             </p>
                             <SecondaryBtn filled={false} className="mt-5">
                                 Cancel
                             </SecondaryBtn>
+                              */}
                         </div>
                         :
                         <>

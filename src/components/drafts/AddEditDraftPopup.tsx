@@ -1001,7 +1001,7 @@ export default function AddEditDraftPopup({ variant = "add", content, deleteNumb
 //                                     Regenerate Image
 //                                 </SecondaryBtn>
 //                                 <PrimaryBtn className="py-3 h-full">
-//                                     Send Now
+//                                     Post Now
 //                                 </PrimaryBtn>
 //                             </div>
 //                         </div>
