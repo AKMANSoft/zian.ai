@@ -38,12 +38,18 @@ export default function DashboardArticleLoaded() {
                             <span className="block text-start w-[150px] overflow-hidden">Created Date</span>
                             <span className="block text-start w-[100px] overflow-hidden"></span>
                         </div>
-                        <div className="max-h-full max-w-full h-screen lg:overflow-y-auto divide-y lg:bg-transparent divide-white/10 space-y-5 lg:divide-y-0 px-5 lg:px-0">
+                        <div className="max-h-full max-w-full h-screen overflow-y-auto lg:bg-transparent divide-white/10 space-y-5 lg:divide-y-0 px-5 lg:px-0">
                             <SingleArticleRow num={1} />
                             <SingleArticleRow num={2} />
                             <SingleArticleRow num={3} />
+                            <SingleArticleRow num={2} />
+                            <SingleArticleRow num={3} />
+                            <SingleArticleRow num={2} />
+                            <SingleArticleRow num={3} />
+                            <SingleArticleRow num={2} />
+                            <SingleArticleRow num={3} />
                         </div>
-                        <DraftsPagination />
+                        <Pagination />
                     </div>
                 </div>
             </GrBorderBox>
@@ -55,9 +61,9 @@ export default function DashboardArticleLoaded() {
 
 
 
-function DraftsPagination() {
+function Pagination() {
     const [activePage, setActivePage] = useState(1);
-    const visiblePages = [1, 2, 3, 4, 5];
+    const visiblePages = [1, 2, 3, 4];
 
     const onPageChange = (page: number) => {
         const lastPage = visiblePages[visiblePages.length - 1];
@@ -68,7 +74,7 @@ function DraftsPagination() {
     }
 
     return (
-        <div className="w-full border-t border-white/10 py-[10px] px-5 sticky bottom-0 bg-dark flex items-center justify-end">
+        <div className="w-full border-t border-white/10 py-[10px] px-5 sticky bottom-0 rounded-b-20 bg-dark flex items-center justify-end">
             <div className="flex items-center gap-2">
                 <button type="button"
                     onClick={() => onPageChange(1)}

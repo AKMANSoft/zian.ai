@@ -162,7 +162,7 @@ function SingleBiillingRow() {
 
 function Pagination() {
     const [activePage, setActivePage] = useState(1);
-    const visiblePages = [1, 2, 3, 4, 5];
+    const visiblePages = [1, 2, 3, 4];
 
     const onPageChange = (page: number) => {
         const lastPage = visiblePages[visiblePages.length - 1];
@@ -173,8 +173,8 @@ function Pagination() {
     }
 
     return (
-        <div className="w-full border-t border-white/10 py-3 bg-dark flex items-center justify-end overflow-hidden px-5">
-            <div className="flex items-center  gap-1 md:gap-2">
+        <div className="w-full border-t border-white/10 py-[10px] px-5 lg:sticky bottom-0 rounded-b-20 bg-dark flex items-center justify-end">
+            <div className="flex items-center gap-2">
                 <button type="button"
                     onClick={() => onPageChange(1)}
                     className="outline-none bg-white/5 rounded text-xs font-normal hover:bg-primary transition-all p-2 w-8 h-8 aspect-square">
@@ -213,6 +213,4 @@ function Pagination() {
         </div>
     )
 }
-
-
 
