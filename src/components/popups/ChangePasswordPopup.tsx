@@ -81,7 +81,7 @@ export default function ChangePasswordPopup({ trigger }: Props) {
                                         </button>
                                     </div>
 
-                                    <div className="max-h-[calc(100vh_-_200px)] overflow-y-auto flex flex-col">
+                                    <div className=" flex flex-col">
                                         {/* content */}
                                         <div className="mx-7 md:space-y-7 space-y-3 pb-24 md:pb-80">
                                             <div className="font-jakarta text-white text-[32px] font-bold">
