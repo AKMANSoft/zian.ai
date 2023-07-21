@@ -30,12 +30,14 @@ export default function SideBar({ expanded = false }: Props) {
             expanded && "left-0"
         )}>
             <div className="w-full">
-                <img src="/images/avatar.png" width={120} height={120} loading="lazy"
-                    className={cn(
-                        "w-[120px] h-auto aspect-square rounded-full overflow-hidden mx-auto",
-                        "hidden xl:block"
-                    )}
-                    alt="" />
+                <a href="/">
+                    <img src="/images/avatar.png" width={120} height={120} loading="lazy"
+                        className={cn(
+                            "w-[120px] h-auto aspect-square rounded-full overflow-hidden mx-auto",
+                            "hidden xl:block"
+                        )}
+                        alt="" />
+                </a>
                 <div className="mt-16 md:mt-4 w-full">
                     <div className="py-3">
                         {/* <UserHeaderComponent expandable className="lg:hidden" toggleClassName="h-[71px]" /> */}
