@@ -6,9 +6,9 @@ import PostViewSection from "../components/postview-section";
 import { InputEl } from "../components/ui/input";
 import { TextAreaEl } from "../components/ui/textarea";
 import SparkleButton from "@/components/ui/sparkle-btn";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import LoadingSparkle from "@/components/LoadingSparkle";
-import { changeImageUrl } from '@/lib/utils'
+import { changeImageUrl, useOnScreen, useIntersection, useIsVisible } from '@/lib/utils'
 
 import {
   Form,
@@ -113,6 +113,16 @@ export default function GenerateContentPage() {
         setTimeout(() => {
             setPostStatus(PostStatus.GENERATED);
         }, 4000);
+    }
+
+    const ref = useRef<HTMLButtonElement>(null);
+    const isVisible = useOnScreen(ref);
+    // const isVisible = useIntersection(ref, '-10px');
+    // const isVisible = useIsVisible(ref);
+    if (isVisible) {
+      console.log('Visible');
+    } else {
+      console.log('Invisible');
     }
 
     useEffect(() => {
@@ -330,6 +340,12 @@ export default function GenerateContentPage() {
       }
     }
 
+    function onClickArrowDownBtn() {
+      if (ref.current) {
+        ref.current.scrollIntoView();
+      }
+    }
+
     return (
         <MainLayout heading="Generate Content" user={pageData.user}>
             <div className="pb-5 flex flex-col lg:flex-row gap-5 min-h-[calc(100vh_-_130px)]">
@@ -412,11 +428,20 @@ export default function GenerateContentPage() {
                                 </div>
                                 <div className="flex justify-end p-3 lg:p-6">
                                   {/*<SparkleButton onClick={onPostGenerateClicked} className="px-10 h-12" type={'submit'}>*/}
-                                    <SparkleButton className="px-10 h-12" type={'submit'} disabled={postStatus === PostStatus.GENERATING}>
+                                    <SparkleButton ref={ref} className="px-10 h-12" type={'submit'} disabled={postStatus === PostStatus.GENERATING}>
                                         Generate
                                     </SparkleButton>
                                 </div>
                               </Form>
+                              {
+                                isVisible ? 
+                                  '' :
+                                  <button className="absolute bottom-2 right-2" onClick={onClickArrowDownBtn}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 stroke-white">
+                                      <path fillRule="evenodd" d="M20.03 4.72a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06 0l-7.5-7.5a.75.75 0 011.06-1.06L12 11.69l6.97-6.97a.75.75 0 011.06 0zm0 6a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06 0l-7.5-7.5a.75.75 0 111.06-1.06L12 17.69l6.97-6.97a.75.75 0 011.06 0z" clipRule="evenodd" />
+                                    </svg>
+                                  </button>
+                              }
                               <div className="p-3 lg:p-5 lg:pt-8 space-y-4">
                                 {
                                   errorMessage ? 

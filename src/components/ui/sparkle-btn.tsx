@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ReactNode } from "react"
+import { ReactNode, forwardRef, RefObject, LegacyRef } from "react"
 
 
 
@@ -9,9 +9,12 @@ type Props = {
     onClick?: () => void
     type?: 'button' | 'submit' | 'reset' | undefined;
     disabled?: boolean | undefined
+    // ref?:RefObject<HTMLButtonElement> | undefined
+    // ref?:LegacyRef<HTMLButtonElement> | undefined
 }
 
-export default function SparkleButton({ children, className, onClick, type, disabled }: Props) {
+// export default function SparkleButton({ children, className, onClick, type, disabled }: Props) {
+const SparkleButton = forwardRef<HTMLButtonElement, Props>( function ({ children, className, onClick, type, disabled}, ref) {
     return (
         <div className="sp">
 
@@ -21,6 +24,7 @@ export default function SparkleButton({ children, className, onClick, type, disa
             )} onClick={onClick}
               type={type}
               disabled={disabled}
+              ref={ref}
             >
                 <span className="spark"></span>
 
@@ -90,4 +94,6 @@ export default function SparkleButton({ children, className, onClick, type, disa
             </span> */}
         </div>
     )
-}
+});
+
+export default SparkleButton;

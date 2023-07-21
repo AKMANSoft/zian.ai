@@ -1,3 +1,4 @@
+import {  RefObject, useMemo, useEffect, useState } from 'react'
 import { ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
  
@@ -107,4 +108,21 @@ export function sortAnswers(answers: any[]) {
     }
   }
   return newAnswers;
+}
+
+export function useOnScreen(ref: RefObject<HTMLElement>) {
+  const [isIntersecting, setIntersecting] = useState(false);
+
+  const observer = useMemo(() => new IntersectionObserver(
+    ([entry]) => setIntersecting(entry.isIntersecting)
+  ), [ref]);
+
+  useEffect(() => {
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+    return () => observer.disconnect()
+  }, [ref, observer]);
+
+  return isIntersecting;
 }
