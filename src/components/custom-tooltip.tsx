@@ -17,7 +17,7 @@ export default function CustomTooltip({ title, content, className }: Props) {
           {title}
         </PrimaryBtn>
       </PopoverTrigger>
-      <PopoverContent className="bg-purple-500 font-base font-normal font-jakarta text-white rounded-[25px] mr-[7px] md:mr-0" align="start" side="top" >
+      <PopoverContent className="bg-purple-500 font-base font-normal font-jakarta text-white" align="start" side="top" >
         {content}
       </PopoverContent>
     </Popover>

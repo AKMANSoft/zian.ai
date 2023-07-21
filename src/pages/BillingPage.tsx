@@ -89,10 +89,10 @@ export default function BillingPage() {
             </div>
 
 
-            <GrBorderBox className="w-full p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)]" type="lg">
+            <GrBorderBox className="w-full p-px md:p-[2px] rounded-20" type="lg">
                 <div className="h-full w-full flex flex-col backdrop-blur-[10px] bg-gr-purple-light opacity-90 rounded-20">
                     {/* Drafts Table  */}
-                    <div className="w-full h-full rounded-20 flex flex-col ">
+                    <div className="w-full h-full rounded-20 flex flex-col">
                         <div className="border-b-[5px] text-xs font-semibold px-4 w-full hidden lg:flex justify-between items-center py-5 border-primary lg:gap-3">
                             <div className="flex items-center justify-between w-full">
                                 <span className="block text-start lg:w-2/3">Invoice</span>
@@ -102,14 +102,17 @@ export default function BillingPage() {
                             </div>
                             <span className="block text-start min-w-[170px]"></span>
                         </div>
-                        <div className="lg:py-0 divide-y divide-white/10 px-4 lg:px-0">
+                        <div className="lg:py-0 divide-y divide-white/10 px-4 lg:px-0 max-h-[600px] overflow-y-auto">
+                            <SingleBiillingRow />
+                            <SingleBiillingRow />
+                            <SingleBiillingRow />
                             <SingleBiillingRow />
                             <SingleBiillingRow />
                             <SingleBiillingRow />
                             <SingleBiillingRow />
                             <SingleBiillingRow />
                         </div>
-                        <DraftsPagination />
+                        <Pagination />
                     </div>
                 </div>
 
@@ -157,7 +160,7 @@ function SingleBiillingRow() {
     );
 }
 
-function DraftsPagination() {
+function Pagination() {
     const [activePage, setActivePage] = useState(1);
     const visiblePages = [1, 2, 3, 4, 5];
 
@@ -170,7 +173,7 @@ function DraftsPagination() {
     }
 
     return (
-        <div className="w-full border-t border-white/10 py-[10px] sticky bottom-0 bg-dark flex items-center justify-end overflow-hidden px-5">
+        <div className="w-full border-t border-white/10 py-3 bg-dark flex items-center justify-end overflow-hidden px-5">
             <div className="flex items-center  gap-1 md:gap-2">
                 <button type="button"
                     onClick={() => onPageChange(1)}
