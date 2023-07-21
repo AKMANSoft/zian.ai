@@ -2,7 +2,7 @@ import GrBorderBox from "../components/ui/gr-border-box";
 import MainLayout from "../components/layout";
 import { PrimaryBtnNeon } from "@/components/ui/buttons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft, faChevronRight, faCreditCard, faIdCard } from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faChevronRight, faCreditCard } from "@fortawesome/free-solid-svg-icons";
 import CustomTooltip from "@/components/custom-tooltip";
 import { CrossCircledIcon } from '@radix-ui/react-icons'
 import { cn } from "@/lib/utils";

@@ -24,7 +24,7 @@ const PopoverContent = React.forwardRef<
       {...props}
     >
       {children}
-      <div className="bg-purple-500 rotate-45 h-6 w-6 absolute left-2 top--1" />
+      <div className="bg-purple-500 rotate-45 h-6 w-6 absolute left-1/2 top--1 md:left-5"/>
     </PopoverPrimitive.Content>
   </PopoverPrimitive.Portal >
 ))
