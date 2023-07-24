@@ -130,6 +130,9 @@ type InputElWChipsProps = {
   labelNode?: React.ReactNode
   placeholder?: string;
   id?: string;
+  max?: number;
+  value?: Array<string>;
+  onChange?: (value: string[]) => void
 }
 
 function InputElWChips({ label, placeholder = "", labelNode = null, id = "" }: InputElWChipsProps) {
@@ -190,7 +193,82 @@ function InputElWChips({ label, placeholder = "", labelNode = null, id = "" }: I
 }
 
 
-export { Input, InputEl, InputElWChips, InputElDate }
+
+const TagsInputEl = React.forwardRef<HTMLInputElement, InputElWChipsProps>((
+  { label, placeholder = "", labelNode = null, id = "", max, value, onChange }, ref
+) => {
+  const [chips, setChips] = React.useState<string[]>(value ?? []);
+  const [inputVal, setInputVal] = React.useState("");
+
+  const handleKeyPress: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault()
+      if (max && chips.length >= max) return;
+      setChips([...chips, inputVal]);
+      setInputVal("");
+    }
+  }
+
+  React.useEffect(() => {
+    onChange?.(chips)
+  }, [chips, onChange])
+
+  const removeChip = (chip: string) => {
+    setChips(chips.filter((ch) => ch !== chip));
+  }
+
+  return (
+    <div className="w-full">
+      {
+        labelNode !== null ?
+          labelNode
+          :
+          <label htmlFor={id} className={cn(
+            "text-base leading-7 block w-full font-semibold font-jakarta text-white"
+          )}>
+            {label}
+          </label>
+      }
+      <div className={cn(
+        "flex items-center flex-wrap px-2 py-2 gap-2 min-h-[56px]",
+        "border border-white/10 rounded-10 w-full bg-transparent mt-2",
+        "focus-within:bg-th-gray/10"
+      )}>
+        {
+          chips.map((chip) => (
+            <PrimaryBtnNeon key={chip} className="text-[15px] font-medium w-auto cursor-default">
+              <span className="block max-w-full whitespace-nowrap overflow-hidden text-ellipsis">
+                {chip}
+              </span>
+              <span onClick={() => removeChip(chip)} className="block z-[1] ms-auto w-auto h-full aspect-square cursor-pointer text-base ">
+                <FontAwesomeIcon icon={faCircleXmark} />
+              </span>
+            </PrimaryBtnNeon>
+          ))
+        }
+        {
+          (!max || chips.length < max) &&
+          <input
+            type="text" id={id}
+            ref={ref}
+            value={inputVal}
+            onChange={(e) => setInputVal(e.target.value)}
+            onKeyDown={handleKeyPress}
+            placeholder={placeholder}
+            className={cn(
+              "text-white h-10 text-start bg-transparent font-jakarta font-normal text-sm leading-6 w-52 px-2",
+              "outline-none transition-all placeholder:text-white/70"
+            )} />
+        }
+      </div>
+    </div>
+  )
+})
+
+TagsInputEl.displayName = "TagsInputEl"
+
+
+export { Input, InputEl, InputElWChips, InputElDate, TagsInputEl }
 
 
 

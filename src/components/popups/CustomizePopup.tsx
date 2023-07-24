@@ -2,15 +2,25 @@ import { Fragment, useState } from "react"
 import { PrimaryBtn, SecondaryBtn } from "../ui/buttons"
 import { Dialog, Transition } from "@headlessui/react"
 import { cn } from "@/lib/utils"
-import { InputElWChips } from "../ui/input"
+import { TagsInputEl } from "../ui/input"
 import { faPen, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { NavigationItem } from "../sidebar"
-import SelectEl from "../ui/selectel"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import CustomTooltip from "../custom-tooltip"
 import GrBorderBox from "../ui/gr-border-box"
+import { useSwrFetcher } from "@/lib/useSwrFetcher"
+import { TIndustry } from "@/types/response.types"
+import apiConfig from "@/config/api.config"
+import api from "@/api"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
+import { useForm } from "react-hook-form"
+import { CustomizeSchema, customizeSchema } from "@/types/forms.types"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { FormSelect } from "../ui/select"
+import { Spinner } from "../ui/spinner"
+import { useToast } from "../ui/use-toast"
 
 
 
@@ -20,6 +30,15 @@ import GrBorderBox from "../ui/gr-border-box"
 
 export default function CustomizePopup() {
     const [isOpen, setIsOpen] = useState(false);
+    const { toast } = useToast()
+    const form = useForm<CustomizeSchema>({
+        resolver: zodResolver(customizeSchema),
+        mode: "onChange",
+        defaultValues: {
+            filter: false,
+        }
+    })
+    const { data: industryList } = useSwrFetcher<Array<TIndustry>>(apiConfig.endpoints.industryList, api.other.industryListFetcher)
 
     function closeModal() {
         setIsOpen(false)
@@ -27,6 +46,18 @@ export default function CustomizePopup() {
 
     function openModal() {
         setIsOpen(true)
+    }
+
+
+    const handleFormSubmit = async (values: CustomizeSchema) => {
+        const res = await api.user.updateKeyword({
+            ...values,
+            website: ""
+        })
+        toast({
+            title: res.success ? "Information updated successfully." : "An error occured while processing your request.",
+            variant: res.success ? "default" : "destructive"
+        })
     }
 
     return (
@@ -37,8 +68,8 @@ export default function CustomizePopup() {
                 text="Customize"
                 icon={<FontAwesomeIcon icon={faPen} />} />
 
-            <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-50" onClose={closeModal}>
+            <Transition appear show={isOpen} static as={Fragment}>
+                <Dialog as="div" onClose={() => setIsOpen(true)} static className="relative z-50">
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -66,88 +97,128 @@ export default function CustomizePopup() {
                                     "w-full max-w-[805px] transform overflow-hidden rounded-20 bg-gr-purple-dark shadow-xl transition-all",
                                     "relative"
                                 )}>
-                                    <div className="w-full flex flex-row  items-center justify-between px-5 mt-5">
-                                        <div></div>
-                                        <button type="button" onClick={closeModal}
-                                            className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-pointer">
-                                            <FontAwesomeIcon icon={faXmark} />
-                                        </button>
-                                    </div>
-
-                                    <div className="max-h-[calc(100vh_-_200px)] overflow-y-auto flex flex-col space-y-32">
-                                        {/* content */}
-                                            <div className="pb-4 space-y-5 px-7 md:pb-8 md:space-y-7">
-                                                <div className="font-jakarta text-white text-[32px] font-bold">
-                                                    Customize
-                                                </div>
-                                                <SelectEl
-                                                    className="w-full"
-                                                    labelNode={
-                                                        <label className="w-full flex items-center justify-between text-start flex-wrap gap-1 mb-2">
-                                                            <p className="text-white font-bold text-sm">
-                                                                Industry
-                                                            </p>
-                                                        </label>
-                                                    }
-                                                    options={[
-                                                        {
-                                                            text: "Marketing",
-                                                            value: "",
-                                                            disabled: false
-                                                        },
-                                                        {
-                                                            text: "Sales",
-                                                            value: "",
-                                                            disabled: false
-                                                        },
-                                                        {
-                                                            text: "Carporate",
-                                                            value: "",
-                                                            disabled: false
-                                                        }
-
-                                                    ]} />
-                                                <InputElWChips
-                                                    placeholder="Add keyword"
-                                                    labelNode={
-                                                        <label className="w-full flex items-center justify-between">
-                                                            <p className="text-white text-sm font-bold font-jakarta">
-                                                                Keywords
-                                                            </p>
-                                                        </label>
-                                                    } />
-                                                <div className="flex space-x-3">
-                                                    <div className="flex items-center space-x-2">
-                                                        <Switch id="airplane-mode" />
-                                                        <Label htmlFor="airplane-mode"></Label>
-                                                    </div>
-                                                    <p className="text-sm font-normal font-jakarta text-white">
-                                                        Skip topics about 3rd party brands - <span className="text-white/70">Yes</span>
-                                                    </p>
-                                                </div>
-                                                <div>
-                                                    <CustomTooltip
-                                                        title="Increase Article Volume"
-                                                        className=""
-                                                        content={
-                                                            <>
-                                                                To increase articles volume, please email hello@zian.ai
-                                                            </>
-                                                        } />
-                                                </div>
+                                    <Form {...form}>
+                                        <form method="POST" onSubmit={form.handleSubmit(handleFormSubmit)}>
+                                            <div className="w-full flex flex-row  items-center justify-between px-5 mt-5">
+                                                <div></div>
+                                                <button type="button" onClick={closeModal}
+                                                    className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-pointer">
+                                                    <FontAwesomeIcon icon={faXmark} />
+                                                </button>
                                             </div>
 
-                                    </div>
-                                    <GrBorderBox className="mt-4 md:mt-24 rounded-none ">
-                                        <div className="flex justify-end bg-gr-purple-dark space-x-[10px] py-2 md:py-5 px-7">
-                                            <SecondaryBtn className="text-sm py-3">
-                                                Cancel
-                                            </SecondaryBtn>
-                                            <PrimaryBtn className=" h-full w-auto px-12 py-3">
-                                                Save
-                                            </PrimaryBtn>
-                                        </div>
-                                    </GrBorderBox>
+                                            <div className="max-h-[calc(100vh_-_200px)] overflow-y-auto flex flex-col space-y-32">
+                                                {/* content */}
+                                                <div className="pb-4 space-y-5 px-7 md:pb-8 md:space-y-7">
+                                                    <div className="font-jakarta text-white text-[32px] font-bold">
+                                                        Customize
+                                                    </div>
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="industry"
+                                                        render={({ field, fieldState }) => (
+                                                            <FormItem>
+                                                                <FormLabel>Industry</FormLabel>
+                                                                <FormControl>
+                                                                    <FormSelect
+                                                                        onValueChange={field.onChange}
+                                                                        {...field}
+                                                                        placeholder="Select Industry"
+                                                                        className="w-full"
+                                                                        options={[
+                                                                            ...(
+                                                                                industryList?.map((industry) => ({
+                                                                                    label: industry.name,
+                                                                                    value: industry.id.toString(),
+                                                                                })) || []
+                                                                            )
+                                                                        ]} />
+                                                                </FormControl>
+                                                                {
+                                                                    fieldState.error?.message &&
+                                                                    <FormMessage>
+                                                                        {fieldState.error.message}
+                                                                    </FormMessage>
+                                                                }
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="keywords"
+                                                        render={({ field, fieldState }) => (
+                                                            <FormItem>
+                                                                <FormLabel>Keywords</FormLabel>
+                                                                <FormControl>
+                                                                    <TagsInputEl
+                                                                        placeholder="Add keyword"
+                                                                        max={5}
+                                                                        {...field} />
+                                                                </FormControl>
+                                                                {
+                                                                    fieldState.error?.message &&
+                                                                    <FormMessage>
+                                                                        {fieldState.error.message}
+                                                                    </FormMessage>
+                                                                }
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="filter"
+                                                        render={({ field, fieldState }) => (
+                                                            <FormItem>
+                                                                <div className="flex items-center gap-4">
+                                                                    <Switch
+                                                                        id="customize-filter"
+                                                                        onCheckedChange={field.onChange}
+                                                                        checked={field.value}
+                                                                        ref={field.ref}
+                                                                        name={field.name} />
+                                                                    <Label htmlFor="customize-filter" className="text-sm font-normal font-jakarta text-white">
+                                                                        Skip topics about 3rd party brands  - <span className="text-white/70">Yes</span>
+                                                                    </Label>
+                                                                </div>
+                                                                {
+                                                                    fieldState.error?.message &&
+                                                                    <FormMessage>
+                                                                        {fieldState.error.message}
+                                                                    </FormMessage>
+                                                                }
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                    <div>
+                                                        <CustomTooltip
+                                                            title="Increase Article Volume"
+                                                            className="h-12"
+                                                            content={
+                                                                <>
+                                                                    To increase articles volume, please email hello@zian.ai
+                                                                </>
+                                                            } />
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <GrBorderBox className="mt-4 md:mt-24 rounded-none ">
+                                                <div className="flex justify-end bg-gr-purple-dark space-x-[10px] py-2 md:py-5 px-7">
+                                                    <SecondaryBtn onClick={closeModal} className="text-sm py-3">
+                                                        Cancel
+                                                    </SecondaryBtn>
+                                                    <PrimaryBtn type="submit" className=" h-12 w-auto px-12 py-3">
+                                                        {
+                                                            form.formState.isSubmitting ?
+                                                                <Spinner />
+                                                                :
+                                                                <span>Save</span>
+                                                        }
+                                                    </PrimaryBtn>
+                                                </div>
+                                            </GrBorderBox>
+                                        </form>
+                                    </Form>
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

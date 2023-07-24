@@ -1,7 +1,7 @@
 
 
 export interface ApiResponse<T = unknown> {
-    data: T | null;
+    data?: T | null;
     message: string;
     success: boolean;
 }
@@ -22,10 +22,13 @@ export type LoginApiResponse = ApiResponse<AuthUser>
 export type SignUpApiResponse = ApiResponse<string>
 
 
-export type IndustryListApiResponse = ApiResponse<Array<{
+
+export type TIndustry = {
     id: number,
     name: string
-}>>
+}
+
+export type IndustryListApiResponse = ApiResponse<Array<TIndustry>>
 
 export type KeywordApiResponse = ApiResponse<{
     filter: boolean;
