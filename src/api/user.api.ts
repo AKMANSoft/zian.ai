@@ -3,7 +3,7 @@ import apiConfig from "@/config/api.config";
 import { definedMessages } from "@/lib/constants";
 import { CustomError } from "@/types/error";
 import { CustomizeSchema, LoginFormSchema, SignUpFormSchema } from "@/types/forms.types";
-import { ApiResponse, KeywordApiResponse, LoginApiResponse, SignUpApiResponse } from "@/types/response.types";
+import { KeywordApiResponse, LoginApiResponse, SignUpApiResponse } from "@/types/response.types";
 import axios from "axios";
 
 

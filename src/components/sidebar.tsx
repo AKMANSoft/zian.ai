@@ -9,6 +9,7 @@ import { useLocation } from "react-router-dom";
 // import UserDropdownMenu from "./dropmenus/UserDropMenu";
 import EditProfilePopup from "./popups/EditProfilePopup";
 import CustomizePopup from "./popups/CustomizePopup";
+import useAuthUserStore from "@/lib/zustand/authUserStore";
 
 
 
@@ -21,6 +22,7 @@ type Props = {
 
 export default function SideBar({ expanded = false }: Props) {
     const { pathname } = useLocation();
+    const { logout } = useAuthUserStore()
     return (
         <div className={cn(
             "min-w-[280px] w-full lg:max-w-[400px] xl:max-w-[300px] min-h-screen pt-5 xl:pt-32 md:pt-16 pb-10",
@@ -63,7 +65,11 @@ export default function SideBar({ expanded = false }: Props) {
                         icon={<FontAwesomeIcon icon={faCreditCard} />} />
                     <GrSeperator className="my-2" />
                     <NavigationItem
-                        href="/logout" active={pathname === "/logout"}
+                        active={pathname === "/logout"}
+                        onClick={() => {
+                            logout()
+                            window.location.reload()
+                        }}
                         className="my-0.5" text="Log out"
                         icon={<FontAwesomeIcon icon={faSignOut} />} />
                 </div>

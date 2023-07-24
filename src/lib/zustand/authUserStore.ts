@@ -10,6 +10,7 @@ type AuthUserState = {
     setToken: (token: string) => void;
     setProfile: (profile: AuthUser) => void;
     setAuthUser: (token: string, profile: AuthUser) => void;
+    logout: () => void
 }
 
 const useAuthUserStore = create<AuthUserState>()(persist(
@@ -17,7 +18,8 @@ const useAuthUserStore = create<AuthUserState>()(persist(
         authUser: null,
         setToken: (token: string) => set((state) => ({ authUser: { ...state.authUser, token: token } })),
         setProfile: (profile: AuthUser) => set((state) => ({ authUser: { ...state.authUser, profile: profile } })),
-        setAuthUser: (token: string, profile: AuthUser) => set({ authUser: { profile: profile, token: token } })
+        setAuthUser: (token: string, profile: AuthUser) => set({ authUser: { profile: profile, token: token } }),
+        logout: () => set({ authUser: null })
     }),
     {
         name: "auth-user-storage",
