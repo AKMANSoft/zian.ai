@@ -2,28 +2,30 @@ import MainLayout from "../components/layout";
 import GrBorderBox from "../components/ui/gr-border-box";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { b64Image, cn } from "../lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatNumberto0 } from "@/lib/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PrimaryBtnNeon } from "@/components/ui/buttons";
 import ArticleViewPopup from "@/components/popups/ArticleViewPopup";
 import { format } from "date-fns";
 import CONSTANTS from "@/lib/constants";
-import { articles } from '@/assets/dummy-articles.json'
-import { Article } from "@/types/response.types";
+import LoadingSparkle from "@/components/LoadingSparkle";
+import { Article, ArticlesApiResponse } from "@/types/response.types";
+import useUiState from "@/components/hooks/useUiState";
+import api from "@/api";
 
 
 
-const dummyArticles: Article[] = articles.map((article) => ({
-    body: article.article,
-    summary: article.summary,
-    headline: article.headline,
-    id: article.id,
-    image: article.image,
-    timestamp: new Date(article.timestamp)
-}))
 
 export default function DashboardArticleLoaded() {
+    const { uiState, setUiData } = useUiState<ArticlesApiResponse>()
+
+    useEffect(() => {
+        api.other.getArticles().then((res) => {
+            setUiData(res)
+        })
+    }, [setUiData])
+
     return (
         <MainLayout heading="Welcome, Mike" description="Here is your articles history">
             <GrBorderBox className="p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_140px)] " type="lg">
@@ -39,17 +41,24 @@ export default function DashboardArticleLoaded() {
                             <span className="block text-start w-[100px] overflow-hidden"></span>
                         </div>
                         <div className="max-h-full max-w-full h-screen overflow-y-auto lg:bg-transparent divide-white/10 space-y-5 lg:divide-y-0 px-5 lg:px-0">
-                            <SingleArticleRow num={1} />
-                            <SingleArticleRow num={2} />
-                            <SingleArticleRow num={3} />
-                            <SingleArticleRow num={2} />
-                            <SingleArticleRow num={3} />
-                            <SingleArticleRow num={2} />
-                            <SingleArticleRow num={3} />
-                            <SingleArticleRow num={2} />
-                            <SingleArticleRow num={3} />
+                            {
+                                uiState?.state?.data ?
+                                    uiState.state.data?.map((article, index) => (
+                                        <SingleArticleRow
+                                            article={article}
+                                            num={index + 1}
+                                            key={article.id} />
+                                    ))
+                                    :
+                                    <div className="flex items-center justify-center h-full">
+                                        <LoadingSparkle variant="medium" spark />
+                                    </div>
+                            }
                         </div>
-                        <Pagination />
+                        {
+                            uiState?.state?.data && uiState.state.data.length > 0 &&
+                            <Pagination />
+                        }
                     </div>
                 </div>
             </GrBorderBox>
@@ -120,13 +129,12 @@ function Pagination() {
 
 type SingleArticleRowProps = {
     num: number;
+    article: Article,
     onClick?: () => void
 }
 
 
-
-function SingleArticleRow({ num }: SingleArticleRowProps) {
-    const article = dummyArticles[0];
+function SingleArticleRow({ num, article }: SingleArticleRowProps) {
     return (
         <ArticleViewPopup
             article={article}

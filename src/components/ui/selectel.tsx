@@ -8,7 +8,7 @@ import { cn } from "../../lib/utils"
 export type Option = {
     value: string;
     text: string;
-    disabled: boolean;
+    disabled?: boolean;
 }
 
 
@@ -68,7 +68,7 @@ export default function SelectEl({
                 </Listbox.Button>
                 {/* <div className="relative w-max"> */}
                 <Listbox.Options className={cn(
-                    "absolute mt-2 z-[100] top-full left-0 w-full bg-th-gray/10 backdrop-blur-[10px] rounded-10 max-h-[250px] overflow-y-auto outline-none",
+                    "absolute mt-2 z-[100] top-full left-0 w-full bg-th-gray/10 backdrop-blur-xl rounded-10 max-h-[250px] overflow-y-auto outline-none",
                     "border-2 border-th-gray/20",
                     optContainerClassName
                 )} >
@@ -96,6 +96,8 @@ export default function SelectEl({
         </Listbox>
     )
 }
+
+
 
 
 

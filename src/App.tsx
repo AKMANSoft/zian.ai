@@ -170,7 +170,7 @@ function App() {
 
   useEffect(() => {
     if (authUser?.token) {
-      axios.defaults.headers.common["Authorization"] = "1476836f1c448bd0991ecd9c88f452e08ae7496d4e0f23ee879ae701ba2616e1"
+      axios.defaults.headers.common["Authorization"] = authUser.token
     }
   }, [authUser])
 
