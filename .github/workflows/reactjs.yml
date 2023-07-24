@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "zian-seo-integrated" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "zian-seo-integrated" ]
+    branches: [ "main" ]
 
 jobs:
   build:
