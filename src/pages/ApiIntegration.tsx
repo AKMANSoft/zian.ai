@@ -6,14 +6,14 @@ import JSONPretty from 'react-json-pretty';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import useAuthUserStore from "@/lib/zustand/authUserStore";
 
 
 
 
 
 export default function ApiIntegrationPage() {
-
-
+    const { authUser } = useAuthUserStore()
 
     return (
         <MainLayout heading="INTEGRATE API">
@@ -26,8 +26,7 @@ export default function ApiIntegrationPage() {
                             </h1>
                             <div className="relative">
                                 <Input className="pr-24" readOnly
-                                    value={'a5ddddc6343e7b1e1f1b4393a8dcce689e0055bb66742e14295f0343ad3046b3'}
-                                    placeholder="Copy" />
+                                    value={authUser?.token} />
                                 <button className="absolute text-sm font-semibold font-jakarta top-1/2 right-5 -translate-y-1/2">
                                     <FontAwesomeIcon className="pr-2" icon={faCopy} /> Copy
                                 </button>

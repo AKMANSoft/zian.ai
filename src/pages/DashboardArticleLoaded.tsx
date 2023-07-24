@@ -7,12 +7,14 @@ import { formatNumberto0 } from "@/lib/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PrimaryBtnNeon } from "@/components/ui/buttons";
 import ArticleViewPopup from "@/components/popups/ArticleViewPopup";
-import useUiState from "@/components/hooks/useUiState";
-import { Article, ArticlesApiResponse } from "@/types/response.types";
-import api from "@/api";
-import LoadingSparkle from "@/components/LoadingSparkle";
 import { format } from "date-fns";
 import CONSTANTS from "@/lib/constants";
+import LoadingSparkle from "@/components/LoadingSparkle";
+import { Article, ArticlesApiResponse } from "@/types/response.types";
+import useUiState from "@/components/hooks/useUiState";
+import api from "@/api";
+
+
 
 
 export default function DashboardArticleLoaded() {
@@ -38,7 +40,7 @@ export default function DashboardArticleLoaded() {
                             <span className="block text-start w-[150px] overflow-hidden">Created Date</span>
                             <span className="block text-start w-[100px] overflow-hidden"></span>
                         </div>
-                        <div className="max-h-full max-w-full h-screen lg:overflow-y-auto divide-y lg:bg-transparent divide-white/10 space-y-5 lg:divide-y-0 px-5 lg:px-0">
+                        <div className="max-h-full max-w-full h-screen overflow-y-auto lg:bg-transparent divide-white/10 space-y-5 lg:divide-y-0 px-5 lg:px-0">
                             {
                                 uiState?.state?.data ?
                                     uiState.state.data?.map((article, index) => (
@@ -49,13 +51,13 @@ export default function DashboardArticleLoaded() {
                                     ))
                                     :
                                     <div className="flex items-center justify-center h-full">
-                                        <LoadingSparkle variant="medium" spark={true} />
+                                        <LoadingSparkle variant="medium" spark />
                                     </div>
                             }
                         </div>
                         {
                             uiState?.state?.data && uiState.state.data.length > 0 &&
-                            <DraftsPagination />
+                            <Pagination />
                         }
                     </div>
                 </div>
@@ -68,9 +70,9 @@ export default function DashboardArticleLoaded() {
 
 
 
-function DraftsPagination() {
+function Pagination() {
     const [activePage, setActivePage] = useState(1);
-    const visiblePages = [1, 2, 3, 4, 5];
+    const visiblePages = [1, 2, 3, 4];
 
     const onPageChange = (page: number) => {
         const lastPage = visiblePages[visiblePages.length - 1];
@@ -81,7 +83,7 @@ function DraftsPagination() {
     }
 
     return (
-        <div className="w-full border-t border-white/10 py-[10px] px-5 sticky bottom-0 bg-dark flex items-center justify-end">
+        <div className="w-full border-t border-white/10 py-[10px] px-5 sticky bottom-0 rounded-b-20 bg-dark flex items-center justify-end">
             <div className="flex items-center gap-2">
                 <button type="button"
                     onClick={() => onPageChange(1)}
@@ -134,47 +136,49 @@ type SingleArticleRowProps = {
 
 function SingleArticleRow({ num, article }: SingleArticleRowProps) {
     return (
-        <div className="flex flex-wrap xl:justify-between lg:flex-nowrap lg:gap-3 items-center w-full" >
-            <span className="hidden lg:block text-sm py-3 min-h-[50px] text-start w-[50px] overflow-hidden lg:ps-4">
-                {formatNumberto0(num)}
-            </span>
-            <span className="block py-3 lg:min-h-[50px] text-start lg:w-[100px] overflow-hidden">
-                <img src={b64Image(article.image)} width={80} height={80} loading="lazy"
-                    className="h-full min-w-[80px] lg:h-[80px] rounded-10 object-cover object-center aspect-square" alt="" />
-            </span>
-            <span className="block py-3 lg:min-h-[50px] text-start w-[calc(100%_-_80px)] lg:w-[20%] overflow-hidden md:min-w-[200px] px-2">
-                <p className="w-full line-clamp-4 text-xs md:text-sm">
-                    {article.headline}
-                </p>
-            </span>
-            <span className="hidden lg:block py-3 lg:min-h-[50px] text-start  lg:w-[40%] overflow-hidden min-w-[200px] px-2">
-                <p className="w-full line-clamp-2 text-xs md:text-sm">
-                    {article.summary}
-                </p>
-            </span>
-
-            <span className="block py-1 lg:py-3 lg:min-h-[50px] text-start w-full lg:w-[150px] overflow-hidden">
-                <div className="flex items-center justify-between text-xs md:text-sm font-jakarta">
-                    <span className="font-semibold block lg:hidden">Created Date:</span>
-                    <span>
-                        {format(article.timestamp, CONSTANTS.DATE_FORMATS.ARTICLE_TABLE)}
+        <ArticleViewPopup
+            article={article}
+            trigger={({ open }) => (
+                <div role="button" onClick={open} className="flex flex-wrap xl:justify-between lg:flex-nowrap lg:gap-3 items-center w-full" >
+                    <span className="hidden lg:block text-sm py-3 min-h-[50px] text-start w-[50px] overflow-hidden lg:ps-4">
+                        {formatNumberto0(num)}
                     </span>
-                </div>
-            </span>
+                    <span className="block py-3 lg:min-h-[50px] text-start lg:w-[100px] overflow-hidden">
+                        <img src={b64Image(article.image)} width={80} height={80} loading="lazy"
+                            className="h-full min-w-[80px] lg:h-[80px] rounded-10 object-cover object-center aspect-square" alt="" />
+                    </span>
+                    <span className="block py-3 lg:min-h-[50px] text-start w-[calc(100%_-_80px)] lg:w-[20%] overflow-hidden md:min-w-[200px] px-2">
+                        <p className="w-full line-clamp-2 text-xs md:text-sm">
+                            {article.headline}
+                        </p>
+                    </span>
+                    <span className="hidden lg:block py-3 lg:min-h-[50px] text-start  lg:w-[40%] overflow-hidden min-w-[200px] px-2">
+                        <p className="w-full line-clamp-2 text-xs md:text-sm">
+                            {article.summary}
+                        </p>
+                    </span>
 
-            <span className="block py-1 lg:py-3 lg:min-h-[50px] text-start w-full lg:w-[100px] overflow-hidden">
-                <div className="flex items-center justify-end mt-5 lg:mt-0 lg:block">
-                    <ArticleViewPopup
-                        article={article}
-                        trigger={({ open }) => (
-                            <PrimaryBtnNeon onClick={open} className="w-full md:w-auto text-xs md:text-sm">
+                    <span className="block py-1 lg:py-3 lg:min-h-[50px] text-start w-full lg:w-[150px] overflow-hidden">
+                        <div className="flex items-center justify-between text-xs md:text-sm font-jakarta">
+                            <span className="font-semibold block lg:hidden">Created Date:</span>
+                            <span>
+                                {format(article.timestamp, CONSTANTS.DATE_FORMATS.ARTICLE_TABLE)}
+                            </span>
+                        </div>
+                    </span>
+
+                    <span className="block py-1 lg:py-3 lg:min-h-[50px] text-start w-full lg:w-[100px] overflow-hidden">
+                        <div className="flex items-center justify-end mt-5 lg:mt-0 lg:block">
+                            <PrimaryBtnNeon className="w-full md:w-auto text-xs md:text-sm">
                                 View
                             </PrimaryBtnNeon>
-                        )} />
-                </div>
-            </span>
 
-        </div>
+                        </div>
+                    </span>
+
+                </div>
+            )} />
+
     );
 }
 
