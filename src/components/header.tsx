@@ -24,11 +24,13 @@ export default function Header({ heading, description, menuExpanded, onToggleMen
                     <p className="text-base font-jakarta">{description}</p>
                 }
             </div>
-            <img src="/images/avatar.png" loading="lazy" width={60} height={60}
-                className={cn(
-                    "w-[60px] h-auto aspect-square rounded-full overflow-hidden xl:hidden"
-                )}
-                alt="" />
+            <a href="/">
+                <img src="/images/avatar.png" loading="lazy" width={60} height={60}
+                    className={cn(
+                        "w-[60px] h-auto aspect-square rounded-full overflow-hidden xl:hidden"
+                    )}
+                    alt="" />
+            </a>
             <div className='flex items-center gap-2 h-[50px]'>
                 {/* <SearchEl />
                 <NotificationsDropMenu />

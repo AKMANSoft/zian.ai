@@ -2,9 +2,11 @@ import GrBorderBox from "../components/ui/gr-border-box";
 import MainLayout from "../components/layout";
 import { PrimaryBtnNeon } from "@/components/ui/buttons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCreditCard } from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faChevronRight, faCreditCard } from "@fortawesome/free-solid-svg-icons";
 import CustomTooltip from "@/components/custom-tooltip";
 import { CrossCircledIcon } from '@radix-ui/react-icons'
+import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 export default function BillingPage() {
 
@@ -16,11 +18,11 @@ export default function BillingPage() {
                         <h1 className="text-xl font-jakarta font-bold text-white">
                             Basic Plan
                         </h1>
-                        <p className="text-base font-normal font-jakarta text-white space-x-1">
-                            <span>
+                        <p className=" font-normal font-jakarta text-white space-x-1">
+                            <span className="text-base font-bold md:text-xl">
                                 $30
                             </span>
-                            <span className="text-white/70">
+                            <span className="text-white/70 text-sm md:text-base">
                                 per week
                             </span>
                         </p>
@@ -50,7 +52,7 @@ export default function BillingPage() {
                         <h1 className="text-xl font-jakarta font-bold text-white">
                             Payment method
                         </h1>
-                        <p className="text-base font-normal font-jakarta text-primary space-x-1">
+                        <p className="text-xs font-bold font-jakarta text-primary space-x-1 md:text-sm">
                             <span>
                                 +
                             </span>
@@ -61,7 +63,7 @@ export default function BillingPage() {
                     </div>
                     <div className="flex justify-between items-center">
                         <h1 className="text-sm font-jakarta font-bold text-white">
-                            <FontAwesomeIcon icon={faCreditCard} />
+                            <FontAwesomeIcon icon={faCreditCard} className="text-white/70" />
                             <span className="pl-[10px]">
                                 Visa ending in
                             </span>
@@ -72,7 +74,7 @@ export default function BillingPage() {
                     </div>
                     <div className="flex justify-between">
                         <h1 className="text-sm font-jakarta font-bold text-white">
-                            <FontAwesomeIcon icon={faCreditCard} />
+                            <FontAwesomeIcon icon={faCreditCard} className="text-white/70" />
                             <span className="pl-[10px]">
                                 Mastercard ending in 1234
                             </span>
@@ -87,10 +89,10 @@ export default function BillingPage() {
             </div>
 
 
-            <GrBorderBox className="w-full p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)]" type="lg">
+            <GrBorderBox className="w-full p-px md:p-[2px] rounded-20" type="lg">
                 <div className="h-full w-full flex flex-col backdrop-blur-[10px] bg-gr-purple-light opacity-90 rounded-20">
                     {/* Drafts Table  */}
-                    <div className="w-full h-full rounded-20 flex flex-col ">
+                    <div className="w-full h-full rounded-20 flex flex-col">
                         <div className="border-b-[5px] text-xs font-semibold px-4 w-full hidden lg:flex justify-between items-center py-5 border-primary lg:gap-3">
                             <div className="flex items-center justify-between w-full">
                                 <span className="block text-start lg:w-2/3">Invoice</span>
@@ -100,12 +102,20 @@ export default function BillingPage() {
                             </div>
                             <span className="block text-start min-w-[170px]"></span>
                         </div>
-                        <div className="lg:py-0 divide-y divide-white/10 px-4">
+                        <div className="lg:py-0 divide-y divide-white/10 px-4 lg:px-0 max-h-[600px] overflow-y-auto">
+                            <SingleBiillingRow />
+                            <SingleBiillingRow />
+                            <SingleBiillingRow />
+                            <SingleBiillingRow />
+                            <SingleBiillingRow />
+                            <SingleBiillingRow />
                             <SingleBiillingRow />
                             <SingleBiillingRow />
                         </div>
+                        <Pagination />
                     </div>
                 </div>
+
             </GrBorderBox>
         </MainLayout>
     );
@@ -114,7 +124,7 @@ export default function BillingPage() {
 
 function SingleBiillingRow() {
     return (
-        <div className="flex items-center justify-between w-full lg:gap-3 py-5" >
+        <div className="flex items-center justify-between w-full lg:gap-3 py-5 lg:px-4" >
             <div className="flex flex-col lg:flex-row lg:items-center justify-between w-full gap-3 lg:gap-0">
                 <span className="block text-sm lg:py-3 text-start overflow-hidden lg:w-2/3">
                     Invoice #007 - May 2023
@@ -150,7 +160,57 @@ function SingleBiillingRow() {
     );
 }
 
+function Pagination() {
+    const [activePage, setActivePage] = useState(1);
+    const visiblePages = [1, 2, 3, 4];
 
+    const onPageChange = (page: number) => {
+        const lastPage = visiblePages[visiblePages.length - 1];
+        let newPage = page;
+        if (newPage <= 0) newPage = 1
+        if (newPage >= lastPage) newPage = lastPage
+        setActivePage(newPage);
+    }
 
-
+    return (
+        <div className="w-full border-t border-white/10 py-[10px] px-5 lg:sticky bottom-0 rounded-b-20 bg-dark flex items-center justify-end">
+            <div className="flex items-center gap-2">
+                <button type="button"
+                    onClick={() => onPageChange(1)}
+                    className="outline-none bg-white/5 rounded text-xs font-normal hover:bg-primary transition-all p-2 w-8 h-8 aspect-square">
+                    <FontAwesomeIcon icon={faChevronLeft} />
+                    <FontAwesomeIcon icon={faChevronLeft} />
+                </button>
+                <button type="button"
+                    onClick={() => onPageChange(activePage - 1)}
+                    className="outline-none bg-white/5 rounded text-xs font-normal hover:bg-primary transition-all p-2 w-8 h-8 aspect-square">
+                    <FontAwesomeIcon icon={faChevronLeft} />
+                </button>
+                {
+                    visiblePages.map((page) => (
+                        <button key={page} type="button"
+                            onClick={() => onPageChange(page)}
+                            className={cn(
+                                "outline-none rounded text-xs font-normal transition-all p-2 w-8 h-8 aspect-square",
+                                activePage === page ? "bg-primary" : "bg-white/5 hover:bg-primary"
+                            )}>
+                            {page}
+                        </button>
+                    ))
+                }
+                <button type="button"
+                    onClick={() => onPageChange(activePage + 1)}
+                    className="outline-none bg-white/5 rounded text-xs font-normal hover:bg-primary transition-all p-2 w-8 h-8 aspect-square">
+                    <FontAwesomeIcon icon={faChevronRight} />
+                </button>
+                <button type="button"
+                    onClick={() => onPageChange(visiblePages[visiblePages.length - 1])}
+                    className="outline-none bg-white/5 rounded text-xs font-normal hover:bg-primary transition-all p-2 w-8 h-8 aspect-square">
+                    <FontAwesomeIcon icon={faChevronRight} />
+                    <FontAwesomeIcon icon={faChevronRight} />
+                </button>
+            </div>
+        </div>
+    )
+}
 

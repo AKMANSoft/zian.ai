@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faHome, faCreditCard,
-    faFile, faSignOut, faExternalLink
+    faFile, faSignOut
 } from '@fortawesome/free-solid-svg-icons';
 import { cn } from "../lib/utils";
 import { GrSeperator } from "./ui/seperator";
@@ -23,19 +23,21 @@ export default function SideBar({ expanded = false }: Props) {
     const { pathname } = useLocation();
     return (
         <div className={cn(
-            "min-w-[280px] w-full lg:max-w-[400px] xl:max-w-[300px] min-h-screen pt-32 pb-10",
+            "min-w-[280px] w-full lg:max-w-[400px] xl:max-w-[300px] min-h-screen pt-5 xl:pt-32 md:pt-16 pb-10",
             "flex flex-col gap-20 lg:gap-10 justify-between z-50 px-6 lg:pl-0",
             "fixed top-0 -left-full xl:static bg-[#1E162E] xl:bg-transparent",
             "max-h-screen overflow-y-auto transition-all",
             expanded && "left-0"
         )}>
             <div className="w-full">
-                <img src="/images/avatar.png" width={120} height={120} loading="lazy"
-                    className={cn(
-                        "w-[120px] h-auto aspect-square rounded-full overflow-hidden mx-auto",
-                        "hidden xl:block"
-                    )}
-                    alt="" />
+                <a href="/">
+                    <img src="/images/avatar.png" width={120} height={120} loading="lazy"
+                        className={cn(
+                            "w-[120px] h-auto aspect-square rounded-full overflow-hidden mx-auto",
+                            "hidden xl:block"
+                        )}
+                        alt="" />
+                </a>
                 <div className="mt-16 md:mt-4 w-full">
                     <div className="py-3">
                         {/* <UserHeaderComponent expandable className="lg:hidden" toggleClassName="h-[71px]" /> */}
@@ -64,12 +66,6 @@ export default function SideBar({ expanded = false }: Props) {
                         href="/logout" active={pathname === "/logout"}
                         className="my-0.5" text="Log out"
                         icon={<FontAwesomeIcon icon={faSignOut} />} />
-                    <NavigationItem
-                        href="/popup" active={pathname === "/popup"}
-                        className="my-0.5" text="Links"
-                        icon={<FontAwesomeIcon icon={faExternalLink} />} />
-
-
                 </div>
             </div>
 

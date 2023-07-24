@@ -13,8 +13,7 @@ type Props = {
     secure?: boolean;
 }
 
-const noSidebarPaths = ["/signup", "/login"]
-
+const noSidebarPaths = ["/signup", "/login", "/forgot-password", "/forgot-password/success", "/new-password", "/new-password/success"]
 export default function MainLayout({ children, heading = "", description, secure = true }: Props) {
     const navigate = useNavigate()
     const { pathname } = useLocation()
