@@ -4,6 +4,7 @@ const apiConfig = {
     endpoints: {
         register: '/register',
         login: '/login',
+        updateProfile: '/account',
         industryList: "?list=industry",
     }
 }

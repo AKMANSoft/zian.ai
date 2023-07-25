@@ -8,18 +8,34 @@ export interface ApiResponse<T = unknown> {
 
 export type AuthUser = {
     authorization: string;
-    created: Date;
+    created?: Date;
     email: string;
-    data: string;
-    package: string;
-    phone: string;
-    quota: number;
+    data?: {
+        filter: boolean;
+        industry: {
+            id: number;
+            industry: string;
+            name: string;
+        };
+        keyword: string;
+    };
+    package?: string;
+    phone?: string;
+    quota?: number;
 }
 
 
 export type LoginApiResponse = ApiResponse<AuthUser>
 
 export type SignUpApiResponse = ApiResponse<string>
+export type UpdateProfileResponse = ApiResponse<{
+    authorization: string;
+    email: string;
+    name: string;
+    package: string;
+    phone: string;
+    website: string;
+}>
 
 
 

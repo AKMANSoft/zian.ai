@@ -66,18 +66,18 @@ type AutoHideAlertProps = AlertProps & {
 }
 
 const AutoHideAlert = ({ title, message, containerClassName, ...props }: AutoHideAlertProps) => {
-  const [visible, setVisible] = React.useState(message && message !== "");
-  const [timeout, settimeout] = React.useState<NodeJS.Timeout | null>(null);
-  React.useEffect(() => {
-    if (timeout !== null) {
-      clearTimeout(timeout)
-    }
-    settimeout(
-      setTimeout(() => {
-        setVisible(false)
-      }, 4000)
-    )
-  }, [visible])
+  const [visible] = React.useState(message && message !== "");
+  // const [timeout, settimeout] = React.useState<NodeJS.Timeout | null>(null);
+  // React.useEffect(() => {
+  //   if (timeout !== null) {
+  //     clearTimeout(timeout)
+  //   }
+  //   settimeout(
+  //     setTimeout(() => {
+  //       setVisible(false)
+  //     }, 4000)
+  //   )
+  // }, [timeout, visible])
   return (
     visible &&
     <div className={containerClassName}>

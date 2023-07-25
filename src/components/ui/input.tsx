@@ -132,7 +132,8 @@ type InputElWChipsProps = {
   id?: string;
   max?: number;
   value?: Array<string>;
-  onChange?: (value: string[]) => void
+  onChange?: (value: string[]) => void,
+  className?: string;
 }
 
 function InputElWChips({ label, placeholder = "", labelNode = null, id = "" }: InputElWChipsProps) {
@@ -195,14 +196,15 @@ function InputElWChips({ label, placeholder = "", labelNode = null, id = "" }: I
 
 
 const TagsInputEl = React.forwardRef<HTMLInputElement, InputElWChipsProps>((
-  { label, placeholder = "", labelNode = null, id = "", max, value, onChange }, ref
+  { label, placeholder = "", labelNode = null, id = "tags-input", className, max, value, onChange }
 ) => {
-  const [chips, setChips] = React.useState<string[]>(value ?? []);
+  const [chips, setChips] = React.useState<string[]>(value || []);
   const [inputVal, setInputVal] = React.useState("");
 
   const handleKeyPress: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === "Enter") {
       e.preventDefault()
+      if (inputVal === "") return;
       if (max && chips.length >= max) return;
       setChips([...chips, inputVal]);
       setInputVal("");
@@ -230,12 +232,13 @@ const TagsInputEl = React.forwardRef<HTMLInputElement, InputElWChipsProps>((
           </label>
       }
       <div className={cn(
-        "flex items-center flex-wrap px-2 py-2 gap-2 min-h-[56px]",
+        "flex flex-wrap px-2 py-2 gap-2 min-h-[56px]",
         "border border-white/10 rounded-10 w-full bg-transparent mt-2",
-        "focus-within:bg-th-gray/10"
+        "focus-within:bg-th-gray/10",
+        className
       )}>
         {
-          chips.map((chip) => (
+          chips?.map((chip) => (
             <PrimaryBtnNeon key={chip} className="text-[15px] font-medium w-auto cursor-default">
               <span className="block max-w-full whitespace-nowrap overflow-hidden text-ellipsis">
                 {chip}
@@ -247,17 +250,18 @@ const TagsInputEl = React.forwardRef<HTMLInputElement, InputElWChipsProps>((
           ))
         }
         {
-          (!max || chips.length < max) &&
+          (!max || chips?.length < max) &&
           <input
-            type="text" id={id}
-            ref={ref}
+            type="text"
+            id={id}
             value={inputVal}
             onChange={(e) => setInputVal(e.target.value)}
             onKeyDown={handleKeyPress}
             placeholder={placeholder}
+            autoComplete="off"
             className={cn(
-              "text-white h-10 text-start bg-transparent font-jakarta font-normal text-sm leading-6 w-52 px-2",
-              "outline-none transition-all placeholder:text-white/70"
+              "text-white h-10 text-start bg-transparent font-jakarta font-normal text-sm leading-6 w-60 max-w-full px-2",
+              "outline-none transition-all placeholder:text-white/70",
             )} />
         }
       </div>
