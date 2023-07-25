@@ -33,7 +33,7 @@ export default function CustomizePopup() {
     const { toast } = useToast()
     const form = useForm<CustomizeSchema>({
         resolver: zodResolver(customizeSchema),
-        mode: "onChange",
+        mode: "all",
         defaultValues: {
             filter: false,
         }

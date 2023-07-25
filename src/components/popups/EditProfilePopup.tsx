@@ -2,12 +2,20 @@ import { Fragment, useState } from "react"
 import { PrimaryBtn, SecondaryBtn } from "../ui/buttons"
 import { Dialog, Transition } from "@headlessui/react"
 import { cn } from "@/lib/utils"
-import { InputEl } from "../ui/input"
+import { Input } from "../ui/input"
 import { faUser, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { NavigationItem } from "../sidebar"
 import GrBorderBox from "../ui/gr-border-box"
 import ChangePasswordPopup from "./ChangePasswordPopup"
+import { useToast } from "../ui/use-toast"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { UpdateProfileSchema, updateProfileSchema } from "@/types/forms.types"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
+import useAuthUserStore from "@/lib/zustand/authUserStore"
+import api from "@/api"
+import { Spinner } from "../ui/spinner"
 
 
 
@@ -17,6 +25,16 @@ import ChangePasswordPopup from "./ChangePasswordPopup"
 
 export default function EditProfilePopup() {
     const [isOpen, setIsOpen] = useState(false);
+    const { authUser, setAuthUser } = useAuthUserStore()
+    const { toast } = useToast()
+    const form = useForm<UpdateProfileSchema>({
+        resolver: zodResolver(updateProfileSchema),
+        mode: "all",
+        defaultValues: {
+            email: authUser?.profile?.email,
+            phone: authUser?.profile?.phone,
+        }
+    })
 
     function closeModal() {
         setIsOpen(false)
@@ -24,6 +42,27 @@ export default function EditProfilePopup() {
 
     function openModal() {
         setIsOpen(true)
+    }
+
+
+    const handleFormSubmit = async (values: UpdateProfileSchema) => {
+        if (!authUser?.profile) return;
+        const res = await api.user.updateProfile(values, authUser?.profile)
+        if (res.success && res.data) {
+            setAuthUser(
+                res.data.authorization,
+                {
+                    authorization: res.data.authorization,
+                    email: res.data.email,
+                    phone: res.data.phone,
+                    package: res.data.package,
+                }
+            )
+        }
+        toast({
+            title: res.success ? "Profile updated successfully." : res.message !== "" ? res.message : "An error occured while processing your request.",
+            variant: res.success ? "default" : "destructive"
+        })
     }
 
     return (
@@ -70,36 +109,113 @@ export default function EditProfilePopup() {
                                     </div>
                                     <div className="pb-4 max-h-[calc(100vh_-_200px)] overflow-y-auto flex flex-col space-y-6">
                                         {/* content */}
-                                        <div className="mx-7 md:space-y-7 space-y-3">
-                                            <div className="font-jakarta text-white text-[32px] font-bold">
-                                                Edit Profile
-                                            </div>
-                                            <div className="space-y-4  md:text-sm font-normal font-jakarta text-xs">
-                                                <InputEl label="Name" placeholder="Mike Males" />
-                                                <InputEl label="Email" placeholder="mike@gmail.com" />
-                                                <InputEl label="Phone" placeholder="+61 00 000 00" />
-                                                <InputEl label="Website" placeholder="https://www.website.com" />
-                                                <ChangePasswordPopup
-                                                    trigger={({ open }) => (
-                                                        <SecondaryBtn onClick={open} className="border-white/10 py-4 md:text-sm">
-                                                            Update Password
-                                                        </SecondaryBtn>
-                                                    )}
-                                                />
-                                            </div>
-                                        </div>
-                                        <GrBorderBox className="p-px md:p-[2px] w-full rounded-none">
-                                            <div className="flex  md:px-[30px] px-7 bg-gr-purple-dark pt-4 justify-end ">
-                                                <div className="space-x-[10px]">
-                                                    <SecondaryBtn className="border-white/10 py-4 px-6 md:px-10 md:text-sm">
-                                                        Cancel
-                                                    </SecondaryBtn>
-                                                    <PrimaryBtn className=" h-full w-auto py-3 md:px-12 px-6">
-                                                        Save
-                                                    </PrimaryBtn>
+                                        <Form {...form}>
+                                            <form onSubmit={form.handleSubmit(handleFormSubmit)}>
+                                                <div className="mx-7 md:space-y-7 space-y-3">
+                                                    <div className="font-jakarta text-white text-[32px] font-bold">
+                                                        Edit Profile
+                                                    </div>
+                                                    <div className="space-y-4  md:text-sm font-normal font-jakarta text-xs">
+                                                        <FormField
+                                                            control={form.control}
+                                                            name="name"
+                                                            render={({ field, fieldState }) => (
+                                                                <FormItem>
+                                                                    <FormLabel>Name</FormLabel>
+                                                                    <FormControl>
+                                                                        <Input type="text" autoComplete="name" {...field} />
+                                                                    </FormControl>
+                                                                    {
+                                                                        fieldState.error &&
+                                                                        <FormMessage>
+                                                                            {fieldState.error?.message}
+                                                                        </FormMessage>
+                                                                    }
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                        <FormField
+                                                            control={form.control}
+                                                            name="email"
+                                                            render={({ field, fieldState }) => (
+                                                                <FormItem>
+                                                                    <FormLabel>Email</FormLabel>
+                                                                    <FormControl>
+                                                                        <Input type="email" autoComplete="email" {...field} />
+                                                                    </FormControl>
+                                                                    {
+                                                                        fieldState.error &&
+                                                                        <FormMessage>
+                                                                            {fieldState.error?.message}
+                                                                        </FormMessage>
+                                                                    }
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                        <FormField
+                                                            control={form.control}
+                                                            name="phone"
+                                                            render={({ field, fieldState }) => (
+                                                                <FormItem>
+                                                                    <FormLabel>Phone</FormLabel>
+                                                                    <FormControl>
+                                                                        <Input type="number" autoComplete="tel" {...field} />
+                                                                    </FormControl>
+                                                                    {
+                                                                        fieldState.error &&
+                                                                        <FormMessage>
+                                                                            {fieldState.error?.message}
+                                                                        </FormMessage>
+                                                                    }
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                        <FormField
+                                                            control={form.control}
+                                                            name="website"
+                                                            render={({ field, fieldState }) => (
+                                                                <FormItem>
+                                                                    <FormLabel>Website</FormLabel>
+                                                                    <FormControl>
+                                                                        <Input autoComplete="website" {...field} />
+                                                                    </FormControl>
+                                                                    {
+                                                                        fieldState.error &&
+                                                                        <FormMessage>
+                                                                            {fieldState.error?.message}
+                                                                        </FormMessage>
+                                                                    }
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                        <ChangePasswordPopup
+                                                            trigger={({ open }) => (
+                                                                <SecondaryBtn onClick={open} className="border-white/10 py-4 md:text-sm">
+                                                                    Update Password
+                                                                </SecondaryBtn>
+                                                            )}
+                                                        />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </GrBorderBox>
+                                                <GrBorderBox className="p-px md:p-[2px] mt-4 w-full rounded-none">
+                                                    <div className="flex  md:px-[30px] px-7 bg-gr-purple-dark pt-4 justify-end ">
+                                                        <div className="flex items-center space-x-[10px]">
+                                                            <SecondaryBtn onClick={closeModal} disabled={form.formState.isSubmitting} className="border-white/10 py-4 px-6 md:px-10 md:text-sm">
+                                                                Cancel
+                                                            </SecondaryBtn>
+                                                            <PrimaryBtn type="submit" disabled={form.formState.isSubmitting} className=" h-full w-auto py-3 md:px-12 px-6">
+                                                                {
+                                                                    form.formState.isSubmitting ?
+                                                                        <Spinner />
+                                                                        :
+                                                                        <span>Save</span>
+                                                                }
+                                                            </PrimaryBtn>
+                                                        </div>
+                                                    </div>
+                                                </GrBorderBox>
+                                            </form>
+                                        </Form>
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>
