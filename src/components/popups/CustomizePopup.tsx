@@ -21,6 +21,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { FormSelect } from "../ui/select"
 import { Spinner } from "../ui/spinner"
 import { useToast } from "../ui/use-toast"
+import useAuthUserStore from "@/lib/zustand/authUserStore"
 
 
 
@@ -29,15 +30,19 @@ import { useToast } from "../ui/use-toast"
 
 
 export default function CustomizePopup() {
+    const { authUser, setProfile } = useAuthUserStore()
     const [isOpen, setIsOpen] = useState(false);
     const { toast } = useToast()
     const form = useForm<CustomizeSchema>({
         resolver: zodResolver(customizeSchema),
         mode: "all",
         defaultValues: {
-            filter: false,
+            filter: authUser?.profile?.data?.filter || false,
+            industry: authUser?.profile?.data?.industry?.id?.toString(),
+            keywords: authUser?.profile?.data?.keyword.split(","),
         }
     })
+    console.log(authUser?.profile?.data)
     const { data: industryList } = useSwrFetcher<Array<TIndustry>>(apiConfig.endpoints.industryList, api.other.industryListFetcher)
 
     function closeModal() {
@@ -50,10 +55,19 @@ export default function CustomizePopup() {
 
 
     const handleFormSubmit = async (values: CustomizeSchema) => {
+        if (!authUser?.profile) return;
         const res = await api.user.updateKeyword({
             ...values,
             website: ""
         })
+        if (res.success && res.data) {
+            setProfile({
+                ...authUser.profile,
+                authorization: authUser.profile.authorization,
+                email: authUser.profile.email,
+                data: res.data
+            })
+        }
         toast({
             title: res.success ? "Information updated successfully." : "An error occured while processing your request.",
             variant: res.success ? "default" : "destructive"
