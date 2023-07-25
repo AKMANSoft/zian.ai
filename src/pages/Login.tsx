@@ -119,7 +119,7 @@ export default function LoginPage() {
                                                 Don't have an account?
                                             </p>
                                             <a href="/signup" className="font-jakarta md:text-sm text-xs font-bold text-primary underline">
-                                                Sing up here
+                                                Sign up here
                                             </a>
                                         </div>
                                         <div>
