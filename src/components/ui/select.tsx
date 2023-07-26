@@ -5,6 +5,7 @@ import * as SelectPrimitive from "@radix-ui/react-select"
 import { cn } from "@/lib/utils"
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Spinner } from "./spinner"
 
 const Select = SelectPrimitive.Root
 
@@ -139,15 +140,21 @@ const FormSelect = React.forwardRef<
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent ref={ref}>
+
         {
-          options?.map((option) => (
-            <SelectItem
-              key={option.value}
-              disabled={option.disabled}
-              value={option.value}>
-              {option.label}
-            </SelectItem>
-          ))
+          !options ?
+            <div className="w-full h-16 py-4 flex items-center justify-center">
+              <Spinner />
+            </div>
+            :
+            options?.map((option) => (
+              <SelectItem
+                key={option.value}
+                disabled={option.disabled}
+                value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))
         }
       </SelectContent>
     </Select>
