@@ -19,6 +19,7 @@ import { useState } from "react";
 import { useSwrFetcher } from "@/lib/useSwrFetcher";
 import apiConfig from "@/config/api.config";
 import { FormSelect } from "@/components/ui/select";
+import axios from "axios";
 
 
 export default function SignUpPage() {
@@ -37,6 +38,7 @@ export default function SignUpPage() {
         if (response.success && response.data) {
             setToken(response.data)
             setCurStep("ONBOARDING")
+            axios.defaults.headers.common["Authorization"] = response.data
         }
 
         setUiData(response)
