@@ -20,6 +20,7 @@ import { useSwrFetcher } from "@/lib/useSwrFetcher";
 import apiConfig from "@/config/api.config";
 import { FormSelect } from "@/components/ui/select";
 import axios from "axios";
+import { Checkbox } from "@/components/ui/checkbox";
 
 
 export default function SignUpPage() {
@@ -59,7 +60,7 @@ export default function SignUpPage() {
                                 :
                                 <Form {...signUpForm}>
                                     <form name="signup form" onSubmit={signUpForm.handleSubmit(handleSignUpFormSubmit)}>
-                                        <div className="px-4 md:px-8 py-[30px] ">
+                                        <div className="px-4 md:px-20 py-[30px] ">
                                             {/* content */}
                                             <img src="/images/avatar.png" width={100} height={100} loading="lazy"
                                                 className={cn(
@@ -143,6 +144,35 @@ export default function SignUpPage() {
                                                         </FormItem>
                                                     )}
                                                 />
+                                                <FormField
+                                                    control={signUpForm.control}
+                                                    name="tos"
+                                                    render={({ field, fieldState }) => (
+                                                        <FormItem>
+                                                            <div className="flex items-start gap-3 mt-4">
+                                                                <FormControl className="mt-1">
+                                                                    <Checkbox checked={field.value} onCheckedChange={(state) => {
+                                                                        const value = state.valueOf()
+                                                                        if (typeof value === "boolean") {
+                                                                            field.onChange(value)
+                                                                        }
+                                                                    }} />
+                                                                </FormControl>
+                                                                <FormLabel className="max-w-[304px]">
+                                                                    <p className="text-sm font-jakarta">
+                                                                        By signing up or using Zian AI service, you agree to be bound by the <Anchor href="/terms">Terms of Service</Anchor> and <Anchor href="/privacy">Privacy Policy</Anchor>
+                                                                    </p>
+                                                                </FormLabel>
+                                                            </div>
+                                                            {
+                                                                fieldState.error &&
+                                                                <FormMessage>
+                                                                    {fieldState.error?.message}
+                                                                </FormMessage>
+                                                            }
+                                                        </FormItem>
+                                                    )}
+                                                />
                                             </div>
                                             {
                                                 !uiState?.state?.success && uiState?.state?.message &&
@@ -156,7 +186,7 @@ export default function SignUpPage() {
                                                     <p className="font-jakarta text-xs md:text-sm font-bold text-white">
                                                         Already have an account?
                                                     </p>
-                                                    <a href="" className="font-jakarta text-xs md:text-sm font-bold text-primary underline">
+                                                    <a href="/login" className="font-jakarta text-xs md:text-sm font-bold text-primary underline">
                                                         Login here
                                                     </a>
                                                 </div>
@@ -180,14 +210,6 @@ export default function SignUpPage() {
                         }
                     </div>
                 </GrBorderBox>
-                {
-                    curStep === "SIGNUP" &&
-                    <div className="max-w-sm mt-5">
-                        <p className="text-sm text-center font-jakarta">
-                            By signing up or using Zian AI service, you agree to be bound by the <Anchor href="/terms">Terms of Service</Anchor> and <Anchor href="/privacy">Privacy Policy</Anchor>
-                        </p>
-                    </div>
-                }
             </div>
         </MainLayout>
     );

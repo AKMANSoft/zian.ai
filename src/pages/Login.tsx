@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import useAuthUserStore from "@/lib/zustand/authUserStore";
 import GrBorderBox from "@/components/ui/gr-border-box";
 import ForgotPassword from "@/components/popups/ForgotPasswordPopup";
+import Anchor from "@/components/ui/anchor-link";
 
 
 export default function LoginPage() {
@@ -51,7 +52,7 @@ export default function LoginPage() {
                     )}>
                         <Form {...form}>
                             <form method="POST" onSubmit={form.handleSubmit(handleFormSubmit)}>
-                                <div className="px-4 md:px-8 py-[30px] ">
+                                <div className="px-4 md:px-20 py-[30px] ">
                                     {/* content */}
                                     <img src="/images/avatar.png" width={100} height={100} loading="lazy"
                                         className={cn(
@@ -106,6 +107,11 @@ export default function LoginPage() {
                                             <ForgotPassword />
                                         </button>
                                     </div>
+                                    <div className="w-full py-5">
+                                        <p className="text-sm font-jakarta font-normal">
+                                            By signing up or using Zian AI service, you agree to be bound by the <Anchor href="/terms">Terms of Service</Anchor> and <Anchor href="/privacy">Privacy Policy</Anchor>
+                                        </p>
+                                    </div>
                                     {
                                         !uiState?.state?.success && uiState?.state?.message &&
                                         <AutoHideAlert
@@ -113,7 +119,7 @@ export default function LoginPage() {
                                             title={"Heads Up!"}
                                             message={uiState.state.message} />
                                     }
-                                    <div className="flex justify-between mt-8 md:mb-[30px]">
+                                    <div className="flex justify-between mt-5 md:mb-[30px]">
                                         <div className="">
                                             <p className="font-jakarta md:text-sm text-xs font-bold text-white">
                                                 Don't have an account?
