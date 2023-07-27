@@ -9,6 +9,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import { ArticlesApiResponse, GenerateApiResponse } from "@/types/response.types";
 import useUiState from "@/components/hooks/useUiState";
 import api from "@/api";
+import useAuthUserStore from "@/lib/zustand/authUserStore";
 const DashboardArticleLoaded = React.lazy(() => import("./DashboardArticleLoaded"));
 
 
@@ -16,6 +17,7 @@ type StateType = "FIRST_TIME" | "GENERATING_EXAMPLE" | "ARTICLES_LOADED"
 export default function Dashboard() {
     const [curState, setCurState] = useState<StateType | null>(null)
     const { uiState, setUiData, setProcessing } = useUiState<GenerateApiResponse | ArticlesApiResponse>()
+    const { authUser } = useAuthUserStore()
 
 
 
@@ -56,7 +58,7 @@ export default function Dashboard() {
                                     <div className="flex flex-col text-center justify-center items-center max-w-2xl">
                                         <div className="">
                                             <h1 className="font-nebula text-2xl md:text-[32px] font-normal text-white">
-                                                Welcome, Mike
+                                                Welcome, {authUser?.profile?.username}
                                             </h1>
                                             <h2 className="font-jakarta text-base md:text-2xl font-normal text-white">
                                                 To get started, click "GENERATE EXAMPLE" below!

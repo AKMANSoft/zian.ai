@@ -19,9 +19,12 @@ export type AuthUser = {
         };
         keyword: string;
     };
-    package?: string;
-    phone?: string;
-    quota?: number;
+    website?: string;
+    username: string;
+    password: string;
+    package: string;
+    phone: string;
+    quota: number;
 }
 
 

@@ -93,6 +93,7 @@ export async function updateKeyword(data: CustomizeSchema): Promise<KeywordApiRe
                 industry_id: parseInt(data.industry),
                 keyword: data.keywords.join(", "),
                 filter: data.filter,
+                ...(data.website && { website: data.website })
             }
         )
         if (res.status === 200 && res.data.status) {

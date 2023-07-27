@@ -33,8 +33,12 @@ export default function EditProfilePopup() {
         defaultValues: {
             email: authUser?.profile?.email,
             phone: authUser?.profile?.phone,
+            name: authUser?.profile?.username,
+            website: authUser?.profile?.website
         }
     })
+
+    console.log(authUser)
 
     function closeModal() {
         setIsOpen(false)
@@ -52,10 +56,12 @@ export default function EditProfilePopup() {
             setAuthUser(
                 res.data.authorization,
                 {
+                    ...authUser.profile,
                     authorization: res.data.authorization,
+                    username: res.data.name,
+                    website: res.data.website,
                     email: res.data.email,
                     phone: res.data.phone,
-                    package: res.data.package,
                 }
             )
         }
