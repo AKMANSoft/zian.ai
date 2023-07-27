@@ -167,7 +167,6 @@ axios.defaults.baseURL = apiConfig.basepath
 function App() {
   const { authUser } = useAuthUserStore()
 
-  console.log(authUser)
 
   useEffect(() => {
     if (authUser?.token) {

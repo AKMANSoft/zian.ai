@@ -42,7 +42,6 @@ export default function CustomizePopup() {
             keywords: authUser?.profile?.data?.keyword.split(","),
         }
     })
-    console.log(authUser?.profile?.data)
     const { data: industryList } = useSwrFetcher<Array<TIndustry>>(apiConfig.endpoints.industryList, api.other.industryListFetcher)
 
     function closeModal() {

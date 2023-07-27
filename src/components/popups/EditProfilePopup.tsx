@@ -38,7 +38,6 @@ export default function EditProfilePopup() {
         }
     })
 
-    console.log(authUser)
 
     function closeModal() {
         setIsOpen(false)
