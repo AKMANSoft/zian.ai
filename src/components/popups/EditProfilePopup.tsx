@@ -7,7 +7,6 @@ import { faUser, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { NavigationItem } from "../sidebar"
 import GrBorderBox from "../ui/gr-border-box"
-import ChangePasswordPopup from "./ChangePasswordPopup"
 import { useToast } from "../ui/use-toast"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -193,16 +192,16 @@ export default function EditProfilePopup() {
                                                                 </FormItem>
                                                             )}
                                                         />
-                                                        <ChangePasswordPopup
+                                                        {/* <ChangePasswordPopup
                                                             trigger={({ open }) => (
                                                                 <SecondaryBtn onClick={open} className="border-white/10 py-4 md:text-sm">
                                                                     Update Password
                                                                 </SecondaryBtn>
                                                             )}
-                                                        />
+                                                        /> */}
                                                     </div>
                                                 </div>
-                                                <GrBorderBox className="p-px md:p-[2px] mt-4 w-full rounded-none">
+                                                <GrBorderBox className="p-px md:p-[2px] mt-10 w-full rounded-none ">
                                                     <div className="flex  md:px-[30px] px-7 bg-gr-purple-dark pt-4 justify-end ">
                                                         <div className="flex items-center space-x-[10px]">
                                                             <SecondaryBtn onClick={closeModal} disabled={form.formState.isSubmitting} className="border-white/10 py-4 px-6 md:px-10 md:text-sm">

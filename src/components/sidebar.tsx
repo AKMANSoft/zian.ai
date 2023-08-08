@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faHome, faCreditCard,
+    faHome, 
     faFile, faSignOut
 } from '@fortawesome/free-solid-svg-icons';
 import { cn } from "../lib/utils";
@@ -10,6 +10,7 @@ import { useLocation } from "react-router-dom";
 import EditProfilePopup from "./popups/EditProfilePopup";
 import CustomizePopup from "./popups/CustomizePopup";
 import useAuthUserStore from "@/lib/zustand/authUserStore";
+import BillingPopup from "./popups/BillingPopup";
 
 
 
@@ -58,11 +59,7 @@ export default function SideBar({ expanded = false }: Props) {
                         icon={<FontAwesomeIcon icon={faFile} />} />
                     <GrSeperator className="my-2" />
                     <EditProfilePopup />
-                    <NavigationItem
-                        href="/billing" active={pathname === "/billing"}
-                        className="mb-3"
-                        text="Billing & Plan"
-                        icon={<FontAwesomeIcon icon={faCreditCard} />} />
+                    <BillingPopup/>
                     <GrSeperator className="my-2" />
                     <NavigationItem
                         active={pathname === "/logout"}

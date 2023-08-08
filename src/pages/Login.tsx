@@ -107,11 +107,6 @@ export default function LoginPage() {
                                             <ForgotPassword />
                                         </button>
                                     </div>
-                                    <div className="w-full py-5">
-                                        <p className="text-sm font-jakarta font-normal">
-                                            By signing up or using Zian AI service, you agree to be bound by the <Anchor href="/terms">Terms of Service</Anchor> and <Anchor href="/privacy">Privacy Policy</Anchor>
-                                        </p>
-                                    </div>
                                     {
                                         !uiState?.state?.success && uiState?.state?.message &&
                                         <AutoHideAlert
@@ -148,6 +143,10 @@ export default function LoginPage() {
                         </Form>
                     </div>
                 </GrBorderBox>
+                <div className="text-white font-jakarta text-xm font-normal mt-5 w-[298px] md:w-[360px] md:text-sm text-center">
+                    By accessing this page, Zian.ai domain, or using Zian AI service, you agree to be bound by the
+                    <Anchor href="/terms">Terms of Service</Anchor> and <Anchor href="/privacy">Privacy Policy</Anchor>
+                </div>
             </div>
         </MainLayout>
     );

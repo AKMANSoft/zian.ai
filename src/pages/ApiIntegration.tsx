@@ -38,19 +38,19 @@ export default function ApiIntegrationPage() {
                             <h1 className="text-base font-jakarta font-bold text-white md:text-xl">
                                 How to install on Wordpress
                             </h1>
-                            <ul className="text-white/70 text-sm font-normal md:text-base">
+                            <ol className="text-white/70 text-sm font-normal md:text-base">
                                 <li>
-                                    Download, install and activate this Zain.Ai plugin
+                                    1. Download, install and activate this <a className="text-white underline">Zain.Ai</a> plugin
                                 </li>
-                                <li>Go to Setting -{">"} Zian.ai API
-                                </li>
-                                <li>
-                                    Fill the API Key
+                                <li>2. Go to Setting -{">"} Zian.ai API
                                 </li>
                                 <li>
-                                    Save Changes
+                                    3. Fill the API Key
                                 </li>
-                            </ul>
+                                <li>
+                                    4. Save Changes
+                                </li>
+                            </ol>
                             <div className="space-y-[10px]">
                                 <VideoComponent />
                                 <div>
@@ -60,8 +60,40 @@ export default function ApiIntegrationPage() {
 
                                 </div>
                             </div>
+                            <div className="space-y-5 pt-4">
+                                <div className="space-y-[10px]">
+                                    <h1 className="text-white font-jakarta text-base font-bold">
+                                        If you can't find where your posts are going:
+                                    </h1>
+                                    <p className="font-jakarta text-base font-normal text-white/70 lg:max-w-[70%]">
+                                        You should already have a page the posts are going to automatically, you just need to find it. However this will depend on however the developers of your website configured your system.
+                                    </p>
+                                </div>
+                                <div>
+                                    <ol className="text-white/70 text-sm font-normal md:text-base">
+                                            <li>
+                                                1. Find it. WP-Admin &gt; Pages &gt; Posts Page.
+                                            </li>
+                                            <li>
+                                                2. Click that page in backend to see the URL it goes to.
+
+                                            </li>
+                                            <li className="lg:max-w-[70%]">
+                                                3. Add that URL to the website's menu if you want to display them, which will be custom for your site. If you need help you will need a developer. Note that without displaying them on the main menu, they are still going on your website and will count for SEO.
+                                            </li>
+                                    </ol>
+                                </div>
+                                <div className="">
+                                    <img src="/images/url-instrusctions-integrate-api.png" className="w-auto h-auto object-contain object-center md:w-[633px]" />
+                                </div>
+                                <div className="">
+                                    <img src="/images/url-location-instructions-integrate.png" className="w-auto h-auto object-contain object-center md:w-[635px]" />
+                                </div>
+                            </div>
+
                         </div>
-                        <div className="space-y-[10px]">
+
+                        <div className="space-y-[10px] pt-6">
                             <h1 className="text-base font-jakarta font-bold text-white md:text-xl">
                                 List the industry
                             </h1>

@@ -11,6 +11,7 @@ import { useState } from "react";
 export default function BillingPage() {
 
     return (
+        <div className="hidden">
         <MainLayout heading="Billing & plan">
             <div className="flex flex-col lg:flex-row gap-5 pb-8">
                 <div className="p-7 space-y-6 lg:space-y-10 border border-primary bg-gr-purple-dark rounded-[20px] w-full lg:w-[60%]">
@@ -118,6 +119,7 @@ export default function BillingPage() {
 
             </GrBorderBox>
         </MainLayout>
+        </div>
     );
 }
 
@@ -211,6 +213,8 @@ function Pagination() {
                 </button>
             </div>
         </div>
+        
     )
+    
 }
 
