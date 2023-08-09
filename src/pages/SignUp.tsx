@@ -21,6 +21,8 @@ import apiConfig from "@/config/api.config";
 import { FormSelect } from "@/components/ui/select";
 import axios from "axios";
 import { Checkbox } from "@/components/ui/checkbox";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 
 export default function SignUpPage() {
@@ -44,6 +46,7 @@ export default function SignUpPage() {
 
         setUiData(response)
     }
+    const [passwordVisible, setPasswordVisible] = useState(false);
 
 
     return (
@@ -133,14 +136,23 @@ export default function SignUpPage() {
                                                         <FormItem>
                                                             <FormLabel>Password</FormLabel>
                                                             <FormControl>
-                                                                <Input type="password" autoComplete="password" {...field} />
+                                                                <div className="relative">
+                                                                    <Input
+                                                                        type={passwordVisible ? 'text' : 'password'}
+                                                                        autoComplete="password"
+                                                                        {...field}
+                                                                    />
+                                                                    <FontAwesomeIcon className="absolute  right-6  top-[45%]" icon={passwordVisible ? faEyeSlash : faEye}
+                                                                        onClick={() => setPasswordVisible(!passwordVisible)}
+                                                                        style={{ cursor: 'pointer' }}
+                                                                    />
+                                                                </div>
                                                             </FormControl>
-                                                            {
-                                                                fieldState.error &&
+                                                            {fieldState.error && (
                                                                 <FormMessage>
                                                                     {fieldState.error?.message}
                                                                 </FormMessage>
-                                                            }
+                                                            )}
                                                         </FormItem>
                                                     )}
                                                 />
@@ -263,7 +275,8 @@ function OnBoardingForm() {
                                 <FormItem>
                                     <FormLabel>Your Website Link</FormLabel>
                                     <FormControl>
-                                        <Input type="url" {...field} />
+                                        {/* ammar changes */}
+                                        <Input type="text" {...field} />
                                     </FormControl>
                                     {
                                         fieldState.error?.message &&

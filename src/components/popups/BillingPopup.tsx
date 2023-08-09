@@ -101,8 +101,11 @@ export default function BillingPopup() {
                                             </div>
                                             <div className="flex justify-between items-center flex-col md:flex-row gap-5">
                                                 <div className="w-full p-[10px] flex items-center justify-center border border-body/10 rounded-10 bg-body/10 md:w-auto md:p-[14px]">
-                                                    <p className="text-white text-sm font-medium font-Inter ">
-                                                        To change or upgrade your plan, please email <span className="underline"> hello@zian.ai</span>
+                                                    <p className="text-white text-sm font-medium font-Inter">
+                                                        To change or upgrade your plan, please email
+                                                        <a href="mailto:hello@zian.ai" className="underline pl-1">
+                                                            hello@zian.ai
+                                                        </a>
                                                     </p>
                                                 </div>
                                                 <PrimaryBtn type="submit" className=" h-12 py-3 w-full md:w-auto md:px-[30px]">

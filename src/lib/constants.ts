@@ -9,7 +9,9 @@ export const definedMessages = {
 
 export const REGEX = {
     PASSWORD: new RegExp(""),
-    WEBSITE: new RegExp("^(https?://)?(www.)?([a-zA-Z0-9-]+.)+[a-zA-Z]{2,}(/)?$")
+    // WEBSITE: new RegExp("^(https?://)?(www.)?([a-zA-Z0-9-]+.)+[a-zA-Z]{2,}(/)?$")
+    // ammar changes
+    WEBSITE: new RegExp("^www\.[a-zA-Z0-9-]+\.com(/)?$")
 }
 
 

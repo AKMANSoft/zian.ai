@@ -16,6 +16,9 @@ import useAuthUserStore from "@/lib/zustand/authUserStore";
 import GrBorderBox from "@/components/ui/gr-border-box";
 import ForgotPassword from "@/components/popups/ForgotPasswordPopup";
 import Anchor from "@/components/ui/anchor-link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
 
 export default function LoginPage() {
@@ -40,11 +43,12 @@ export default function LoginPage() {
         setUiData(response)
         setProcessing(false)
     }
+    const [passwordVisible, setPasswordVisible] = useState(false);
 
 
     return (
         <MainLayout secure={false} >
-            <div className="flex flex-col items-center justify-center py-20 ">
+            <div className="flex flex-col items-center justify-center py-20 min-h-screen ">
                 <GrBorderBox className="p-[2px] rounded-20 w-full max-w-[500px] shadow-xl">
                     <div className={cn(
                         "transform overflow-hidden rounded-20 bg-gr-purple-light",
@@ -82,7 +86,6 @@ export default function LoginPage() {
                                                 </FormItem>
                                             )}
                                         />
-
                                         <FormField
                                             control={form.control}
                                             name="password"
@@ -90,14 +93,23 @@ export default function LoginPage() {
                                                 <FormItem>
                                                     <FormLabel>Password</FormLabel>
                                                     <FormControl>
-                                                        <Input type="password" autoComplete="password" {...field} />
+                                                        <div className="relative">
+                                                            <Input
+                                                                type={passwordVisible ? 'text' : 'password'}
+                                                                autoComplete="password"
+                                                                {...field}
+                                                            />
+                                                            <FontAwesomeIcon className="absolute  right-6  top-[45%]" icon={passwordVisible ? faEyeSlash : faEye}
+                                                                onClick={() => setPasswordVisible(!passwordVisible)}
+                                                                style={{ cursor: 'pointer' }}
+                                                            />
+                                                        </div>
                                                     </FormControl>
-                                                    {
-                                                        fieldState.error &&
+                                                    {fieldState.error && (
                                                         <FormMessage>
                                                             {fieldState.error?.message}
                                                         </FormMessage>
-                                                    }
+                                                    )}
                                                 </FormItem>
                                             )}
                                         />
@@ -145,7 +157,7 @@ export default function LoginPage() {
                 </GrBorderBox>
                 <div className="text-white font-jakarta text-xm font-normal mt-5 w-[298px] md:w-[360px] md:text-sm text-center">
                     By accessing this page, Zian.ai domain, or using Zian AI service, you agree to be bound by the
-                    <Anchor href="/terms">Terms of Service</Anchor> and <Anchor href="/privacy">Privacy Policy</Anchor>
+                    <Anchor href="/terms" className="ps-1">Terms of Service</Anchor> and <Anchor href="/privacy" className="ps-1">Privacy Policy</Anchor>
                 </div>
             </div>
         </MainLayout>
