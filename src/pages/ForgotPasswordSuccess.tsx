@@ -14,7 +14,7 @@ export default function ForgotPasswordSuccessPage() {
             <div className="flex flex-col items-center justify-center py-20">
                 <GrBorderBox className="p-[2px] rounded-20 w-full max-w-[500px] shadow-xl">
                     <div className={cn(
-                        "rounded-20 bg-gr-purple-dark",
+                        "rounded-20  bg-gr-purple-light",
                     )}>
                         <div className="w-full flex flex-row  items-center justify-between px-4 pt-5 md:px-5">
                             <button type="button" onClick={() => window.history.back()}

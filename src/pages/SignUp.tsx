@@ -51,7 +51,7 @@ export default function SignUpPage() {
             <div className="flex flex-col items-center justify-center py-20">
                 <GrBorderBox className="p-[2px] rounded-20 w-full max-w-[500px] shadow-xl">
                     <div className={cn(
-                        "transform overflow-hidden rounded-20 bg-gr-purple-dark",
+                        "transform overflow-hidden rounded-20 bg-gr-purple-light",
                         "relative"
                     )}>
                         {
@@ -243,7 +243,7 @@ function OnBoardingForm() {
     return (
         <Form {...onboardingFrom}>
             <form name="onboarding form" onSubmit={onboardingFrom.handleSubmit(handleOnBoardingFormSubmit)}>
-                <div className="md:px-8 py-[30px] rounded-20 bg-gr-purple-dark">
+                <div className="md:px-8 py-[30px] rounded-20 bg-gr-purple-light">
                     {/* content */}
                     <img src="/images/avatar.png" width={100} height={100} loading="lazy"
                         className={cn(

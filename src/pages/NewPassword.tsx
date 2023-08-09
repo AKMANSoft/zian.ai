@@ -13,7 +13,7 @@ export default function ForgotPasswordPage() {
             <div className="flex flex-col items-center justify-center py-20">
                 <GrBorderBox className="p-[2px] rounded-20 w-full max-w-[500px] shadow-xl">
                     <div className={cn(
-                        "transform overflow-hidden rounded-20 bg-gr-purple-dark",
+                        "transform overflow-hidden rounded-20 bg-gr-purple-light",
                         "relative"
                     )}>
                         <div className="px-8 pt-[30px] pb-[50px] max-h-[calc(100vh_-_200px)] rounded-20 bg-gr-purple-dark">

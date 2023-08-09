@@ -10,7 +10,7 @@ export default function TermsPage() {
     return (
         <div className="h-screen py-10 overflow-y-auto">
             <GrBorderBox className="max-w-5xl mx-4 lg:mx-auto">
-                <div className="flex flex-col rounded-20 items-center bg-gr-purple-dark text-white space-y-7 py-5 pb-16 px-4 md:px-8">
+                <div className="flex flex-col rounded-20 items-center bg-gr-purple-light text-white space-y-7 py-5 pb-16 px-4 md:px-8">
                     <div>
                         <img src="/images/avatar.png" alt="" />
                     </div>

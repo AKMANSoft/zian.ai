@@ -1,27 +1,10 @@
 import { Fragment, useState } from "react"
-import { PrimaryBtn, SecondaryBtn } from "../ui/buttons"
+import { PrimaryBtn } from "../ui/buttons"
 import { Dialog, Transition } from "@headlessui/react"
 import { cn } from "@/lib/utils"
-import { TagsInputEl } from "../ui/input"
-import { faCreditCard, faPen, faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faCreditCard, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { NavigationItem } from "../sidebar"
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
-import CustomTooltip from "../custom-tooltip"
-import GrBorderBox from "../ui/gr-border-box"
-import { useSwrFetcher } from "@/lib/useSwrFetcher"
-import { TIndustry } from "@/types/response.types"
-import apiConfig from "@/config/api.config"
-import api from "@/api"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
-import { useForm } from "react-hook-form"
-import { CustomizeSchema, customizeSchema } from "@/types/forms.types"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { FormSelect } from "../ui/select"
-import { Spinner } from "../ui/spinner"
-import { useToast } from "../ui/use-toast"
-import useAuthUserStore from "@/lib/zustand/authUserStore"
 
 
 
@@ -30,19 +13,8 @@ import useAuthUserStore from "@/lib/zustand/authUserStore"
 
 
 export default function BillingPopup() {
-    const { authUser, setProfile } = useAuthUserStore()
     const [isOpen, setIsOpen] = useState(false);
-    const { toast } = useToast()
-    const form = useForm<CustomizeSchema>({
-        resolver: zodResolver(customizeSchema),
-        mode: "all",
-        defaultValues: {
-            filter: authUser?.profile?.data?.filter || false,
-            industry: authUser?.profile?.data?.industry?.id?.toString(),
-            keywords: authUser?.profile?.data?.keyword.split(","),
-        }
-    })
-    const { data: industryList } = useSwrFetcher<Array<TIndustry>>(apiConfig.endpoints.industryList, api.other.industryListFetcher)
+
 
     function closeModal() {
         setIsOpen(false)
@@ -53,25 +25,7 @@ export default function BillingPopup() {
     }
 
 
-    const handleSubmit = async (values: CustomizeSchema) => {
-        if (!authUser?.profile) return;
-        const res = await api.user.updateKeyword({
-            ...values,
-            website: ""
-        })
-        if (res.success && res.data) {
-            setProfile({
-                ...authUser.profile,
-                authorization: authUser.profile.authorization,
-                email: authUser.profile.email,
-                data: res.data
-            })
-        }
-        toast({
-            title: res.success ? "Information updated successfully." : "An error occured while processing your request.",
-            variant: res.success ? "default" : "destructive"
-        })
-    }
+
 
     return (
         <>
@@ -109,11 +63,11 @@ export default function BillingPopup() {
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <Dialog.Panel className={cn(
-                                    "w-full max-w-[805px] transform overflow-hidden rounded-20 bg-gr-purple-dark shadow-xl transition-all",
+                                    "w-full max-w-[805px] transform overflow-hidden rounded-20  shadow-xl transition-all",
                                     "relative  border-primary rounded-20"
                                 )}>
 
-                                    <div className="max-h-[calc(100vh_-_200px)]  flex flex-col space-y-32 p-7">
+                                    <div className="max-h-[calc(100vh_-_200px)]  flex flex-col space-y-32 p-7 bg-gr-purple-dark">
                                         {/* content */}
 
                                         <div className=" space-y-6 lg:space-y-10 ">
@@ -125,7 +79,7 @@ export default function BillingPopup() {
                                                         </h1>
                                                     </div>
                                                     <button type="button" onClick={closeModal}
-                                                        className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-pointer">
+                                                        className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-point">
                                                         <FontAwesomeIcon icon={faXmark} />
                                                     </button>
                                                 </div>
@@ -146,16 +100,14 @@ export default function BillingPopup() {
                                                 </div>
                                             </div>
                                             <div className="flex justify-between items-center flex-col md:flex-row gap-5">
-                                                <div className="p-1 md:p-[14px] flex items-center justify-center border border-body/10 rounded-10 bg-body/10">
+                                                <div className="w-full p-[10px] flex items-center justify-center border border-body/10 rounded-10 bg-body/10 md:w-auto md:p-[14px]">
                                                     <p className="text-white text-sm font-medium font-Inter ">
                                                         To change or upgrade your plan, please email <span className="underline"> hello@zian.ai</span>
                                                     </p>
                                                 </div>
-                                                <div>
-                                                    <PrimaryBtn type="submit" className=" h-12  w-auto  md:px-[30px] py-3">
-                                                        Upgrade
-                                                    </PrimaryBtn>
-                                                </div>
+                                                <PrimaryBtn type="submit" className=" h-12 py-3 w-full md:w-auto md:px-[30px]">
+                                                    Upgrade
+                                                </PrimaryBtn>
                                             </div>
                                         </div>
                                     </div>

@@ -87,7 +87,7 @@ export default function ArticleViewPopup({ trigger, article }: Props) {
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <Dialog.Panel className={cn(
-                                    "w-full max-w-[805px] transform flex flex-col bg-gr-purple-dark shadow-xl transition-all",
+                                    "w-full max-w-[805px] transform flex flex-col bg-gr-purple-light shadow-xl transition-all",
                                     "relative overflow-hidden pb-5 max-h-screen md:max-h-[95vh] md:rounded-20"
                                 )}>
                                     <div className="w-full flex flex-row gap-5 items-start justify-between sticky top-0 p-4 md:p-8 pb-0">
@@ -125,7 +125,7 @@ export default function ArticleViewPopup({ trigger, article }: Props) {
                                                 </p>
                                             </div>
                                         </div>
-                                        <div className="mt-5">
+                                        <div className="mt-5 h-full">
                                             <img src={b64Image(article.image)} width={800} height={400} alt=""
                                                 className="w-full h-auto object-fill" />
                                         </div>
