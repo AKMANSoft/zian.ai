@@ -67,7 +67,7 @@ export default function BillingPopup() {
                                     "relative  border-primary rounded-20"
                                 )}>
 
-                                    <div className="max-h-[calc(100vh_-_200px)]  flex flex-col space-y-32 p-7 bg-gr-purple-dark">
+                                    <div className="max-h-[calc(100vh_-_200px)]  flex flex-col space-y-32 p-7 pb-0 bg-gr-purple-dark">
                                         {/* content */}
 
                                         <div className=" space-y-6 lg:space-y-10 ">
