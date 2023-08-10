@@ -116,7 +116,7 @@ export default function ArticleViewPopup({ trigger, article }: Props) {
                                         </button>
                                     </div>
 
-                                    <div className="max-h-full mt-5 overflow-y-auto flex flex-col p-4 md:p-8">
+                                    <div className="max-h-full mt-5 overflow-y-auto flex flex-col p-4 pb-10 md:p-8">
                                         <div className="min-h-[430px] md:min-h-[330px] rounded-10 border py-2 md:py-4 border-white/20 overflow-hidden">
                                             <div className="max-h-[430px] md:max-h-[330px] px-2 md:px-5 overflow-y-auto">
                                                 <p className="text-sm font-light font-jakarta text-body">
