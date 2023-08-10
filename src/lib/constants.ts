@@ -11,7 +11,7 @@ export const REGEX = {
     PASSWORD: new RegExp(""),
     // WEBSITE: new RegExp("^(https?://)?(www.)?([a-zA-Z0-9-]+.)+[a-zA-Z]{2,}(/)?$")
     // ammar changes
-    WEBSITE: new RegExp("^(https?://)?(www.)?[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$")
+    WEBSITE: new RegExp("^(https?://)?(www.)?[a-zA-Z0-9.-]+.[a-zA-Z0-9]{2,}$")
 }
 
 
