@@ -72,7 +72,7 @@ export default function InstructionsSentPopup({ trigger }: Props) {
                                     "relative"
                                 )}>
                                     <GrBorderBox>
-                                        <div className="rounded-20 bg-gr-purple-dark">
+                                        <div className="rounded-20 bg-gr-purple-light">
                                             <div className="w-full flex flex-row  items-center justify-between px-4 pt-5 md:px-5">
                                                 <button type="button" onClick={closeModal}
                                                     className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-pointer">

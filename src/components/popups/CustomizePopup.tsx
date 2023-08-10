@@ -107,7 +107,7 @@ export default function CustomizePopup() {
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <Dialog.Panel className={cn(
-                                    "w-full max-w-[805px] transform overflow-hidden rounded-20 bg-gr-purple-dark shadow-xl transition-all",
+                                    "w-full max-w-[805px] transform overflow-hidden rounded-20  bg-gr-purple-dark shadow-xl transition-all",
                                     "relative"
                                 )}>
                                     <Form {...form}>

@@ -24,6 +24,8 @@ export default function BillingPopup() {
     }
 
 
+
+
     return (
         <>
 
@@ -60,11 +62,11 @@ export default function BillingPopup() {
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <Dialog.Panel className={cn(
-                                    "w-full max-w-[805px] transform overflow-hidden rounded-20 bg-gr-purple-dark shadow-xl transition-all",
+                                    "w-full max-w-[805px] transform overflow-hidden rounded-20  shadow-xl transition-all",
                                     "relative  border-primary rounded-20"
                                 )}>
 
-                                    <div className="max-h-[calc(100vh_-_200px)]  flex flex-col space-y-32 p-7">
+                                    <div className="max-h-[calc(100vh_-_200px)]  flex flex-col space-y-32 p-7 pb-0 bg-gr-purple-dark md:pb-7">
                                         {/* content */}
 
                                         <div className=" space-y-6 lg:space-y-10 ">
@@ -76,7 +78,7 @@ export default function BillingPopup() {
                                                         </h1>
                                                     </div>
                                                     <button type="button" onClick={closeModal}
-                                                        className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-pointer">
+                                                        className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-point">
                                                         <FontAwesomeIcon icon={faXmark} />
                                                     </button>
                                                 </div>
@@ -97,16 +99,17 @@ export default function BillingPopup() {
                                                 </div>
                                             </div>
                                             <div className="flex justify-between items-center flex-col md:flex-row gap-5">
-                                                <div className="p-1 md:p-[14px] flex items-center justify-center border border-body/10 rounded-10 bg-body/10">
-                                                    <p className="text-white text-sm font-medium font-Inter ">
-                                                        To change or upgrade your plan, please email <span className="underline"> hello@zian.ai</span>
+                                                <div className="w-full p-[10px] flex items-center justify-center border border-body/10 rounded-10 bg-body/10 md:w-auto md:p-[14px]">
+                                                    <p className="text-white text-sm font-medium font-Inter">
+                                                        To change or upgrade your plan, please email
+                                                        <a href="mailto:hello@zian.ai" className="underline pl-1">
+                                                            hello@zian.ai
+                                                        </a>
                                                     </p>
                                                 </div>
-                                                <div>
-                                                    <PrimaryBtn type="submit" className=" h-12  w-auto  md:px-[30px] py-3">
-                                                        Upgrade
-                                                    </PrimaryBtn>
-                                                </div>
+                                                <PrimaryBtn type="submit" className=" h-12 py-3 w-full md:w-auto md:px-[30px]">
+                                                    Upgrade
+                                                </PrimaryBtn>
                                             </div>
                                         </div>
                                     </div>

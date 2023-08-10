@@ -65,11 +65,11 @@ export default function OnboardingPopup({ trigger }: Props) {
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <Dialog.Panel className={cn(
-                                    "w-full max-w-[500px] transform overflow-hidden  shadow-xl transition-all",
+                                    "w-full max-w-[500px] transform overflow-hidden  shadow-xl transition-all ",
                                     "relative"
                                 )}>
                                     <GrBorderBox>
-                                        <div className="md:px-8 py-[30px] max-h-[calc(100vh_-_200px)] rounded-20 bg-gr-purple-dark">
+                                        <div className="md:px-8 py-[30px] max-h-[calc(100vh_-_200px)] rounded-20 bg-gr-purple-light">
                                             {/* content */}
                                             <img src="/images/avatar.png" width={100} height={100} loading="lazy"
                                                 className={cn(
