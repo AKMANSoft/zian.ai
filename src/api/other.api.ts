@@ -70,7 +70,7 @@ export async function industryListFetcher(): Promise<Array<TIndustry>> {
 export async function generate(): Promise<GenerateApiResponse> {
     try {
         const res = await axios.get(`${apiConfig.basepath}?generate=1`)
-        if (res.status === 200 && res.data.status) {
+        if (res.status === 200) {
             return {
                 message: "",
                 success: res.data.status ?? false,

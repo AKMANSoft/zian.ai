@@ -87,8 +87,8 @@ export default function ArticleViewPopup({ trigger, article }: Props) {
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <Dialog.Panel className={cn(
-                                    "w-full max-w-[805px] transform flex flex-col bg-gr-purple-light shadow-xl transition-all",
-                                    "relative overflow-hidden pb-5 max-h-screen md:max-h-[95vh] md:rounded-20"
+                                    "w-full max-w-[95vw] md:max-w-[805px] transform flex flex-col bg-gr-purple-light shadow-xl transition-all",
+                                    "relative overflow-hidden pb-5 max-h-[98vh] rounded-20"
                                 )}>
                                     <div className="w-full flex flex-row gap-5 items-start justify-between sticky top-0 p-4 md:p-8 pb-0">
                                         <div className="w-full mt-8 md:mt-0 md:max-w-[90%]">
@@ -116,7 +116,7 @@ export default function ArticleViewPopup({ trigger, article }: Props) {
                                         </button>
                                     </div>
 
-                                    <div className="max-h-full mt-5 overflow-y-auto flex flex-col p-4 pb-10 md:p-8">
+                                    <div className="max-h-full mt-5 overflow-y-auto flex flex-col p-4 md:p-8">
                                         <div className="min-h-[430px] md:min-h-[330px] rounded-10 border py-2 md:py-4 border-white/20 overflow-hidden">
                                             <div className="max-h-[430px] md:max-h-[330px] px-2 md:px-5 overflow-y-auto">
                                                 <p className="text-sm font-light font-jakarta text-body">

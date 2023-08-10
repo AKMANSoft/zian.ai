@@ -14,11 +14,7 @@ import { AutoHideAlert } from "@/components/ui/alert";
 import { useNavigate } from "react-router-dom";
 import useAuthUserStore from "@/lib/zustand/authUserStore";
 import GrBorderBox from "@/components/ui/gr-border-box";
-import ForgotPassword from "@/components/popups/ForgotPasswordPopup";
 import Anchor from "@/components/ui/anchor-link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
 
 
 export default function LoginPage() {
@@ -43,8 +39,6 @@ export default function LoginPage() {
         setUiData(response)
         setProcessing(false)
     }
-    const [passwordVisible, setPasswordVisible] = useState(false);
-
 
     return (
         <MainLayout secure={false} >
@@ -79,9 +73,7 @@ export default function LoginPage() {
                                                     </FormControl>
                                                     {
                                                         fieldState.error &&
-                                                        <FormMessage>
-                                                            {fieldState.error?.message}
-                                                        </FormMessage>
+                                                        <FormMessage />
                                                     }
                                                 </FormItem>
                                             )}
@@ -93,31 +85,19 @@ export default function LoginPage() {
                                                 <FormItem>
                                                     <FormLabel>Password</FormLabel>
                                                     <FormControl>
-                                                        <div className="relative">
-                                                            <Input
-                                                                type={passwordVisible ? 'text' : 'password'}
-                                                                autoComplete="password"
-                                                                {...field}
-                                                            />
-                                                            <FontAwesomeIcon className="absolute  right-6  top-[45%]" icon={passwordVisible ? faEyeSlash : faEye}
-                                                                onClick={() => setPasswordVisible(!passwordVisible)}
-                                                                style={{ cursor: 'pointer' }}
-                                                            />
-                                                        </div>
+                                                        <Input type="password" autoComplete="password"  {...field} />
                                                     </FormControl>
-                                                    {fieldState.error && (
-                                                        <FormMessage>
-                                                            {fieldState.error?.message}
-                                                        </FormMessage>
-                                                    )}
+                                                    {fieldState.error &&
+                                                        <FormMessage />
+                                                    }
                                                 </FormItem>
                                             )}
                                         />
                                     </div>
                                     <div className="flex justify-end mt-3 lg:mt-0">
-                                        <button>
-                                            <ForgotPassword />
-                                        </button>
+                                        <a href="/forgot-password" className="font-jakarta md:text-sm text-xs font-normal text-white hover:text-primary">
+                                            Forgot Password
+                                        </a>
                                     </div>
                                     {
                                         !uiState?.state?.success && uiState?.state?.message &&

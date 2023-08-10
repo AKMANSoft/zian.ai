@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils"
 import { PrimaryBtnNeon } from "./buttons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faTwitter } from "@fortawesome/free-brands-svg-icons"
-import { IconDefinition, faCalendar, faCircleXmark } from "@fortawesome/free-solid-svg-icons"
+import { IconDefinition, faCalendar, faCircleXmark, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import { Popover, PopoverContent, PopoverTrigger } from "./popover"
 import { Calendar } from "./calendar"
 import { SelectSingleEventHandler } from "react-day-picker"
@@ -13,19 +13,29 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement>
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => {
+    const [passwordVisible, setPasswordVisible] = React.useState(false);
     return (
-      <input
-        type={type}
-        className={cn(
-          // "flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-          "text-white text-start font-jakarta font-semibold text-sm leading-6 py-3 px-5",
-          "border border-white/10 appearance-none rounded-10 w-full bg-transparent mt-2",
-          "focus:bg-th-gray/10 outline-none transition-all placeholder:text-white/70",
-          className
-        )}
-        ref={ref}
-        {...props}
-      />
+      <div className="relative w-full">
+        <input
+          type={type === "password" ? (passwordVisible ? "text" : "password") : type}
+          className={cn(
+            // "flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+            "text-white text-start font-jakarta font-semibold text-sm leading-6 py-3 px-5",
+            "border border-white/10 appearance-none rounded-10 w-full bg-transparent mt-2",
+            "focus:bg-th-gray/10 outline-none transition-all placeholder:text-white/70",
+            className
+          )}
+          ref={ref}
+          {...props}
+        />
+        {
+          type === "password" &&
+          <FontAwesomeIcon className="absolute right-6 top-[45%]" icon={passwordVisible ? faEyeSlash : faEye}
+            onClick={() => setPasswordVisible(!passwordVisible)}
+            style={{ cursor: 'pointer' }}
+          />
+        }
+      </div>
     )
   }
 )

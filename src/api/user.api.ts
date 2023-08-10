@@ -2,8 +2,8 @@
 import apiConfig from "@/config/api.config";
 import { definedMessages } from "@/lib/constants";
 import { CustomError } from "@/types/error";
-import { CustomizeSchema, LoginFormSchema, SignUpFormSchema, UpdateProfileSchema } from "@/types/forms.types";
-import { AuthUser, KeywordApiResponse, LoginApiResponse, SignUpApiResponse, UpdateProfileResponse } from "@/types/response.types";
+import { CustomizeSchema, ForgotPasswordSchema, LoginFormSchema, SignUpFormSchema, UpdateProfileSchema } from "@/types/forms.types";
+import { AuthUser, ForgotPwdApiResponse, KeywordApiResponse, LoginApiResponse, SignUpApiResponse, UpdateProfileResponse } from "@/types/response.types";
 import axios from "axios";
 
 
@@ -64,7 +64,7 @@ export async function updateProfile(data: UpdateProfileSchema, authUser: AuthUse
 export async function login(data: LoginFormSchema): Promise<LoginApiResponse> {
     try {
         const res = await axios.post(apiConfig.endpoints.login, data)
-        if (res.status === 200 && res.data.status) {
+        if (res.status === 200) {
             return {
                 message: res.data.message ?? "",
                 success: res.data.status ?? false,
@@ -72,6 +72,46 @@ export async function login(data: LoginFormSchema): Promise<LoginApiResponse> {
                     ...res.data.account,
                     created: new Date(res.data.account.created)
                 })
+            }
+        }
+        throw new CustomError(definedMessages.UNKNOWN_ERROR_TRY_AGAIN)
+    } catch (error: any) {
+        console.error(error)
+        return {
+            message: ((error instanceof CustomError) ? error.message : error?.response?.data?.message) ?? "",
+            success: false,
+            data: null
+        }
+    }
+}
+
+export async function forgotPassword(data: ForgotPasswordSchema): Promise<ForgotPwdApiResponse> {
+    try {
+        const res = await axios.post(apiConfig.endpoints.forgotPassword, data)
+        if (res.status === 200 && res.data.status) {
+            return {
+                message: res.data.message ?? "",
+                success: res.data.status ?? false
+            }
+        }
+        throw new CustomError(definedMessages.UNKNOWN_ERROR_TRY_AGAIN)
+    } catch (error: any) {
+        console.error(error)
+        return {
+            message: ((error instanceof CustomError) ? error.message : error?.response?.data?.message) ?? "",
+            success: false,
+            data: null
+        }
+    }
+}
+
+export async function createNewPwd(data: { password: string, token: string }): Promise<ForgotPwdApiResponse> {
+    try {
+        const res = await axios.post(apiConfig.endpoints.forgotPassword, data)
+        if (res.status === 200 && res.data.status) {
+            return {
+                message: res.data.message ?? "",
+                success: res.data.status ?? false
             }
         }
         throw new CustomError(definedMessages.UNKNOWN_ERROR_TRY_AGAIN)

@@ -21,8 +21,6 @@ import apiConfig from "@/config/api.config";
 import { FormSelect } from "@/components/ui/select";
 import axios from "axios";
 import { Checkbox } from "@/components/ui/checkbox";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 
 export default function SignUpPage() {
@@ -46,7 +44,6 @@ export default function SignUpPage() {
 
         setUiData(response)
     }
-    const [passwordVisible, setPasswordVisible] = useState(false);
 
 
     return (
@@ -136,17 +133,10 @@ export default function SignUpPage() {
                                                         <FormItem>
                                                             <FormLabel>Password</FormLabel>
                                                             <FormControl>
-                                                                <div className="relative">
-                                                                    <Input
-                                                                        type={passwordVisible ? 'text' : 'password'}
-                                                                        autoComplete="password"
-                                                                        {...field}
-                                                                    />
-                                                                    <FontAwesomeIcon className="absolute  right-6  top-[45%]" icon={passwordVisible ? faEyeSlash : faEye}
-                                                                        onClick={() => setPasswordVisible(!passwordVisible)}
-                                                                        style={{ cursor: 'pointer' }}
-                                                                    />
-                                                                </div>
+                                                                <Input
+                                                                    autoComplete="password"
+                                                                    {...field}
+                                                                />
                                                             </FormControl>
                                                             {fieldState.error && (
                                                                 <FormMessage>
@@ -233,7 +223,7 @@ function OnBoardingForm() {
     const { uiState, setUiData } = useUiState<KeywordApiResponse>()
     const onboardingFrom = useForm<CustomizeSchema>({
         resolver: zodResolver(customizeSchema),
-        mode: "all",
+        mode: "onBlur",
         defaultValues: {
             filter: true,
             keywords: []

@@ -29,6 +29,8 @@ export type AuthUser = {
 
 
 export type LoginApiResponse = ApiResponse<AuthUser>
+export type ForgotPwdApiResponse = ApiResponse<null>
+export type NewPwdApiResponse = ApiResponse<null>
 
 export type SignUpApiResponse = ApiResponse<string>
 export type UpdateProfileResponse = ApiResponse<{

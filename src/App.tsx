@@ -14,8 +14,6 @@ const SignUpPage = React.lazy(() => import("./pages/SignUp"));
 const LoginPage = React.lazy(() => import("./pages/Login"));
 const ForgotPasswordPage = React.lazy(() => import("./pages/ForgotPassword"));
 const NewPasswordPage = React.lazy(() => import("./pages/NewPassword"));
-const ForgotPasswordSuccessPage = React.lazy(() => import("./pages/ForgotPasswordSuccess"));
-const NewPasswordSuccessPage = React.lazy(() => import("./pages/NewPasswordSuccess"));
 const CustomizePage = React.lazy(() => import("./components/popups/CustomizePopup"));
 const TermsPage = React.lazy(() => import("./pages/Terms"));
 const PrivacyPage = React.lazy(() => import("./pages/Privacy"));
@@ -73,19 +71,7 @@ const router = createBrowserRouter([
     )
   },
   {
-    path: "/forgot-password/success",
-    element: (
-      <Suspense fallback={
-        <div className="w-full h-screen flex items-center justify-center">
-          <LoadingSparkle spark variant="large" />
-        </div>
-      }>
-        <ForgotPasswordSuccessPage />
-      </Suspense>
-    )
-  },
-  {
-    path: "/new-password",
+    path: "/reset-password/:token",
     element: (
       <Suspense fallback={
         <div className="w-full h-screen flex items-center justify-center">
@@ -93,18 +79,6 @@ const router = createBrowserRouter([
         </div>
       }>
         <NewPasswordPage />
-      </Suspense>
-    )
-  },
-  {
-    path: "/new-password/success",
-    element: (
-      <Suspense fallback={
-        <div className="w-full h-screen flex items-center justify-center">
-          <LoadingSparkle spark variant="large" />
-        </div>
-      }>
-        <NewPasswordSuccessPage />
       </Suspense>
     )
   },

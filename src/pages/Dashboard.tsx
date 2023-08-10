@@ -15,7 +15,7 @@ import DashboardArticleLoaded from "./DashboardArticleLoaded";
 
 type StateType = "IDLE" | "FIRST_TIME" | "GENERATING_EXAMPLE" | "ARTICLES_LOADED"
 export default function Dashboard() {
-    const [curState, setCurState] = useState<StateType>("IDLE")
+    const [curState, setCurState] = useState<StateType>(sessionStorage.getItem("GENERATING_EXAMPLE") ? "GENERATING_EXAMPLE" : "IDLE")
     const { uiState, setUiData, setProcessing } = useUiState<GenerateApiResponse | ArticlesApiResponse>()
     const { authUser } = useAuthUserStore()
 
@@ -34,6 +34,10 @@ export default function Dashboard() {
         const response = await api.other.generate()
         setUiData(response)
         setCurState(response.success ? "GENERATING_EXAMPLE" : "FIRST_TIME")
+        if (response.success) {
+            sessionStorage.setItem("GENERATING_EXAMPLE", "true")
+        }
+        console.log(response)
         setProcessing(false)
     }
 
@@ -53,71 +57,66 @@ export default function Dashboard() {
                                 </div>
                                 :
                                 <div className="flex md:h-screen w-full justify-center items-center">
-                                    {
-                                        curState === null ?
-                                            <LoadingSparkle variant="large" spark />
-                                            :
-                                            <div className="flex flex-col text-center justify-center items-center max-w-2xl">
-                                                <div className="">
-                                                    <h1 className="font-nebula text-2xl md:text-[32px] font-normal text-white">
-                                                        Welcome, {authUser?.profile?.username}
-                                                    </h1>
-                                                    <h2 className="font-jakarta text-base md:text-2xl font-normal text-white">
-                                                        To get started, click "GENERATE EXAMPLE" below!
-                                                    </h2>
-                                                    <p className="font-jakarta text-sm md:text-base font-normal text-white/80 py-5">
-                                                        If no examples are available yet, please wait for our team to notify you that your account is ready, and in the meantime view Integration to connect the system with your site. Reach out to hello@zian.ai if you need support
-                                                    </p>
-                                                </div>
-                                                <div className="flex md:flex-row  flex-col items-center justify-center my-5 gap-3">
-                                                    <CustomTooltip
-                                                        title="Upgrade"
-                                                        className="px-16 md:px-4"
-                                                        content={
-                                                            <>
-                                                                To change your plan or increase your weekly quota, please email hello@zian.ai
-                                                            </>
-                                                        } />
+                                    <div className="flex flex-col text-center justify-center items-center max-w-2xl">
+                                        <div className="">
+                                            <h1 className="font-nebula text-2xl md:text-[32px] font-normal text-white">
+                                                Welcome, {authUser?.profile?.username}
+                                            </h1>
+                                            <h2 className="font-jakarta text-base md:text-2xl font-normal text-white">
+                                                To get started, click "GENERATE EXAMPLE" below!
+                                            </h2>
+                                            <p className="font-jakarta text-sm md:text-base font-normal text-white/80 py-5">
+                                                If no examples are available yet, please wait for our team to notify you that your account is ready, and in the meantime view Integration to connect the system with your site. Reach out to hello@zian.ai if you need support
+                                            </p>
+                                        </div>
+                                        <div className="flex md:flex-row  flex-col items-center justify-center my-5 gap-3">
+                                            <CustomTooltip
+                                                title="Upgrade"
+                                                className="px-16 md:px-4"
+                                                content={
+                                                    <>
+                                                        To change your plan or increase your weekly quota, please email hello@zian.ai
+                                                    </>
+                                                } />
 
-                                                    {
-                                                        uiState.state?.success && uiState.state.data ?
-                                                            <PrimaryBtnNeon
-                                                                onClick={() => window.location.reload()}
-                                                                className="w-full max-w-[100%] md:w-auto">
-                                                                Refresh
-                                                            </PrimaryBtnNeon>
-                                                            :
-                                                            <PrimaryBtnNeon
-                                                                onClick={handleGenerateExample}
-                                                                disabled={uiState.processing}
-                                                                className="w-full max-w-[100%] md:w-auto">
-                                                                {
-                                                                    uiState.processing ?
-                                                                        <LoadingSparkle variant="tiny" spark={true} />
-                                                                        :
-                                                                        <span>Generate Example</span>
-                                                                }
-                                                            </PrimaryBtnNeon>
-                                                    }
-                                                </div>
-                                                <div className="text-start mt-5">
-                                                    {
-                                                        uiState.state?.data &&
-                                                            uiState.state.success ?
-                                                            <p className="text-sm font-medium flex items-start gap-3">
-                                                                <FontAwesomeIcon icon={faCircleCheck} className="text-th-green mt-1" />
-                                                                Success! We&apos;re crafting your examples. Check back in 2-5 mins for the results.
-                                                            </p>
-                                                            :
-                                                            uiState.state?.message &&
-                                                            <p className="text-sm font-medium flex items-start gap-3">
-                                                                <FontAwesomeIcon icon={faCircleInfo} className="text-red-500 mt-1" />
-                                                                {uiState.state.message}
-                                                            </p>
-                                                    }
-                                                </div>
-                                            </div>
-                                    }
+                                            {
+                                                (uiState.state?.success && uiState.state.data) || sessionStorage.getItem("GENERATING_EXAMPLE") ?
+                                                    <PrimaryBtnNeon
+                                                        onClick={() => window.location.reload()}
+                                                        className="w-full max-w-[100%] md:w-auto">
+                                                        Refresh
+                                                    </PrimaryBtnNeon>
+                                                    :
+                                                    <PrimaryBtnNeon
+                                                        onClick={handleGenerateExample}
+                                                        disabled={uiState.processing}
+                                                        className="w-full max-w-[100%] md:w-auto">
+                                                        {
+                                                            uiState.processing ?
+                                                                <LoadingSparkle variant="tiny" spark={true} />
+                                                                :
+                                                                <span>Generate Example</span>
+                                                        }
+                                                    </PrimaryBtnNeon>
+                                            }
+                                        </div>
+                                        <div className="text-start mt-5">
+                                            {
+                                                (uiState.state?.data || sessionStorage.getItem("GENERATING_EXAMPLE")) &&
+                                                    uiState?.state?.success || sessionStorage.getItem("GENERATING_EXAMPLE") ?
+                                                    <p className="text-sm font-medium flex items-start gap-3">
+                                                        <FontAwesomeIcon icon={faCircleCheck} className="text-th-green mt-1" />
+                                                        Success! We&apos;re crafting your examples. Check back in 2-5 mins for the results.
+                                                    </p>
+                                                    :
+                                                    uiState.state?.data &&
+                                                    <p className="text-sm font-medium flex items-start gap-3">
+                                                        <FontAwesomeIcon icon={faCircleInfo} className="text-red-500 mt-1" />
+                                                        {uiState.state.data as string}
+                                                    </p>
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
                         }
                     </div>

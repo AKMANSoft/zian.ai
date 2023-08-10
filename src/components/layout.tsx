@@ -13,7 +13,7 @@ type Props = {
     secure?: boolean;
 }
 
-const noSidebarPaths = ["/signup", "/login", "/forgot-password", "/forgot-password/success", "/new-password", "/new-password/success"]
+const noSidebarPaths = ["/signup", "/login", "/forgot-password", "/reset-password"]
 export default function MainLayout({ children, heading = "", description, secure = true }: Props) {
     const navigate = useNavigate()
     const { pathname } = useLocation()
@@ -37,12 +37,12 @@ export default function MainLayout({ children, heading = "", description, secure
             :
             <div className="w-full flex gap-5">
                 {
-                    !noSidebarPaths.includes(pathname) &&
+                    (!noSidebarPaths.includes(pathname) && !pathname.startsWith("/reset-password")) &&
                     <SideBar expanded={menuExpanded} />
                 }
                 <div className="flex flex-col w-full max-w-full overflow-x-hidden max-h-screen overflow-y-auto px-2 xs:px-4 lg:px-5 bg-gr-purple lg:bg-none">
                     {
-                        !noSidebarPaths.includes(pathname) &&
+                        (!noSidebarPaths.includes(pathname) && !pathname.startsWith("/reset-password")) &&
                         <Header
                             heading={heading}
                             description={description}

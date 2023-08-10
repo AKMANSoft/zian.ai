@@ -11,7 +11,7 @@ export const REGEX = {
     PASSWORD: new RegExp(""),
     // WEBSITE: new RegExp("^(https?://)?(www.)?([a-zA-Z0-9-]+.)+[a-zA-Z]{2,}(/)?$")
     // ammar changes
-    WEBSITE: new RegExp("^www.[a-zA-Z0-9-]+.com(/)?$")
+    WEBSITE: new RegExp("^(https?://)?(www.)?[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$")
 }
 
 
@@ -20,9 +20,16 @@ export const DATE_FORMATS = {
 }
 
 
+export const DEFAULTS = {
+    PER_PAGE_ITEMS: 10
+}
+
+
+
 const CONSTANTS = {
     REGEX,
     definedMessages,
-    DATE_FORMATS
+    DATE_FORMATS,
+    DEFAULTS
 }
 export default CONSTANTS

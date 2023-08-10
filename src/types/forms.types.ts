@@ -29,6 +29,20 @@ export const loginFormSchema = z.object({
 })
 export type LoginFormSchema = z.infer<typeof loginFormSchema>
 
+export const newPasswordSchema = z.object({
+    password: z.string({ required_error: "This field is required." }).min(8, "Password must contain atleast 8 characters."),
+    confPassword: z.string({ required_error: "This field is required." }).min(8, "Password must contain atleast 8 characters."),
+}).refine((data) => data.password === data.confPassword, {
+    message: "Confirm password does not match the password.",
+    path: ["confPassword"]
+})
+export type NewPasswordSchema = z.infer<typeof newPasswordSchema>
+
+export const forgotPasswordSchema = z.object({
+    email: z.string({ required_error: "This field is required." }).email({ message: "Please enter a valid email address." }),
+})
+export type ForgotPasswordSchema = z.infer<typeof forgotPasswordSchema>
+
 
 export const customizeSchema = z.object({
     website: z.string().regex(CONSTANTS.REGEX.WEBSITE, { message: "Please enter a valid website url." }).optional().or(z.literal("")),
