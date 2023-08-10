@@ -13,12 +13,14 @@ import LoadingSparkle from "@/components/LoadingSparkle";
 import { Article, ArticlesApiResponse } from "@/types/response.types";
 import useUiState from "@/components/hooks/useUiState";
 import api from "@/api";
+import useAuthUserStore from "@/lib/zustand/authUserStore";
 
 
 
 
 export default function DashboardArticleLoaded() {
     const { uiState, setUiData } = useUiState<ArticlesApiResponse>()
+    const { authUser } = useAuthUserStore()
 
     useEffect(() => {
         api.other.getArticles().then((res) => {
@@ -27,7 +29,7 @@ export default function DashboardArticleLoaded() {
     }, [setUiData])
 
     return (
-        <MainLayout heading="Welcome, Mike" description="Here is your articles history">
+        <MainLayout heading={`Welcome, ${authUser?.profile?.username}`} description="Here is your articles history">
             <GrBorderBox className="p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_140px)] " type="lg">
                 <div className="h-full w-full flex flex-col backdrop-blur-[10px] bg-gr-purple-light opacity-90 rounded-20">
                     {/* Drafts Table  */}
