@@ -30,63 +30,55 @@ export default function PrivacyPage() {
                             heading="Personal Information Collection"
                             content={
                                 <>
-                                    We collect personal information that you provide to us directly when you use our Services. This includes information you provide when you create an account, make a purchase, or communicate with us. The types of information we collect may include your name, email address, postal address, and payment information. In addition, we collect information about your interactions with our Services.
-                                </>
+                                    We collect personal information that you provide to us directly when you use our Services. This includes information you provide when you create an account, make a purchase, or communicate with us. The types of information we collect may include your name, email address, postal address, and payment information. In addition, we collect information about your interactions with our Services.                                </>
                             } />
                         <TermsPrivacyComponent
                             heading="Purpose of Data Collection"
                             content={
                                 <>
-                                    We use the information we collect to provide, maintain, and improve our Services. We also use the information we collect to personalize your experience, to send you information about our Services, respond to your inquiries, and for other customer service purposes.
-                                </>
+                                    We use the information we collect to provide, maintain, and improve our Services. We also use the information we collect to personalize your experience, to send you information about our Services, respond to your inquiries, and for other customer service purposes.                                </>
                             } />
                         <TermsPrivacyComponent
                             heading="Data Sharing and Disclosure"
                             content={
                                 <>
-                                    We may share your information with third-party vendors, consultants, and other service providers who perform services or functions on our behalf. We may also share your information to comply with the law, to protect the rights and property of Zian AI, our users, and others, or in connection with a sale or transfer of assets.
-                                </>
+                                    We may share your information with third-party vendors, consultants, and other service providers who perform services or functions on our behalf. We may also share your information to comply with the law, to protect the rights and property of Zian AI, our users, and others, or in connection with a sale or transfer of assets.                                </>
                             } />
                         <TermsPrivacyComponent
                             heading="Data Storage and Security"
                             content={
                                 <>
-                                    We take reasonable measures to protect your personal information from loss, theft, misuse, unauthorized access, disclosure, alteration, and destruction. However, the Internet is not 100% secure and we cannot guarantee the security of your information.
-                                </>
+                                    We take reasonable measures to protect your personal information from loss, theft, misuse, unauthorized access, disclosure, alteration, and destruction. However, the Internet is not 100% secure and we cannot guarantee the security of your information.                                </>
                             } />
                         <TermsPrivacyComponent
                             heading="User Rights and Choices"
                             content={
                                 <>
-                                    You may update, correct, or delete your account information at any time by contacting us. Please note that we may retain certain information as required by law or as necessary for our business purposes.
-                                </>
+                                    You may update, correct, or delete your account information at any time by contacting us. Please note that we may retain certain information as required by law or as necessary for our business purposes.                                </>
                             } />
                         <TermsPrivacyComponent
                             heading="Use of Cookies and Other Technologies"
                             content={
                                 <>
-                                    We use cookies and other tracking technologies to collect information about your use of our Services. We use this information to improve our Services, to analyze trends, to administer our Services, and to understand how users interact with our Services.
-                                </>
+                                    We use cookies and other tracking technologies to collect information about your use of our Services. We use this information to improve our Services, to analyze trends, to administer our Services, and to understand how users interact with our Services.                                </>
                             } />
                         <TermsPrivacyComponent
                             heading="Children's Privacy"
                             content={
                                 <>
-                                    Our Services are not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13.
-                                </>
+                                    Our Services are not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13.                                </>
                             } />
                         <TermsPrivacyComponent
                             heading="Changes to Privacy Policy"
                             content={
                                 <>
-                                    We may change this Privacy Policy from time to time. If we make changes, we will notify you by revising the date at the top of this policy and, in some cases, we may provide additional notice.
-                                </>
+                                    We may change this Privacy Policy from time to time. If we make changes, we will notify you by revising the date at the top of this policy and, in some cases, we may provide additional notice.                                </>
                             } />
                         <TermsPrivacyComponent
                             heading="Contact Information"
                             content={
                                 <>
-                                    If you have any questions about this Privacy Policy, please contact us at: hello@zian.ai
+                                    If you have any questions about this Privacy Policy, please contact us at: <a href="mailto:hello@zian.ai"> hello@zian.ai</a>
                                 </>
                             } />
                     </div>
