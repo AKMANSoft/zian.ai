@@ -43,6 +43,11 @@ export const forgotPasswordSchema = z.object({
 })
 export type ForgotPasswordSchema = z.infer<typeof forgotPasswordSchema>
 
+export const emailLoginSchema = z.object({
+    email: z.string({ required_error: "This field is required." }).email({ message: "Please enter a valid email address." }),
+})
+export type EmailloginSchema = z.infer<typeof emailLoginSchema>
+
 
 export const customizeSchema = z.object({
     website: z.string().regex(CONSTANTS.REGEX.WEBSITE, { message: "Please enter a valid website url." }).optional().or(z.literal("")),

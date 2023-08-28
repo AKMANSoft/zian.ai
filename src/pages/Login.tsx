@@ -94,7 +94,10 @@ export default function LoginPage() {
                                             )}
                                         />
                                     </div>
-                                    <div className="flex justify-end mt-3 lg:mt-0">
+                                    <div className="flex justify-between mt-3 lg:mt-0">
+                                        <a href="/login-with-email" className="font-jakarta md:text-sm text-xs font-normal text-white hover:text-primary">
+                                            Login with email
+                                        </a>
                                         <a href="/forgot-password" className="font-jakarta md:text-sm text-xs font-normal text-white hover:text-primary">
                                             Forgot Password
                                         </a>
