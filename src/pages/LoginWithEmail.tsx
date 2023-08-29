@@ -32,7 +32,7 @@ export default function LoginWithEmailPage() {
     const handleFormSubmit = async (data: EmailloginSchema) => {
         setProcessing(true)
         const response = await api.user.emaillogin(data)
-        
+
 
         if (response.success) {
             return setEmailSent(true)
@@ -52,7 +52,9 @@ export default function LoginWithEmailPage() {
                     emailSent ?
                         <GrBorderBox className="p-[2px] rounded-20 w-full max-w-[500px] shadow-xl">
 
-                            <div className="max-h-[calc(100vh_-_200px)] rounded-20 bg-gr-purple-dark">
+                            <div className={cn(
+                                "rounded-20  bg-gr-purple-light",
+                            )}>
                                 <div className="w-full flex flex-row  items- justify-between px-5 pt-5">
                                     <button type="button"
                                         onClick={() => navigate("/login")}
@@ -72,8 +74,8 @@ export default function LoginWithEmailPage() {
                                     <div className="font-nebula text-white text-center text-2xl font-normal mt-5">
                                         LOGIN LINK SENT
                                     </div>
-                                    <div>
-                                        <p className="md:text-sm text-xs font-normal font-jakarta text-white/70 text-center md:my-4 my-2">
+                                    <div className=" flex  justify-center items-center">
+                                        <p className="md:text-sm md:max-w-[80%] text-center text-xs font-normal font-jakarta text-white/70  md:my-4 my-2">
                                             We have sent you a link to login, Please check your email and login instantly by clicking on that link.                                </p>
                                     </div>
                                 </div>
