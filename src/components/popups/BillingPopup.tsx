@@ -69,7 +69,7 @@ export default function BillingPopup() {
                                     "relative  border-primary rounded-20"
                                 )}>
 
-                                    <div className="max-h-[calc(100vh_-_200px)]  flex flex-col space-y-32 p-7 pb-0 bg-gr-purple-dark md:pb-7">
+                                    <div className="  h-full flex flex-col space-y-32 p-7 pb-0 bg-gr-purple-dark md:pb-7">
                                         {/* content */}
 
                                         <div className=" space-y-6 lg:space-y-10 ">
@@ -103,7 +103,7 @@ export default function BillingPopup() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="flex justify-between items-center flex-col md:flex-row gap-5">
+                                            <div className="flex justify-between items-center flex-col md:flex-row gap-5 md:pb-0 pb-12">
                                                 <div className="w-full p-[10px] flex items-center justify-center border border-body/10 rounded-10 bg-body/10 md:w-auto md:p-[14px]">
                                                     <p className="text-white text-sm font-medium font-Inter">
                                                         To change or upgrade your plan, please email
