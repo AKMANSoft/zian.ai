@@ -91,7 +91,7 @@ export default function BillingPopup() {
                                                 <div>
                                                     <div className="space-y-[6px]">
                                                         <h1 className="text-white font-jakarta text-base md:text-xl font-bold">
-                                                            {authUser?.profile?.package} Plan: {authUser?.profile?.quota} Articles per week
+                                                            {authUser?.profile?.package} Plan:  Articles per week
                                                         </h1>
                                                         <p className="md:text-base text-sm font-normal font-jakarta text-white/70">
                                                             Current quota remaining: {Math.max(0, (authUser?.profile?.quota ?? 0) - 1)}
