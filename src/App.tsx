@@ -118,6 +118,7 @@ const router = createBrowserRouter([
         <BillingPage />
       </Suspense>
     )
+    // 
   },
   {
     path: "/terms",
@@ -143,6 +144,14 @@ const router = createBrowserRouter([
       </Suspense>
     )
   },
+  // {
+  //   path: "/login-with-email/:token",
+  //   element: (
+  //     <Suspense>
+  //       <LoginWithEmailTokenPage />
+  //     </Suspense>
+  //   )
+  // },
 
 ])
 
