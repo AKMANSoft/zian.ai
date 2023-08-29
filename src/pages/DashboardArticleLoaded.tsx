@@ -8,17 +8,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PrimaryBtnNeon } from "@/components/ui/buttons";
 import ArticleViewPopup from "@/components/popups/ArticleViewPopup";
 import { format } from "date-fns";
-import CONSTANTS from "@/lib/constants";
+import CONSTANTS, { DEFAULTS } from "@/lib/constants";
 import LoadingSparkle from "@/components/LoadingSparkle";
-import { Article, ArticlesApiResponse } from "@/types/response.types";
+import type { Article, ArticlesApiResponse } from "@/types/response.types";
 import useUiState from "@/components/hooks/useUiState";
 import api from "@/api";
 
 
 
 
+
 export default function DashboardArticleLoaded() {
-    const { uiState, setUiData } = useUiState<ArticlesApiResponse>()
+    const { uiState, setUiData, setProcessing } = useUiState<ArticlesApiResponse>()
+    const [currentPage, setCurrentPage] = useState(1);
+
+
+    const loadArticles = async (page: number) => {
+        setCurrentPage(page)
+        setProcessing(true)
+        const res = await api.other.getArticles(DEFAULTS.PER_PAGE_ITEMS, (page - 1) * DEFAULTS.PER_PAGE_ITEMS)
+        setUiData(res)
+        setProcessing(false)
+    }
+
+    useEffect(() => {
+        loadArticles(1)
+    }, [])
 
     useEffect(() => {
         api.other.getArticles().then((res) => {
@@ -43,7 +58,7 @@ export default function DashboardArticleLoaded() {
                         <div className="max-h-full max-w-full h-screen overflow-y-auto lg:bg-transparent divide-white/10 space-y-5 lg:divide-y-0 px-5 lg:px-0">
                             {
                                 uiState?.state?.data ?
-                                    uiState.state.data?.map((article, index) => (
+                                    uiState?.state?.data.map((article, index) => (
                                         <SingleArticleRow
                                             article={article}
                                             num={index + 1}
@@ -56,8 +71,8 @@ export default function DashboardArticleLoaded() {
                             }
                         </div>
                         {
-                            uiState?.state?.data && uiState.state.data.length > 0 &&
-                            <Pagination />
+                            !uiState?.processing &&
+                            <Pagination currentPage={currentPage} setCurrentPage={loadArticles} endReached={((uiState?.state?.data && uiState?.state?.data.length < DEFAULTS.PER_PAGE_ITEMS) ?? false)} />
                         }
                     </div>
                 </div>
@@ -69,17 +84,41 @@ export default function DashboardArticleLoaded() {
 
 
 
+function formatePaginationNums(num: number, length = 4, offset = 1) {
+    const formattedArray = [];
 
-function Pagination() {
-    const [activePage, setActivePage] = useState(1);
-    const visiblePages = [1, 2, 3, 4];
+    for (let i = 1; i <= length; i++) {
+        if (i === Math.ceil(length / 2)) {
+            formattedArray.push(num);
+        } else {
+            formattedArray.push(num + (i - Math.ceil(length / 2)) * offset);
+        }
+    }
+    const filteredArray = formattedArray.filter(num => num !== 0);
+    if (filteredArray.length < length) {
+        filteredArray.push(filteredArray[filteredArray.length - 1] + 1)
+    }
+    return filteredArray;
+}
+
+
+
+type PaginationProps = {
+    currentPage: number;
+    setCurrentPage: (page: number) => void;
+    endReached?: boolean;
+}
+
+
+function Pagination({ currentPage, setCurrentPage, endReached }: PaginationProps) {
+    const visiblePages = formatePaginationNums(currentPage);
 
     const onPageChange = (page: number) => {
         const lastPage = visiblePages[visiblePages.length - 1];
         let newPage = page;
         if (newPage <= 0) newPage = 1
         if (newPage >= lastPage) newPage = lastPage
-        setActivePage(newPage);
+        setCurrentPage(newPage);
     }
 
     return (
@@ -87,35 +126,39 @@ function Pagination() {
             <div className="flex items-center gap-2">
                 <button type="button"
                     onClick={() => onPageChange(1)}
-                    className="outline-none bg-white/5 rounded text-xs font-normal hover:bg-primary transition-all p-2 w-8 h-8 aspect-square">
+                    disabled={currentPage <= 1}
+                    className="outline-none bg-white/5 rounded text-xs font-normal hover:bg-primary transition-all p-2 w-8 h-8 aspect-square disabled:opacity-50 disabled:!bg-white/5">
                     <FontAwesomeIcon icon={faChevronLeft} />
                     <FontAwesomeIcon icon={faChevronLeft} />
                 </button>
                 <button type="button"
-                    onClick={() => onPageChange(activePage - 1)}
-                    className="outline-none bg-white/5 rounded text-xs font-normal hover:bg-primary transition-all p-2 w-8 h-8 aspect-square">
+                    disabled={currentPage <= 1}
+                    onClick={() => onPageChange(currentPage - 1)}
+                    className="outline-none bg-white/5 rounded text-xs font-normal hover:bg-primary transition-all p-2 w-8 h-8 aspect-square disabled:opacity-50 disabled:!bg-white/5">
                     <FontAwesomeIcon icon={faChevronLeft} />
                 </button>
                 {
-                    visiblePages.map((page) => (
+                    (endReached ? visiblePages.filter((p) => p <= currentPage) : visiblePages).map((page) => (
                         <button key={page} type="button"
                             onClick={() => onPageChange(page)}
                             className={cn(
-                                "outline-none rounded text-xs font-normal transition-all p-2 w-8 h-8 aspect-square",
-                                activePage === page ? "bg-primary" : "bg-white/5 hover:bg-primary"
+                                "outline-none rounded text-xs font-normal transition-all p-2 w-8 h-8 aspect-square disabled:opacity-50",
+                                currentPage === page ? "bg-primary" : "bg-white/5 hover:bg-primary disabled:!bg-white/5"
                             )}>
                             {page}
                         </button>
                     ))
                 }
                 <button type="button"
-                    onClick={() => onPageChange(activePage + 1)}
-                    className="outline-none bg-white/5 rounded text-xs font-normal hover:bg-primary transition-all p-2 w-8 h-8 aspect-square">
+                    disabled={endReached}
+                    onClick={() => onPageChange(currentPage + 1)}
+                    className="outline-none bg-white/5 rounded text-xs font-normal hover:bg-primary transition-all p-2 w-8 h-8 aspect-square disabled:opacity-50 disabled:!bg-white/5">
                     <FontAwesomeIcon icon={faChevronRight} />
                 </button>
                 <button type="button"
-                    onClick={() => onPageChange(visiblePages[visiblePages.length - 1])}
-                    className="outline-none bg-white/5 rounded text-xs font-normal hover:bg-primary transition-all p-2 w-8 h-8 aspect-square">
+                    disabled={endReached}
+                    onClick={() => onPageChange(currentPage + visiblePages.length)}
+                    className="outline-none bg-white/5 rounded text-xs font-normal hover:bg-primary transition-all p-2 w-8 h-8 aspect-square disabled:opacity-50 disabled:!bg-white/5">
                     <FontAwesomeIcon icon={faChevronRight} />
                     <FontAwesomeIcon icon={faChevronRight} />
                 </button>
@@ -123,6 +166,7 @@ function Pagination() {
         </div>
     )
 }
+
 
 
 
