@@ -24,11 +24,6 @@ export const DEFAULTS = {
 }
 
 
-export const DEFAULTS = {
-    PER_PAGE_ITEMS: 10
-}
-
-
 
 const CONSTANTS = {
     REGEX,
