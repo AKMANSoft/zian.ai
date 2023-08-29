@@ -2,8 +2,8 @@
 import apiConfig from "@/config/api.config";
 import { definedMessages } from "@/lib/constants";
 import { CustomError } from "@/types/error";
-import { CustomizeSchema, ForgotPasswordSchema, LoginFormSchema, SignUpFormSchema, UpdateProfileSchema } from "@/types/forms.types";
-import { AuthUser, ForgotPwdApiResponse, KeywordApiResponse, LoginApiResponse, SignUpApiResponse, UpdateProfileResponse } from "@/types/response.types";
+import { CustomizeSchema, EmailloginSchema, ForgotPasswordSchema, LoginFormSchema, SignUpFormSchema, UpdateProfileSchema } from "@/types/forms.types";
+import { AuthUser, EmailLoginApiResponse, ForgotPwdApiResponse, KeywordApiResponse, LoginApiResponse, SignUpApiResponse, UpdateProfileResponse } from "@/types/response.types";
 import axios from "axios";
 
 
@@ -148,6 +148,28 @@ export async function updateKeyword(data: CustomizeSchema): Promise<KeywordApiRe
         console.error(error)
         return {
             message: ((error instanceof CustomError) ? error.message : error?.response?.data?.error) ?? "",
+            success: false,
+            data: null
+        }
+    }
+}
+
+
+
+export async function emaillogin(data: EmailloginSchema): Promise<EmailLoginApiResponse> {
+    try {
+        const res = await axios.post(apiConfig.endpoints.emaillogin, data)
+        if (res.status === 200) {
+            return {
+                message: res.data.message ?? "",
+                success: res.data.status ?? false,
+            }
+        }
+        throw new CustomError(definedMessages.UNKNOWN_ERROR_TRY_AGAIN)
+    } catch (error: any) {
+        console.error(error)
+        return {
+            message: ((error instanceof CustomError) ? error.message : error?.response?.data?.message) ?? "",
             success: false,
             data: null
         }

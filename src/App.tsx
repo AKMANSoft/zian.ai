@@ -17,6 +17,7 @@ const NewPasswordPage = React.lazy(() => import("./pages/NewPassword"));
 const CustomizePage = React.lazy(() => import("./components/popups/CustomizePopup"));
 const TermsPage = React.lazy(() => import("./pages/Terms"));
 const PrivacyPage = React.lazy(() => import("./pages/Privacy"));
+const LoginWithEmailPage = React.lazy(() => import("./pages/LoginWithEmail"));
 
 
 
@@ -117,6 +118,7 @@ const router = createBrowserRouter([
         <BillingPage />
       </Suspense>
     )
+    // 
   },
   {
     path: "/terms",
@@ -133,7 +135,24 @@ const router = createBrowserRouter([
         <PrivacyPage />
       </Suspense>
     )
-  }
+  },
+  {
+    path: "/login-with-email",
+    element: (
+      <Suspense>
+        <LoginWithEmailPage />
+      </Suspense>
+    )
+  },
+  // {
+  //   path: "/login-with-email/:token",
+  //   element: (
+  //     <Suspense>
+  //       <LoginWithEmailTokenPage />
+  //     </Suspense>
+  //   )
+  // },
+
 ])
 
 

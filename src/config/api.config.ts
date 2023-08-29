@@ -7,6 +7,7 @@ const apiConfig = {
         forgotPassword: '/forgot',
         updateProfile: '/account',
         industryList: "?list=industry",
+        emaillogin:'/emaillogin'
     }
 }
 
