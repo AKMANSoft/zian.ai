@@ -32,7 +32,7 @@ export default function LoginWithEmailPage() {
     const handleFormSubmit = async (data: EmailloginSchema) => {
         setProcessing(true)
         const response = await api.user.emaillogin(data)
-        
+
 
         if (response.success) {
             return setEmailSent(true)
@@ -47,12 +47,12 @@ export default function LoginWithEmailPage() {
 
     return (
         <MainLayout secure={false} >
-            <div className="flex flex-col items-center justify-center py-20 min-h-screen ">
+            <div className="flex flex-col items-center justify-center py-20  min-h-screen">
                 {
                     emailSent ?
                         <GrBorderBox className="p-[2px] rounded-20 w-full max-w-[500px] shadow-xl">
 
-                            <div className="max-h-[calc(100vh_-_200px)] rounded-20 bg-gr-purple-dark">
+                            <div className=" rounded-20 bg-gr-purple-dark">
                                 <div className="w-full flex flex-row  items- justify-between px-5 pt-5">
                                     <button type="button"
                                         onClick={() => navigate("/login")}
@@ -80,78 +80,80 @@ export default function LoginWithEmailPage() {
                             </div>
                         </GrBorderBox>
                         :
-                        <><GrBorderBox className="p-[2px] rounded-20 w-full max-w-[500px] shadow-xl">
+                        <>
+                            <GrBorderBox className="p-[2px] rounded-20 w-full max-w-[500px] shadow-xl">
 
-                            <div className={cn(
-                                "transform overflow-hidden rounded-20 bg-gr-purple-light",
-                                "relative"
-                            )}>
-                                <Form {...form}>
-                                    <form method="POST" onSubmit={form.handleSubmit(handleFormSubmit)}>
-                                        <div className="w-full flex flex-row  items-center justify-between px-4 pt-5 md:px-5">
-                                            <button type="button"
-                                                onClick={() => navigate("/login")}
-                                                className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-pointer">
-                                                <FontAwesomeIcon icon={faArrowLeft} />
-                                            </button>
-                                            <div></div>
-                                        </div>
-                                        <div className="px-4 md:px-20 py-[30px] ">
-                                            {/* content */}
-
-                                            <img src="/images/avatar.png" width={100} height={100} loading="lazy"
-                                                className={cn(
-                                                    "w-[100px] h-auto aspect-square rounded-full overflow-hidden mx-auto",
-                                                    "block"
-                                                )}
-                                                alt="" />
-                                            <div className="font-nebula text-white text-center text-2xl font-normal mt-4">
-                                                LOGIN WITH EMAIL
+                                <div className={cn(
+                                    "transform overflow-hidden rounded-20 bg-gr-purple-light",
+                                    "relative"
+                                )}>
+                                    <Form {...form}>
+                                        <form method="POST" onSubmit={form.handleSubmit(handleFormSubmit)}>
+                                            <div className="w-full flex flex-row  items-center justify-between px-4 pt-5 md:px-5">
+                                                <button type="button"
+                                                    onClick={() => navigate("/login")}
+                                                    className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-pointer">
+                                                    <FontAwesomeIcon icon={faArrowLeft} />
+                                                </button>
+                                                <div></div>
                                             </div>
-                                            <div className="text-white/70  font-jakarta text-center text-xs mb-5 md:mb-0 md:mt-5 md:text-sm">
-                                                We will sent you login link to your email
-                                            </div>
-                                            <div className="lg:py-5 lg:pt-8 space-y-[10px] md:text-sm text-xs">
-                                                <FormField
-                                                    control={form.control}
-                                                    name="email"
-                                                    render={({ field, fieldState }) => (
-                                                        <FormItem>
-                                                            <FormLabel>Email</FormLabel>
-                                                            <FormControl>
-                                                                <Input type="email" autoComplete="email" {...field} />
-                                                            </FormControl>
-                                                            {fieldState.error &&
-                                                                <FormMessage />}
-                                                        </FormItem>
-                                                    )} />
+                                            <div className="px-4 md:px-20 py-[30px] ">
+                                                {/* content */}
 
-                                            </div>
+                                                <img src="/images/avatar.png" width={100} height={100} loading="lazy"
+                                                    className={cn(
+                                                        "w-[100px] h-auto aspect-square rounded-full overflow-hidden mx-auto",
+                                                        "block"
+                                                    )}
+                                                    alt="" />
+                                                <div className="font-nebula text-white text-center text-2xl font-normal mt-4">
+                                                    LOGIN WITH EMAIL
+                                                </div>
+                                                <div className="text-white/70  font-jakarta text-center text-xs mb-5 md:mb-0 md:mt-5 md:text-sm">
+                                                    We will sent you login link to your email
+                                                </div>
+                                                <div className="lg:py-5 lg:pt-8 space-y-[10px] md:text-sm text-xs">
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="email"
+                                                        render={({ field, fieldState }) => (
+                                                            <FormItem>
+                                                                <FormLabel>Email</FormLabel>
+                                                                <FormControl>
+                                                                    <Input type="email" autoComplete="email" {...field} />
+                                                                </FormControl>
+                                                                {fieldState.error &&
+                                                                    <FormMessage />}
+                                                            </FormItem>
+                                                        )} />
 
-
-                                            <div className="flex justify-end mt-5 md:mb-[30px]">
-
-                                                <div>
-                                                    <PrimaryBtn
-                                                        type="submit"
-                                                        disabled={uiState?.processing}
-                                                        className="py-3 h-full px-6 md:w-auto">
-                                                        {uiState?.processing ?
-                                                            <Spinner />
-                                                            :
-                                                            <span>Email Login Link</span>}
-                                                    </PrimaryBtn>
                                                 </div>
 
+
+                                                <div className="flex justify-end mt-5 md:mb-[30px]">
+
+                                                    <div>
+                                                        <PrimaryBtn
+                                                            type="submit"
+                                                            disabled={uiState?.processing}
+                                                            className="py-3 h-full px-6 md:w-auto">
+                                                            {uiState?.processing ?
+                                                                <Spinner />
+                                                                :
+                                                                <span>Email Login Link</span>}
+                                                        </PrimaryBtn>
+                                                    </div>
+
+                                                </div>
                                             </div>
-                                        </div>
-                                    </form>
-                                </Form>
-                            </div>
-                        </GrBorderBox><div className="text-white font-jakarta text-xm font-normal mt-5 w-[298px] md:w-[360px] md:text-sm text-center">
+                                        </form>
+                                    </Form>
+                                </div>
+                            </GrBorderBox><div className="text-white font-jakarta text-xm font-normal mt-5 w-[298px] md:w-[360px] md:text-sm text-center">
                                 By accessing this page, Zian.ai domain, or using Zian AI service, you agree to be bound by the
                                 <Anchor href="/terms" className="ps-1">Terms of Service</Anchor> and <Anchor href="/privacy" className="ps-1">Privacy Policy</Anchor>
-                            </div></>
+                            </div>
+                        </>
                 }
             </div>
         </MainLayout>

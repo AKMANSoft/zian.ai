@@ -1,25 +1,40 @@
 import { useState } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Billingover, BillingoverContent, BillingoverTrigger } from "./ui/Popover2";
 import { PrimaryBtn } from "./ui/buttons";
-
 
 type Props = {
   title: string;
   content: React.ReactNode;
   className: string;
-}
+};
+
 export default function CustomTooltip({ title, content, className }: Props) {
   const [open, setOpen] = useState(false);
+  
+
   return (
-    <Popover open={open} onOpenChange={(value) => setOpen(value)}>
-      <PopoverTrigger asChild>
-        <PrimaryBtn className={className} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+    <Billingover open={open} onOpenChange={setOpen}>
+      <BillingoverTrigger>
+        <PrimaryBtn
+          className={className}
+          onMouseEnter={() => setOpen(true)}
+          onMouseLeave={() => setOpen(false)}
+        >
           {title}
         </PrimaryBtn>
-      </PopoverTrigger>
-      <PopoverContent className="bg-purple-500 font-base font-normal font-jakarta text-white" align="start" side="top" >
-        {content}
-      </PopoverContent>
-    </Popover>
-  )
+      </BillingoverTrigger>
+      {open && (
+        <BillingoverContent
+          className="bg-purple-500 font-base font-normal font-jakarta text-white"
+          align="end"
+          side="top"
+          onMouseEnter={() => setOpen(true)}
+          onMouseLeave={() => setOpen(false)}
+        >
+          {content}
+        </BillingoverContent>
+      )}
+    </Billingover>
+  );
 }
+

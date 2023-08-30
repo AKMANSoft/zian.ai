@@ -6,6 +6,7 @@ import { faCreditCard, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { NavigationItem } from "../sidebar"
 import useAuthUserStore from "@/lib/zustand/authUserStore"
+import CustomTooltip from "../custom-tooltip"
 
 
 
@@ -69,7 +70,7 @@ export default function BillingPopup() {
                                     "relative  border-primary rounded-20"
                                 )}>
 
-                                    <div className="max-h-[calc(100vh_-_200px)]  flex flex-col space-y-32 p-7 pb-0 bg-gr-purple-dark md:pb-7">
+                                    <div className="  flex flex-col space-y-32 p-7 pb-12 bg-gr-purple-dark  md:pb-7">
                                         {/* content */}
 
                                         <div className=" space-y-6 lg:space-y-10 ">
@@ -112,8 +113,18 @@ export default function BillingPopup() {
                                                         </a>
                                                     </p>
                                                 </div>
-                                                <PrimaryBtn type="submit" className=" h-12 py-3 w-full md:w-auto md:px-[30px]">
-                                                    Upgrade
+                                                <PrimaryBtn type="submit" className=" h-12 py-3 w-full md:w-auto md:px-[30px] ">
+                                                    <CustomTooltip
+                                                        title="Upgrade"
+                                                        className="w-auto overflow-hidden"
+                                                        content={
+
+                                                            <>
+                                                                <p>
+                                                                    To upgrade, please email <a href="mailto:hello@zian.ai" className="underline">hello@zian.ai</a>
+                                                                </p>
+                                                            </>
+                                                        } />
                                                 </PrimaryBtn>
                                             </div>
                                         </div>

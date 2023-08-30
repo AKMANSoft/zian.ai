@@ -90,6 +90,7 @@ export default function SignUpPage() {
                                                         </FormItem>
                                                     )}
                                                 />
+
                                                 <FormField
                                                     control={signUpForm.control}
                                                     name="email"
@@ -134,6 +135,7 @@ export default function SignUpPage() {
                                                             <FormLabel>Password</FormLabel>
                                                             <FormControl>
                                                                 <Input
+                                                                    type="password"
                                                                     autoComplete="password"
                                                                     {...field}
                                                                 />

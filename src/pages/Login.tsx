@@ -42,7 +42,7 @@ export default function LoginPage() {
 
     return (
         <MainLayout secure={false} >
-            <div className="flex flex-col items-center justify-center py-20 min-h-screen ">
+            <div className="flex flex-col items-center justify-center py-20 min-h-screen">
                 <GrBorderBox className="p-[2px] rounded-20 w-full max-w-[500px] shadow-xl">
                     <div className={cn(
                         "transform overflow-hidden rounded-20 bg-gr-purple-light",
