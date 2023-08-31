@@ -72,8 +72,8 @@ export default function LoginWithEmailPage() {
                                     <div className="font-nebula text-white text-center text-2xl font-normal mt-5">
                                         LOGIN LINK SENT
                                     </div>
-                                    <div>
-                                        <p className="md:text-sm text-xs font-normal font-jakarta text-white/70 text-center md:my-4 my-2">
+                                    <div className=" flex  justify-center items-center">
+                                        <p className="md:text-sm md:max-w-[80%] text-center text-xs font-normal font-jakarta text-white/70  md:my-4 my-2">
                                             We have sent you a link to login, Please check your email and login instantly by clicking on that link.                                </p>
                                     </div>
                                 </div>

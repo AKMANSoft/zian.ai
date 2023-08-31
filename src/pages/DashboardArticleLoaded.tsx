@@ -10,10 +10,11 @@ import ArticleViewPopup from "@/components/popups/ArticleViewPopup";
 import { format } from "date-fns";
 import CONSTANTS, { DEFAULTS } from "@/lib/constants";
 import LoadingSparkle from "@/components/LoadingSparkle";
-import { Article, ArticlesApiResponse } from "@/types/response.types";
+import type { Article, ArticlesApiResponse } from "@/types/response.types";
 import useUiState from "@/components/hooks/useUiState";
 import api from "@/api";
 import useAuthUserStore from "@/lib/zustand/authUserStore";
+
 
 
 
@@ -52,38 +53,24 @@ export default function DashboardArticleLoaded() {
                             <span className="block text-start w-[150px] overflow-hidden">Created Date</span>
                             <span className="block text-start w-[100px] overflow-hidden"></span>
                         </div>
-                        {
-                            uiState.processing ?
-                                <div className="w-full h-screen flex items-center justify-center">
-                                    <LoadingSparkle spark variant="large" />
-                                </div>
-                                :
-                                uiState?.state?.data &&
-                                (uiState?.state?.data?.length > 0 ?
-                                    <div className="max-h-full max-w-full h-screen overflow-y-auto lg:bg-transparent divide-white/10 space-y-5 lg:divide-y-0 px-5 lg:px-0">
-                                        {
-                                            uiState?.state?.data ?
-                                                uiState.state.data?.map((article, index) => (
-                                                    <SingleArticleRow
-                                                        article={article}
-                                                        num={index + 1}
-                                                        key={article.id} />
-                                                ))
-                                                :
-                                                <div className="flex items-center justify-center h-full">
-                                                    <LoadingSparkle variant="medium" spark />
-                                                </div>
-                                        }
-                                    </div>
+                        <div className="max-h-full max-w-full h-screen overflow-y-auto lg:bg-transparent divide-white/10 space-y-5 lg:divide-y-0 px-5 lg:px-0">
+                            {
+                                uiState?.state?.data ?
+                                    uiState?.state?.data.map((article, index) => (
+                                        <SingleArticleRow
+                                            article={article}
+                                            num={index + 1}
+                                            key={article.id} />
+                                    ))
                                     :
-                                    <div className="w-full h-screen flex items-center justify-center">
-                                        <p className="text-xl font-medium">No data.</p>
+                                    <div className="flex items-center justify-center h-full">
+                                        <LoadingSparkle variant="medium" spark />
                                     </div>
-                                )
-                        }
+                            }
+                        </div>
                         {
                             !uiState?.processing &&
-                            <Pagination currentPage={currentPage} setCurrentPage={loadArticles} endReached={(uiState?.state?.data && uiState?.state?.data?.length <= 0) ?? false} />
+                            <Pagination currentPage={currentPage} setCurrentPage={loadArticles} endReached={((uiState?.state?.data && uiState?.state?.data.length < DEFAULTS.PER_PAGE_ITEMS) ?? false)} />
                         }
                     </div>
                 </div>
@@ -91,6 +78,8 @@ export default function DashboardArticleLoaded() {
         </MainLayout>
     );
 }
+
+
 
 
 function formatePaginationNums(num: number, length = 4, offset = 1) {
@@ -175,6 +164,7 @@ function Pagination({ currentPage, setCurrentPage, endReached }: PaginationProps
         </div>
     )
 }
+
 
 
 

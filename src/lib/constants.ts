@@ -19,7 +19,6 @@ export const DATE_FORMATS = {
     ARTICLE_TABLE: 'MMMM yyyy, EEEE h:mma'
 }
 
-
 export const DEFAULTS = {
     PER_PAGE_ITEMS: 10
 }

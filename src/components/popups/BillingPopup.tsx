@@ -92,7 +92,7 @@ export default function BillingPopup() {
                                                 <div>
                                                     <div className="space-y-[6px]">
                                                         <h1 className="text-white font-jakarta text-base md:text-xl font-bold">
-                                                            {authUser?.profile?.package} Plan: {authUser?.profile?.quota} Articles per week
+                                                            {authUser?.profile?.package} Plan:{authUser?.profile?.quota}  Articles per week
                                                         </h1>
                                                         <p className="md:text-base text-sm font-normal font-jakarta text-white/70">
                                                             Current quota remaining: {Math.max(0, (authUser?.profile?.quota ?? 0) - 1)}
@@ -104,7 +104,7 @@ export default function BillingPopup() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="flex justify-between items-center flex-col md:flex-row gap-5">
+                                            <div className="flex justify-between items-center flex-col md:flex-row gap-5 md:pb-0 pb-12">
                                                 <div className="w-full p-[10px] flex items-center justify-center border border-body/10 rounded-10 bg-body/10 md:w-auto md:p-[14px]">
                                                     <p className="text-white text-sm font-medium font-Inter">
                                                         To change or upgrade your plan, please email

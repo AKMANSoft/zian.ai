@@ -125,12 +125,18 @@ export async function createNewPwd(data: { password: string, token: string }): P
     }
 }
 
-export async function updateKeyword(data: CustomizeSchema): Promise<KeywordApiResponse> {
+export async function updateKeyword(data: CustomizeSchema, isIndustryOther = false): Promise<KeywordApiResponse> {
     try {
         const res = await axios.post(
             apiConfig.basepath,
             {
-                industry_id: parseInt(data.industry),
+                ...((isIndustryOther && data.otherIndustry && data.otherIndustry !== "") ?
+                    {
+                        others: data.otherIndustry,
+                    }
+                    : {
+                        industry_id: parseInt(data.industry),
+                    }),
                 keyword: data.keywords.join(", "),
                 filter: data.filter,
                 ...(data.website && { website: data.website })

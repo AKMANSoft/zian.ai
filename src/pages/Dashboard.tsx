@@ -15,7 +15,7 @@ import DashboardArticleLoaded from "./DashboardArticleLoaded";
 
 type StateType = "IDLE" | "FIRST_TIME" | "GENERATING_EXAMPLE" | "ARTICLES_LOADED"
 export default function Dashboard() {
-    const [curState, setCurState] = useState<StateType>(sessionStorage.getItem("GENERATING_EXAMPLE") ? "GENERATING_EXAMPLE" : "IDLE")
+    const [curState, setCurState] = useState<StateType>("IDLE")
     const { uiState, setUiData, setProcessing } = useUiState<GenerateApiResponse | ArticlesApiResponse>()
     const { authUser } = useAuthUserStore()
 
@@ -124,10 +124,3 @@ export default function Dashboard() {
             </MainLayout>
     );
 }
-
-
-
-
-
-
-

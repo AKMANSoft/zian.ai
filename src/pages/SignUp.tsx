@@ -223,7 +223,7 @@ export default function SignUpPage() {
 
 function OnBoardingForm() {
     const { uiState, setUiData } = useUiState<KeywordApiResponse>()
-    const onboardingFrom = useForm<CustomizeSchema>({
+    const form = useForm<CustomizeSchema>({
         resolver: zodResolver(customizeSchema),
         mode: "onBlur",
         defaultValues: {
@@ -234,9 +234,17 @@ function OnBoardingForm() {
     const navigate = useNavigate();
     const { data: industryList } = useSwrFetcher<Array<TIndustry>>(apiConfig.endpoints.industryList, api.other.industryListFetcher)
 
+    const isIndustryOthers = () => {
+        const industryId = form.getValues('industry')?.toLowerCase()
+        if (!industryId) return false;
+        const industry = industryList?.find((ind) => ind.id === Number(industryId));
+        if (!industry) return false;
+        return industry.name.toLowerCase() === "other"
+    }
+
 
     const handleOnBoardingFormSubmit = async (values: CustomizeSchema) => {
-        const response = await api.user.updateKeyword(values)
+        const response = await api.user.updateKeyword(values, isIndustryOthers())
         if (response.success && response.data) {
             navigate("/")
         }
@@ -245,8 +253,8 @@ function OnBoardingForm() {
 
 
     return (
-        <Form {...onboardingFrom}>
-            <form name="onboarding form" onSubmit={onboardingFrom.handleSubmit(handleOnBoardingFormSubmit)}>
+        <Form {...form}>
+            <form name="onboarding form" onSubmit={form.handleSubmit(handleOnBoardingFormSubmit)}>
                 <div className="md:px-8 py-[30px] rounded-20 bg-gr-purple-light">
                     {/* content */}
                     <img src="/images/avatar.png" width={100} height={100} loading="lazy"
@@ -261,7 +269,7 @@ function OnBoardingForm() {
                     </div>
                     <div className="p-3 lg:p-5 lg:pt-8 space-y-[10px]">
                         <FormField
-                            control={onboardingFrom.control}
+                            control={form.control}
                             name="website"
                             render={({ field, fieldState }) => (
                                 <FormItem>
@@ -279,7 +287,7 @@ function OnBoardingForm() {
                             )}
                         />
                         <FormField
-                            control={onboardingFrom.control}
+                            control={form.control}
                             name="industry"
                             render={({ field, fieldState }) => (
                                 <FormItem>
@@ -308,8 +316,29 @@ function OnBoardingForm() {
                                 </FormItem>
                             )}
                         />
+                        {
+                            isIndustryOthers() && (
+
+                                <FormField
+                                    control={form.control}
+                                    name="otherIndustry"
+                                    render={({ field, fieldState }) => (
+                                        <FormItem>
+                                            <FormLabel></FormLabel>
+                                            <FormControl>
+                                                <Input {...field} />
+                                            </FormControl>
+                                            {
+                                                fieldState.error &&
+                                                <FormMessage />
+                                            }
+                                        </FormItem>
+                                    )}
+                                />
+                            )
+                        }
                         <FormField
-                            control={onboardingFrom.control}
+                            control={form.control}
                             name="keywords"
                             render={({ field, fieldState }) => (
                                 <FormItem>
@@ -340,9 +369,9 @@ function OnBoardingForm() {
                         <div className="flex justify-between">
                             <div></div>
                             <div>
-                                <PrimaryBtn type="submit" disabled={onboardingFrom.formState.isSubmitting} className="py-3 h-12 px-6 md:w-auto">
+                                <PrimaryBtn type="submit" disabled={form.formState.isSubmitting} className="py-3 h-12 px-6 md:w-auto">
                                     {
-                                        onboardingFrom.formState.isSubmitting ?
+                                        form.formState.isSubmitting ?
                                             <Spinner />
                                             :
                                             <span>Submit & Complete Sign up</span>
