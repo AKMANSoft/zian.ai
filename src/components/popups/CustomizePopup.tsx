@@ -150,6 +150,7 @@ export default function CustomizePopup() {
                                                                     <FormSelect
                                                                         onValueChange={(value) => {
                                                                             field.onChange(value);
+                                                                            form.setValue("otherIndustry", "")
                                                                         }}
                                                                         {...field}
                                                                         placeholder="Select Industry"
