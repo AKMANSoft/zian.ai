@@ -2,7 +2,7 @@ import { Fragment, useState } from "react"
 import { PrimaryBtn, SecondaryBtn } from "../ui/buttons"
 import { Dialog, Transition } from "@headlessui/react"
 import { cn } from "@/lib/utils"
-import { Input, InputEl, TagsInputEl } from "../ui/input"
+import { Input, TagsInputEl } from "../ui/input"
 import { faPen, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { NavigationItem } from "../sidebar"
@@ -42,6 +42,7 @@ export default function CustomizePopup() {
         defaultValues: {
             filter: authUser?.profile?.data?.filter || false,
             industry: authUser?.profile?.data?.industry?.id?.toString(),
+            otherIndustry: (authUser?.profile?.data?.industry?.industry?.toLowerCase()?.includes("other") ? authUser?.profile?.data?.industry?.name : ""),
             keywords: authUser?.profile?.data?.keyword.split(","),
         }
     })
@@ -58,7 +59,7 @@ export default function CustomizePopup() {
 
 
     const isIndustryOthers = () => {
-        const industryId = form.getValues('industry').toLowerCase()
+        const industryId = form.getValues('industry')?.toLowerCase()
         if (!industryId) return false;
         const industry = industryList?.find((ind) => ind.id === Number(industryId));
         if (!industry) return false;
@@ -71,7 +72,7 @@ export default function CustomizePopup() {
         const res = await api.user.updateKeyword({
             ...values,
             website: ""
-        })
+        }, isIndustryOthers())
         if (res.success && res.data) {
             setProfile({
                 ...authUser.profile,
@@ -180,8 +181,7 @@ export default function CustomizePopup() {
                                                                     <FormItem>
                                                                         <FormLabel></FormLabel>
                                                                         <FormControl>
-                                                                            
-                                                                            <Input  {...field} />
+                                                                            <Input {...field} />
                                                                         </FormControl>
                                                                         {
                                                                             fieldState.error &&
@@ -254,7 +254,7 @@ export default function CustomizePopup() {
                                                 </div>
 
                                             </div>
-                                            <GrBorderBox className="mt-4 md:mt-24 rounded-none ">
+                                            <GrBorderBox className="mt-4 md:mt-20 rounded-none ">
                                                 <div className="flex justify-end bg-gr-purple-dark space-x-[10px] py-2 md:py-5 px-7">
                                                     <SecondaryBtn onClick={closeModal} className="text-sm py-3">
                                                         Cancel
