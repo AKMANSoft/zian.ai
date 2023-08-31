@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import useAuthUserStore from "@/lib/zustand/authUserStore";
 import GrBorderBox from "@/components/ui/gr-border-box";
 import Anchor from "@/components/ui/anchor-link";
+import axios from "axios";
 
 
 export default function LoginPage() {
@@ -33,6 +34,7 @@ export default function LoginPage() {
 
         if (response.success && response.data) {
             setAuthUser(response.data.authorization, response.data)
+            axios.defaults.headers.common["Authorization"] = response.data.authorization
             navigate("/")
         }
 
