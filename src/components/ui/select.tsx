@@ -48,7 +48,7 @@ const SelectContent = React.forwardRef<
         "relative z-50 min-w-[8rem] overflow-hidden rounded-xl bg-th-gray/5 border border-white/10 backdrop-blur-3xl text-white data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
         position === "popper" &&
         "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
-        "max-h-80 overflow-y-auto",
+        // "max-h-80 overflow-y-auto",
         className
       )}
       position={position}
@@ -140,22 +140,25 @@ const FormSelect = React.forwardRef<
       <SelectTrigger className={cn(className)}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      <SelectContent className="">
-
+      <SelectContent>
         {
           !options ?
             <div className="w-full h-16 py-4 flex items-center justify-center">
               <Spinner />
             </div>
             :
-            options?.map((option) => (
-              <SelectItem
-                key={option.value}
-                disabled={option.disabled}
-                value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))
+            <div className="mt-2 max-h-96 overflow-y-auto">
+              {
+                options?.map((option) => (
+                  <SelectItem
+                    key={option.value}
+                    disabled={option.disabled}
+                    value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))
+              }
+            </div>
         }
       </SelectContent>
     </Select>
