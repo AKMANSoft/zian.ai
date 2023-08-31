@@ -234,7 +234,7 @@ function OnBoardingForm() {
     const navigate = useNavigate();
     const { data: industryList } = useSwrFetcher<Array<TIndustry>>(apiConfig.endpoints.industryList, api.other.industryListFetcher)
 
-    const [industryOthers,setIndustryOthers]=useState(false)
+    const [industryOthers, setIndustryOthers] = useState(false)
     const checkIndustryOthers = () => {
         const industryId = form.getValues('industry')?.toLowerCase()
         if (!industryId) return false;
@@ -296,7 +296,11 @@ function OnBoardingForm() {
                                     <FormLabel>Your Industry</FormLabel>
                                     <FormControl>
                                         <FormSelect
-                                            onValueChange={field.onChange}
+                                            onValueChange={(value) => {
+                                                field.onChange(value);
+                                                form.setValue("otherIndustry", "")
+                                                checkIndustryOthers()
+                                            }}
                                             {...field}
                                             placeholder="Select Industry"
                                             className="w-full"
