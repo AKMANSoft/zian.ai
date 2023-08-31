@@ -9,7 +9,7 @@ export const signUpFormSchema = z.object({
     name: z.string({ required_error: "This field is required." }),
     email: z.string({ required_error: "This field is required." }).email({ message: "Please enter a valid email address." }),
     phone: z.string({ required_error: "This field is required." }),
-    password: z.string({ required_error: "This field is required." }),
+    password: z.string({ required_error: "This field is required." }).min(1, {message: "This field is required."}),
 })
 
 export type SignUpFormSchema = z.infer<typeof signUpFormSchema>
@@ -25,12 +25,12 @@ export type UpdateProfileSchema = z.infer<typeof updateProfileSchema>
 
 export const loginFormSchema = z.object({
     email: z.string({ required_error: "This field is required." }).email({ message: "Please enter a valid email address." }),
-    password: z.string({ required_error: "This field is required." }),
+    password: z.string({ required_error: "This field is required." }).min(1, {message: "This field is required."}),
 })
 export type LoginFormSchema = z.infer<typeof loginFormSchema>
 
 export const newPasswordSchema = z.object({
-    password: z.string({ required_error: "This field is required." }),
+    password: z.string({ required_error: "This field is required." }).min(1, {message: "This field is required."}),
     confPassword: z.string({ required_error: "This field is required." }),
 }).refine((data) => data.password === data.confPassword, {
     message: "Confirm password does not match the password.",
