@@ -43,7 +43,7 @@ export default function ForgotPasswordPage() {
 
     return (
         <MainLayout secure={false}>
-            <div className="flex flex-col items-center  h-screen justify-center py-20">
+            <div className="flex flex-col items-center min-h-screen  justify-center py-20 max-h-[calc(100vh_-_10px)] overflow-auto">
                 {
                     passwordReset ?
                         <GrBorderBox className="p-[2px] rounded-20 w-full max-w-[500px] shadow-xl">
