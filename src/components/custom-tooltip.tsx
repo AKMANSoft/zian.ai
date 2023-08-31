@@ -10,7 +10,9 @@ type Props = {
 
 export default function CustomTooltip({ title, content, className }: Props) {
   const [open, setOpen] = useState(false);
-  
+  const handleButtonClick = () => {
+    setOpen(!open);
+  };
 
   return (
     <Billingover open={open} onOpenChange={setOpen}>
@@ -25,7 +27,7 @@ export default function CustomTooltip({ title, content, className }: Props) {
       </BillingoverTrigger>
       {open && (
         <BillingoverContent
-          className="bg-purple-500 font-base font-normal font-jakarta text-white"
+          className="bg-purple-500 font-base font-normal font-jakarta text-white"onClick={handleButtonClick}
           align="end"
           side="top"
           onMouseEnter={() => setOpen(true)}

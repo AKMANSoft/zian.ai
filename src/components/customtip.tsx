@@ -9,7 +9,9 @@ type Props = {
 };
 export  function CustomTooltip({ title, content, className }: Props) {
     const [open, setOpen] = useState(false);
-    
+    const handleButtonClick = () => {
+      setOpen(!open);
+    }; 
   
     return (
       <Popover open={open} onOpenChange={setOpen}>
@@ -25,6 +27,7 @@ export  function CustomTooltip({ title, content, className }: Props) {
         {open && (
           <PopoverContent
             className="bg-purple-500 font-base font-normal font-jakarta text-white"
+            onClick={handleButtonClick}
             align="start"
             side="top"
             onMouseEnter={() => setOpen(true)}
