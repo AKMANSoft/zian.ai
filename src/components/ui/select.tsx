@@ -139,7 +139,7 @@ const FormSelect = React.forwardRef<
       <SelectTrigger className={cn(className)}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      <SelectContent ref={ref}>
+      <SelectContent className="">
 
         {
           !options ?

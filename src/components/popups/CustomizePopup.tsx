@@ -56,15 +56,14 @@ export default function CustomizePopup() {
         setIsOpen(true)
     }
 
-
-
-    const isIndustryOthers = () => {
+    const [industryOthers,setIndustryOthers]=useState(false)
+    const checkIndustryOthers = () => {
         const industryId = form.getValues('industry')?.toLowerCase()
         if (!industryId) return false;
         const industry = industryList?.find((ind) => ind.id === Number(industryId));
         if (!industry) return false;
         console.log(industry)
-        return industry.name.toLowerCase() === "other"
+        setIndustryOthers(industry.name.toLowerCase() === "other")
     }
 
 
@@ -73,7 +72,7 @@ export default function CustomizePopup() {
         const res = await api.user.updateKeyword({
             ...values,
             website: ""
-        }, isIndustryOthers())
+        }, checkIndustryOthers())
         if (res.success && res.data) {
             setProfile({
                 ...authUser.profile,
@@ -152,6 +151,7 @@ export default function CustomizePopup() {
                                                                         onValueChange={(value) => {
                                                                             field.onChange(value);
                                                                             form.setValue("otherIndustry", "")
+                                                                            checkIndustryOthers()
                                                                         }}
                                                                         {...field}
                                                                         placeholder="Select Industry"
@@ -174,7 +174,7 @@ export default function CustomizePopup() {
 
                                                     />
                                                     {
-                                                        isIndustryOthers() && (
+                                                        industryOthers && (
 
                                                             <FormField
                                                                 control={form.control}

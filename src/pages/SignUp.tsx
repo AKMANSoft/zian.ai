@@ -234,17 +234,19 @@ function OnBoardingForm() {
     const navigate = useNavigate();
     const { data: industryList } = useSwrFetcher<Array<TIndustry>>(apiConfig.endpoints.industryList, api.other.industryListFetcher)
 
-    const isIndustryOthers = () => {
+    const [industryOthers,setIndustryOthers]=useState(false)
+    const checkIndustryOthers = () => {
         const industryId = form.getValues('industry')?.toLowerCase()
         if (!industryId) return false;
         const industry = industryList?.find((ind) => ind.id === Number(industryId));
         if (!industry) return false;
-        return industry.name.toLowerCase() === "other"
+        console.log(industry)
+        setIndustryOthers(industry.name.toLowerCase() === "other")
     }
 
 
     const handleOnBoardingFormSubmit = async (values: CustomizeSchema) => {
-        const response = await api.user.updateKeyword(values, isIndustryOthers())
+        const response = await api.user.updateKeyword(values, checkIndustryOthers())
         if (response.success && response.data) {
             navigate("/")
         }
@@ -317,7 +319,7 @@ function OnBoardingForm() {
                             )}
                         />
                         {
-                            isIndustryOthers() && (
+                            industryOthers && (
 
                                 <FormField
                                     control={form.control}
