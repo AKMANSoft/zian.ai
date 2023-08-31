@@ -63,6 +63,7 @@ export default function CustomizePopup() {
         if (!industryId) return false;
         const industry = industryList?.find((ind) => ind.id === Number(industryId));
         if (!industry) return false;
+        console.log(industry)
         return industry.name.toLowerCase() === "other"
     }
 
