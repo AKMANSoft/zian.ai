@@ -38,8 +38,8 @@ export default function SignUpPage() {
 
         if (response.success && response.data) {
             setToken(response.data)
-            setCurStep("ONBOARDING")
             axios.defaults.headers.common["Authorization"] = response.data
+            setCurStep("ONBOARDING")
         }
 
         setUiData(response)
@@ -234,6 +234,8 @@ function OnBoardingForm() {
     const navigate = useNavigate();
     const { data: industryList } = useSwrFetcher<Array<TIndustry>>(apiConfig.endpoints.industryList, api.other.industryListFetcher)
 
+    console.log(industryList)
+
     const [industryOthers, setIndustryOthers] = useState(false)
     const checkIndustryOthers = () => {
         const industryId = form.getValues('industry')?.toLowerCase()
@@ -246,13 +248,12 @@ function OnBoardingForm() {
 
 
     const handleOnBoardingFormSubmit = async (values: CustomizeSchema) => {
-        const response = await api.user.updateKeyword(values, checkIndustryOthers())
+        const response = await api.user.updateKeyword(values, industryOthers)
         if (response.success && response.data) {
             navigate("/")
         }
         setUiData(response)
     }
-
 
     return (
         <Form {...form}>

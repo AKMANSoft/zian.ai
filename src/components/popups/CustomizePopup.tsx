@@ -56,7 +56,8 @@ export default function CustomizePopup() {
         setIsOpen(true)
     }
 
-    const [industryOthers, setIndustryOthers] = useState(false)
+
+    const [industryOthers, setIndustryOthers] = useState(authUser?.profile?.data?.industry?.industry?.toLowerCase()?.includes("other") ?? false)
     const checkIndustryOthers = () => {
         const industryId = form.getValues('industry')?.toLowerCase()
         if (!industryId) return false;
@@ -72,7 +73,7 @@ export default function CustomizePopup() {
         const res = await api.user.updateKeyword({
             ...values,
             website: ""
-        }, checkIndustryOthers())
+        }, industryOthers)
         if (res.success && res.data) {
             setProfile({
                 ...authUser.profile,
@@ -156,14 +157,11 @@ export default function CustomizePopup() {
                                                                         {...field}
                                                                         placeholder="Select Industry"
                                                                         className="w-full"
-                                                                        options={[
-                                                                            ...(
-                                                                                industryList?.map((industry) => ({
-                                                                                    label: industry.name,
-                                                                                    value: industry.id.toString(),
-                                                                                })) || []
-                                                                            )
-                                                                        ]}
+                                                                        options={
+                                                                            industryList?.map((industry) => ({
+                                                                                label: industry.name,
+                                                                                value: industry.id.toString(),
+                                                                            }))}
                                                                     />
 
                                                                 </FormControl>

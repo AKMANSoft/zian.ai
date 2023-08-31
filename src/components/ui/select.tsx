@@ -168,6 +168,28 @@ SelectSeparator.displayName = SelectPrimitive.Separator.displayName
 // FormSelect.displayName = "FormSelect"
 
 
+
+export default function useComponentVisible(initialIsVisible: boolean) {
+  const [isComponentVisible, setIsComponentVisible] = React.useState(initialIsVisible);
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (event: any) => {
+    if (ref.current && !ref.current.contains(event.target)) {
+      setIsComponentVisible(false);
+    }
+  };
+
+  React.useEffect(() => {
+    document.addEventListener('click', handleClickOutside, true);
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
+  }, []);
+
+  return { ref, isComponentVisible, setIsComponentVisible };
+}
+
+
 export type SelectOption = {
   label: string;
   value: string;
@@ -185,19 +207,34 @@ const FormSelect = React.forwardRef<
   FormSelectProps
 >(({ placeholder, className, options, onValueChange, value }) => {
   const [selectedOpt, setSelectedOpt] = React.useState(options?.find((opt) => opt.value === value))
+  const { isComponentVisible, ref } = useComponentVisible(false)
+  const [open, setOpen] = React.useState(isComponentVisible ?? false);
+  const triggerRef = React.useRef<HTMLButtonElement>(null)
 
   React.useEffect(() => {
     setSelectedOpt(options?.find((opt) => opt.value === value))
-  }, [value])
+  }, [value, options])
+
+
+
+  React.useEffect(() => {
+    window.addEventListener("click", (e) => {
+      if (e.target === triggerRef.current) return;
+      setOpen((prevValue) => ((prevValue === true) ? false : prevValue));
+    })
+  }, [])
+
 
   const onSelectedOptChange = (opt: SelectOption) => {
     setSelectedOpt(opt);
     onValueChange?.(opt.value)
+    setOpen(false)
   }
 
   return (
     <div className="relative">
-      <button type="button"
+      <button ref={triggerRef} id="select-trigger" type="button"
+        onClick={() => setOpen(!open)}
         className={cn(
           "h-[56px] text-white/70 text-start font-jakarta font-semibold text-sm leading-6 py-3 px-5",
           "border border-white/10 bg-transparent rounded-10 w-full",
@@ -205,30 +242,36 @@ const FormSelect = React.forwardRef<
           className
         )}
       >
-        <span>{placeholder}</span>
+        <span>{(selectedOpt ? selectedOpt.label : (options ? placeholder : ""))}</span>
         <FontAwesomeIcon icon={faChevronDown} className="h-4 w-4 opacity-50" />
       </button>
-      <div className="p-0 w-full">
-        {
-          !options ?
-            <div className="w-full h-16 py-4 flex items-center justify-center">
-              <Spinner />
-            </div>
-            :
-            <div className="mt-2 max-h-60 overflow-y-auto absolute top-full bg-gr-purple-dark rounded-md s z-50 w-full">
-              {
-                options?.map((option) => (
-                  <div onClick={() => onSelectedOptChange(option)} key={option.value} className={cn(
-                    "relative flex w-full cursor-default select-none items-center rounded-lg py-3 pl-2 pr-8 text-base font-normal transition-all focus:bg-white/10 outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-                    className
-                  )}>
-                    {option.label}
-                  </div>
-                ))
-              }
-            </div>
-        }
-      </div>
+      {
+        open &&
+        <div ref={ref} className="p-0 w-full absolute top-full bg-gr-purple-dark rounded-md shadow-md z-50 ">
+          {
+            options && options.length > 0 ?
+              <div className="mt-2 max-h-60 overflow-y-auto w-full">
+                {
+                  options?.map((option) => (
+                    <div
+                      onClick={() => onSelectedOptChange(option)}
+                      key={option.value} className={cn(
+                        "relative flex w-full cursor-pointer select-none items-center rounded-lg py-3 pl-2 pr-8 text-base font-normal hover:bg-white/20 transition-all focus:bg-white/10 outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+                        selectedOpt?.value === option.value && "bg-white/20",
+                        className
+                      )}>
+                      {option.label}
+                    </div>
+                  ))
+                }
+              </div>
+              :
+              <div className="w-full h-20 py-4 flex items-center justify-center">
+                <Spinner />
+              </div>
+          }
+        </div>
+      }
     </div>
   )
 })
