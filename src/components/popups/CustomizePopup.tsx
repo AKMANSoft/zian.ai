@@ -182,7 +182,7 @@ export default function CustomizePopup() {
                                                                     <FormItem>
                                                                         <FormLabel></FormLabel>
                                                                         <FormControl>
-                                                                            <Input {...field} />
+                                                                            <Input required {...field} />
                                                                         </FormControl>
                                                                         {
                                                                             fieldState.error &&

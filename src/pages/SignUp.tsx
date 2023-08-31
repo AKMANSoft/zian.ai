@@ -294,7 +294,10 @@ function OnBoardingForm() {
                                     <FormLabel>Your Industry</FormLabel>
                                     <FormControl>
                                         <FormSelect
-                                            onValueChange={field.onChange}
+                                            onValueChange={(value) => {
+                                                field.onChange(value)
+                                                form.setValue("otherIndustry", "")
+                                            }}
                                             {...field}
                                             placeholder="Select Industry"
                                             className="w-full"
@@ -326,7 +329,7 @@ function OnBoardingForm() {
                                         <FormItem>
                                             <FormLabel></FormLabel>
                                             <FormControl>
-                                                <Input {...field} />
+                                                <Input required {...field} />
                                             </FormControl>
                                             {
                                                 fieldState.error &&
