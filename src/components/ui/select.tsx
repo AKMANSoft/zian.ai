@@ -118,6 +118,56 @@ SelectSeparator.displayName = SelectPrimitive.Separator.displayName
 
 
 
+// export type SelectOption = {
+//   label: string;
+//   value: string;
+//   disabled?: boolean;
+// }
+
+// type FormSelectProps = SelectPrimitive.SelectProps & {
+//   placeholder?: string;
+//   className?: string;
+//   options?: Array<SelectOption>;
+// }
+
+// const FormSelect = React.forwardRef<
+//   React.ElementRef<typeof SelectPrimitive.Content>,
+//   FormSelectProps
+// >(({ placeholder, className, options, ...selectProps }, ref) => {
+//   console.log(ref)
+//   return (
+//     <Select {...selectProps}>
+//       <SelectTrigger className={cn(className)}>
+//         <SelectValue placeholder={placeholder} />
+//       </SelectTrigger>
+//       <SelectContent className="p-0">
+//         {
+//           !options ?
+//             <div className="w-full h-16 py-4 flex items-center justify-center">
+//               <Spinner />
+//             </div>
+//             :
+//             <div className="mt-2 max-h-60 overflow-y-auto">
+//               {
+//                 options?.map((option) => (
+//                   <SelectItem
+//                     key={option.value}
+//                     disabled={option.disabled}
+//                     value={option.value}>
+//                     {option.label}
+//                   </SelectItem>
+//                 ))
+//               }
+//             </div>
+//         }
+//       </SelectContent>
+//     </Select>
+//   )
+// })
+
+// FormSelect.displayName = "FormSelect"
+
+
 export type SelectOption = {
   label: string;
   value: string;
@@ -133,40 +183,57 @@ type FormSelectProps = SelectPrimitive.SelectProps & {
 const FormSelect = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,
   FormSelectProps
->(({ placeholder, className, options, ...selectProps }, ref) => {
-  console.log(ref)
+>(({ placeholder, className, options, onValueChange, value }) => {
+  const [selectedOpt, setSelectedOpt] = React.useState(options?.find((opt) => opt.value === value))
+
+  React.useEffect(() => {
+    setSelectedOpt(options?.find((opt) => opt.value === value))
+  }, [value])
+
+  const onSelectedOptChange = (opt: SelectOption) => {
+    setSelectedOpt(opt);
+    onValueChange?.(opt.value)
+  }
+
   return (
-    <Select {...selectProps}>
-      <SelectTrigger className={cn(className)}>
-        <SelectValue placeholder={placeholder} />
-      </SelectTrigger>
-      <SelectContent>
+    <div className="relative">
+      <button type="button"
+        className={cn(
+          "h-[56px] text-white/70 text-start font-jakarta font-semibold text-sm leading-6 py-3 px-5",
+          "border border-white/10 bg-transparent rounded-10 w-full",
+          "flex items-center justify-between",
+          className
+        )}
+      >
+        <span>{placeholder}</span>
+        <FontAwesomeIcon icon={faChevronDown} className="h-4 w-4 opacity-50" />
+      </button>
+      <div className="p-0 w-full">
         {
           !options ?
             <div className="w-full h-16 py-4 flex items-center justify-center">
               <Spinner />
             </div>
             :
-            <div className="mt-2 max-h-96 overflow-y-auto">
+            <div className="mt-2 max-h-60 overflow-y-auto absolute top-full bg-gr-purple-dark rounded-md s z-50 w-full">
               {
                 options?.map((option) => (
-                  <SelectItem
-                    key={option.value}
-                    disabled={option.disabled}
-                    value={option.value}>
+                  <div onClick={() => onSelectedOptChange(option)} key={option.value} className={cn(
+                    "relative flex w-full cursor-default select-none items-center rounded-lg py-3 pl-2 pr-8 text-base font-normal transition-all focus:bg-white/10 outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+                    className
+                  )}>
                     {option.label}
-                  </SelectItem>
+                  </div>
                 ))
               }
             </div>
         }
-      </SelectContent>
-    </Select>
+      </div>
+    </div>
   )
 })
 
 FormSelect.displayName = "FormSelect"
-
 
 export {
   Select,

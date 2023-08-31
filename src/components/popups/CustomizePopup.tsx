@@ -56,7 +56,7 @@ export default function CustomizePopup() {
         setIsOpen(true)
     }
 
-    const [industryOthers,setIndustryOthers]=useState(false)
+    const [industryOthers, setIndustryOthers] = useState(false)
     const checkIndustryOthers = () => {
         const industryId = form.getValues('industry')?.toLowerCase()
         if (!industryId) return false;
@@ -165,6 +165,7 @@ export default function CustomizePopup() {
                                                                             )
                                                                         ]}
                                                                     />
+
                                                                 </FormControl>
                                                                 {fieldState.error?.message && (
                                                                     <FormMessage>{fieldState.error.message}</FormMessage>
