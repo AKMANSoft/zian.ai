@@ -43,10 +43,10 @@ export default function ForgotPasswordPage() {
 
     return (
         <MainLayout secure={false}>
-            <div className="flex flex-col items-center min-h-screen  justify-center py-20 max-h-[calc(100vh_-_10px)] overflow-auto">
+            <div className="flex flex-col items-center  justify-center py-20  overflow-auto">
                 {
                     passwordReset ?
-                        <GrBorderBox className="p-[2px] rounded-20 w-full max-w-[500px] shadow-xl">
+                        <GrBorderBox className="p-[2px] rounded-20 h-full w-full max-w-[500px] shadow-xl">
                             <div className={cn(
                                 "rounded-20  bg-gr-purple-light",
                             )}>
@@ -84,7 +84,7 @@ export default function ForgotPasswordPage() {
                             </div>
                         </GrBorderBox>
                         :
-                        <GrBorderBox className="p-[2px] rounded-20 w-full max-w-[500px] shadow-xl">
+                        <GrBorderBox className="p-[2px] rounded-20 h-full w-full max-w-[500px] shadow-xl">
                             <div className={cn(
                                 "transform overflow-hidden rounded-20 bg-gr-purple-light",
                                 "relative"

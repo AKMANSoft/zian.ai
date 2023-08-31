@@ -46,7 +46,7 @@ export default function NewPasswordPage() {
                     passwordCreated ?
                         <GrBorderBox className="p-[2px] rounded-20 w-full max-w-[500px] shadow-xl">
 
-                            <div className="max-h-[calc(100vh_-_200px)] rounded-20 bg-gr-purple-dark">
+                            <div className=" rounded-20 bg-gr-purple-dark">
                                 <div className="w-full flex flex-row  items-center justify-between px-5 pt-5">
                                     <button type="button"
                                         onClick={() => window.history.back()}
@@ -87,7 +87,7 @@ export default function NewPasswordPage() {
                                 "transform overflow-hidden rounded-20 bg-gr-purple-light",
                                 "relative"
                             )}>
-                                <div className="px-8 pt-[30px] pb-[50px] max-h-[calc(100vh_-_200px)] rounded-20 bg-gr-purple-dark">
+                                <div className="px-8 pt-[30px] pb-[50px]  rounded-20 bg-gr-purple-dark">
                                     {/* content */}
                                     <img src="/images/avatar.png" width={100} height={100} loading="lazy"
                                         className={cn(

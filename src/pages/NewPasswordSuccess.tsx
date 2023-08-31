@@ -17,7 +17,7 @@ export default function NewPasswordSuccessPage() {
             <div className="flex flex-col items-center justify-center py-20">
                 <GrBorderBox className="p-[2px] rounded-20 w-full max-w-[500px] shadow-xl">
 
-                    <div className="max-h-[calc(100vh_-_200px)] rounded-20 bg-gr-purple-dark">
+                    <div className=" rounded-20 bg-gr-purple-dark">
                         <div className="w-full flex flex-row  items-center justify-between px-5 pt-5">
                             <button type="button"
                                 onClick={() => window.history.back()}

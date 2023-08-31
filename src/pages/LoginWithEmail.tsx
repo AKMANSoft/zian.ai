@@ -47,7 +47,7 @@ export default function LoginWithEmailPage() {
 
     return (
         <MainLayout secure={false} >
-            <div className="flex flex-col items-center justify-center py-36  max-h-[calc(100vh_-_10px)]  overflow-auto">
+            <div className="flex flex-col items-center justify-center py-36  ">
                 {
                     emailSent ?
                         <GrBorderBox className="p-[2px] rounded-20 w-full  max-w-[500px] shadow-xl">
