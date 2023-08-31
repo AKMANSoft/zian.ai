@@ -48,7 +48,7 @@ export default function SignUpPage() {
 
     return (
         <MainLayout secure={false}>
-            <div className="flex flex-col items-center justify-center py-20">
+            <div className="flex flex-col items-center justify-center py-20 max-h-[calc(100vh_-_10px)] overflow-auto">
                 <GrBorderBox className="p-[2px] rounded-20 w-full max-w-[500px] shadow-xl">
                     <div className={cn(
                         "transform overflow-hidden rounded-20 bg-gr-purple-light",
@@ -90,6 +90,7 @@ export default function SignUpPage() {
                                                         </FormItem>
                                                     )}
                                                 />
+
                                                 <FormField
                                                     control={signUpForm.control}
                                                     name="email"
@@ -134,6 +135,7 @@ export default function SignUpPage() {
                                                             <FormLabel>Password</FormLabel>
                                                             <FormControl>
                                                                 <Input
+                                                                    type="password"
                                                                     autoComplete="password"
                                                                     {...field}
                                                                 />

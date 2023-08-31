@@ -2,13 +2,12 @@ import { Fragment, useState } from "react"
 import { PrimaryBtn, SecondaryBtn } from "../ui/buttons"
 import { Dialog, Transition } from "@headlessui/react"
 import { cn } from "@/lib/utils"
-import { TagsInputEl } from "../ui/input"
+import { Input, InputEl, TagsInputEl } from "../ui/input"
 import { faPen, faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { NavigationItem } from "../sidebar"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
-import CustomTooltip from "../custom-tooltip"
 import GrBorderBox from "../ui/gr-border-box"
 import { useSwrFetcher } from "@/lib/useSwrFetcher"
 import { TIndustry } from "@/types/response.types"
@@ -22,6 +21,10 @@ import { FormSelect } from "../ui/select"
 import { Spinner } from "../ui/spinner"
 import { useToast } from "../ui/use-toast"
 import useAuthUserStore from "@/lib/zustand/authUserStore"
+import { CustomTooltip } from "../customtip"
+
+
+
 
 
 
@@ -50,6 +53,16 @@ export default function CustomizePopup() {
 
     function openModal() {
         setIsOpen(true)
+    }
+
+
+
+    const isIndustryOthers = () => {
+        const industryId = form.getValues('industry').toLowerCase()
+        if (!industryId) return false;
+        const industry = industryList?.find((ind) => ind.id === Number(industryId));
+        if (!industry) return false;
+        return industry.name.toLowerCase() === "other"
     }
 
 
@@ -92,7 +105,7 @@ export default function CustomizePopup() {
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur" />
+                        <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur " />
                     </Transition.Child>
 
                     <div className="fixed inset-0 overflow-y-auto">
@@ -112,7 +125,7 @@ export default function CustomizePopup() {
                                 )}>
                                     <Form {...form}>
                                         <form method="POST" onSubmit={form.handleSubmit(handleFormSubmit)}>
-                                            <div className="w-full flex flex-row  items-center justify-between px-5 mt-5">
+                                            <div className="w-full flex flex-row  items-center justify-between px-5 mt-5 ">
                                                 <div></div>
                                                 <button type="button" onClick={closeModal}
                                                     className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-pointer">
@@ -134,7 +147,9 @@ export default function CustomizePopup() {
                                                                 <FormLabel>Industry</FormLabel>
                                                                 <FormControl>
                                                                     <FormSelect
-                                                                        onValueChange={field.onChange}
+                                                                        onValueChange={(value) => {
+                                                                            field.onChange(value);
+                                                                        }}
                                                                         {...field}
                                                                         placeholder="Select Industry"
                                                                         className="w-full"
@@ -145,17 +160,41 @@ export default function CustomizePopup() {
                                                                                     value: industry.id.toString(),
                                                                                 })) || []
                                                                             )
-                                                                        ]} />
+                                                                        ]}
+                                                                    />
                                                                 </FormControl>
-                                                                {
-                                                                    fieldState.error?.message &&
-                                                                    <FormMessage>
-                                                                        {fieldState.error.message}
-                                                                    </FormMessage>
-                                                                }
+                                                                {fieldState.error?.message && (
+                                                                    <FormMessage>{fieldState.error.message}</FormMessage>
+                                                                )}
                                                             </FormItem>
                                                         )}
+
                                                     />
+                                                    {
+                                                        isIndustryOthers() && (
+
+                                                            <FormField
+                                                                control={form.control}
+                                                                name="otherIndustry"
+                                                                render={({ field, fieldState }) => (
+                                                                    <FormItem>
+                                                                        <FormLabel></FormLabel>
+                                                                        <FormControl>
+                                                                            
+                                                                            <Input  {...field} />
+                                                                        </FormControl>
+                                                                        {
+                                                                            fieldState.error &&
+                                                                            <FormMessage />
+                                                                        }
+                                                                    </FormItem>
+                                                                )}
+                                                            />
+                                                        )
+                                                    }
+
+
+
                                                     <FormField
                                                         control={form.control}
                                                         name="keywords"
@@ -205,10 +244,10 @@ export default function CustomizePopup() {
                                                     <div>
                                                         <CustomTooltip
                                                             title="Increase Article Volume"
-                                                            className="h-12"
+                                                            className="h-12 "
                                                             content={
                                                                 <>
-                                                                    To increase articles volume, please email hello@zian.ai
+                                                                    To increase articles volume, please email <a href="mailto:hello@zian.ai" className="underline">hello@zian.ai</a>
                                                                 </>
                                                             } />
                                                     </div>
