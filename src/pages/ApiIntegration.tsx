@@ -53,9 +53,12 @@ export default function ApiIntegrationPage() {
                             </ol>
                             <div className="space-y-[10px]">
                                 <VideoComponent />
-                                <div>
+                                <div className="flex flex-col gap-[10px]">
                                     <a className="text-base font-jakarta font-bold text-white underline  md:text-xl cursor-pointer">
                                         Installing Zian AI into Your WordPress Website 🚀 - Watch Video
+                                    </a>
+                                    <a className="text-base font-jakarta font-bold text-white underline  md:text-xl cursor-pointer" href="https://wordpress.com/support/posts-page/">
+                                        How to Select WordPress Default Posts Page
                                     </a>
 
                                 </div>
@@ -71,16 +74,16 @@ export default function ApiIntegrationPage() {
                                 </div>
                                 <div>
                                     <ol className="text-white/70 text-sm font-normal md:text-base">
-                                            <li>
-                                                1. Find it. WP-Admin &gt; Pages &gt; Posts Page.
-                                            </li>
-                                            <li>
-                                                2. Click that page in backend to see the URL it goes to.
+                                        <li>
+                                            1. Find it. WP-Admin &gt; Pages &gt; Posts Page.
+                                        </li>
+                                        <li>
+                                            2. Click that page in backend to see the URL it goes to.
 
-                                            </li>
-                                            <li className="lg:max-w-[70%]">
-                                                3. Add that URL to the website's menu if you want to display them, which will be custom for your site. If you need help you will need a developer. Note that without displaying them on the main menu, they are still going on your website and will count for SEO.
-                                            </li>
+                                        </li>
+                                        <li className="lg:max-w-[70%]">
+                                            3. Add that URL to the website's menu if you want to display them, which will be custom for your site. If you need help you will need a developer. Note that without displaying them on the main menu, they are still going on your website and will count for SEO.
+                                        </li>
                                     </ol>
                                 </div>
                                 <div className="">
