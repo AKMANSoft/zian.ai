@@ -113,20 +113,18 @@ export default function BillingPopup() {
                                                         </a>
                                                     </p>
                                                 </div>
-                                                <PrimaryBtn type="submit" className=" h-12 py-3 w-full md:w-auto md:px-[30px]  ">
-                                                    <CustomTooltip
-                                            
-                                                        title="Upgrade"
-                                                        className=""
-                                                        content={
-                                                            <>
-                                                                <p>
-                                                                    To upgrade, please email <a href="mailto:hello@zian.ai" className="underline">hello@zian.ai</a>
-                                                                </p>
-                                                            </>
-                                                        } />
-                                                        
-                                                </PrimaryBtn>
+                                                <CustomTooltip
+
+                                                    title="Upgrade"
+                                                    className="h-12"
+                                                    content={
+                                                        <>
+                                                            <p>
+                                                                To upgrade, please email <a href="mailto:hello@zian.ai" className="underline">hello@zian.ai</a>
+                                                            </p>
+                                                        </>
+                                                    } />
+
                                             </div>
                                         </div>
                                     </div>
