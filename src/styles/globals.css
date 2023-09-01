@@ -428,12 +428,23 @@ input::-webkit-inner-spin-button {
 
 /* Apply styles when the tooltip content is visible */
 .custom-tooltip-content {
-  display: none; /* Initially hide the content */
-  z-index: 999; /* Make sure it's above other elements */
-  transition: opacity 0.2s ease-in-out; /* Add a smooth transition effect */
+  display: none; 
+  z-index: 999; 
+  transition: opacity 0.2s ease-in-out; 
 }
 
 .custom-tooltip-content.open {
-  display: block; /* Show content when the "open" class is applied */
-  opacity: 1; /* Fade-in effect */
+  display: block; 
+  opacity: 1; 
 }
+@media screen and (max-width: 768px) {
+  .custom-tooltip-content.open {
+  /* Add margin for spacing */
+    display: block; 
+    opacity: 1; 
+  }
+}
+
+
+
+
