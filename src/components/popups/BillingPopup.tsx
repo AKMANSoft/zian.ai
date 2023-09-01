@@ -113,18 +113,14 @@ export default function BillingPopup() {
                                                         </a>
                                                     </p>
                                                 </div>
-                                                <CustomTooltip
-
-                                                    title="Upgrade"
-                                                    className="h-12"
-                                                    content={
-                                                        <>
-                                                            <p>
-                                                                To upgrade, please email <a href="mailto:hello@zian.ai" className="underline">hello@zian.ai</a>
-                                                            </p>
-                                                        </>
-                                                    } />
-
+                                                    <CustomTooltip
+                                                        title="Upgrade"
+                                                        className="w-full"
+                                                        content={
+                                                            <>
+                                                                To increase articles volume, please email <a href="mailto:hello@zian.ai" className="underline">hello@zian.ai</a>
+                                                            </>
+                                                        } />
                                             </div>
                                         </div>
                                     </div>

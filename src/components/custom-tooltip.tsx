@@ -19,9 +19,9 @@ export default function CustomTooltip({ title, content, className }: Props) {
 
   return (
     <Billingover>
-      <BillingoverTrigger>
+      <BillingoverTrigger className="w-full md:w-auto    ">
         <PrimaryBtn
-          className={`${className} custom-tooltip-trigger z-50  py-3 w-full md:w-auto md:px-[30px]`}
+          className={`${className} custom-tooltip-trigger md:px-[30px]  py-3  `}
           onClick={toggleTooltip}
         >
           {title}
