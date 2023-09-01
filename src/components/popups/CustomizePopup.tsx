@@ -22,7 +22,6 @@ import { Spinner } from "../ui/spinner"
 import { useToast } from "../ui/use-toast"
 import useAuthUserStore from "@/lib/zustand/authUserStore"
 import { Customtip } from "../customtip"
-import fi from "date-fns/esm/locale/fi/index.js"
 
 
 
