@@ -1,4 +1,6 @@
-import { useState } from "react";
+
+
+import React, { useState } from "react";
 import { Billingover, BillingoverContent, BillingoverTrigger } from "./ui/Popover2";
 import { PrimaryBtn } from "./ui/buttons";
 
@@ -10,33 +12,30 @@ type Props = {
 
 export default function CustomTooltip({ title, content, className }: Props) {
   const [open, setOpen] = useState(false);
-  const handleButtonClick = () => {
+
+  const toggleTooltip = () => {
     setOpen(!open);
   };
 
   return (
-    <Billingover open={open} onOpenChange={setOpen}>
+    <Billingover>
       <BillingoverTrigger>
         <PrimaryBtn
-          className={className}
-          onMouseEnter={() => setOpen(true)}
-          onMouseLeave={() => setOpen(false)}
+          className={`${className} custom-tooltip-trigger`}
+          onClick={toggleTooltip}
         >
           {title}
         </PrimaryBtn>
       </BillingoverTrigger>
-      {open && (
-        <BillingoverContent
-          className="bg-purple-500 font-base font-normal font-jakarta text-white"onClick={handleButtonClick}
-          align="end"
-          side="top"
-          onMouseEnter={() => setOpen(true)}
-          onMouseLeave={() => setOpen(false)}
-        >
-          {content}
-        </BillingoverContent>
-      )}
+      <BillingoverContent
+        className={`custom-tooltip-content ${open ? "open" : ""}`}
+        align="end"
+        side="top"
+      >
+        {content}
+      </BillingoverContent>
     </Billingover>
   );
 }
+
 

@@ -21,7 +21,7 @@ import { FormSelect } from "../ui/select"
 import { Spinner } from "../ui/spinner"
 import { useToast } from "../ui/use-toast"
 import useAuthUserStore from "@/lib/zustand/authUserStore"
-import { CustomTooltip } from "../customtip"
+import {  Customtip } from "../customtip"
 
 
 
@@ -243,7 +243,7 @@ export default function CustomizePopup() {
                                                         )}
                                                     />
                                                     <div>
-                                                        <CustomTooltip
+                                                        <Customtip
                                                             title="Increase Article Volume"
                                                             className="h-12 "
                                                             content={
