@@ -41,7 +41,7 @@ export default function BillingPopup() {
                 icon={<FontAwesomeIcon icon={faCreditCard} />} />
 
             <Transition appear show={isOpen} static as={Fragment}>
-                <Dialog as="div" onClose={() => setIsOpen(true)} static className="relative z-50">
+                <Dialog as="div" onClose={() => setIsOpen(true)} static className="relative">
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
