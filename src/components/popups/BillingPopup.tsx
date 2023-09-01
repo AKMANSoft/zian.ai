@@ -1,5 +1,4 @@
 import { Fragment, useState } from "react"
-import { PrimaryBtn } from "../ui/buttons"
 import { Dialog, Transition } from "@headlessui/react"
 import { cn } from "@/lib/utils"
 import { faCreditCard, faXmark } from "@fortawesome/free-solid-svg-icons"
