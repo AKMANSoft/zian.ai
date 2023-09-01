@@ -21,7 +21,8 @@ import { FormSelect } from "../ui/select"
 import { Spinner } from "../ui/spinner"
 import { useToast } from "../ui/use-toast"
 import useAuthUserStore from "@/lib/zustand/authUserStore"
-import {  Customtip } from "../customtip"
+import { Customtip } from "../customtip"
+import fi from "date-fns/esm/locale/fi/index.js"
 
 
 
@@ -33,6 +34,7 @@ import {  Customtip } from "../customtip"
 
 
 export default function CustomizePopup() {
+
     const { authUser, setProfile } = useAuthUserStore()
     const [isOpen, setIsOpen] = useState(false);
     const { toast } = useToast()
@@ -88,6 +90,11 @@ export default function CustomizePopup() {
         })
     }
 
+    const [isChecked, setIsChecked] = useState(false);
+
+    const handleToggle = () => {
+        setIsChecked(!isChecked);
+    };
     return (
         <>
             <NavigationItem
@@ -222,15 +229,19 @@ export default function CustomizePopup() {
                                                         name="filter"
                                                         render={({ field, fieldState }) => (
                                                             <FormItem>
+                                                               
                                                                 <div className="flex items-center gap-4">
                                                                     <Switch
                                                                         id="customize-filter"
-                                                                        onCheckedChange={field.onChange}
-                                                                        checked={field.value}
+                                                                        onCheckedChange={handleToggle}
+                                                                        checked={isChecked}
                                                                         ref={field.ref}
-                                                                        name={field.name} />
+                                                                        name="customize-filter"
+                                                                    />
                                                                     <Label htmlFor="customize-filter" className="text-sm font-normal font-jakarta text-white">
-                                                                        Skip topics about 3rd parties(people,brands,places)   - <span className="text-white/70">Yes</span>
+                                                                        Skip topics about 3rd parties(people,brands,places) - <span className="text-white/70">
+                                                                            {isChecked ? 'Yes' : 'No'}
+                                                                        </span>
                                                                     </Label>
                                                                 </div>
                                                                 {
