@@ -16,7 +16,7 @@ export const REGEX = {
 
 
 export const DATE_FORMATS = {
-    ARTICLE_TABLE: 'MMMM yyyy, EEEE h:mma'
+    ARTICLE_TABLE: 'dd MMMM yyyy '
 }
 
 export const DEFAULTS = {

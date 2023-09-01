@@ -439,7 +439,6 @@ input::-webkit-inner-spin-button {
 }
 @media screen and (max-width: 768px) {
   .custom-tooltip-content.open {
-  /* Add margin for spacing */
     display: block; 
     opacity: 1; 
   }
