@@ -115,6 +115,7 @@ export default function BillingPopup() {
                                                 </div>
                                                 <PrimaryBtn type="submit" className=" h-12 py-3 w-full md:w-auto md:px-[30px]  ">
                                                     <CustomTooltip
+                                            
                                                         title="Upgrade"
                                                         className="h-12 z-50"
                                                         content={
@@ -124,6 +125,7 @@ export default function BillingPopup() {
                                                                 </p>
                                                             </>
                                                         } />
+                                                        
                                                 </PrimaryBtn>
                                             </div>
                                         </div>

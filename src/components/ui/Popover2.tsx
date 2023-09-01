@@ -2,7 +2,6 @@ import * as React from "react"
 import * as BillingoverPrimitive from "@radix-ui/react-popover"
 
 import { cn } from "@/lib/utils"
-import BillingPopup from "../popups/BillingPopup"
 
 const Billingover = BillingoverPrimitive.Root
 
@@ -13,11 +12,9 @@ const BillingoverContent = React.forwardRef<
   React.ElementRef<typeof BillingoverPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof BillingoverPrimitive.Content>
 >(({ className, children, align = "center", sideOffset = 4, ...props }, ref) => {
-  const isBillingPopupVisible = BillingPopup();
   const contentClassName = cn(
-    "z-50 p-5 text-Billingover-foreground shadow-md outline-none animate-in data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+    "z-50 p-5 bg-purple-500 rounded-20 ml-3 w-[280px] md:w-[350px] text-Billingover-foreground shadow-md outline-none animate-in data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
     className,
-    isBillingPopupVisible ? "bg-purple-500 rounded-20 ml-3 w-[280px] md:w-[350px]" : "bg-purple-500 rounded-20 w-[350px]"
   );
 
   return (
