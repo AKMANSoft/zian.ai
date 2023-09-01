@@ -41,7 +41,7 @@ export default function BillingPopup() {
                 icon={<FontAwesomeIcon icon={faCreditCard} />} />
 
             <Transition appear show={isOpen} static as={Fragment}>
-                <Dialog as="div" onClose={() => setIsOpen(true)} static className="relative">
+                <Dialog as="div" onClose={() => setIsOpen(true)} static className="relative z-50">
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -113,10 +113,10 @@ export default function BillingPopup() {
                                                         </a>
                                                     </p>
                                                 </div>
-                                                <PrimaryBtn type="submit" className=" h-12 py-3 w-full md:w-auto md:px-[30px] ">
+                                                <PrimaryBtn type="submit" className=" h-12 py-3 w-full md:w-auto md:px-[30px]  ">
                                                     <CustomTooltip
                                                         title="Upgrade"
-                                                        className="h-12"
+                                                        className="h-12 z-50"
                                                         content={
                                                             <>
                                                                 <p>
