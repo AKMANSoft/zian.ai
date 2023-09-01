@@ -117,7 +117,7 @@ export default function BillingPopup() {
                                                     <CustomTooltip
                                             
                                                         title="Upgrade"
-                                                        className="h-12"
+                                                        className=""
                                                         content={
                                                             <>
                                                                 <p>

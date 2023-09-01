@@ -21,7 +21,7 @@ export default function CustomTooltip({ title, content, className }: Props) {
     <Billingover>
       <BillingoverTrigger>
         <PrimaryBtn
-          className={`${className} custom-tooltip-trigger`}
+          className={`${className} custom-tooltip-trigger z-50`}
           onClick={toggleTooltip}
         >
           {title}
