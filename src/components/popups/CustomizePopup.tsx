@@ -230,7 +230,7 @@ export default function CustomizePopup() {
                                                                         ref={field.ref}
                                                                         name={field.name} />
                                                                     <Label htmlFor="customize-filter" className="text-sm font-normal font-jakarta text-white">
-                                                                        Skip topics about 3rd party brands  - <span className="text-white/70">Yes</span>
+                                                                        Skip topics about 3rd parties(people,brands,places)   - <span className="text-white/70">Yes</span>
                                                                     </Label>
                                                                 </div>
                                                                 {

@@ -75,7 +75,7 @@ export default function Dashboard() {
                                                 className="px-16 md:px-4"
                                                 content={
                                                     <>
-                                                        To change your plan or increase your weekly quota, please email hello@zian.ai
+                                                        To increase articles volume, please email <a href="mailto:hello@zian.ai" className="underline">hello@zian.ai</a>
                                                     </>
                                                 } />
 
