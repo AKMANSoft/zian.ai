@@ -238,7 +238,7 @@ export default function CustomizePopup() {
                                                                         name="customize-filter"
                                                                     />
                                                                     <Label htmlFor="customize-filter" className="text-sm font-normal font-jakarta text-white">
-                                                                        Skip topics about 3rd parties(people,<span className="ps-1"/>brands,<span className="ps-1"/> places) - <span className="text-white/70">
+                                                                        Skip topics about 3rd parties<span className="ps-1"/>(people,<span className="ps-1"/>brands,<span className="ps-1"/> places)<span className="ps-1"/> - <span className="text-white/70">
                                                                             {isChecked ? 'Yes' : 'No'}
                                                                         </span>
                                                                     </Label>

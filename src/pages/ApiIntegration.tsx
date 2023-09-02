@@ -20,7 +20,7 @@ export default function ApiIntegrationPage() {
                 <div className="py-3 md:py-7 h-full w-full flex flex-col backdrop-blur-[10px] bg-gr-purple-light opacity-90 rounded-20">
                     <div className="max-h-full overflow-y-auto space-y-2 px-3 md:px-7 md:space-y-7">
                         <div className="space-y-[10px]">
-                            <h1 className="text-base font-jakarta font-bold text-white md:text-xl">
+                            <h1 className="text-xl font-jakarta font-bold text-white md:text-xl">
                                 API Key
                             </h1>
                             <div className="relative">
@@ -30,9 +30,12 @@ export default function ApiIntegrationPage() {
                                     <FontAwesomeIcon className="pr-2" icon={faCopy} /> Copy
                                 </button>
                             </div>
-
-
+                            <div className="font-jakarta text-white text-[32px] font-bold ">
+                                Wordpress Integration
+                            </div>
                         </div>
+
+                        <hr className="border-white/10 border" />
                         <div className="space-y-3">
                             <h1 className="text-base font-jakarta font-bold text-white md:text-xl">
                                 How to install on Wordpress
@@ -52,13 +55,13 @@ export default function ApiIntegrationPage() {
                             </ol>
                             <div className="">
                                 <VideoComponent />
-                                <div className="flex flex-col pt-2">
-                                    <a className="text-base font-jakarta font-bold text-white   md:text-xl cursor-pointer pb-2 md:pb-5">
+                                <div className="flex flex-col pt-1">
+                                    <a className="text-base font-jakarta font-normal text-white   cursor-pointer pb-2 md:pb-5">
                                         Installing Zian AI into Your WordPress Website 🚀 - Watch Video
                                     </a>
                                     <hr className="border border-white/10  " />
                                     <div className="flex gap-[6px] md:pt-4 pt-2 pb-2 md:pb-6 text-primary items-center ">
-                                        <a className="flex text-base font-jakarta font-bold text-primary underline  md:text-xl cursor-pointer " href="https://wordpress.com/support/posts-page/">
+                                        <a className="flex text-base font-jakarta font-normal text-primary underline   cursor-pointer " href="https://wordpress.com/support/posts-page/">
                                             How to Select WordPress Default Posts Page
                                         </a>
                                         <ExternalLinkIcon />
@@ -68,7 +71,7 @@ export default function ApiIntegrationPage() {
                             </div>
                             <div className="space-y-5 pt-2 md:pt-4">
                                 <div className="space-y-[10px]">
-                                    <h1 className="text-white font-jakarta text-base font-bold">
+                                    <h1 className="text-white font-jakarta text-xl font-bold">
                                         If you can't find where your posts are going:
                                     </h1>
                                     <p className="font-jakarta text-base font-normal text-white/70 lg:max-w-[70%]">
@@ -99,8 +102,8 @@ export default function ApiIntegrationPage() {
 
                         </div>
 
-                        <div className="space-y-[10px] pt-6">
-                            <h1 className="text-base font-jakarta font-bold text-white md:text-xl">
+                        <div className="space-y-4 pt-6">
+                            <h1 className="text-base font-jakarta font-bold text-white md:text-[32px]">
                                 List the industry
                             </h1>
                             <div className="border rounded-xl border-white/10">
@@ -137,8 +140,8 @@ export default function ApiIntegrationPage() {
                                 </pre>
                             </div>
                         </div>
-                        <div className="space-y-[10px]">
-                            <h1 className="text-base font-jakarta font-bold text-white md:text-xl">
+                        <div className="space-y-4">
+                            <h1 className="text-base font-jakarta font-bold text-white md:text-[32px]">
                                 Update the keyword
                             </h1>
                             <div className="border rounded-xl border-white/10">
@@ -175,8 +178,8 @@ export default function ApiIntegrationPage() {
 
                             </div>
                         </div>
-                        <div className="space-y-[10px]">
-                            <h1 className="text-base font-jakarta font-bold text-white md:text-xl">
+                        <div className="space-y-4">
+                            <h1 className="text-base font-jakarta font-bold text-white md:text-[32px]">
                                 List the article
                             </h1>
                             <div className="border rounded-xl border-white/10">
