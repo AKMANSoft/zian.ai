@@ -30,32 +30,35 @@ export default function ApiIntegrationPage() {
                                     <FontAwesomeIcon className="pr-2" icon={faCopy} /> Copy
                                 </button>
                             </div>
-                            <div className="font-jakarta text-white text-[32px] font-bold ">
+                            <div className="font-jakarta text-white text-3xl md:text-[32px] font-bold md:pb-3 pb-1">
                                 Wordpress Integration
                             </div>
+                            <hr className="border-white/10 border" />
                         </div>
 
-                        <hr className="border-white/10 border" />
                         <div className="space-y-3">
-                            <h1 className="text-base font-jakarta font-bold text-white md:text-xl">
-                                How to install on Wordpress
-                            </h1>
-                            <ol className="text-white/70 text-sm font-normal md:text-base">
-                                <li>
-                                    1. Download, install and activate this <a className="text-white underline">Zain.Ai</a> plugin
-                                </li>
-                                <li>2. Go to Setting -{">"} Zian.ai API
-                                </li>
-                                <li>
-                                    3. Fill the API Key
-                                </li>
-                                <li>
-                                    4. Save Changes
-                                </li>
-                            </ol>
+                            <div>
+                                <h1 className="text-base font-jakarta font-bold text-white md:text-xl ">
+                                    How to install on Wordpress
+                                </h1>
+                                <ol className="text-white/70 text-sm font-normal md:text-base font-jakarta">
+                                    <li>
+                                        1. Download, install and activate this <a className="text-white underline">Zain.Ai</a> plugin
+                                    </li>
+                                    <li>2. Go to Setting -{">"} Zian.ai API
+                                    </li>
+                                    <li>
+                                        3. Fill the API Key
+                                    </li>
+                                    <li>
+                                        4. Save Changes
+                                    </li>
+                                </ol>
+                            </div>
+
                             <div className="">
                                 <VideoComponent />
-                                <div className="flex flex-col pt-1">
+                                <div className="flex flex-col pt-2">
                                     <a className="text-base font-jakarta font-normal text-white   cursor-pointer pb-2 md:pb-5">
                                         Installing Zian AI into Your WordPress Website 🚀 - Watch Video
                                     </a>
@@ -79,7 +82,7 @@ export default function ApiIntegrationPage() {
                                     </p>
                                 </div>
                                 <div>
-                                    <ol className="text-white/70 text-sm font-normal md:text-base">
+                                    <ol className="text-white/70 text-sm font-normal md:text-base font-jakarta">
                                         <li>
                                             1. Find it. WP-Admin &gt; Pages &gt; Posts Page.
                                         </li>
@@ -107,7 +110,7 @@ export default function ApiIntegrationPage() {
                                 List the industry
                             </h1>
                             <div className="border rounded-xl border-white/10">
-                                <pre className="px-5 py-4 text-xs font-semibold text-white/70 overflow-x-auto md:text-sm">
+                                <pre className="px-5 py-4 text-xs font-semibold text-white/70 overflow-x-auto md:text-sm font-jakarta">
                                     <code>
                                         Method : GET
                                         <br /><br />
@@ -145,7 +148,7 @@ export default function ApiIntegrationPage() {
                                 Update the keyword
                             </h1>
                             <div className="border rounded-xl border-white/10">
-                                <pre className="px-5 py-4 text-xs font-semibold text-white/70 overflow-x-auto md:text-sm">
+                                <pre className="px-5 py-4 text-xs font-semibold text-white/70 overflow-x-auto md:text-sm font-jakarta">
                                     <code>
                                         Method : POST
                                         <br /><br />
@@ -183,7 +186,7 @@ export default function ApiIntegrationPage() {
                                 List the article
                             </h1>
                             <div className="border rounded-xl border-white/10">
-                                <pre className="px-5 py-4 text-xs font-semibold text-white/70 overflow-x-auto md:text-sm">
+                                <pre className="px-5 py-4 text-xs font-semibold text-white/70 overflow-x-auto md:text-sm font-jakarta">
                                     <code>
                                         Method : GET
                                         <br /><br />
