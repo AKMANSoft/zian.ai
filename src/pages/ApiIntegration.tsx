@@ -1,12 +1,11 @@
 import MainLayout from "../components/layout";
 import GrBorderBox from "../components/ui/gr-border-box";
 import { Input } from "@/components/ui/input";
-import { faCopy, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import JSONPretty from 'react-json-pretty';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/utils";
 import useAuthUserStore from "@/lib/zustand/authUserStore";
+import { ExternalLinkIcon } from "@radix-ui/react-icons";
 
 
 
@@ -51,19 +50,23 @@ export default function ApiIntegrationPage() {
                                     4. Save Changes
                                 </li>
                             </ol>
-                            <div className="space-y-[10px]">
+                            <div className="">
                                 <VideoComponent />
-                                <div className="flex flex-col gap-[10px]">
-                                    <a className="text-base font-jakarta font-bold text-white underline  md:text-xl cursor-pointer">
+                                <div className="flex flex-col pt-2">
+                                    <a className="text-base font-jakarta font-bold text-white   md:text-xl cursor-pointer pb-2 md:pb-5">
                                         Installing Zian AI into Your WordPress Website 🚀 - Watch Video
                                     </a>
-                                    <a className="text-base font-jakarta font-bold text-white underline  md:text-xl cursor-pointer" href="https://wordpress.com/support/posts-page/">
-                                        How to Select WordPress Default Posts Page
-                                    </a>
-
+                                    <hr className="border border-white/10  " />
+                                    <div className="flex gap-[6px] md:pt-4 pt-2 pb-2 md:pb-6 text-primary items-center ">
+                                        <a className="flex text-base font-jakarta font-bold text-primary underline  md:text-xl cursor-pointer " href="https://wordpress.com/support/posts-page/">
+                                            How to Select WordPress Default Posts Page
+                                        </a>
+                                        <ExternalLinkIcon />
+                                    </div>
+                                    <hr className="boreder border-white/10" />
                                 </div>
                             </div>
-                            <div className="space-y-5 pt-4">
+                            <div className="space-y-5 pt-2 md:pt-4">
                                 <div className="space-y-[10px]">
                                     <h1 className="text-white font-jakarta text-base font-bold">
                                         If you can't find where your posts are going:
@@ -224,40 +227,55 @@ export default function ApiIntegrationPage() {
 
 
 
+
+
+
 function VideoComponent() {
-    const videoRef = useRef<HTMLVideoElement>(null);
-    const [showBtn, setShowBtn] = useState(false);
 
-
-    useEffect(() => {
-        videoRef.current?.addEventListener("play", function () {
-            if (!videoRef.current) return;
-            setShowBtn(!videoRef.current.paused)
-        })
-    }, [videoRef])
-
-
-    const onPlayVideoClicked = async () => {
-        if (!videoRef.current) return;
-        await videoRef.current.play()
-        videoRef.current.controls = true;
-    }
 
     return (
         <div className="">
             <div className="relative w-full md:w-[500px]">
-                <video ref={videoRef} src="/videos/test_video.mp4" width={500} height={300} className="rounded-20 overflow-hidden w-full h-auto aspect-video object-cover" />
-                <button onClick={onPlayVideoClicked} className={cn(
-                    "aspect-square px-4 bg-transparent/60 flex items-center justify-center border rounded-full",
-                    "absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2",
-                    showBtn && "hidden"
-                )}>
-                    <FontAwesomeIcon className="text-lg text-white " icon={faPlay} />
-                </button>
+                <iframe width={500} height={300} src="https://www.loom.com/embed/55bd2943e2b54559a85ae44695671b99?sid=a03a9b2a-754d-48cc-bb83-0f8b00e540e1" className="rounded-20 overflow-hidden w-full h-auto aspect-video object-cover"> </iframe>
             </div>
         </div>
     )
-
 }
+
+
+// function VideoComponent() {
+
+//     const videoRef = useRef<HTMLVideoElement>(null);
+//     const [showBtn, setShowBtn] = useState(false);
+
+
+//     useEffect(() => {
+//         videoRef.current?.addEventListener("play", function () {
+//             if (!videoRef.current) return;
+//             setShowBtn(!videoRef.current.paused)
+//         })
+//     }, [videoRef])
+
+
+//     const onPlayVideoClicked = async () => {
+//         if (!videoRef.current) return;
+//         await videoRef.current.play()
+//         videoRef.current.controls = true;
+//     }
+
+//     return (
+//         <div className="">
+//             <div className="relative w-full md:w-[500px]">
+//                 <video ref={videoRef} src="/videos/test_video.mp4" width={500} height={300} className="rounded-20 overflow-hidden w-full h-auto aspect-video object-cover" />
+//                 <button onClick={onPlayVideoClicked} className={cn(
+//                     "aspect-square px-4 bg-transparent/60 flex items-center justify-center border rounded-full",
+//                     "absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2",
+//                     showBtn && "hidden"
+//                 )}>
+//                     <FontAwesomeIcon className="text-lg text-white " icon={faPlay} />
+//                 </button>
+//             </div>
+//         </div>
+//     )}
 
 
