@@ -56,9 +56,9 @@ export default function ApiIntegrationPage() {
                                 </ol>
                             </div>
 
-                            <div className="">
+                            <div className="pt-1">
                                 <VideoComponent />
-                                <div className="flex flex-col pt-2">
+                                <div className="flex flex-col pt-[10px]">
                                     <a className="text-base font-jakarta font-normal text-white   cursor-pointer pb-2 md:pb-5">
                                         Installing Zian AI into Your WordPress Website 🚀 - Watch Video
                                     </a>
@@ -84,14 +84,14 @@ export default function ApiIntegrationPage() {
                                 <div>
                                     <ol className="text-white/70 text-sm font-normal md:text-base font-jakarta">
                                         <li>
-                                            1. Find it. WP-Admin &gt; Pages &gt; Posts Page.
+                                            1.<span className="ps-1"/>Find it. WP-Admin &gt; Pages &gt; Posts Page.
                                         </li>
                                         <li>
                                             2. Click that page in backend to see the URL it goes to.
 
                                         </li>
                                         <li className="lg:max-w-[70%]">
-                                            3. Add that URL to the website's menu if you want to display them, which will be custom for your site. If you need help you will need a developer. Note that without displaying them on the main menu, they are still going on your website and will count for SEO.
+                                            3.<span className="ps-1"/>  Add that URL to the website's menu if you want to display them, which will be custom for your site. If you need help you will need a developer. Note that without displaying them on the main menu, they are still going on your website and will count for SEO.
                                         </li>
                                     </ol>
                                 </div>
