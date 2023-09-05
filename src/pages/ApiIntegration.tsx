@@ -63,7 +63,11 @@ export default function ApiIntegrationPage() {
                                         Installing Zian AI into Your WordPress Website 🚀 - Watch Video
                                     </a>
                                     <hr className="border border-white/10  " />
-                                    <div className="flex gap-[6px] md:pt-4 pt-2 pb-2 md:pb-6 text-primary items-center ">
+                                    <h1 className="text-white text-xl font-bold font-jakarta pt-5 md:pt-10 ">
+                                        Default Posts Page, How To Select Where Articles Are Posted:
+                                    </h1>
+                                    <div className="flex gap-[6px] md:pt-5  pt-2 pb-5 md:pb-10 text-primary items-center ">
+
                                         <a className="flex text-base font-jakarta font-normal text-primary underline   cursor-pointer " href="https://wordpress.com/support/posts-page/">
                                             How to Select WordPress Default Posts Page
                                         </a>
@@ -84,14 +88,14 @@ export default function ApiIntegrationPage() {
                                 <div>
                                     <ol className="text-white/70 text-sm font-normal md:text-base font-jakarta">
                                         <li>
-                                            1.<span className="ps-1"/>Find it. WP-Admin &gt; Pages &gt; Posts Page.
+                                            1.<span className="ps-1" />Find it. WP-Admin &gt; Pages &gt; Posts Page.
                                         </li>
                                         <li>
                                             2. Click that page in backend to see the URL it goes to.
 
                                         </li>
                                         <li className="lg:max-w-[70%]">
-                                            3.<span className="ps-1"/>  Add that URL to the website's menu if you want to display them, which will be custom for your site. If you need help you will need a developer. Note that without displaying them on the main menu, they are still going on your website and will count for SEO.
+                                            3.<span className="ps-1" />  Add that URL to the website's menu if you want to display them, which will be custom for your site. If you need help you will need a developer. Note that without displaying them on the main menu, they are still going on your website and will count for SEO.
                                         </li>
                                     </ol>
                                 </div>
