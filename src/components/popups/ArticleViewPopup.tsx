@@ -39,7 +39,7 @@ export default function ArticleViewPopup({ trigger, article }: Props) {
         })
     }
     const copyArticleBody = async () => {
-        await navigator.clipboard.writeText(article.headline);
+        await navigator.clipboard.writeText(article.body);
         toast({
             title: "Article copied to clipboard.",
             variant: "default",
