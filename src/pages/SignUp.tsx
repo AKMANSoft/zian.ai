@@ -31,7 +31,7 @@ export default function SignUpPage() {
 
     const { uiState, setUiData } = useUiState<SignUpApiResponse>()
     const { setToken } = useAuthUserStore();
-    const [curStep, setCurStep] = useState<"SIGNUP" | "ONBOARDING">("SIGNUP")
+    const [curStep, setCurStep] = useState<"SIGNUP" | "ONBOARDING">("ONBOARDING")
 
     const handleSignUpFormSubmit = async (values: SignUpFormSchema) => {
         const response = await api.user.signup(values)
@@ -68,7 +68,7 @@ export default function SignUpPage() {
                                                     "block"
                                                 )}
                                                 alt="" />
-                                            <div className="font-nebula text-white text-center text-2xl font-normal mt-5">
+                                            <div className="mt-5 text-2xl font-normal text-center text-white font-nebula">
                                                 Sign Up
                                             </div>
                                             <div className="lg:py-5 lg:pt-8 space-y-[10px] md:text-sm text-xs">
@@ -187,10 +187,10 @@ export default function SignUpPage() {
                                             }
                                             <div className="flex justify-between mb-[30px] mt-5">
                                                 <div className="">
-                                                    <p className="font-jakarta text-xs md:text-sm font-bold text-white">
+                                                    <p className="text-xs font-bold text-white font-jakarta md:text-sm">
                                                         Already have an account?
                                                     </p>
-                                                    <a href="/login" className="font-jakarta text-xs md:text-sm font-bold text-primary underline">
+                                                    <a href="/login" className="text-xs font-bold underline font-jakarta md:text-sm text-primary">
                                                         Login here
                                                     </a>
                                                 </div>
@@ -198,7 +198,7 @@ export default function SignUpPage() {
                                                     <PrimaryBtn
                                                         type="submit"
                                                         disabled={signUpForm.formState.isSubmitting}
-                                                        className="py-3 h-12 px-6 md:w-auto ">
+                                                        className="h-12 px-6 py-3 md:w-auto ">
                                                         {
                                                             signUpForm.formState.isSubmitting ?
                                                                 <Spinner />
@@ -266,7 +266,7 @@ function OnBoardingForm() {
                             "block"
                         )}
                         alt="" />
-                    <div className="font-nebula text-white text-center text-2xl font-normal mt-5">
+                    <div className="mt-5 text-2xl font-normal text-center text-white font-nebula">
                         Customize ZIAN
                         <br />Ai for your business
                     </div>
@@ -376,7 +376,7 @@ function OnBoardingForm() {
                         <div className="flex justify-between">
                             <div></div>
                             <div>
-                                <PrimaryBtn type="submit" disabled={form.formState.isSubmitting} className="py-3 h-12 px-6 md:w-auto">
+                                <PrimaryBtn type="submit" disabled={form.formState.isSubmitting} className="h-12 px-6 py-3 md:w-auto">
                                     {
                                         form.formState.isSubmitting ?
                                             <Spinner />

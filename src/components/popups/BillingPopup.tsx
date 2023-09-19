@@ -54,7 +54,7 @@ export default function BillingPopup() {
                     </Transition.Child>
 
                     <div className="fixed inset-0 overflow-y-auto">
-                        <div className="flex min-h-full items-center justify-center p-4">
+                        <div className="flex items-center justify-center min-h-full p-4">
                             <Transition.Child
                                 as={Fragment}
                                 enter="ease-out duration-300"
@@ -69,12 +69,12 @@ export default function BillingPopup() {
                                     "relative  border-primary rounded-20"
                                 )}>
 
-                                    <div className="  flex flex-col space-y-32 p-7 pb-12 bg-gr-purple-dark  md:pb-7">
+                                    <div className="flex flex-col pb-12 space-y-32 p-7 bg-gr-purple-dark md:pb-7">
                                         {/* content */}
 
-                                        <div className=" space-y-6 lg:space-y-10 ">
+                                        <div className="space-y-6 lg:space-y-10">
                                             <div>
-                                                <div className="w-full  flex flex-row  items-center justify-between ">
+                                                <div className="flex flex-row items-center justify-between w-full ">
                                                     <div>
                                                         <h1 className="text-2xl md:text-[32px] font-jakarta font-bold text-white">
                                                             Billing & Plan
@@ -90,24 +90,24 @@ export default function BillingPopup() {
                                             <div className="space-y-2">
                                                 <div>
                                                     <div className="space-y-[6px]">
-                                                        <h1 className="text-white font-jakarta text-base md:text-xl font-bold">
+                                                        <h1 className="text-base font-bold text-white font-jakarta md:text-xl">
                                                             {authUser?.profile?.package} Plan: {authUser?.profile?.quota}  Articles per week
                                                         </h1>
-                                                        <p className="md:text-base text-sm font-normal font-jakarta text-white/70">
+                                                        <p className="text-sm font-normal md:text-base font-jakarta text-white/70">
                                                             Current quota remaining: {Math.max(0, (authUser?.profile?.quota ?? 0) - 1)}
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <div className="bg-white w-full h-1">
+                                                <div className="w-full h-1 bg-white">
                                                     <div className="bg-primary w-[90%] h-full">
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="flex justify-between items-center flex-col md:flex-row gap-5 md:pb-0 pb-12">
+                                            <div className="flex flex-col items-center justify-between gap-5 pb-12 md:flex-row md:pb-0">
                                                 <div className="w-full p-[10px] flex items-center justify-center border border-body/10 rounded-10 bg-body/10 md:w-auto md:p-[14px]">
-                                                    <p className="text-white text-sm font-medium font-Inter">
+                                                    <p className="text-sm font-medium text-white font-Inter">
                                                         To change or upgrade your plan, please email
-                                                        <a href="mailto:hello@zian.ai" className="underline pl-1">
+                                                        <a href="mailto:hello@zian.ai" className="pl-1 underline">
                                                             hello@zian.ai
                                                         </a>
                                                     </p>
