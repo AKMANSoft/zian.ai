@@ -205,12 +205,11 @@ function VideoComponent() {
     return (
         <div className="">
             <div className="relative w-full md:w-[500px]">
-                <iframe width={500} height={300} src="https://www.loom.com/embed/55bd2943e2b54559a85ae44695671b99?sid=a03a9b2a-754d-48cc-bb83-0f8b00e540e1" className="object-cover w-full h-auto overflow-hidden rounded-20 aspect-video"> </iframe>
+                <iframe width={500} height={300} src="https://www.loom.com/embed/6e0e77ef595f4e488e8636a1d03770dc?sid=1c27efb4-bbb7-4d21-a14d-7d5e897fd125"  className="object-cover w-full h-auto overflow-hidden rounded-20 aspect-video"> </iframe>
             </div>
         </div>
     )
 }
-
 
 // function VideoComponent() {
 
