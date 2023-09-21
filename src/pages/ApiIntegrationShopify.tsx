@@ -61,7 +61,7 @@ export default function ApiIntegrationShopify() {
                                     <li className="">
                                         <span className="ps-1">Your Zian SEO API</span>
                                     </li>
-                                    <li className=""><span className="flex items-center underline text-primary ps-1">Zapier <ExternalLinkIcon /></span>
+                                    <li className=""><span className="flex items-center gap-2 underline text-primary ps-1">Zapier <ExternalLinkIcon className="mt-[4px]"/></span>
                                     </li>
                                     <li className="">
                                         <span className="underline text-primary ps-1">UUID Generator</span>
