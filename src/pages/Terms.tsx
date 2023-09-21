@@ -10,12 +10,12 @@ export default function TermsPage() {
     return (
         <div className="h-screen py-10 overflow-y-auto">
             <GrBorderBox className="max-w-5xl mx-4 lg:mx-auto">
-                <div className="flex flex-col rounded-20 items-center bg-gr-purple-light text-white space-y-7 py-5 pb-16 px-4 md:px-8">
+                <div className="flex flex-col items-center px-4 py-5 pb-16 text-white rounded-20 bg-gr-purple-light space-y-7 md:px-8">
                     <div>
                         <img src="/images/avatar.png" alt="" />
                     </div>
                     <div>
-                        <h1 className="text-2xl font-normal font-nebula md:text-3xl w-full">
+                        <h1 className="w-full text-2xl font-normal font-nebula md:text-3xl">
                             Zian AI Terms of Service
                         </h1>
                     </div>
@@ -24,42 +24,49 @@ export default function TermsPage() {
                             heading="Introduction"
                             content={
                                 <>
-                                    This is a contract between you (the User) and Envisionaires Media Pty Ltd., the provider of Zian AI, a sophisticated AI marketing tool. Please read these terms and conditions carefully before using the service.
+                                    This is a contract between you (the “User”, “You”, or your company) and Zian AI (or “Zian”, “We”, “Us”, “Our”) including associated parties that may have ownership over Zian AI or its products. Please read these terms and conditions carefully before using the service.
                                 </>
                             } />
                         <TermsPrivacyComponent
                             heading="Acceptance of Terms"
                             content={
                                 <>
-                                    By using Zian AI, you agree to be bound by these terms and conditions. If you disagree with these terms and conditions or any part of these terms and conditions, you must not use the service. By using this service you agree to be within a jurisdiction we support, you confirm that by using this you will not break any laws, and you agree that you are over 18 years old.
+                                    By using Zian AI, or paying for, or logging in to, or by accessing any of our web pages or products, you agree to be bound by these terms and conditions. If you disagree with these terms and conditions or any part of these terms and conditions, you must not use the service. By using this service you agree to be within a jurisdiction we support, you confirm that by using this you will not break any laws, and you agree that you are over 18 years old.
                                 </>
                             } />
                         <TermsPrivacyComponent
-                            heading="Service Provision"
+                            heading="Service Provision and Disclaimer"
                             content={
                                 <>
-                                    Zian AI is provided 'as is' and 'as available', without any representations or warranties, express or implied. We make no representations or warranties about the reliability, availability, timeliness, security, accuracy, sufficiency, suitability, fitness for a particular purpose, or completeness of Zian AI and expressly disclaim any warranties of merchantability or fitness for a particular purpose. Zian makes no claims or guarantees of any particular results, sales, or numbers that a User may or may not gain.
+                                    Zian AI is provided 'as is' and 'as available', without any representations or warranties, express or implied. We make no representations or warranties about the reliability, availability, timeliness, security, accuracy, sufficiency, suitability, fitness for a particular purpose, quality, appropriateness, or completeness of Zian AI or the content it produces. Zian AI expressly disclaims any warranties of merchantability or fitness for a particular purpose. The user acknowledges and agrees that Zian AI is a tool designed to assist in marketing content creation and does not guarantee any particular results, sales, or numbers from using the service. Additionally, Zian AI makes no claims or guarantees about the accuracy or appropriateness of any content or information generated on behalf of the user.
                                 </>
                             } />
                         <TermsPrivacyComponent
                             heading="Limitation of Liability"
                             content={
                                 <>
-                                    In no event shall Zian AI, Envisionaires Media Pty Ltd., or its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of or inability to access or use the service.
+                                    In no event shall Zian AI, Envisionaires Media Pty Ltd., its parent companies, subsidiaries, affiliates, or any of its directors, employees, partners, agents, suppliers, or affiliates be liable for any direct, indirect, incidental, special, consequential, or punitive damages, including, without limitation, loss of profits, data, use, goodwill, or other intangible losses, whether foreseeable or unforeseeable. This encompasses damages that result from the use of, or the inability to use, the content or information generated by Zian AI, or from accessing or using the service, associated products, or brands.
+                                </>
+                            } />
+                        <TermsPrivacyComponent
+                            heading="Indemnification"
+                            content={
+                                <>
+                                    The user, you, and your company, agrees to indemnify, defend, and hold harmless Zian AI, Envisionaires Media Pty Ltd., its parent companies, subsidiaries, affiliates, officers, directors, employees, and agents from any claim, demand, loss, liability, or expense (including attorneys' fees) arising out of or related to the user's use of the content or information produced by Zian AI, or any breach or violation of these clauses or any other provisions of this contract
                                 </>
                             } />
                         <TermsPrivacyComponent
                             heading="Intellectual Property & Data Rights"
                             content={
                                 <>
-                                    All intellectual property rights related to the software and the data generated or collected through the use of Zian AI are the exclusive property of Envisionaires Media Pty Ltd. You are granted a limited, non-exclusive, non-transferable, revocable license to use the service and any material created from the use of this service. This license does not include any rights to reproduce, duplicate, copy, sell, resell or exploit any portion of the service. If your subscription is terminated, you agree to immediately delete all data and content obtained from Zian AI. The User has rights to use the material created for that User, in any way they like, so long as they maintain an active paying subscription. Canceling a paying subscription will cancel rights to use that content and must be deleted from their website, social media and all hosted or public material immediately. Use of a free account grants access / rights to temporarily use only the material created in that free plan with limited quantity. User has no rights to use any Zian AI branded material. Zian AI retains the right to display, share or present any of the User’s or User’s brands or logos, for the purpose for any marketing material or marketing activities. Any and all lead or contact information, including names, emails, phone numbers, including customer and client contact details, created or passed through Zian AI will grant Envisionaires Media PTY LTD irrevocable rights to use those databases as they wish.
+                                    All intellectual property rights related to the software and the data generated or collected through the use of Zian AI are the exclusive property of Envisionaires Media Pty Ltd. You are granted a limited, non-exclusive, non-transferable, revocable license to use the service and any material created from the use of this service. This license does not include any rights to reproduce, duplicate, copy, sell, resell or exploit any portion of the service. If your subscription is terminated, you agree to immediately delete all data and content obtained from Zian AI include articles or content that was created for you while your subscription was live, backdating to the beginning of the subscription. The User has rights to use the material created for that User, in any way they like, so long as they maintain an active paying subscription. Canceling a paying subscription will cancel rights to use that content and must be deleted from their website, social media and all hosted or public material immediately. Use of a free account grants access / rights to temporarily use only the material created in that free plan with limited quantity. User has no rights to use any Zian AI branded material. Zian AI retains the right to display, share or present any of the User’s or User’s brands or logos, for the purpose for any marketing material or marketing activities. Any and all lead or contact information, including names, emails, phone numbers, including customer and client contact details, created or passed through Zian AI will grant Envisionaires Media PTY LTD irrevocable rights to use those databases as they wish.
                                 </>
                             } />
                         <TermsPrivacyComponent
                             heading="Governing Law & Jurisdiction"
                             content={
                                 <>
-                                    This agreement is governed by the laws of Victoria, Australia. You agree to submit to the exclusive jurisdiction of the courts of Victoria, Australia, to resolve any dispute arising out of your use of Zian AI or this agreement. Any dispute arising from this agreement will take place in the courts of Victoria, Australia.
+                                    This agreement is governed by the laws of Victoria, Australia. You agree to submit to the exclusive jurisdiction of the courts of Victoria, Australia, to resolve any dispute arising out of your use of Zian AI or this agreement. Any dispute arising from this agreement will take place in the courts of Victoria, Australia, only, or another more appropriate location as dictated solely by Zian AI.
                                 </>
                             } />
                         <TermsPrivacyComponent
@@ -73,16 +80,25 @@ export default function TermsPage() {
                             heading="Non-Compete"
                             content={
                                 <>
-                                    You agree not to engage in any enterprise that directly competes with Zian AI, in the form of selling AI-generated marketing, social media, blog, news or SEO content for businesses. This includes not being a shareholder of more than 20% in, creating, or selling a similar service or tool that uses artificial intelligence, large language models, or image generation models for SEO, blog or article creation, or AI social media generative tools for a period of three years from the last date of using Zian AI, in the countries of USA, United Kingdom, China, Australia, Canada, New Zealand, and UAE. Affiliates or white-label distributors of Zian AI, selling a form of Zian AI, are excluded from this non-compete and are free to sell their own solution as long as that solution is financially compensating Zian AI in an agreed manner.
+                                    You agree not to engage in any enterprise that directly competes with Zian AI, in the form of selling AI-generated marketing, social media, blog, news or SEO content for businesses. This includes not being a shareholder of more than 20% in, creating, or selling a similar service or tool that uses artificial intelligence, large language models, or image generation models for SEO, blog or article creation, or AI social media generative tools for a period of three years from the last date of using or purchasing Zian AI, in the countries of USA, United Kingdom, China, Australia, Canada, New Zealand, and UAE. Affiliates, re-selling, on-selling or white-label distributors of Zian AI, or parties selling a form or derivative of Zian AI, are excluded from this non-compete and are free to sell their own solution as long as that solution is financially compensating Zian AI in an agreed manner. For the avoidance of doubt, this means that agency or reseller partners of Zian AI who re-sell the service or use the service for their own clients, are excluded from the non-compete so long as they don’t try to replicate or reverse engineer Zian AI, build a competing product, or build their own software solution of a similar nature.
                                 </>
                             } />
                         <TermsPrivacyComponent
-                            heading="Subscription and Cancellation"
+                            heading="Subscription and Billing Authorization"
+                            content={
+                                <>
+                                    By purchasing a discounted trial; short term trial (for example a 1 week deposit); a free trial with your credit card on file as collateral; or purchase any service fully priced; any of our ongoing services such as but not limited to the SEO AI, Social Media AI, or Link Building service, you agree to pay Zian AI the associated weekly, bi-weekly, monthly or annual recurring fee associated with the service and plan you have chosen. You authorize completely for Zian AI to charge the credit or debit card(s) on file provided by you for this service in the recurring amounts until canceled by you on the below terms. In all cases, you agree that any weekly or monthly services offered will be automatically renewed and continued indefinitely until canceled, including but not limited to automatically continuing a weekly subscription after placing a deposit on an initial 1 week. For any fees quoted or advertised as a ‘price per week’ or ‘weekly fee’, you agree these may be billed and debited in weekly, bi-weekly or monthly amounts and authorize this charge. By paying for, registering or applying for, using the service, or accessing any Zian.ai website or software, you irrevocably agree to these terms.
+                                </>
+                            } />
+                        <TermsPrivacyComponent
+                            heading="Cancellation"
                             content={
                                 <>
                                     You can cancel your account at any time with 14 days' notice. You understand that if you cancel before the end of your billing cycle, you will not be refunded for any billing charges incurred for that cycle. You will be responsible for the full 14 days payments until the account is canceled. Cancellation notice must be delivered in Writing to <a href="mailto:hello@zian.ai" className="text-white ps-1">hello@zian.ai</a> or canceled within the platform itself (where available). Canceling your subscription may result in termination of your account subject to the “Termination Rights” section.
+
                                 </>
                             } />
+
                         <TermsPrivacyComponent
                             heading="Refunds"
                             content={
@@ -144,7 +160,7 @@ export default function TermsPage() {
                             heading="Non-solicitation"
                             content={
                                 <>
-                                    The user agrees that during the term of this agreement and for a period of one year after the termination or expiration of this agreement, they will not directly or indirectly, solicit or attempt to solicit any employee, independent contractor, affiliate, contributor, developer or consultant of Zian AI or Envisionaires Media Pty Ltd. to terminate their relationship with us in order to become an employee, consultant, or contractor to or for any other person or entity, or to participate in any deal or sale that may result in profits generated for any other party other than Zian AI and approved affiliates.
+                                    The user agrees that during the term of this agreement and for a period of two years after the termination or expiration of this agreement, they will not directly or indirectly, solicit or attempt to solicit any employee, independent contractor, affiliate, contributor, developer or consultant of Zian AI or Envisionaires Media Pty Ltd. to terminate their relationship with us in order to become an employee, consultant, or contractor to or for any other person or entity, or to participate in any deal or sale that may result in profits generated for any other party other than Zian AI and approved affiliates.
                                 </>
                             } />
                         <TermsPrivacyComponent
@@ -198,8 +214,10 @@ export default function TermsPage() {
                             } />
                     </div>
                     <div>
-                        <h1 className="text-base font-bold font-jkarta text-white md:text-xl">
+                        <h1 className="text-base font-bold text-white font-jkarta md:text-xl">
+
                             By using Zian AI, or creating or paying for an account, or accessing any of the webpages hosted on zian.ai, you acknowledge that you have read, understood, and agreed to be bound by these terms.
+
                         </h1>
                     </div>
                 </div>
