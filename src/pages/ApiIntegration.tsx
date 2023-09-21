@@ -6,6 +6,8 @@ import JSONPretty from 'react-json-pretty';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useAuthUserStore from "@/lib/zustand/authUserStore";
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
+import { PrimaryBtn, PrimaryBtnNeon } from "@/components/ui/buttons";
+
 
 
 
@@ -18,30 +20,53 @@ export default function ApiIntegrationPage() {
         <MainLayout heading="INTEGRATE API">
             <GrBorderBox className="p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)] " type="lg">
                 <div className="py-3 md:py-7 h-full w-full flex flex-col backdrop-blur-[10px] bg-gr-purple-light opacity-90 rounded-20">
-                    <div className="max-h-full overflow-y-auto space-y-2 px-3 md:px-7 md:space-y-7">
+                    <div className="max-h-full px-3 space-y-2 overflow-y-auto md:px-7 md:space-y-7">
                         <div className="space-y-[10px]">
-                            <h1 className="text-xl font-jakarta font-bold text-white md:text-xl">
+                            <h1 className="text-xl font-bold text-white font-jakarta md:text-xl">
                                 API Key
                             </h1>
                             <div className="relative">
                                 <Input className="pr-24" readOnly
                                     value={authUser?.token} />
-                                <button className="absolute text-sm font-semibold font-jakarta top-1/2 right-5 -translate-y-1/2">
+                                <button className="absolute text-sm font-semibold -translate-y-1/2 font-jakarta top-1/2 right-5">
                                     <FontAwesomeIcon className="pr-2" icon={faCopy} /> Copy
                                 </button>
                             </div>
-                            <div className="font-jakarta text-white text-3xl md:text-[32px] font-bold md:pb-3 pb-1">
+
+                            <div className="  mb-[9px]" >
+                                <p className="mt-3 text-xl font-bold text-white font-jakarta md:mt-[18px]">
+                                    Select your Integration:
+                                </p>
+                                <div className="mt-3 md:mt-5  flex md:flex-row flex-col gap-[10px]   mb-[15px]">
+                                    <a href="/integrate">
+                                        <PrimaryBtn className="font-normal text-[15px] py-[8px] w-full ">
+                                            Wordpress Integration
+                                        </PrimaryBtn>
+                                    </a>
+                                 
+                                    <a href="/shopify">
+                                        <PrimaryBtnNeon className="font-normal text-[15px] w-full ">
+                                            Shopify Integration Via Zapier
+                                        </PrimaryBtnNeon>
+                                    </a>
+                                </div>
+
+
+                            </div>
+                            <hr className="!p-0 border-2 border-primary " />
+
+                            <div className="font-jakarta text-white text-3xl md:text-[32px] font-bold md:pb-3 pb-1 pt-5">
                                 Wordpress Integration
                             </div>
-                            <hr className="border-white/10 border" />
+                            <hr className="border border-white/10" />
                         </div>
 
                         <div className="space-y-3">
                             <div>
-                                <h1 className="text-base font-jakarta font-bold text-white md:text-xl ">
+                                <h1 className="text-base font-bold text-white font-jakarta md:text-xl ">
                                     How to install on Wordpress
                                 </h1>
-                                <ol className="text-white/70 text-sm font-normal md:text-base font-jakarta">
+                                <ol className="text-sm font-normal text-white/70 md:text-base font-jakarta">
                                     <li>
                                         1. Download, install and activate this <a className="text-white underline">Zain.Ai</a> plugin
                                     </li>
@@ -59,16 +84,16 @@ export default function ApiIntegrationPage() {
                             <div className="pt-1">
                                 <VideoComponent />
                                 <div className="flex flex-col pt-[10px]">
-                                    <a className="text-base font-jakarta font-normal text-white   cursor-pointer pb-2 md:pb-5">
+                                    <a className="pb-2 text-base font-normal text-white cursor-pointer font-jakarta md:pb-5">
                                         Installing Zian AI into Your WordPress Website 🚀 - Watch Video
                                     </a>
-                                    <hr className="border border-white/10  " />
-                                    <h1 className="text-white text-xl font-bold font-jakarta pt-5 md:pt-10 ">
+                                    <hr className="border border-white/10 " />
+                                    <h1 className="pt-5 text-xl font-bold text-white font-jakarta md:pt-10 ">
                                         Default Posts Page, How To Select Where Articles Are Posted:
                                     </h1>
                                     <div className="flex gap-[6px] md:pt-5  pt-2 pb-5 md:pb-10 text-primary items-center ">
 
-                                        <a className="flex text-base font-jakarta font-normal text-primary underline   cursor-pointer " href="https://wordpress.com/support/posts-page/">
+                                        <a className="flex text-base font-normal underline cursor-pointer font-jakarta text-primary " href="https://wordpress.com/support/posts-page/">
                                             How to Select WordPress Default Posts Page
                                         </a>
                                         <ExternalLinkIcon />
@@ -76,9 +101,9 @@ export default function ApiIntegrationPage() {
                                     <hr className="boreder border-white/10" />
                                 </div>
                             </div>
-                            <div className="space-y-5 pt-2 md:pt-4">
+                            <div className="pt-2 space-y-5 md:pt-4">
                                 <div className="space-y-[10px]">
-                                    <h1 className="text-white font-jakarta text-xl font-bold">
+                                    <h1 className="text-xl font-bold text-white font-jakarta">
                                         If you can't find where your posts are going:
                                     </h1>
                                     <p className="font-jakarta text-base font-normal text-white/70 lg:max-w-[70%]">
@@ -86,7 +111,7 @@ export default function ApiIntegrationPage() {
                                     </p>
                                 </div>
                                 <div>
-                                    <ol className="text-white/70 text-sm font-normal md:text-base font-jakarta">
+                                    <ol className="text-sm font-normal text-white/70 md:text-base font-jakarta">
                                         <li>
                                             1.<span className="ps-1" />Find it. WP-Admin &gt; Pages &gt; Posts Page.
                                         </li>
@@ -109,12 +134,12 @@ export default function ApiIntegrationPage() {
 
                         </div>
 
-                        <div className="space-y-4 pt-6">
+                        <div className="pt-6 space-y-4">
                             <h1 className="text-base font-jakarta font-bold text-white md:text-[32px]">
                                 List the industry
                             </h1>
                             <div className="border rounded-xl border-white/10">
-                                <pre className="px-5 py-4 text-xs font-semibold text-white/70 overflow-x-auto md:text-sm font-jakarta">
+                                <pre className="px-5 py-4 overflow-x-auto text-xs font-semibold text-white/70 md:text-sm font-jakarta">
                                     <code>
                                         Method : GET
                                         <br /><br />
@@ -152,7 +177,7 @@ export default function ApiIntegrationPage() {
                                 Update the keyword
                             </h1>
                             <div className="border rounded-xl border-white/10">
-                                <pre className="px-5 py-4 text-xs font-semibold text-white/70 overflow-x-auto md:text-sm font-jakarta">
+                                <pre className="px-5 py-4 overflow-x-auto text-xs font-semibold text-white/70 md:text-sm font-jakarta">
                                     <code>
                                         Method : POST
                                         <br /><br />
@@ -190,7 +215,7 @@ export default function ApiIntegrationPage() {
                                 List the article
                             </h1>
                             <div className="border rounded-xl border-white/10">
-                                <pre className="px-5 py-4 text-xs font-semibold text-white/70 overflow-x-auto md:text-sm font-jakarta">
+                                <pre className="px-5 py-4 overflow-x-auto text-xs font-semibold text-white/70 md:text-sm font-jakarta">
                                     <code>
                                         Method : GET
                                         <br /><br />
@@ -246,7 +271,7 @@ function VideoComponent() {
     return (
         <div className="">
             <div className="relative w-full md:w-[500px]">
-                <iframe width={500} height={300} src="https://www.loom.com/embed/55bd2943e2b54559a85ae44695671b99?sid=a03a9b2a-754d-48cc-bb83-0f8b00e540e1" className="rounded-20 overflow-hidden w-full h-auto aspect-video object-cover"> </iframe>
+                <iframe width={500} height={300} src="https://www.loom.com/embed/55bd2943e2b54559a85ae44695671b99?sid=a03a9b2a-754d-48cc-bb83-0f8b00e540e1" className="object-cover w-full h-auto overflow-hidden rounded-20 aspect-video"> </iframe>
             </div>
         </div>
     )
@@ -276,7 +301,7 @@ function VideoComponent() {
 //     return (
 //         <div className="">
 //             <div className="relative w-full md:w-[500px]">
-//                 <video ref={videoRef} src="/videos/test_video.mp4" width={500} height={300} className="rounded-20 overflow-hidden w-full h-auto aspect-video object-cover" />
+//                 <video ref={videoRef} src="/videos/test_video.mp4" width={500} height={300} className="object-cover w-full h-auto overflow-hidden rounded-20 aspect-video" />
 //                 <button onClick={onPlayVideoClicked} className={cn(
 //                     "aspect-square px-4 bg-transparent/60 flex items-center justify-center border rounded-full",
 //                     "absolute top-1/2 right-1/2 -translate-y-1/2 translate-x-1/2",

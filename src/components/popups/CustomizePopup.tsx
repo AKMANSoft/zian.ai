@@ -89,11 +89,7 @@ export default function CustomizePopup() {
         })
     }
 
-    const [isChecked, setIsChecked] = useState(false);
-
-    const handleToggle = () => {
-        setIsChecked(!isChecked);
-    };
+    
     return (
         <>
             <NavigationItem
@@ -117,7 +113,7 @@ export default function CustomizePopup() {
                     </Transition.Child>
 
                     <div className="fixed inset-0 overflow-y-auto">
-                        <div className="flex min-h-full items-center justify-center p-4">
+                        <div className="flex items-center justify-center min-h-full p-4">
                             <Transition.Child
                                 as={Fragment}
                                 enter="ease-out duration-300"
@@ -133,7 +129,7 @@ export default function CustomizePopup() {
                                 )}>
                                     <Form {...form}>
                                         <form method="POST" onSubmit={form.handleSubmit(handleFormSubmit)}>
-                                            <div className="w-full flex flex-row  items-center justify-between px-5 mt-5 ">
+                                            <div className="flex flex-row items-center justify-between w-full px-5 mt-5 ">
                                                 <div></div>
                                                 <button type="button" onClick={closeModal}
                                                     className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-pointer">
@@ -228,18 +224,71 @@ export default function CustomizePopup() {
                                                         name="filter"
                                                         render={({ field, fieldState }) => (
                                                             <FormItem>
-                                                               
+
                                                                 <div className="flex items-center gap-4">
                                                                     <Switch
                                                                         id="customize-filter"
-                                                                        onCheckedChange={handleToggle}
-                                                                        checked={isChecked}
                                                                         ref={field.ref}
                                                                         name="customize-filter"
                                                                     />
-                                                                    <Label htmlFor="customize-filter" className="text-sm font-normal font-jakarta text-white">
-                                                                        Skip topics about 3rd parties<span className="ps-1"/>(people,<span className="ps-1"/>brands,<span className="ps-1"/> places)<span className="ps-1"/> - <span className="text-white/70">
-                                                                            {isChecked ? 'Yes' : 'No'}
+                                                                    <Label htmlFor="customize-filter" className="text-sm font-bold text-white font-jakarta">
+                                                                        Filter out negative or criminal topics or news  - <span className="font-normal text-white/70">
+                                                                            { "" ?'No' : 'Yes'}
+                                                                        </span>
+                                                                    </Label>
+                                                                </div>
+                                                                {
+                                                                    fieldState.error?.message &&
+                                                                    <FormMessage>
+                                                                        {fieldState.error.message}
+                                                                    </FormMessage>
+                                                                }
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="filter"
+                                                        render={({ field, fieldState }) => (
+                                                            <FormItem>
+
+                                                                <div className="flex items-center gap-4">
+                                                                    <Switch
+                                                                        id="customize-filter"
+                                                                        ref={field.ref}
+                                                                        name="customize-filter"
+                                                                    />
+                                                                    <Label htmlFor="customize-filter" className="text-sm font-bold text-white font-jakarta">
+                                                                        Filter out promotions or sales from 3rd parties or other businesses  - <span className="font-normal text-white/70">
+                                                                            {"" ? 'Yes' : 'No'}
+                                                                        </span>
+                                                                    </Label>
+                                                                </div>
+                                                                {
+                                                                    fieldState.error?.message &&
+                                                                    <FormMessage>
+                                                                        {fieldState.error.message}
+                                                                    </FormMessage>
+                                                                }
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="filter"
+                                                        render={({ field, fieldState }) => (
+                                                            <FormItem>
+
+                                                                <div className="flex items-center gap-4">
+                                                                    <Switch
+                                                                        id="customize-filter"
+                                                                        ref={field.ref}
+                                                                        name="customize-filter"
+                                                                    />
+                                                                    <Label htmlFor="customize-filter" className="text-sm font-bold text-white font-jakarta">
+                                                                        Filter out all topics about 3rd parties, specific places or specific people (not often recommend)-
+                                                                        <span className="font-normal text-white/70">
+                                                                            {"" ? 'No' : 'Yes'}
                                                                         </span>
                                                                     </Label>
                                                                 </div>
@@ -255,7 +304,7 @@ export default function CustomizePopup() {
                                                     <div>
                                                         <Customtip
                                                             title="Increase Article Volume"
-                                                            className="h-12 "
+                                                            className="h-12 mt-[62px]"
                                                             content={
                                                                 <>
                                                                     To increase articles volume, please email <a href="mailto:hello@zian.ai" className="underline">hello@zian.ai</a>
@@ -265,12 +314,12 @@ export default function CustomizePopup() {
                                                 </div>
 
                                             </div>
-                                            <GrBorderBox className="mt-4 md:mt-20 rounded-none ">
+                                            <GrBorderBox className="mt-4 rounded-none md:mt-20 ">
                                                 <div className="flex justify-end bg-gr-purple-dark space-x-[10px] py-2 md:py-5 px-7">
-                                                    <SecondaryBtn onClick={closeModal} className="text-sm py-3">
+                                                    <SecondaryBtn onClick={closeModal} className="py-3 text-sm">
                                                         Cancel
                                                     </SecondaryBtn>
-                                                    <PrimaryBtn type="submit" className=" h-12 w-auto px-12 py-3">
+                                                    <PrimaryBtn type="submit" className="w-auto h-12 px-12 py-3 ">
                                                         {
                                                             form.formState.isSubmitting ?
                                                                 <Spinner />

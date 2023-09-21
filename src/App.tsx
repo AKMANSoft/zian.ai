@@ -18,6 +18,7 @@ const CustomizePage = React.lazy(() => import("./components/popups/CustomizePopu
 const TermsPage = React.lazy(() => import("./pages/Terms"));
 const PrivacyPage = React.lazy(() => import("./pages/Privacy"));
 const LoginWithEmailPage = React.lazy(() => import("./pages/LoginWithEmail"));
+const ApiIntegrationShopify = React.lazy(() => import("./pages/ApiIntegrationShopify"));
 
 
 
@@ -92,6 +93,18 @@ const router = createBrowserRouter([
         </div>
       }>
         <ApiIntegrationPage />
+      </Suspense>
+    )
+  },
+  {
+    path: "/shopify",
+    element: (
+      <Suspense fallback={
+        <div className="w-full h-screen flex items-center justify-center">
+          <LoadingSparkle spark variant="large" />
+        </div>
+      }>
+        <ApiIntegrationShopify />
       </Suspense>
     )
   },
