@@ -37,7 +37,7 @@ export default function CustomizePopup() {
         resolver: zodResolver(customizeSchema),
         mode: "all",
         defaultValues: {
-            filter_brand: authUser?.profile?.data?.filter_brand ?? false,
+            filter_brand: authUser?.profile?.data?.filter_brand ?? true,
             filter_negativity: authUser?.profile?.data?.filter_negativity ?? true,
             filter_advertisement: authUser?.profile?.data?.filter_advertisement ?? false,
             industry: authUser?.profile?.data?.industry?.id?.toString(),
@@ -92,7 +92,7 @@ export default function CustomizePopup() {
 
     const [isNegativityChecked, setIsNegativityChecked] = useState(true);
     const [isAdvertisementChecked, setIsAdvertisementChecked] = useState(false);
-    const [isBrandChecked, setIsBrandChecked] = useState(false);
+    const [isBrandChecked, setIsBrandChecked] = useState(true);
 
     const handleNegativityToggle = () => {
         setIsNegativityChecked(!isNegativityChecked);
