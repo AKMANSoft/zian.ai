@@ -28,10 +28,6 @@ import { Customtip } from "../customtip"
 
 
 
-
-
-
-
 export default function CustomizePopup() {
 
     const { authUser, setProfile } = useAuthUserStore()
@@ -41,7 +37,9 @@ export default function CustomizePopup() {
         resolver: zodResolver(customizeSchema),
         mode: "all",
         defaultValues: {
-            filter: authUser?.profile?.data?.filter || false,
+            filter_brand: authUser?.profile?.data?.filter_brand ?? false,
+            filter_negativity: authUser?.profile?.data?.filter_negativity ?? true,
+            filter_advertisement: authUser?.profile?.data?.filter_advertisement ?? false,
             industry: authUser?.profile?.data?.industry?.id?.toString(),
             otherIndustry: (authUser?.profile?.data?.industry?.industry?.toLowerCase()?.includes("other") ? authUser?.profile?.data?.industry?.name : ""),
             keywords: authUser?.profile?.data?.keyword.split(","),
@@ -67,8 +65,6 @@ export default function CustomizePopup() {
         console.log(industry)
         setIndustryOthers(industry.name.toLowerCase() === "other")
     }
-
-
     const handleFormSubmit = async (values: CustomizeSchema) => {
         if (!authUser?.profile) return;
         const res = await api.user.updateKeyword({
@@ -80,7 +76,12 @@ export default function CustomizePopup() {
                 ...authUser.profile,
                 authorization: authUser.profile.authorization,
                 email: authUser.profile.email,
-                data: res.data
+                data: {
+                    ...res.data,
+                    filter_brand: values.filter_brand,
+                    filter_negativity: values.filter_negativity,
+                    filter_advertisement: values.filter_advertisement,
+                }
             })
         }
         toast({
@@ -89,7 +90,24 @@ export default function CustomizePopup() {
         })
     }
 
+    const [isNegativityChecked, setIsNegativityChecked] = useState(true);
+    const [isAdvertisementChecked, setIsAdvertisementChecked] = useState(false);
+    const [isBrandChecked, setIsBrandChecked] = useState(false);
+
+    const handleNegativityToggle = () => {
+        setIsNegativityChecked(!isNegativityChecked);
+    };
+
+    const handleAdvertisementToggle = () => {
+        setIsAdvertisementChecked(!isAdvertisementChecked);
+    };
+
+    const handleBrandToggle = () => {
+        setIsBrandChecked(!isBrandChecked);   
+    };
     
+
+
     return (
         <>
             <NavigationItem
@@ -136,10 +154,9 @@ export default function CustomizePopup() {
                                                     <FontAwesomeIcon icon={faXmark} />
                                                 </button>
                                             </div>
-
                                             <div className="max-h-[calc(100vh_-_200px)] overflow-y-auto flex flex-col space-y-32">
                                                 {/* content */}
-                                                <div className="pb-4 space-y-5 px-7 md:pb-8 md:space-y-7">
+                                                <div className="pb-4 space-y-5 px-7  md:space-y-7">
                                                     <div className="font-jakarta text-white text-[32px] font-bold">
                                                         Customize
                                                     </div>
@@ -195,9 +212,6 @@ export default function CustomizePopup() {
                                                             />
                                                         )
                                                     }
-
-
-
                                                     <FormField
                                                         control={form.control}
                                                         name="keywords"
@@ -221,19 +235,20 @@ export default function CustomizePopup() {
                                                     />
                                                     <FormField
                                                         control={form.control}
-                                                        name="filter"
+                                                        name="filter_negativity"
                                                         render={({ field, fieldState }) => (
                                                             <FormItem>
-
                                                                 <div className="flex items-center gap-4">
                                                                     <Switch
-                                                                        id="customize-filter"
+                                                                        id="customize-filter-negativity"
                                                                         ref={field.ref}
-                                                                        name="customize-filter"
+                                                                        name="customize-filter-negativity"
+                                                                        onCheckedChange={handleNegativityToggle}
+                                                                        checked={isNegativityChecked}
                                                                     />
-                                                                    <Label htmlFor="customize-filter" className="text-sm font-bold text-white font-jakarta">
+                                                                    <Label htmlFor="customize-filter-negativity" className="text-sm font-bold text-white font-jakarta">
                                                                         Filter out negative or criminal topics or news  - <span className="font-normal text-white/70">
-                                                                            { "" ?'No' : 'Yes'}
+                                                                            {isNegativityChecked ? 'Yes' : 'No'}
                                                                         </span>
                                                                     </Label>
                                                                 </div>
@@ -246,21 +261,26 @@ export default function CustomizePopup() {
                                                             </FormItem>
                                                         )}
                                                     />
+
                                                     <FormField
                                                         control={form.control}
-                                                        name="filter"
+                                                        name="filter_advertisement"
                                                         render={({ field, fieldState }) => (
                                                             <FormItem>
-
                                                                 <div className="flex items-center gap-4">
                                                                     <Switch
-                                                                        id="customize-filter"
+                                                                        id="customize-filter-advertisement"
                                                                         ref={field.ref}
-                                                                        name="customize-filter"
-                                                                    />
-                                                                    <Label htmlFor="customize-filter" className="text-sm font-bold text-white font-jakarta">
+                                                                        name="customize-filter-advertisement"
+                                                                        onCheckedChange={handleAdvertisementToggle}
+                                                                        checked={isAdvertisementChecked}
+                                                                        
+                                                                    /> 
+                                                                                                                                    
+                                                                    <Label htmlFor="customize-filter-advertisement" className="text-sm font-bold text-white font-jakarta">
                                                                         Filter out promotions or sales from 3rd parties or other businesses  - <span className="font-normal text-white/70">
-                                                                            {"" ? 'Yes' : 'No'}
+                                                                            {isAdvertisementChecked ? 'Yes' : 'No'}
+                                                                            
                                                                         </span>
                                                                     </Label>
                                                                 </div>
@@ -273,22 +293,24 @@ export default function CustomizePopup() {
                                                             </FormItem>
                                                         )}
                                                     />
+
                                                     <FormField
                                                         control={form.control}
-                                                        name="filter"
+                                                        name="filter_brand"
                                                         render={({ field, fieldState }) => (
                                                             <FormItem>
-
                                                                 <div className="flex items-center gap-4">
                                                                     <Switch
-                                                                        id="customize-filter"
+                                                                        id="customize-filter-brand"
                                                                         ref={field.ref}
-                                                                        name="customize-filter"
+                                                                        name="customize-filter-brand"
+                                                                        onCheckedChange={handleBrandToggle}
+                                                                        checked={isBrandChecked}
                                                                     />
-                                                                    <Label htmlFor="customize-filter" className="text-sm font-bold text-white font-jakarta">
+                                                                    <Label htmlFor="customize-filter-brand" className="text-sm font-bold text-white font-jakarta">
                                                                         Filter out all topics about 3rd parties, specific places or specific people (not often recommend)-
                                                                         <span className="font-normal text-white/70">
-                                                                            {"" ? 'No' : 'Yes'}
+                                                                            {isBrandChecked ? 'Yes' : 'No'}
                                                                         </span>
                                                                     </Label>
                                                                 </div>
@@ -314,7 +336,7 @@ export default function CustomizePopup() {
                                                 </div>
 
                                             </div>
-                                            <GrBorderBox className="mt-4 rounded-none md:mt-20 ">
+                                            <GrBorderBox className="mt-4 rounded-none md:mt-[54px]">
                                                 <div className="flex justify-end bg-gr-purple-dark space-x-[10px] py-2 md:py-5 px-7">
                                                     <SecondaryBtn onClick={closeModal} className="py-3 text-sm">
                                                         Cancel

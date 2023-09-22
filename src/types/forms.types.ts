@@ -53,7 +53,9 @@ export const customizeSchema = z.object({
     website: z.string().regex(CONSTANTS.REGEX.WEBSITE, { message: "Please enter a valid website url." }).optional().or(z.literal("")),
     industry: z.string({ required_error: "This field is required." }),
     otherIndustry: z.string().optional().default(""),
-    filter: z.boolean({ required_error: "This field is required." }),
+    filter_brand: z.boolean({ required_error: "This field is required." }).optional().default(false),
+    filter_negativity: z.boolean({ required_error: "This field is required." }).optional().default(true),
+    filter_advertisement: z.boolean({ required_error: "This field is required." }).optional().default(false),
     keywords: z.array(z.string(), { required_error: "This field is required." })
         .min(1, { message: "This field is required." })
         .max(5, { message: "You can't select more than 5 keywords." }),

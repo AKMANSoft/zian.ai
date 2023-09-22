@@ -11,7 +11,9 @@ export type AuthUser = {
     created?: Date;
     email: string;
     data?: {
-        filter: boolean;
+        filter_brand: boolean;
+        filter_negativity: boolean;
+        filter_advertisement: boolean;
         industry: {
             id: number;
             industry: string;

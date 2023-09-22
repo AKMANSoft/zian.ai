@@ -138,8 +138,13 @@ export async function updateKeyword(data: CustomizeSchema, isIndustryOther = fal
                         industry_id: parseInt(data.industry),
                     }),
                 keyword: data.keywords.join(", "),
-                filter: data.filter,
-                ...(data.website && { website: data.website })
+                filter_brand: data.filter_brand,
+                ...(data.website && { website: data.website }),
+                filter_negativity: data.filter_negativity,
+                ...(data.website && { website: data.website }),
+                filter_advertisement: data.filter_advertisement,
+                ...(data.website && { website: data.website }),
+                
             }
         )
         if (res.status === 200 && res.data.status) {
