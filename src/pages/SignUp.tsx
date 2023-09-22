@@ -227,7 +227,9 @@ function OnBoardingForm() {
         resolver: zodResolver(customizeSchema),
         mode: "onBlur",
         defaultValues: {
-            filter: true,
+            filter_advertisement: false,
+            filter_brand:false,
+            filter_negativity:true,
             keywords: []
         }
     })
