@@ -102,7 +102,7 @@ export default function ApiIntegrationShopify() {
 
                                         </li>
                                     </ol>
-                                    <img src="/images/shopify.svg" alt="" className="w-[634px] h-auto  my-5" />
+                                    <img src="/images/python-shopify.png" alt="" className="w-[634px] h-auto  my-5" />
                                     <div className="border rounded-xl border-white/10">
                                         <pre className="px-5  leading-[26px] py-[15px] overflow-x-auto text-xs font-semibold text-white/70 md:text-sm font-jakarta">
                                             url = 'https://seo.zian.ai/api?limit=399&offset=0&image_url=1'<br />
@@ -140,11 +140,11 @@ export default function ApiIntegrationShopify() {
                                             Save step in Zapier, run test. If it produces an error, just run the test again and again.
                                         </span>
                                     </h2>
-                                    <img src="/images/shopify3.svg" alt="" className="md:w-[634px] w-full h-auto" />
+                                    <img src="/images/shopify-python.png" alt="" className="md:w-[634px] w-full h-auto" />
                                     <h2 className="text-base lg:text-[32px] text-white font-bold font-jakarta leading-[20px] lg:leading-[100%] flex gap-[6px]">
                                         4. <span className="" /> Connect Shopify app {">"} Configure shopify step with correct fields in the zap as below:
                                     </h2>
-                                    <img src="/images/shopify4.svg" alt="" className="md:w-[634px] w-full h-auto" />
+                                    <img src="/images/shopify-blog.png" alt="" className="md:w-[634px] w-full h-auto" />
                                     <h2 className="text-base lg:text-[32px] text-white flex gap-2 font-bold font-jakarta leading-[20px] lg:leading-[100%]">
                                         5. <span className="" /> Run Shopify test, check Shopify account, then save & turn on Zap. You’re finished! 🎉
                                     </h2>
@@ -157,16 +157,16 @@ export default function ApiIntegrationShopify() {
                                         <p className="text-base font-normal md:text-xl font-jakarta">
                                             a. Navigate to the shopify step {">"} action {">"} content {">"} article {">"} format data
                                         </p>
-                                        <img src="/images/blogshopify.svg" alt="" className="w-[419px] h-auto" />
+                                        <img src="/images/blog-entry-shopify.png" alt="" className="w-[419px] h-auto" />
                                         <p className="text-base font-normal md:text-xl font-jakarta">
                                             b. n the AI Prompt text box, copy and paste:Format the following article in HTML to include the following after every paragraph spacing:
                                         </p>
-                                        <img src="/images/shopify-format.svg" alt="" className="w-[512px] h-auto" />
+                                        <img src="/images/format-data-shopify.png" alt="" className="w-[512px] h-auto" />
 
                                         <p className="text-base font-normal md:text-xl font-jakarta">
                                             c. In the Shopify Step, replace the “Content” field with the new content from the new formatting step we just added:
                                         </p>
-                                        <img src="/images/shopify-data.svg" className="md:w-[512px] w-full h-auto" />
+                                        <img src="/images/shopify-data.png" className="md:w-[512px] w-full h-auto" />
                                         <p className="mt-2 text-base font-normal text-center text-white md:text-xl md:mt-5 font-jakarta">
                                             Finally run test, save a turn on zap!
                                         </p>
