@@ -5,7 +5,7 @@ import { Dialog, Transition } from "@headlessui/react"
 import { cn } from "@/lib/utils"
 import { TriggerFunProps } from "../WarningPopup"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import LoginPopup from "./LoginPopup"
+
 import GrBorderBox from "../ui/gr-border-box"
 
 
@@ -102,7 +102,7 @@ export default function NewPasswordCreatedPopup({ trigger }: Props) {
                                                     </p>
                                                 </div>
                                                 <div className="text-center md:mt-0 mt-5">
-                                                    <LoginPopup />
+                                                    {/* <LoginPopup /> */}
                                                 </div>
                                             </div>
                                         </div>
