@@ -136,7 +136,7 @@ export default function LoginWithEmailPage() {
                                                         <PrimaryBtn
                                                             type="submit"
                                                             disabled={uiState?.processing}
-                                                            className="py-3 h-full px-6 md:w-auto">
+                                                            className="py-3 h-[44px] px-6 md:w-auto">
                                                             {uiState?.processing ?
                                                                 <Spinner />
                                                                 :

@@ -42,7 +42,7 @@ export default function CustomizePopup() {
             filter_advertisement: authUser?.profile?.data?.filter_advertisement ?? false,
             industry: authUser?.profile?.data?.industry?.id?.toString(),
             otherIndustry: (authUser?.profile?.data?.industry?.industry?.toLowerCase()?.includes("other") ? authUser?.profile?.data?.industry?.name : ""),
-            keywords: authUser?.profile?.data?.keyword.split(","),
+            keywords: authUser?.profile?.data?.keyword?.split(",") ?? [],
         }
     })
     const { data: industryList } = useSwrFetcher<Array<TIndustry>>(apiConfig.endpoints.industryList, api.other.industryListFetcher)
