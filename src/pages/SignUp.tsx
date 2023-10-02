@@ -39,7 +39,7 @@ import axios from "axios";
 import { Checkbox } from "@/components/ui/checkbox";
 
 export default function SignUpPage() {
-  const signUpForm = useForm<SignUpFormSchema>({
+  const form = useForm<SignUpFormSchema>({
     resolver: zodResolver(signUpFormSchema),
     mode: "all",
   });
@@ -71,12 +71,17 @@ export default function SignUpPage() {
             )}
           >
             {curStep === "ONBOARDING" ? (
-              <OnBoardingForm />
+              <OnBoardingForm
+                loginCreds={{
+                  email: form.getValues("email"),
+                  password: form.getValues("password"),
+                }}
+              />
             ) : (
-              <Form {...signUpForm}>
+              <Form {...form}>
                 <form
                   name="signup form"
-                  onSubmit={signUpForm.handleSubmit(handleSignUpFormSubmit)}
+                  onSubmit={form.handleSubmit(handleSignUpFormSubmit)}
                 >
                   <div className="px-4 md:px-20 py-[30px] ">
                     {/* content */}
@@ -96,7 +101,7 @@ export default function SignUpPage() {
                     </div>
                     <div className="lg:py-5 lg:pt-8 space-y-[10px] md:text-sm text-xs">
                       <FormField
-                        control={signUpForm.control}
+                        control={form.control}
                         name="name"
                         render={({ field, fieldState }) => (
                           <FormItem>
@@ -118,7 +123,7 @@ export default function SignUpPage() {
                       />
 
                       <FormField
-                        control={signUpForm.control}
+                        control={form.control}
                         name="email"
                         render={({ field, fieldState }) => (
                           <FormItem>
@@ -139,7 +144,7 @@ export default function SignUpPage() {
                         )}
                       />
                       <FormField
-                        control={signUpForm.control}
+                        control={form.control}
                         name="phone"
                         render={({ field, fieldState }) => (
                           <FormItem>
@@ -161,7 +166,7 @@ export default function SignUpPage() {
                         )}
                       />
                       <FormField
-                        control={signUpForm.control}
+                        control={form.control}
                         name="password"
                         render={({ field, fieldState }) => (
                           <FormItem>
@@ -182,7 +187,7 @@ export default function SignUpPage() {
                         )}
                       />
                       <FormField
-                        control={signUpForm.control}
+                        control={form.control}
                         name="tos"
                         render={({ field, fieldState }) => (
                           <FormItem>
@@ -243,10 +248,10 @@ export default function SignUpPage() {
                       <div>
                         <PrimaryBtn
                           type="submit"
-                          disabled={signUpForm.formState.isSubmitting}
+                          disabled={form.formState.isSubmitting}
                           className="h-12 px-6 py-3 md:w-auto "
                         >
-                          {signUpForm.formState.isSubmitting ? (
+                          {form.formState.isSubmitting ? (
                             <Spinner />
                           ) : (
                             <span>Sign Up</span>
@@ -265,8 +270,12 @@ export default function SignUpPage() {
   );
 }
 
-function OnBoardingForm() {
+type OnBoardingForm = {
+  loginCreds: { email?: string; password?: string };
+};
+function OnBoardingForm({ loginCreds }: OnBoardingForm) {
   const { uiState, setUiData } = useUiState<KeywordApiResponse>();
+  const { setAuthUser } = useAuthUserStore();
   const form = useForm<CustomizeSchema>({
     resolver: zodResolver(customizeSchema),
     mode: "onBlur",
@@ -283,8 +292,6 @@ function OnBoardingForm() {
     api.other.industryListFetcher
   );
 
-  console.log(industryList);
-
   const [industryOthers, setIndustryOthers] = useState(false);
   const checkIndustryOthers = () => {
     const industryId = form.getValues("industry")?.toLowerCase();
@@ -298,7 +305,19 @@ function OnBoardingForm() {
   const handleOnBoardingFormSubmit = async (values: CustomizeSchema) => {
     const response = await api.user.updateKeyword(values, industryOthers);
     if (response.success && response.data) {
-      navigate("/");
+      if (loginCreds.email && loginCreds.password) {
+        const loginRes = await api.user.login({
+          email: loginCreds.email,
+          password: loginCreds.password,
+        });
+        if (loginRes.success && loginRes.data) {
+          setAuthUser(loginRes.data.authorization, loginRes.data);
+          axios.defaults.headers.common["Authorization"] =
+            loginRes.data.authorization;
+          return navigate("/");
+        }
+      }
+      return navigate("/login");
     }
     setUiData(response);
   };
