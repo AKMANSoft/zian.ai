@@ -5,6 +5,7 @@ import LoadingSparkle from "@/components/LoadingSparkle";
 export default function LoginWithEmailPage() {
   const { token } = useParams();
 
+  console.log(token)
 
 
   return (
