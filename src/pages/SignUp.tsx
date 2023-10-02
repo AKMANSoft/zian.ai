@@ -45,6 +45,7 @@ export default function SignUpPage() {
   });
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setCookie] = useCookies(["authToken"]);
+  const navigate = useNavigate()
 
   const { uiState, setUiData } = useUiState<SignUpApiResponse>();
   const [curStep, setCurStep] = useState<"SIGNUP" | "ONBOARDING">("SIGNUP");
@@ -54,9 +55,6 @@ export default function SignUpPage() {
 
     if (response.success && response.data) {
       axios.defaults.headers.common["Authorization"] = response.data;
-      setCookie("authToken", response.data, {
-        maxAge: 24 * 60 * 60,
-      });
       setCurStep("ONBOARDING");
     }
 
@@ -74,7 +72,15 @@ export default function SignUpPage() {
             )}
           >
             {curStep === "ONBOARDING" ? (
-              <OnBoardingForm />
+              <OnBoardingForm onCompleted={() => {
+                if (uiState.state?.data) {
+                  setCookie("authToken", uiState.state.data, {
+                    maxAge: 24 * 60 * 60,
+                  });
+                  navigate("/");
+                  window.location.reload()
+                }
+              }} />
             ) : (
               <Form {...form}>
                 <form
@@ -268,7 +274,11 @@ export default function SignUpPage() {
   );
 }
 
-function OnBoardingForm() {
+
+type OnBoardingForm = {
+  onCompleted?: () => void;
+}
+function OnBoardingForm({ onCompleted }: OnBoardingForm) {
   const { uiState, setUiData } = useUiState<KeywordApiResponse>();
 
   const form = useForm<CustomizeSchema>({
@@ -281,7 +291,6 @@ function OnBoardingForm() {
       keywords: [],
     },
   });
-  const navigate = useNavigate();
   const { data: industryList } = useSwrFetcher<Array<TIndustry>>(
     apiConfig.endpoints.industryList,
     api.other.industryListFetcher
@@ -299,8 +308,7 @@ function OnBoardingForm() {
   const handleOnBoardingFormSubmit = async (values: CustomizeSchema) => {
     const response = await api.user.updateKeyword(values, industryOthers);
     if (response.success && response.data) {
-      navigate("/", { replace: true });
-      window.location.reload();
+      onCompleted?.()
     }
     setUiData(response);
   };
