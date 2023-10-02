@@ -42,8 +42,13 @@ export default function ApiIntegrationShopify() {
                                     </a>
                                     <a href="/shopify">
                                         <PrimaryBtn className="font-normal text-[15px] w-full md:w-auto">
-                                            Shopify Integration Via Zapier
+                                        Shopify Integration Via Zapier
                                         </PrimaryBtn>
+                                    </a>
+                                    <a href="/wix">
+                                        <PrimaryBtnNeon className="font-normal text-[15px] py-[8px] w-full md:w-auto">
+                                        Wix Integration Via Zapier
+                                        </PrimaryBtnNeon>
                                     </a>
                                 </div>
 

@@ -49,6 +49,11 @@ export default function ApiIntegrationPage() {
                                             Shopify Integration Via Zapier
                                         </PrimaryBtnNeon>
                                     </a>
+                                    <a href="/wix">
+                                        <PrimaryBtnNeon className="font-normal text-[15px] w-full ">
+                                            Wix Integration Via zapier
+                                        </PrimaryBtnNeon>
+                                    </a>
                                 </div>
 
 

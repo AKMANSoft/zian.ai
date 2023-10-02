@@ -25,6 +25,9 @@ const LoginWithEmailTokenPage = React.lazy(
 const ApiIntegrationShopify = React.lazy(
   () => import("./pages/ApiIntegrationShopify")
 );
+const ApiIntegrationWix = React.lazy(
+  () => import("./pages/ApiIntegrationWix")
+);
 
 const router = createBrowserRouter([
   {
@@ -122,6 +125,20 @@ const router = createBrowserRouter([
         }
       >
         <ApiIntegrationShopify />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/wix",
+    element: (
+      <Suspense
+        fallback={
+          <div className="w-full h-screen flex items-center justify-center">
+            <LoadingSparkle spark variant="large" />
+          </div>
+        }
+      >
+        <ApiIntegrationWix />
       </Suspense>
     ),
   },
