@@ -38,7 +38,7 @@ export default function CustomizePopup() {
         resolver: zodResolver(customizeSchema),
         mode: "onChange",
         defaultValues: {
-            filter_brand: authUser?.filter?.brand ?? true,
+            filter_brand: authUser?.filter.brand ?? true,
             filter_negativity: authUser?.filter?.negativity ?? true,
             filter_advertisement: authUser?.filter?.advertisement ?? false,
             industry: authUser?.keyword?.industry?.id?.toString(),
@@ -80,7 +80,6 @@ export default function CustomizePopup() {
         const res = await api.user.updateKeyword(
             {
                 ...values,
-                website: "",
             },
             industryOthers
         );
@@ -96,21 +95,6 @@ export default function CustomizePopup() {
         });
     };
 
-    const [isNegativityChecked, setIsNegativityChecked] = useState(true);
-    const [isAdvertisementChecked, setIsAdvertisementChecked] = useState(false);
-    const [isBrandChecked, setIsBrandChecked] = useState(true);
-
-    const handleNegativityToggle = () => {
-        setIsNegativityChecked(!isNegativityChecked);
-    };
-
-    const handleAdvertisementToggle = () => {
-        setIsAdvertisementChecked(!isAdvertisementChecked);
-    };
-
-    const handleBrandToggle = () => {
-        setIsBrandChecked(!isBrandChecked);
-    };
 
     return (
         <>
@@ -255,8 +239,8 @@ export default function CustomizePopup() {
                                                                         id="customize-filter-negativity"
                                                                         ref={field.ref}
                                                                         name="customize-filter-negativity"
-                                                                        onCheckedChange={handleNegativityToggle}
-                                                                        checked={isNegativityChecked}
+                                                                        onCheckedChange={field.onChange}
+                                                                        checked={field.value}
                                                                     />
                                                                     <Label
                                                                         htmlFor="customize-filter-negativity"
@@ -265,7 +249,7 @@ export default function CustomizePopup() {
                                                                         Filter out negative or criminal topics or
                                                                         news -{" "}
                                                                         <span className="font-normal text-white/70">
-                                                                            {isNegativityChecked ? "Yes" : "No"}
+                                                                            {field.value ? "Yes" : "No"}
                                                                         </span>
                                                                     </Label>
                                                                 </div>
@@ -288,8 +272,8 @@ export default function CustomizePopup() {
                                                                         id="customize-filter-advertisement"
                                                                         ref={field.ref}
                                                                         name="customize-filter-advertisement"
-                                                                        onCheckedChange={handleAdvertisementToggle}
-                                                                        checked={isAdvertisementChecked}
+                                                                        onCheckedChange={field.onChange}
+                                                                        checked={field.value}
                                                                     />
 
                                                                     <Label
@@ -299,7 +283,7 @@ export default function CustomizePopup() {
                                                                         Filter out promotions or sales from 3rd
                                                                         parties or other businesses -{" "}
                                                                         <span className="font-normal text-white/70">
-                                                                            {isAdvertisementChecked ? "Yes" : "No"}
+                                                                            {field.value ? "Yes" : "No"}
                                                                         </span>
                                                                     </Label>
                                                                 </div>
@@ -322,8 +306,8 @@ export default function CustomizePopup() {
                                                                         id="customize-filter-brand"
                                                                         ref={field.ref}
                                                                         name="customize-filter-brand"
-                                                                        onCheckedChange={handleBrandToggle}
-                                                                        checked={isBrandChecked}
+                                                                        onCheckedChange={field.onChange}
+                                                                        checked={field.value}
                                                                     />
                                                                     <Label
                                                                         htmlFor="customize-filter-brand"
@@ -333,7 +317,7 @@ export default function CustomizePopup() {
                                                                         specific places or specific people (not
                                                                         often recommend)-
                                                                         <span className="font-normal text-white/70">
-                                                                            {isBrandChecked ? "Yes" : "No"}
+                                                                            {field.value ? "Yes" : "No"}
                                                                         </span>
                                                                     </Label>
                                                                 </div>
