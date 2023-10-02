@@ -409,7 +409,7 @@ function OnBoardingForm({ onCompleted }: OnBoardingForm) {
                   <FormControl>
                     <TagsInputEl
                       placeholder="Enter keyword and press enter"
-                      max={5}
+                      max={1000}
                       className="min-h-[130px]"
                       {...field}
                     />
