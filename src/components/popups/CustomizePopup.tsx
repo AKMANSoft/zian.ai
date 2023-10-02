@@ -1,94 +1,100 @@
-import { Fragment, useState } from "react"
-import { PrimaryBtn, SecondaryBtn } from "../ui/buttons"
-import { Dialog, Transition } from "@headlessui/react"
-import { cn } from "@/lib/utils"
-import { Input, TagsInputEl } from "../ui/input"
-import { faPen, faXmark } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { NavigationItem } from "../sidebar"
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
-import GrBorderBox from "../ui/gr-border-box"
-import { useSwrFetcher } from "@/lib/useSwrFetcher"
-import { TIndustry } from "@/types/response.types"
-import apiConfig from "@/config/api.config"
-import api from "@/api"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
-import { useForm } from "react-hook-form"
-import { CustomizeSchema, customizeSchema } from "@/types/forms.types"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { FormSelect } from "../ui/select"
-import { Spinner } from "../ui/spinner"
-import { useToast } from "../ui/use-toast"
-import useAuthUserStore from "@/lib/zustand/authUserStore"
-import { Customtip } from "../customtip"
-
-
-
-
-
+import { Fragment, useState } from "react";
+import { PrimaryBtn, SecondaryBtn } from "../ui/buttons";
+import { Dialog, Transition } from "@headlessui/react";
+import { cn } from "@/lib/utils";
+import { Input, TagsInputEl } from "../ui/input";
+import { faPen, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { NavigationItem } from "../sidebar";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import GrBorderBox from "../ui/gr-border-box";
+import { useSwrFetcher } from "@/lib/useSwrFetcher";
+import { TIndustry } from "@/types/response.types";
+import apiConfig from "@/config/api.config";
+import api from "@/api";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "../ui/form";
+import { useForm } from "react-hook-form";
+import { CustomizeSchema, customizeSchema } from "@/types/forms.types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FormSelect } from "../ui/select";
+import { Spinner } from "../ui/spinner";
+import { useToast } from "../ui/use-toast";
+import useAuthUserStore from "@/lib/zustand/authUserStore";
+import { Customtip } from "../customtip";
 
 export default function CustomizePopup() {
-
-    const { authUser, setProfile } = useAuthUserStore()
+    const { authUser, setAuthUser } = useAuthUserStore();
     const [isOpen, setIsOpen] = useState(false);
-    const { toast } = useToast()
+    const { toast } = useToast();
     const form = useForm<CustomizeSchema>({
         resolver: zodResolver(customizeSchema),
-        mode: "all",
+        mode: "onChange",
         defaultValues: {
-            filter_brand: authUser?.profile?.data?.filter_brand ?? true,
-            filter_negativity: authUser?.profile?.data?.filter_negativity ?? true,
-            filter_advertisement: authUser?.profile?.data?.filter_advertisement ?? false,
-            industry: authUser?.profile?.data?.industry?.id?.toString(),
-            otherIndustry: (authUser?.profile?.data?.industry?.industry?.toLowerCase()?.includes("other") ? authUser?.profile?.data?.industry?.name : ""),
-            keywords: authUser?.profile?.data?.keyword?.split(",") ?? [],
-        }
-    })
-    const { data: industryList } = useSwrFetcher<Array<TIndustry>>(apiConfig.endpoints.industryList, api.other.industryListFetcher)
+            filter_brand: authUser?.filter?.brand ?? true,
+            filter_negativity: authUser?.filter?.negativity ?? true,
+            filter_advertisement: authUser?.filter?.advertisement ?? false,
+            industry: authUser?.keyword?.industry?.id?.toString(),
+            otherIndustry: authUser?.keyword?.industry?.industry
+                ?.toLowerCase()
+                ?.includes("other")
+                ? authUser?.keyword?.industry?.name
+                : "",
+            keywords: authUser?.keyword?.keyword?.split(",") ?? [],
+        },
+    });
+    const { data: industryList } = useSwrFetcher<Array<TIndustry>>(
+        apiConfig.endpoints.industryList,
+        api.other.industryListFetcher
+    );
 
     function closeModal() {
-        setIsOpen(false)
+        setIsOpen(false);
     }
 
     function openModal() {
-        setIsOpen(true)
+        setIsOpen(true);
     }
 
-
-    const [industryOthers, setIndustryOthers] = useState(authUser?.profile?.data?.industry?.industry?.toLowerCase()?.includes("other") ?? false)
+    const [industryOthers, setIndustryOthers] = useState(
+        authUser?.keyword?.industry?.industry
+            ?.toLowerCase()
+            ?.includes("other") ?? false
+    );
     const checkIndustryOthers = () => {
-        const industryId = form.getValues('industry')?.toLowerCase()
+        const industryId = form.getValues("industry")?.toLowerCase();
         if (!industryId) return false;
         const industry = industryList?.find((ind) => ind.id === Number(industryId));
         if (!industry) return false;
-        console.log(industry)
-        setIndustryOthers(industry.name.toLowerCase() === "other")
-    }
+        setIndustryOthers(industry.name.toLowerCase() === "other");
+    };
     const handleFormSubmit = async (values: CustomizeSchema) => {
-        if (!authUser?.profile) return;
-        const res = await api.user.updateKeyword({
-            ...values,
-            website: ""
-        }, industryOthers)
+        if (!authUser) return;
+        const res = await api.user.updateKeyword(
+            {
+                ...values,
+                website: "",
+            },
+            industryOthers
+        );
         if (res.success && res.data) {
-            setProfile({
-                ...authUser.profile,
-                authorization: authUser.profile.authorization,
-                email: authUser.profile.email,
-                data: {
-                    ...res.data,
-                    filter_brand: values.filter_brand,
-                    filter_negativity: values.filter_negativity,
-                    filter_advertisement: values.filter_advertisement,
-                }
-            })
+            const profile = await api.user.getProfile()
+            setAuthUser(profile);
         }
         toast({
-            title: res.success ? "Information updated successfully." : "An error occured while processing your request.",
-            variant: res.success ? "default" : "destructive"
-        })
-    }
+            title: res.success
+                ? "Information updated successfully."
+                : "An error occured while processing your request.",
+            variant: res.success ? "default" : "destructive",
+        });
+    };
 
     const [isNegativityChecked, setIsNegativityChecked] = useState(true);
     const [isAdvertisementChecked, setIsAdvertisementChecked] = useState(false);
@@ -103,21 +109,26 @@ export default function CustomizePopup() {
     };
 
     const handleBrandToggle = () => {
-        setIsBrandChecked(!isBrandChecked);   
+        setIsBrandChecked(!isBrandChecked);
     };
-    
-
 
     return (
         <>
             <NavigationItem
-                onClick={openModal} active={isOpen}
+                onClick={openModal}
+                active={isOpen}
                 className="my-0.5"
                 text="Customize"
-                icon={<FontAwesomeIcon icon={faPen} />} />
+                icon={<FontAwesomeIcon icon={faPen} />}
+            />
 
             <Transition appear show={isOpen} static as={Fragment}>
-                <Dialog as="div" onClose={() => setIsOpen(true)} static className="relative z-50">
+                <Dialog
+                    as="div"
+                    onClose={() => setIsOpen(true)}
+                    static
+                    className="relative z-50"
+                >
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -141,16 +152,24 @@ export default function CustomizePopup() {
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel className={cn(
-                                    "w-full max-w-[805px] transform overflow-hidden rounded-20  bg-gr-purple-dark shadow-xl transition-all",
-                                    "relative"
-                                )}>
+                                <Dialog.Panel
+                                    className={cn(
+                                        "w-full max-w-[805px] transform overflow-hidden rounded-20  bg-gr-purple-dark shadow-xl transition-all",
+                                        "relative"
+                                    )}
+                                >
                                     <Form {...form}>
-                                        <form method="POST" onSubmit={form.handleSubmit(handleFormSubmit)}>
+                                        <form
+                                            method="POST"
+                                            onSubmit={form.handleSubmit(handleFormSubmit)}
+                                        >
                                             <div className="flex flex-row items-center justify-between w-full px-5 mt-5 ">
                                                 <div></div>
-                                                <button type="button" onClick={closeModal}
-                                                    className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-pointer">
+                                                <button
+                                                    type="button"
+                                                    onClick={closeModal}
+                                                    className="text-white block text-2xl !m-0 aspect-square px-2 font-semibold outline-none cursor-pointer"
+                                                >
                                                     <FontAwesomeIcon icon={faXmark} />
                                                 </button>
                                             </div>
@@ -170,48 +189,41 @@ export default function CustomizePopup() {
                                                                     <FormSelect
                                                                         onValueChange={(value) => {
                                                                             field.onChange(value);
-                                                                            form.setValue("otherIndustry", "")
-                                                                            checkIndustryOthers()
+                                                                            form.setValue("otherIndustry", "");
+                                                                            checkIndustryOthers();
                                                                         }}
                                                                         {...field}
                                                                         placeholder="Select Industry"
                                                                         className="w-full"
-                                                                        options={
-                                                                            industryList?.map((industry) => ({
-                                                                                label: industry.name,
-                                                                                value: industry.id.toString(),
-                                                                            }))}
+                                                                        options={industryList?.map((industry) => ({
+                                                                            label: industry.name,
+                                                                            value: industry.id.toString(),
+                                                                        }))}
                                                                     />
-
                                                                 </FormControl>
                                                                 {fieldState.error?.message && (
-                                                                    <FormMessage>{fieldState.error.message}</FormMessage>
+                                                                    <FormMessage>
+                                                                        {fieldState.error.message}
+                                                                    </FormMessage>
                                                                 )}
                                                             </FormItem>
                                                         )}
-
                                                     />
-                                                    {
-                                                        industryOthers && (
-
-                                                            <FormField
-                                                                control={form.control}
-                                                                name="otherIndustry"
-                                                                render={({ field, fieldState }) => (
-                                                                    <FormItem>
-                                                                        <FormLabel></FormLabel>
-                                                                        <FormControl>
-                                                                            <Input {...field} />
-                                                                        </FormControl>
-                                                                        {
-                                                                            fieldState.error &&
-                                                                            <FormMessage />
-                                                                        }
-                                                                    </FormItem>
-                                                                )}
-                                                            />
-                                                        )
-                                                    }
+                                                    {industryOthers && (
+                                                        <FormField
+                                                            control={form.control}
+                                                            name="otherIndustry"
+                                                            render={({ field, fieldState }) => (
+                                                                <FormItem>
+                                                                    <FormLabel></FormLabel>
+                                                                    <FormControl>
+                                                                        <Input {...field} />
+                                                                    </FormControl>
+                                                                    {fieldState.error && <FormMessage />}
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                    )}
                                                     <FormField
                                                         control={form.control}
                                                         name="keywords"
@@ -222,14 +234,14 @@ export default function CustomizePopup() {
                                                                     <TagsInputEl
                                                                         placeholder="Add keyword"
                                                                         max={5}
-                                                                        {...field} />
+                                                                        {...field}
+                                                                    />
                                                                 </FormControl>
-                                                                {
-                                                                    fieldState.error?.message &&
+                                                                {fieldState.error?.message && (
                                                                     <FormMessage>
                                                                         {fieldState.error.message}
                                                                     </FormMessage>
-                                                                }
+                                                                )}
                                                             </FormItem>
                                                         )}
                                                     />
@@ -246,18 +258,22 @@ export default function CustomizePopup() {
                                                                         onCheckedChange={handleNegativityToggle}
                                                                         checked={isNegativityChecked}
                                                                     />
-                                                                    <Label htmlFor="customize-filter-negativity" className="text-sm font-bold text-white font-jakarta">
-                                                                        Filter out negative or criminal topics or news  - <span className="font-normal text-white/70">
-                                                                            {isNegativityChecked ? 'Yes' : 'No'}
+                                                                    <Label
+                                                                        htmlFor="customize-filter-negativity"
+                                                                        className="text-sm font-bold text-white font-jakarta"
+                                                                    >
+                                                                        Filter out negative or criminal topics or
+                                                                        news -{" "}
+                                                                        <span className="font-normal text-white/70">
+                                                                            {isNegativityChecked ? "Yes" : "No"}
                                                                         </span>
                                                                     </Label>
                                                                 </div>
-                                                                {
-                                                                    fieldState.error?.message &&
+                                                                {fieldState.error?.message && (
                                                                     <FormMessage>
                                                                         {fieldState.error.message}
                                                                     </FormMessage>
-                                                                }
+                                                                )}
                                                             </FormItem>
                                                         )}
                                                     />
@@ -274,22 +290,24 @@ export default function CustomizePopup() {
                                                                         name="customize-filter-advertisement"
                                                                         onCheckedChange={handleAdvertisementToggle}
                                                                         checked={isAdvertisementChecked}
-                                                                        
-                                                                    /> 
-                                                                                                                                    
-                                                                    <Label htmlFor="customize-filter-advertisement" className="text-sm font-bold text-white font-jakarta">
-                                                                        Filter out promotions or sales from 3rd parties or other businesses  - <span className="font-normal text-white/70">
-                                                                            {isAdvertisementChecked ? 'Yes' : 'No'}
-                                                                            
+                                                                    />
+
+                                                                    <Label
+                                                                        htmlFor="customize-filter-advertisement"
+                                                                        className="text-sm font-bold text-white font-jakarta"
+                                                                    >
+                                                                        Filter out promotions or sales from 3rd
+                                                                        parties or other businesses -{" "}
+                                                                        <span className="font-normal text-white/70">
+                                                                            {isAdvertisementChecked ? "Yes" : "No"}
                                                                         </span>
                                                                     </Label>
                                                                 </div>
-                                                                {
-                                                                    fieldState.error?.message &&
+                                                                {fieldState.error?.message && (
                                                                     <FormMessage>
                                                                         {fieldState.error.message}
                                                                     </FormMessage>
-                                                                }
+                                                                )}
                                                             </FormItem>
                                                         )}
                                                     />
@@ -307,19 +325,23 @@ export default function CustomizePopup() {
                                                                         onCheckedChange={handleBrandToggle}
                                                                         checked={isBrandChecked}
                                                                     />
-                                                                    <Label htmlFor="customize-filter-brand" className="text-sm font-bold text-white font-jakarta">
-                                                                        Filter out all topics about 3rd parties, specific places or specific people (not often recommend)-
+                                                                    <Label
+                                                                        htmlFor="customize-filter-brand"
+                                                                        className="text-sm font-bold text-white font-jakarta"
+                                                                    >
+                                                                        Filter out all topics about 3rd parties,
+                                                                        specific places or specific people (not
+                                                                        often recommend)-
                                                                         <span className="font-normal text-white/70">
-                                                                            {isBrandChecked ? 'Yes' : 'No'}
+                                                                            {isBrandChecked ? "Yes" : "No"}
                                                                         </span>
                                                                     </Label>
                                                                 </div>
-                                                                {
-                                                                    fieldState.error?.message &&
+                                                                {fieldState.error?.message && (
                                                                     <FormMessage>
                                                                         {fieldState.error.message}
                                                                     </FormMessage>
-                                                                }
+                                                                )}
                                                             </FormItem>
                                                         )}
                                                     />
@@ -329,25 +351,36 @@ export default function CustomizePopup() {
                                                             className="h-12 mt-[62px]"
                                                             content={
                                                                 <>
-                                                                    To increase articles volume, please email <a href="mailto:hello@zian.ai" className="underline">hello@zian.ai</a>
+                                                                    To increase articles volume, please email{" "}
+                                                                    <a
+                                                                        href="mailto:hello@zian.ai"
+                                                                        className="underline"
+                                                                    >
+                                                                        hello@zian.ai
+                                                                    </a>
                                                                 </>
-                                                            } />
+                                                            }
+                                                        />
                                                     </div>
                                                 </div>
-
                                             </div>
                                             <GrBorderBox className="mt-4 rounded-none md:mt-[54px]">
                                                 <div className="flex justify-end bg-gr-purple-dark space-x-[10px] py-2 md:py-5 px-7">
-                                                    <SecondaryBtn onClick={closeModal} className="py-3 text-sm">
+                                                    <SecondaryBtn
+                                                        onClick={closeModal}
+                                                        className="py-3 text-sm"
+                                                    >
                                                         Cancel
                                                     </SecondaryBtn>
-                                                    <PrimaryBtn type="submit" className="w-auto h-12 px-12 py-3 ">
-                                                        {
-                                                            form.formState.isSubmitting ?
-                                                                <Spinner />
-                                                                :
-                                                                <span>Save</span>
-                                                        }
+                                                    <PrimaryBtn
+                                                        type="submit"
+                                                        className="w-auto h-12 px-12 py-3 "
+                                                    >
+                                                        {form.formState.isSubmitting ? (
+                                                            <Spinner />
+                                                        ) : (
+                                                            <span>Save</span>
+                                                        )}
                                                     </PrimaryBtn>
                                                 </div>
                                             </GrBorderBox>
@@ -360,7 +393,5 @@ export default function CustomizePopup() {
                 </Dialog>
             </Transition>
         </>
-    )
+    );
 }
-
-

@@ -19,7 +19,6 @@ export async function getIndustryList(): Promise<IndustryListApiResponse> {
         }
         throw new CustomError(definedMessages.UNKNOWN_ERROR_TRY_AGAIN)
     } catch (error: any) {
-        console.error(error)
         return {
             message: ((error instanceof CustomError) ? error.message : error?.response?.data?.message) ?? "",
             success: false,
@@ -39,7 +38,6 @@ export async function industryListFetcher(): Promise<Array<TIndustry>> {
         }
         throw new CustomError(definedMessages.UNKNOWN_ERROR_TRY_AGAIN)
     } catch (error: any) {
-        console.error(error)
         return []
     }
 }
@@ -58,7 +56,6 @@ export async function industryListFetcher(): Promise<Array<TIndustry>> {
 //         }
 //         throw new CustomError(definedMessages.UNKNOWN_ERROR_TRY_AGAIN)
 //     } catch (error: any) {
-//         console.error(error)
 //         return {
 //             message: ((error instanceof CustomError) ? error.message : error?.response?.data?.message) ?? "",
 //             success: false,
@@ -79,7 +76,6 @@ export async function generate(): Promise<GenerateApiResponse> {
         }
         throw new CustomError(res.data.generated)
     } catch (error: any) {
-        console.error(error)
         return {
             message: ((error instanceof CustomError) ? error.message : error?.response?.data?.generated) ?? "",
             success: false,
@@ -100,7 +96,6 @@ export async function getArticles(limit = 3, offset = 0): Promise<ArticlesApiRes
         }
         throw new CustomError(definedMessages.UNKNOWN_ERROR_TRY_AGAIN)
     } catch (error: any) {
-        console.error(error)
         return {
             message: ((error instanceof CustomError) ? error.message : error?.response?.data?.message) ?? "",
             success: false,

@@ -37,11 +37,12 @@ export default function DashboardArticleLoaded() {
 
   useEffect(() => {
     loadArticles(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <MainLayout
-      heading={`Welcome, ${authUser?.profile?.username}`}
+      heading={`Welcome, ${authUser?.name}`}
       description="Here is your articles history"
     >
       <GrBorderBox

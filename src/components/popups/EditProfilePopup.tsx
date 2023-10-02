@@ -30,10 +30,10 @@ export default function EditProfilePopup() {
         resolver: zodResolver(updateProfileSchema),
         mode: "all",
         defaultValues: {
-            email: authUser?.profile?.email,
-            phone: authUser?.profile?.phone,
-            name: authUser?.profile?.username,
-            website: authUser?.profile?.website
+            email: authUser?.email,
+            phone: authUser?.phone,
+            name: authUser?.name,
+            website: authUser?.website
         }
     })
 
@@ -48,20 +48,11 @@ export default function EditProfilePopup() {
 
 
     const handleFormSubmit = async (values: UpdateProfileSchema) => {
-        if (!authUser?.profile) return;
-        const res = await api.user.updateProfile(values, authUser?.profile)
+        if (!authUser) return;
+        const res = await api.user.updateProfile(values, authUser)
         if (res.success && res.data) {
-            setAuthUser(
-                res.data.authorization,
-                {
-                    ...authUser.profile,
-                    authorization: res.data.authorization,
-                    username: res.data.name,
-                    website: res.data.website,
-                    email: res.data.email,
-                    phone: res.data.phone,
-                }
-            )
+            const profile = await api.user.getProfile()
+            setAuthUser(profile);
         }
         toast({
             title: res.success ? "Profile updated successfully." : res.message !== "" ? res.message : "An error occured while processing your request.",

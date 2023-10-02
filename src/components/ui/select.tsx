@@ -134,7 +134,6 @@ SelectSeparator.displayName = SelectPrimitive.Separator.displayName
 //   React.ElementRef<typeof SelectPrimitive.Content>,
 //   FormSelectProps
 // >(({ placeholder, className, options, ...selectProps }, ref) => {
-//   console.log(ref)
 //   return (
 //     <Select {...selectProps}>
 //       <SelectTrigger className={cn(className)}>
