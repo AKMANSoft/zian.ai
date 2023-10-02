@@ -47,24 +47,7 @@ export default function ArticleViewPopup({ trigger, article }: Props) {
         })
     }
 
-    const downloadArticleImage = async () => {
-        try {
-            window.open(article.image, "_blank",)
-            // const link = document.createElement("a");
-            // if (article.image.startsWith("https")) {
-            //     const image = await fetch(article.image, { mode: "no-cors" }).then(res => res.blob())
-            //     console.log(image)
-            //     link.href = URL.createObjectURL(image)
-            // } else {
-            //     link.href = article.image
-            // }
-            // link.download = article.headline;
-            // link.click();
-        } catch (error) {
-            console.log(error)
-        }
 
-    }
 
 
     return (
