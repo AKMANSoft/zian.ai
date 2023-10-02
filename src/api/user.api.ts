@@ -85,8 +85,8 @@ export async function getProfile(): Promise<AuthUser | null> {
         ...res.data.account,
         filter: {
           advertisement: res.data.account.filter.advertisement == 1,
-          brand: res.data.account.filter.advertisement == 1,
-          negativity: res.data.account.filter.advertisement == 1,
+          brand: res.data.account.filter.brand == 1,
+          negativity: res.data.account.filter.negativity == 1,
         },
         created: new Date(res.data.account.created),
       };
@@ -187,9 +187,7 @@ export async function updateKeyword(
           }),
       keyword: data.keywords.join(", "),
       filter_brand: data.filter_brand,
-      ...(data.website && { website: data.website }),
       filter_negativity: data.filter_negativity,
-      ...(data.website && { website: data.website }),
       filter_advertisement: data.filter_advertisement,
       ...(data.website && { website: data.website }),
     });
