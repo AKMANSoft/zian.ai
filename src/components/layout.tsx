@@ -4,7 +4,6 @@ import SideBar from "./sidebar";
 import { ReactNode, useEffect, useState } from "react";
 import useAuthUserStore from "@/lib/zustand/authUserStore";
 import LoadingSparkle from "./LoadingSparkle";
-import api from "@/api";
 
 type Props = {
   children?: ReactNode;
