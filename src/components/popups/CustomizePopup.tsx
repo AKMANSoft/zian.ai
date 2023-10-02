@@ -217,7 +217,7 @@ export default function CustomizePopup() {
                                                                 <FormControl>
                                                                     <TagsInputEl
                                                                         placeholder="Add keyword"
-                                                                        max={1000}
+                                                                        max={5}
                                                                         {...field}
                                                                     />
                                                                 </FormControl>
