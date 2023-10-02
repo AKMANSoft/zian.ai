@@ -48,8 +48,6 @@ export default function ArticleViewPopup({ trigger, article }: Props) {
     }
 
 
-
-
     return (
         <>
             {
