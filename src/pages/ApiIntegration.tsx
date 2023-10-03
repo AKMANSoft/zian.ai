@@ -17,7 +17,7 @@ export default function ApiIntegrationPage() {
     const { authUser } = useAuthUserStore()
 
     return (
-        <MainLayout heading="INTEGRATE API">
+        <MainLayout secure heading="INTEGRATE API">
             <GrBorderBox className="p-px md:p-[2px] rounded-20 lg:max-h-[calc(100vh_-_130px)] " type="lg">
                 <div className="py-3 md:py-7 h-full w-full flex flex-col backdrop-blur-[10px] bg-gr-purple-light opacity-90 rounded-20">
                     <div className="max-h-full px-3 space-y-2 overflow-y-auto md:px-7 md:space-y-7">
@@ -27,7 +27,7 @@ export default function ApiIntegrationPage() {
                             </h1>
                             <div className="relative">
                                 <Input className="pr-24" readOnly
-                                    value={authUser?.token} />
+                                    value={authUser?.authorization} />
                                 <button className="absolute text-sm font-semibold -translate-y-1/2 font-jakarta top-1/2 right-5">
                                     <FontAwesomeIcon className="pr-2" icon={faCopy} /> Copy
                                 </button>
@@ -43,7 +43,7 @@ export default function ApiIntegrationPage() {
                                             Wordpress Integration
                                         </PrimaryBtn>
                                     </a>
-                                 
+
                                     <a href="/shopify">
                                         <PrimaryBtnNeon className="font-normal text-[15px] w-full ">
                                             Shopify Integration Via Zapier

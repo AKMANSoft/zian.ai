@@ -37,11 +37,12 @@ export default function DashboardArticleLoaded() {
 
   useEffect(() => {
     loadArticles(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <MainLayout
-      heading={`Welcome, ${authUser?.profile?.username}`}
+      heading={`Welcome, ${authUser?.name}`}
       description="Here is your articles history"
     >
       <GrBorderBox
@@ -225,7 +226,7 @@ function SingleArticleRow({ num, article }: SingleArticleRowProps) {
               width={80}
               height={80}
               loading="lazy"
-              className="h-full min-w-[80px] lg:h-[80px] rounded-10 object-cover object-center aspect-square"
+              className="h-full min-w-[80px] lg:h-[80px] rounded-10 object-cover object-center aspect-square bg-white/10"
               alt=""
             />
           </span>

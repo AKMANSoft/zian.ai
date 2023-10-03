@@ -5,37 +5,19 @@ import LoadingSparkle from "@/components/LoadingSparkle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import CustomTooltip from "@/components/custom-tooltip";
-import { useEffect, useState } from "react";
-import {
-  ArticlesApiResponse,
-  GenerateApiResponse,
-} from "@/types/response.types";
+import { GenerateApiResponse } from "@/types/response.types";
 import useUiState from "@/components/hooks/useUiState";
 import api from "@/api";
 import useAuthUserStore from "@/lib/zustand/authUserStore";
 import DashboardArticleLoaded from "./DashboardArticleLoaded";
+import { useEffect, useState } from "react";
 
-type StateType =
-  | "IDLE"
-  | "FIRST_TIME"
-  | "GENERATING_EXAMPLE"
-  | "ARTICLES_LOADED";
+type StateType = "IDLE" | "FIRST_TIME" | "GENERATING_EXAMPLE";
 export default function Dashboard() {
   const [curState, setCurState] = useState<StateType>("IDLE");
-  const { uiState, setUiData, setProcessing } = useUiState<
-    GenerateApiResponse | ArticlesApiResponse
-  >();
+  const { uiState, setUiData, setProcessing } =
+    useUiState<GenerateApiResponse>();
   const { authUser } = useAuthUserStore();
-
-  useEffect(() => {
-    if (!authUser) return;
-    api.other.getArticles(1).then((res) => {
-      console.log(res);
-      setCurState(
-        res.data && res.data.length > 0 ? "ARTICLES_LOADED" : "FIRST_TIME"
-      );
-    });
-  }, [authUser]);
 
   const handleGenerateExample = async () => {
     setProcessing(true);
@@ -45,7 +27,15 @@ export default function Dashboard() {
     setProcessing(false);
   };
 
-  return curState === "ARTICLES_LOADED" ? (
+  useEffect(() => {
+    setCurState(
+      authUser?.articlesample === "generating article"
+        ? "GENERATING_EXAMPLE"
+        : "FIRST_TIME"
+    );
+  }, [authUser]);
+
+  return authUser?.articlesample === "claimed" ? (
     <DashboardArticleLoaded />
   ) : (
     <MainLayout>
@@ -63,7 +53,7 @@ export default function Dashboard() {
               <div className="flex flex-col text-center justify-center items-center max-w-2xl">
                 <div className="">
                   <h1 className="font-nebula text-2xl md:text-[32px] font-normal text-white">
-                    Welcome, {authUser?.profile?.username}
+                    Welcome, {authUser?.name}
                   </h1>
                   <h2 className="font-jakarta text-base md:text-2xl font-normal text-white">
                     To get started, click "GENERATE EXAMPLE" below!
@@ -89,10 +79,10 @@ export default function Dashboard() {
                     }
                   />
 
-                  {uiState.state?.success && uiState.state.data ? (
+                  {curState === "GENERATING_EXAMPLE" ? (
                     <PrimaryBtnNeon
                       onClick={() => window.location.reload()}
-                      className="w-full max-w-[100%] md:w-auto"
+                      className="w-full max-w-[100%] h-[42px] md:w-auto"
                     >
                       Refresh
                     </PrimaryBtnNeon>
@@ -100,7 +90,7 @@ export default function Dashboard() {
                     <PrimaryBtnNeon
                       onClick={handleGenerateExample}
                       disabled={uiState.processing}
-                      className="w-full max-w-[100%] md:w-auto"
+                      className="w-full max-w-[100%] h-[42px] md:w-auto"
                     >
                       {uiState.processing ? (
                         <LoadingSparkle variant="tiny" spark={true} />
@@ -111,7 +101,7 @@ export default function Dashboard() {
                   )}
                 </div>
                 <div className="text-start mt-5">
-                  {uiState.state?.data && uiState?.state?.success ? (
+                  {curState === "GENERATING_EXAMPLE" ? (
                     <p className="text-sm font-medium flex items-start gap-3">
                       <FontAwesomeIcon
                         icon={faCircleCheck}

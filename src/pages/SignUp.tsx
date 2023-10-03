@@ -29,7 +29,6 @@ import {
 import api from "@/api";
 import { AutoHideAlert } from "@/components/ui/alert";
 import { useNavigate } from "react-router-dom";
-import useAuthUserStore from "@/lib/zustand/authUserStore";
 import GrBorderBox from "@/components/ui/gr-border-box";
 import { useState } from "react";
 import { useSwrFetcher } from "@/lib/useSwrFetcher";
@@ -37,22 +36,24 @@ import apiConfig from "@/config/api.config";
 import { FormSelect } from "@/components/ui/select";
 import axios from "axios";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useCookies } from "react-cookie";
 
 export default function SignUpPage() {
   const form = useForm<SignUpFormSchema>({
     resolver: zodResolver(signUpFormSchema),
     mode: "all",
   });
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setCookie] = useCookies(["authToken"]);
+  const navigate = useNavigate()
 
   const { uiState, setUiData } = useUiState<SignUpApiResponse>();
-  const { setToken } = useAuthUserStore();
   const [curStep, setCurStep] = useState<"SIGNUP" | "ONBOARDING">("SIGNUP");
 
   const handleSignUpFormSubmit = async (values: SignUpFormSchema) => {
     const response = await api.user.signup(values);
 
     if (response.success && response.data) {
-      setToken(response.data);
       axios.defaults.headers.common["Authorization"] = response.data;
       setCurStep("ONBOARDING");
     }
@@ -71,12 +72,15 @@ export default function SignUpPage() {
             )}
           >
             {curStep === "ONBOARDING" ? (
-              <OnBoardingForm
-                loginCreds={{
-                  email: form.getValues("email"),
-                  password: form.getValues("password"),
-                }}
-              />
+              <OnBoardingForm onCompleted={() => {
+                if (uiState.state?.data) {
+                  setCookie("authToken", uiState.state.data, {
+                    maxAge: 24 * 60 * 60,
+                  });
+                  navigate("/");
+                  window.location.reload()
+                }
+              }} />
             ) : (
               <Form {...form}>
                 <form
@@ -270,12 +274,13 @@ export default function SignUpPage() {
   );
 }
 
+
 type OnBoardingForm = {
-  loginCreds: { email?: string; password?: string };
-};
-function OnBoardingForm({ loginCreds }: OnBoardingForm) {
+  onCompleted?: () => void;
+}
+function OnBoardingForm({ onCompleted }: OnBoardingForm) {
   const { uiState, setUiData } = useUiState<KeywordApiResponse>();
-  const { setAuthUser } = useAuthUserStore();
+
   const form = useForm<CustomizeSchema>({
     resolver: zodResolver(customizeSchema),
     mode: "onBlur",
@@ -286,7 +291,6 @@ function OnBoardingForm({ loginCreds }: OnBoardingForm) {
       keywords: [],
     },
   });
-  const navigate = useNavigate();
   const { data: industryList } = useSwrFetcher<Array<TIndustry>>(
     apiConfig.endpoints.industryList,
     api.other.industryListFetcher
@@ -298,26 +302,13 @@ function OnBoardingForm({ loginCreds }: OnBoardingForm) {
     if (!industryId) return false;
     const industry = industryList?.find((ind) => ind.id === Number(industryId));
     if (!industry) return false;
-    console.log(industry);
     setIndustryOthers(industry.name.toLowerCase() === "other");
   };
 
   const handleOnBoardingFormSubmit = async (values: CustomizeSchema) => {
     const response = await api.user.updateKeyword(values, industryOthers);
     if (response.success && response.data) {
-      if (loginCreds.email && loginCreds.password) {
-        const loginRes = await api.user.login({
-          email: loginCreds.email,
-          password: loginCreds.password,
-        });
-        if (loginRes.success && loginRes.data) {
-          setAuthUser(loginRes.data.authorization, loginRes.data);
-          axios.defaults.headers.common["Authorization"] =
-            loginRes.data.authorization;
-          return navigate("/");
-        }
-      }
-      return navigate("/login");
+      onCompleted?.()
     }
     setUiData(response);
   };

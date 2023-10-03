@@ -25,7 +25,7 @@ export default function ApiIntegrationShopify() {
                             </h1>
                             <div className="relative mt-[10px]">
                                 <Input className="pr-24" readOnly
-                                    value={authUser?.token} />
+                                    value={authUser?.authorization} />
                                 <button className="absolute text-sm font-semibold -translate-y-1/2 font-jakarta top-1/2 right-5">
                                     <FontAwesomeIcon className="pr-2" icon={faCopy} /> Copy
                                 </button>
@@ -66,7 +66,7 @@ export default function ApiIntegrationShopify() {
                                     <li className="">
                                         <span className="ps-1">Your Zian SEO API</span>
                                     </li>
-                                    <li className=""><span className="flex items-center gap-2 underline text-primary ps-1">Zapier <ExternalLinkIcon className="mt-[4px]"/></span>
+                                    <li className=""><span className="flex items-center gap-2 underline text-primary ps-1">Zapier <ExternalLinkIcon className="mt-[4px]" /></span>
                                     </li>
                                     <li className="">
                                         <span className="underline text-primary ps-1">UUID Generator</span>
@@ -93,7 +93,7 @@ export default function ApiIntegrationShopify() {
                                     <br /><br />
                                     <ol className="list-decimal px-[18px]">
                                         <li>
-                                            Navigate to Zapier {">"} Create Zap   (you should watch the video above)
+                                            Navigate to Zapier {">"} Create Zap (you should watch the video above)
                                         </li>
                                         <li>
                                             Select: Run Python Code as the trigger {">"}Paste the below code and edit:<br />
@@ -210,7 +210,7 @@ function VideoComponent() {
     return (
         <div className="">
             <div className="relative w-full md:w-[500px]">
-                <iframe width={500} height={300} src="https://www.loom.com/embed/6e0e77ef595f4e488e8636a1d03770dc?sid=1c27efb4-bbb7-4d21-a14d-7d5e897fd125"  className="object-cover w-full h-auto overflow-hidden rounded-20 aspect-video"> </iframe>
+                <iframe width={500} height={300} src="https://www.loom.com/embed/6e0e77ef595f4e488e8636a1d03770dc?sid=1c27efb4-bbb7-4d21-a14d-7d5e897fd125" className="object-cover w-full h-auto overflow-hidden rounded-20 aspect-video"> </iframe>
             </div>
         </div>
     )

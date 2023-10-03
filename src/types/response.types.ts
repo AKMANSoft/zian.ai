@@ -1,78 +1,83 @@
-
-
 export interface ApiResponse<T = unknown> {
-    data?: T | null;
-    message: string;
-    success: boolean;
+  data?: T | null;
+  message: string;
+  success: boolean;
 }
+
+export type ArticlesFilters = {
+  advertisement: boolean;
+  brand: boolean;
+  negativity: boolean;
+};
 
 export type AuthUser = {
-    authorization: string;
-    created?: Date;
-    email: string;
-    data?: {
-        filter_brand: boolean;
-        filter_negativity: boolean;
-        filter_advertisement: boolean;
-        industry: {
-            id: number;
-            industry: string;
-            name: string;
-        };
-        keyword: string;
+  articlesample: boolean | "claimed" | "generating article";
+  authorization: string;
+  created: Date;
+  email: string;
+  filter: ArticlesFilters;
+  keyword: {
+    industry: {
+      id: number;
+      industry: string;
+      name: string;
     };
-    website?: string;
-    username: string;
-    password: string;
-    package: string;
-    phone: string;
-    quota: number;
-}
-
-
-export type LoginApiResponse = ApiResponse<AuthUser>
-export type ForgotPwdApiResponse = ApiResponse<null>
-export type NewPwdApiResponse = ApiResponse<null>
-export type EmailLoginApiResponse = ApiResponse<null>
-
-export type SignUpApiResponse = ApiResponse<string>
-export type UpdateProfileResponse = ApiResponse<{
-    authorization: string;
-    email: string;
+    keyword: string;
+  };
+  midjourney: 0;
+  name: string;
+  package: {
+    amount: number;
+    id: number;
     name: string;
-    package: string;
-    phone: string;
-    website: string;
-}>
+  };
+  tone: string;
+  website?: string;
+  password: string;
+  phone: string;
+  quota: number;
+};
 
+export type LoginApiResponse = ApiResponse<AuthUser>;
+export type ForgotPwdApiResponse = ApiResponse<null>;
+export type NewPwdApiResponse = ApiResponse<null>;
+export type EmailLoginApiResponse = ApiResponse<null>;
 
+export type SignUpApiResponse = ApiResponse<string>;
+export type UpdateProfileResponse = ApiResponse<{
+  authorization: string;
+  email: string;
+  name: string;
+  package: string;
+  phone: string;
+  website: string;
+}>;
 
 export type TIndustry = {
-    id: number,
-    name: string
-}
+  id: number;
+  name: string;
+};
 
-export type IndustryListApiResponse = ApiResponse<Array<TIndustry>>
+export type IndustryListApiResponse = ApiResponse<Array<TIndustry>>;
 
 export type KeywordApiResponse = ApiResponse<{
-    filter: boolean;
-    industry: {
-        id: number;
-        industry: string;
-        name: string;
-    },
-    keyword: string;
-}>
+  filter: ArticlesFilters;
+  industry: {
+    id: number;
+    industry: string;
+    name: string;
+  };
+  keyword: string;
+}>;
 
-export type GenerateApiResponse = ApiResponse<string>
-export type ArticlesApiResponse = ApiResponse<Array<Article>>
-
+export type GenerateApiResponse = ApiResponse<string>;
+export type ArticlesApiResponse = ApiResponse<Array<Article>>;
 
 export type Article = {
-    id: number;
-    headline: string;
-    summary: string;
-    body: string;
-    image: string;
-    timestamp: Date;
-}
+  id: number;
+  headline: string;
+  summary: string;
+  body: string;
+  image: string;
+  timestamp: Date;
+};

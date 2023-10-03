@@ -6,6 +6,8 @@ import useAuthUserStore from "./lib/zustand/authUserStore";
 import ApiIntegrationPage from "./pages/ApiIntegration";
 import ShadcnProviders from "./components/ui/shadcn-providers";
 import LoadingSparkle from "./components/LoadingSparkle";
+import { useCookies } from "react-cookie";
+import api from "./api";
 
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const BillingPage = React.lazy(() => import("./pages/BillingPage"));
@@ -207,20 +209,30 @@ const router = createBrowserRouter([
 
 axios.defaults.baseURL = apiConfig.basepath;
 function App() {
-  const { authUser } = useAuthUserStore();
+  const [cookies] = useCookies(["authToken"]);
+  const { loadingProfile, setAuthUser } = useAuthUserStore();
 
   useEffect(() => {
-    if (authUser?.token) {
-      axios.defaults.headers.common["Authorization"] = authUser.token;
-    }
-  }, [authUser]);
+    axios.defaults.headers.common.Authorization = cookies.authToken;
+    api.user.getProfile().then((profile) => {
+      setAuthUser(profile);
+    }).catch(() => setAuthUser(null));
+  }, [cookies.authToken, setAuthUser]);
+
 
   return (
     <div className="bg-primary-image-mobile lg:bg-primary-image bg-no-repeat overflow-hidden h-screen max-h-screen relative">
       <div className="hidden xl:block absolute top-0 left-0 -translate-x-5 -translate-y-5">
         <img src="/images/moon.png" className="w-[270px] h-auto" alt="" />
       </div>
-      <RouterProvider router={router} />
+      {
+        loadingProfile ?
+          <div className="flex w-full h-screen items-center justify-center">
+            <LoadingSparkle spark variant="large" />
+          </div>
+          :
+          <RouterProvider router={router} />
+      }
       <ShadcnProviders />
     </div>
   );

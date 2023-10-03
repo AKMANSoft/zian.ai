@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Header from "./header";
 import SideBar from "./sidebar";
 import { ReactNode, useEffect, useState } from "react";
@@ -13,15 +13,6 @@ type Props = {
   sidebar?: boolean;
 };
 
-const noSidebarPaths = [
-  "/signup",
-  "/login",
-  "/forgot-password",
-  "/reset-password",
-  "/login-with-email",
-  "/email-sent",
-  "/email",
-];
 export default function MainLayout({
   children,
   heading = "",
@@ -29,19 +20,31 @@ export default function MainLayout({
   secure = true,
   sidebar = true,
 }: Props) {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
   const [menuExpanded, setMenuExpanded] = useState(false);
   const { authUser } = useAuthUserStore();
   const [showPage, setShowPage] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!secure) return setShowPage(true);
-    if (authUser?.token && authUser.token !== "") {
-      return setShowPage(true);
-    }
-    navigate("/login");
-  }, [authUser, navigate, secure]);
+    if (!secure && !authUser) return setShowPage(true);
+    if (!secure && authUser) return navigate("/", { replace: true })
+    if (secure && !authUser) return navigate("/login", { replace: true });
+    if (authUser) return setShowPage(true);
+    return navigate("/login", { replace: true });
+    // api.user
+    //   .getProfile()
+    //   .then((profile) => {
+    //     if (!profile && secure) return navigate("/login");
+    //     setAuthUser(profile);
+    //     setShowPage(true);
+    //     if (profile && !secure) return navigate("/");
+    //   })
+    //   .catch((error) => {
+    //     if (secure) navigate("/login");
+    //   });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authUser, secure]);
+
 
   return !showPage ? (
     <div className="flex w-full h-screen items-center justify-center">
@@ -49,11 +52,9 @@ export default function MainLayout({
     </div>
   ) : (
     <div className="w-full flex gap-5">
-      {!noSidebarPaths.includes(pathname) && sidebar && (
-        <SideBar expanded={menuExpanded} />
-      )}
+      {secure && sidebar && <SideBar expanded={menuExpanded} />}
       <div className="flex flex-col w-full max-w-full overflow-x-hidden min-h-screen overflow-y-auto px-2 xs:px-4 lg:px-5 bg-gr-purple lg:bg-none max-h-[calc(100vh_-_10px)] ">
-        {!noSidebarPaths.includes(pathname) && sidebar && (
+        {secure && sidebar && (
           <Header
             heading={heading}
             description={description}

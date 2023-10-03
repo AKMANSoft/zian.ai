@@ -6,6 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function b64Image(image: string) {
+  if (image.startsWith("https")) return image;
   return `data:image/png;base64,${image}`;
 }
 

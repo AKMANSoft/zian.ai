@@ -31,8 +31,6 @@ export default function BillingPopup() {
 
     return (
         <>
-
-
             <NavigationItem
                 onClick={openModal} active={isOpen}
                 className="mb-3"
@@ -95,7 +93,7 @@ export default function BillingPopup() {
                                                             Free Plan
                                                         </h1>
                                                         <p className="text-sm font-normal md:text-base font-jakarta text-white/70">
-                                                            Current quota remaining: {Math.max(0, (authUser?.profile?.quota ?? 0) - 1)}
+                                                            Current quota remaining: {Math.max(0, (authUser?.quota ?? 0) - 1)}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -113,14 +111,14 @@ export default function BillingPopup() {
                                                         </a>
                                                     </p>
                                                 </div>
-                                                    <CustomTooltip
-                                                        title="Upgrade"
-                                                        className="w-full"
-                                                        content={
-                                                            <>
-                                                                To increase articles volume, please email <a href="mailto:hello@zian.ai" className="underline">hello@zian.ai</a>
-                                                            </>
-                                                        } />
+                                                <CustomTooltip
+                                                    title="Upgrade"
+                                                    className="w-full"
+                                                    content={
+                                                        <>
+                                                            To increase articles volume, please email <a href="mailto:hello@zian.ai" className="underline">hello@zian.ai</a>
+                                                        </>
+                                                    } />
                                             </div>
                                         </div>
                                     </div>

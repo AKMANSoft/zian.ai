@@ -4,7 +4,7 @@ const apiConfig = {
     register: "/register",
     login: "/login",
     forgotPassword: "/forgot",
-    updateProfile: "/account",
+    profile: "/account",
     industryList: "?list=industry",
     emaillogin: "/emaillogin",
   },
