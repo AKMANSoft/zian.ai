@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useAuthUserStore from "@/lib/zustand/authUserStore";
 import { PrimaryBtn, PrimaryBtnNeon } from "@/components/ui/buttons";
 import WixSteps from "@/components/WixStepsComponent";
+import { Link } from "react-router-dom";
 
 
 
@@ -37,21 +38,21 @@ export default function ApiIntegrationWix() {
                   Select your Integration:
                 </p>
                 <div className="mt-3 md:mt-5  flex md:flex-row flex-col gap-[10px]   mb-[15px]">
-                  <a href="/integrate">
+                  <Link to="/integrate">
                     <PrimaryBtnNeon className="font-normal text-[15px] py-[8px] w-full md:w-auto">
                       Wordpress Integration
                     </PrimaryBtnNeon>
-                  </a>
-                  <a href="/shopify">
+                  </Link>
+                  <Link to="/shopify">
                     <PrimaryBtnNeon className="font-normal text-[15px] py-[8px] w-full md:w-auto">
                       Shopify Integration Via Zapier
                     </PrimaryBtnNeon>
-                  </a>
-                  <a href="/wix">
+                  </Link>
+                  <Link to="/wix">
                     <PrimaryBtn className="font-normal text-[15px] w-full md:w-auto">
                       Wix Integration Via Zapier
                     </PrimaryBtn>
-                  </a>
+                  </Link>
                 </div>
               </div>
               <hr className="border-2 border-primary " />

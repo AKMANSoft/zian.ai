@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useAuthUserStore from "@/lib/zustand/authUserStore";
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import { PrimaryBtn, PrimaryBtnNeon } from "@/components/ui/buttons";
+import { Link } from "react-router-dom";
 
 
 
@@ -35,21 +36,21 @@ export default function ApiIntegrationShopify() {
                                     Select your Integration:
                                 </p>
                                 <div className="mt-3 md:mt-5  flex md:flex-row flex-col gap-[10px]   mb-[15px]">
-                                    <a href="/integrate">
+                                    <Link to="/integrate">
                                         <PrimaryBtnNeon className="font-normal text-[15px] py-[8px] w-full md:w-auto">
                                             Wordpress Integration
                                         </PrimaryBtnNeon>
-                                    </a>
-                                    <a href="/shopify">
+                                    </Link>
+                                    <Link to="/shopify">
                                         <PrimaryBtn className="font-normal text-[15px] w-full md:w-auto">
                                         Shopify Integration Via Zapier
                                         </PrimaryBtn>
-                                    </a>
-                                    <a href="/wix">
+                                    </Link>
+                                    <Link to="/wix">
                                         <PrimaryBtnNeon className="font-normal text-[15px] py-[8px] w-full md:w-auto">
                                         Wix Integration Via Zapier
                                         </PrimaryBtnNeon>
-                                    </a>
+                                    </Link>
                                 </div>
 
                             </div>
