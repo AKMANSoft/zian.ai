@@ -27,7 +27,7 @@ export default function ApiIntegrationWix() {
                 API Key
               </h1>
               <div className="relative mt-[10px]">
-                <Input className="pr-24" readOnly value={authUser?.token} />
+                <Input className="pr-24" readOnly value={authUser?.authorization} />
                 <button className="absolute text-sm font-semibold -translate-y-1/2 font-jakarta top-1/2 right-5">
                   <FontAwesomeIcon className="pr-2" icon={faCopy} /> Copy
                 </button>
