@@ -22,7 +22,7 @@ export default function DashboardArticleLoaded() {
   const { uiState, setProcessing, setUiData } =
     useUiState<ArticlesApiResponse>();
   const { authUser } = useAuthUserStore();
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(uiState.state?.data?.current_page ?? 1);
 
   const loadArticles = async (page: number) => {
     setCurrentPage(page);
@@ -76,10 +76,11 @@ export default function DashboardArticleLoaded() {
                   <LoadingSparkle variant="medium" spark />
                 </div>
               ) : (
-                uiState?.state?.data.map((article, index) => (
+                uiState?.state?.data &&
+                uiState?.state?.data?.articles?.map((article, index) => (
                   <SingleArticleRow
                     article={article}
-                    num={index + 1}
+                    num={((currentPage - 1) * DEFAULTS.PER_PAGE_ITEMS) + (index + 1)}
                     key={article.id}
                   />
                 ))
@@ -89,11 +90,7 @@ export default function DashboardArticleLoaded() {
               <Pagination
                 currentPage={currentPage}
                 setCurrentPage={loadArticles}
-                endReached={
-                  (uiState?.state?.data &&
-                    uiState?.state?.data.length < DEFAULTS.PER_PAGE_ITEMS) ??
-                  false
-                }
+                totalPages={uiState.state?.data?.total_pages ?? 1}
               />
             )}
           </div>
@@ -123,18 +120,20 @@ function formatePaginationNums(num: number, length = 4, offset = 1) {
 type PaginationProps = {
   currentPage: number;
   setCurrentPage: (page: number) => void;
-  endReached?: boolean;
+  totalPages: number;
 };
 
 function Pagination({
   currentPage,
   setCurrentPage,
-  endReached,
+  totalPages,
 }: PaginationProps) {
-  const visiblePages = formatePaginationNums(currentPage);
+  const endReached = currentPage >= totalPages;
+  const visiblePages = formatePaginationNums(currentPage).filter((num) => num <= totalPages);
 
   const onPageChange = (page: number) => {
-    const lastPage = visiblePages[visiblePages.length - 1];
+    if (currentPage === page) return;
+    const lastPage = totalPages;
     let newPage = page;
     if (newPage <= 0) newPage = 1;
     if (newPage >= lastPage) newPage = lastPage;
@@ -190,7 +189,7 @@ function Pagination({
         <button
           type="button"
           disabled={endReached}
-          onClick={() => onPageChange(currentPage + visiblePages.length)}
+          onClick={() => onPageChange(totalPages)}
           className="outline-none bg-white/5 rounded text-xs font-normal hover:bg-primary transition-all p-2 w-8 h-8 aspect-square disabled:opacity-50 disabled:!bg-white/5"
         >
           <FontAwesomeIcon icon={faChevronRight} />
