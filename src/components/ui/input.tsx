@@ -130,9 +130,50 @@ function InputElDate({ className }: InputElDateProps) {
     </Popover>
   )
 }
+type InputStyleProps = InputProps & {
+  type?: React.HTMLInputTypeAttribute;
+  label?: string;
+  labelNode?: React.ReactNode
+  placeholder?: string;
+  id?: string;
+  endIcon?: IconDefinition;
+  onValueChange?: (value: string) => void
+}
 
+function InputTone({ label, placeholder = "", labelNode = null, id = "", endIcon, type = "text", value, onValueChange, className }: InputStyleProps) {
 
-
+  return (
+    <div className={cn(
+      "w-full h-[70px] bg-input rounded-10 ",
+      className,
+    )}>
+      {
+        labelNode !== null ?
+          labelNode
+          :
+          <label htmlFor={id} className={cn(
+            "text-sm font-semibold font-jakarta text-white"
+          )}>
+            {label}
+          </label>
+      }
+      <input type={type} id={id} placeholder={placeholder}
+        value={value}
+        onChange={(e) => onValueChange?.(e.target.value)}
+        className={cn(
+          "text-white/50 text-start font-jakarta font-semibold text-sm leading-6 py-3 px-5",
+          "border border-white/40 appearance-none rounded-10 w-full bg-transparent h-[60px]",
+          "focus:bg-th-gray/10 outline-none transition-all placeholder:text-white/50"
+        )} />
+      {
+        endIcon && endIcon !== null &&
+        <span className="h-16 absolute z-10 top-0 flex items-center justify-center right-4 text-white text-lg">
+          <FontAwesomeIcon icon={endIcon} />
+        </span>
+      }
+    </div>
+  )
+}
 
 
 type InputElWChipsProps = {
@@ -282,7 +323,9 @@ const TagsInputEl = React.forwardRef<HTMLInputElement, InputElWChipsProps>((
 TagsInputEl.displayName = "TagsInputEl"
 
 
-export { Input, InputEl, InputElWChips, InputElDate, TagsInputEl }
+export { Input, InputEl, InputElWChips, InputElDate, TagsInputEl,InputTone }
+
+
 
 
 
