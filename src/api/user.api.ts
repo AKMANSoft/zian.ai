@@ -76,6 +76,31 @@ export async function updateProfile(
   }
 }
 
+export async function updateTone(tone: string): Promise<UpdateProfileResponse> {
+  try {
+    const res = await axios.post(apiConfig.endpoints.profile, {
+      tone: tone
+    });
+    if (res.status === 200 && res.data.status) {
+      return {
+        message: res.data.message ?? "",
+        success: res.data.status ?? false,
+        data: res.data.account,
+      };
+    }
+    throw new CustomError(definedMessages.UNKNOWN_ERROR_TRY_AGAIN);
+  } catch (error: any) {
+    return {
+      message:
+        (error instanceof CustomError
+          ? error.message
+          : error?.response?.data?.message) ?? "",
+      success: false,
+      data: null,
+    };
+  }
+}
+
 export async function getProfile(): Promise<AuthUser | null> {
   try {
     const res = await axios.get(apiConfig.endpoints.profile);
@@ -191,6 +216,13 @@ export async function updateKeyword(
       ...(data.website && { website: data.website }),
     });
     if (res.status === 200 && res.data.status) {
+      if (data.tone) {
+        try {
+          await updateTone(data.tone)
+        } catch (error) {
+          console.error("Update Tone ", error)
+        }
+      }
       return {
         message: res.data.error ?? "",
         success: res.data.status ?? false,

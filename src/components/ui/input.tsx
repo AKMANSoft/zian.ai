@@ -140,7 +140,7 @@ type InputStyleProps = InputProps & {
   onValueChange?: (value: string) => void
 }
 
-function InputTone({ label, placeholder = "", labelNode = null, id = "", endIcon, type = "text", value, onValueChange, className }: InputStyleProps) {
+function InputTone({ label, placeholder = "", labelNode = null, id = "", endIcon, type = "text", value, onChange, className }: InputStyleProps) {
 
   return (
     <div className={cn(
@@ -159,9 +159,9 @@ function InputTone({ label, placeholder = "", labelNode = null, id = "", endIcon
       }
       <input type={type} id={id} placeholder={placeholder}
         value={value}
-        onChange={(e) => onValueChange?.(e.target.value)}
+        onChange={onChange}
         className={cn(
-          "text-white/50 text-start font-jakarta font-semibold text-sm leading-6 py-3 px-5",
+          "text-white text-start font-jakarta font-semibold text-sm leading-6 py-3 px-5",
           "border border-white/40 appearance-none rounded-10 w-full bg-transparent h-[60px]",
           "focus:bg-th-gray/10 outline-none transition-all placeholder:text-white/50"
         )} />
@@ -323,7 +323,7 @@ const TagsInputEl = React.forwardRef<HTMLInputElement, InputElWChipsProps>((
 TagsInputEl.displayName = "TagsInputEl"
 
 
-export { Input, InputEl, InputElWChips, InputElDate, TagsInputEl,InputTone }
+export { Input, InputEl, InputElWChips, InputElDate, TagsInputEl, InputTone }
 
 
 

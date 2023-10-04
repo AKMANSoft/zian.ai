@@ -97,6 +97,7 @@ export const customizeSchema = z.object({
   keywords: z
     .array(z.string(), { required_error: "This field is required." })
     .min(1, { message: "This field is required." })
-    // .max(5, { message: "You can't select more than 5 keywords." }),
+    .max(5, { message: "You can't select more than 5 keywords." }),
+  tone: z.string({ required_error: "This field is required." }).optional()
 });
 export type CustomizeSchema = z.infer<typeof customizeSchema>;
