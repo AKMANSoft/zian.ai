@@ -17,8 +17,8 @@ const useAuthUserStore = create<AuthUserState>()((set) => ({
       loadingProfile: false,
     }),
   setLoadingProfile: (loading) =>
-    set((state) => ({
-      ...state,
+    set(() => ({
+      authUser: undefined,
       loadingProfile: loading,
     })),
   logout: () => {
