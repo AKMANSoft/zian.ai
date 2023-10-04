@@ -37,7 +37,10 @@ export default function LoginWithEmailPage() {
 
   const handleFormSubmit = async (data: EmailloginSchema) => {
     setProcessing(true);
-    const response = await api.user.emaillogin(data);
+    const response = await api.user.emaillogin({
+      type: "email",
+      email: data.email
+    });
 
     if (response.success) {
       return setEmailSent(true);

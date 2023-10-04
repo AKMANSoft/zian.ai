@@ -100,11 +100,16 @@ export async function getArticles(
       return {
         message: res.data.message ?? "",
         success: res.data.status ?? false,
-        data: res.data.articles?.map((article: any) => ({
-          ...article,
-          timestamp: new Date(article.timestamp),
-          body: article.article,
-        })),
+        data: {
+          articles: res.data.articles?.map((article: any) => ({
+            ...article,
+            timestamp: new Date(article.timestamp),
+            body: article.article,
+          })),
+          current_page: res.data.current_page,
+          total_articles: res.data.total_articles,
+          total_pages: res.data.total_pages,
+        },
       };
     }
     throw new CustomError(definedMessages.UNKNOWN_ERROR_TRY_AGAIN);

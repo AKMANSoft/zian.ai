@@ -89,7 +89,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/reset-password/:token",
+    path: "/password/:token",
     element: (
       <Suspense
         fallback={
@@ -210,13 +210,15 @@ const router = createBrowserRouter([
 axios.defaults.baseURL = apiConfig.basepath;
 function App() {
   const [cookies] = useCookies(["authToken"]);
-  const { loadingProfile, setAuthUser } = useAuthUserStore();
+  const { loadingProfile, setAuthUser, setLoadingProfile } = useAuthUserStore();
 
   useEffect(() => {
+    setLoadingProfile(true)
     axios.defaults.headers.common.Authorization = cookies.authToken;
     api.user.getProfile().then((profile) => {
       setAuthUser(profile);
     }).catch(() => setAuthUser(null));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cookies.authToken, setAuthUser]);
 
 
