@@ -173,7 +173,7 @@ export default function ApiIntegrationShopify() {
                                             c. In the Shopify Step, replace the “Content” field with the new content from the new formatting step we just added:
                                         </p>
                                         <img src="/images/shopify-data.png" className="md:w-[512px] w-full h-auto" />
-                                        <p className="mt-2 text-base font-normal text-center text-white md:text-xl md:mt-5 font-jakarta">
+                                        <p className=" text-base font-normal text-start text-white md:text-xl md:mt-5 font-jakarta">
                                             Finally run test, save a turn on zap!
                                         </p>
 
