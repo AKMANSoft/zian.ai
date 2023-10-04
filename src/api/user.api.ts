@@ -4,7 +4,6 @@ import { definedMessages } from "@/lib/constants";
 import { CustomError } from "@/types/error";
 import {
   CustomizeSchema,
-  EmailloginSchema,
   ForgotPasswordSchema,
   LoginFormSchema,
   SignUpFormSchema,
