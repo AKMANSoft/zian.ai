@@ -41,6 +41,8 @@ export default function LoginPage() {
     if (response.success && response.data) {
       setCookie("authToken", response.data.authorization, {
         maxAge: 24 * 60 * 60,
+        path: "/",
+        sameSite: "lax",
       });
       navigate("/", { replace: true });
       window.location.reload();

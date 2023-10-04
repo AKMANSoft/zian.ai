@@ -41,7 +41,7 @@ export type AuthUser = {
 export type LoginApiResponse = ApiResponse<AuthUser>;
 export type ForgotPwdApiResponse = ApiResponse<null>;
 export type NewPwdApiResponse = ApiResponse<null>;
-export type EmailLoginApiResponse = ApiResponse<null>;
+export type EmailLoginApiResponse = ApiResponse<string | undefined>;
 
 export type SignUpApiResponse = ApiResponse<string>;
 export type UpdateProfileResponse = ApiResponse<{

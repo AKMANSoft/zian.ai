@@ -180,11 +180,11 @@ export async function updateKeyword(
     const res = await axios.post(apiConfig.basepath, {
       ...(isIndustryOther && data.otherIndustry && data.otherIndustry !== ""
         ? {
-            others: data.otherIndustry,
-          }
+          others: data.otherIndustry,
+        }
         : {
-            industry_id: parseInt(data.industry),
-          }),
+          industry_id: parseInt(data.industry),
+        }),
       keyword: data.keywords.join(", "),
       filter_brand: data.filter_brand,
       filter_negativity: data.filter_negativity,
@@ -211,8 +211,11 @@ export async function updateKeyword(
   }
 }
 
+
+type EmailLoginInput = ({ type: "email"; email: string; } | { type: "token"; token: string })
+
 export async function emaillogin(
-  data: EmailloginSchema
+  data: EmailLoginInput
 ): Promise<EmailLoginApiResponse> {
   try {
     const res = await axios.post(apiConfig.endpoints.emaillogin, data);
@@ -220,6 +223,7 @@ export async function emaillogin(
       return {
         message: res.data.message ?? "",
         success: res.data.status ?? false,
+        data: res.data.authorization
       };
     }
     throw new CustomError(definedMessages.UNKNOWN_ERROR_TRY_AGAIN);

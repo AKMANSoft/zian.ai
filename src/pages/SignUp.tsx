@@ -76,6 +76,8 @@ export default function SignUpPage() {
                 if (uiState.state?.data) {
                   setCookie("authToken", uiState.state.data, {
                     maxAge: 24 * 60 * 60,
+                    path: "/",
+                    sameSite: "lax",
                   });
                   navigate("/");
                   window.location.reload()
