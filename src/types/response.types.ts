@@ -71,7 +71,12 @@ export type KeywordApiResponse = ApiResponse<{
 }>;
 
 export type GenerateApiResponse = ApiResponse<string>;
-export type ArticlesApiResponse = ApiResponse<Array<Article>>;
+export type ArticlesApiResponse = ApiResponse<{
+  articles: Array<Article>;
+  current_page: number,
+  total_articles: number,
+  total_pages: number
+}>;
 
 export type Article = {
   id: number;
