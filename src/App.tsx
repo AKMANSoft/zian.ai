@@ -89,7 +89,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/reset-password/:token",
+    path: "/password/:token",
     element: (
       <Suspense
         fallback={
