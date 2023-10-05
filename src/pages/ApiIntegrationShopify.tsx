@@ -56,7 +56,7 @@ export default function ApiIntegrationShopify() {
                             </div>
                             <hr className="border-2 border-primary " />
                             <div>
-                                <h2 className="md:text-[32px] text-base font-bold font-jakarta text-white my-4 md:my-[30px]">
+                                <h2 className="md:text-[32px] text-2xl font-bold font-jakarta text-white my-4 md:my-[30px]">
                                     Shopify Integration Via Zapier
                                 </h2>
                                 <hr className="border border-white/10" />

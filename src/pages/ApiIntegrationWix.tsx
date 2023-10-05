@@ -57,7 +57,7 @@ export default function ApiIntegrationWix() {
               </div>
               <hr className="border-2 border-primary " />
               <div className="">
-                <h2 className="md:text-[32px] text-base font-bold font-jakarta text-white my-4 md:my-[30px] tracking-wider">
+                <h2 className="md:text-[32px] text-2xl font-bold font-jakarta text-white my-4 md:my-[30px] tracking-wider">
                   How To Connect Zian AI SEO to Wix Via Zapier
                 </h2>
                 <hr className="border border-white/10" />
