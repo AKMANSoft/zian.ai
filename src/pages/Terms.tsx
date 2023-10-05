@@ -94,7 +94,7 @@ export default function TermsPage() {
                             heading="Cancellation"
                             content={
                                 <>
-                                    You can cancel your account at any time with 14 days' notice. You understand that if you cancel before the end of your billing cycle, you will not be refunded for any billing charges incurred for that cycle. You will be responsible for the full 14 days payments until the account is canceled. Cancellation notice must be delivered in Writing to <a href="mailto:hello@zian.ai" className="text-white ps-1">hello@zian.ai</a> or canceled within the platform itself (where available). Canceling your subscription may result in termination of your account subject to the “Termination Rights” section.
+                                    You can cancel your account at any time with 14 days' notice. You understand that if you cancel before the end of your billing cycle, you will not be refunded for any billing charges incurred for that cycle. You will be responsible for the full 14 days payments until the account is canceled. Cancellation notice must be delivered in Writing to <a href="mailto:hello@zian.ai" className="text-white underline ps-1">hello@zian.ai</a> or canceled within the platform itself (where available). Canceling your subscription may result in termination of your account subject to the “Termination Rights” section.
 
                                 </>
                             } />

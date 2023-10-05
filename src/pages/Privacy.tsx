@@ -87,7 +87,7 @@ export default function PrivacyPage() {
                             heading="Contact Information"
                             content={
                                 <>
-                                    If you have any questions about this Privacy Policy, please contact us at: <a href="mailto:hello@zian.ai"> hello@zian.ai
+                                    If you have any questions about this Privacy Policy, please contact us at: <a href="mailto:hello@zian.ai" className="underline text-white"> hello@zian.ai
                                     </a>
                                 </>
                             } />
