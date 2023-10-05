@@ -74,7 +74,7 @@ export default function ApiIntegrationPage() {
                                 </h1>
                                 <ol className="text-sm font-normal text-white/70 md:text-base font-jakarta">
                                     <li>
-                                        1. Download, install and activate this <a className="text-white underline">Zain.Ai</a> plugin
+                                        1. Download, install and activate this <a href="#" target="_blank" className="text-white underline cursor-pointer">Zain.Ai</a> plugin
                                     </li>
                                     <li>2. Go to Setting -{">"} Zian.ai API
                                     </li>
@@ -90,7 +90,7 @@ export default function ApiIntegrationPage() {
                             <div className="pt-1">
                                 <VideoComponent />
                                 <div className="flex flex-col pt-[10px]">
-                                    <a className="pb-2 text-base font-normal text-white cursor-pointer font-jakarta md:pb-5">
+                                    <a className="pb-2 text-base font-normal text-white cursor-pointer font-jakarta md:pb-5" target="_blank">
                                         Installing Zian AI into Your WordPress Website 🚀 - Watch Video
                                     </a>
                                     <hr className="border border-white/10 " />
@@ -99,7 +99,7 @@ export default function ApiIntegrationPage() {
                                     </h1>
                                     <div className="flex gap-[6px] md:pt-5  pt-2 pb-5 md:pb-10 text-primary items-center ">
 
-                                        <a className="flex text-base font-normal underline cursor-pointer font-jakarta text-primary " href="https://wordpress.com/support/posts-page/">
+                                        <a className="flex text-base font-normal underline cursor-pointer font-jakarta text-primary " target="_blank" href="https://wordpress.com/support/posts-page/">
                                             How to Select WordPress Default Posts Page
                                         </a>
                                         <ExternalLinkIcon />
