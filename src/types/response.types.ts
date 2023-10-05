@@ -24,6 +24,7 @@ export type AuthUser = {
     };
     keyword: string;
   };
+  blacklist: string;
   midjourney: 0;
   name: string;
   package: {
