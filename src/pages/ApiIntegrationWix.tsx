@@ -38,7 +38,7 @@ export default function ApiIntegrationWix() {
                   Select your Integration:
                 </p>
                 <div className="mt-3 md:mt-5  flex md:flex-row flex-col gap-[10px]   mb-[15px]">
-                  <Link to="/integrate">
+                  <Link to="/wordpress">
                     <PrimaryBtnNeon className="font-normal text-[15px] py-[8px] w-full md:w-auto">
                       Wordpress Integration
                     </PrimaryBtnNeon>

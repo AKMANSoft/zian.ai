@@ -63,8 +63,8 @@ export default function SideBar({ expanded = false }: Props) {
           <GrSeperator className="mt-6 mb-2" />
           <CustomizePopup />
           <NavigationItem
-            href="/integrate"
-            active={pathname === "/integrate"}
+            href="/wordpress"
+            active={pathname === "/wordpress"}
             className="my-0.5"
             text="Integrate API"
             icon={<FontAwesomeIcon icon={faFile} />}

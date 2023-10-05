@@ -191,7 +191,7 @@ export default function WixSteps() {
           />
           <div className="text-base font-normal md:text-xl font-jakarta">
             b.{" "}
-            <span>
+            <span className="pl-[6px] md:pl-0">
               {" "}
               - ``headline`` : ``Headline`` <br />
             </span>

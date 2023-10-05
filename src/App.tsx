@@ -103,7 +103,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/integrate",
+    path: "/wordpress",
     element: (
       <Suspense
         fallback={

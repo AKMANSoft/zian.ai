@@ -62,8 +62,9 @@ export default function Dashboard() {
                     If no examples are available yet, please wait for our team
                     to notify you that your account is ready, and in the
                     meantime view Integration to connect the system with your
-                    site. Reach out to hello@zian.ai if you need support
+                    site. Reach out to <a href="mailto:hello@zian.ai" className="underline">hello@zian.ai</a> if you need support
                   </p>
+                  
                 </div>
                 <div className="flex md:flex-row  flex-col items-center justify-center my-5 gap-3">
                   <CustomTooltip
