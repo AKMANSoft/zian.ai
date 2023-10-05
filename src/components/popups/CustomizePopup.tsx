@@ -48,7 +48,8 @@ export default function CustomizePopup() {
                 ? authUser?.keyword?.industry?.name
                 : "",
             keywords: authUser?.keyword?.keyword?.split(",") ?? [],
-            tone: authUser?.tone
+            tone: authUser?.tone,
+            blacklist: []
         },
     });
     const { data: industryList } = useSwrFetcher<Array<TIndustry>>(
@@ -156,7 +157,7 @@ export default function CustomizePopup() {
                                                     <FontAwesomeIcon icon={faXmark} />
                                                 </button>
                                             </div>
-                                            <div className="max-h-[calc(100vh_-_200px)] overflow-y-auto flex flex-col space-y-32">
+                                            <div className="max-h-[calc(100vh_-_200px)] overflow-y-auto flex flex-col space-y-32 pb-4 md:pb-[54px]">
                                                 {/* content */}
                                                 {/* px-7  */}
                                                 <div className="pb-4 space-y-5   md:space-y-7">
@@ -216,8 +217,9 @@ export default function CustomizePopup() {
                                                                 <FormLabel>Target SEO Keywords</FormLabel>
                                                                 <FormControl>
                                                                     <TagsInputEl
+                                                                        className="min-h-[106px]"
                                                                         placeholder="Add keyword"
-                                                                        max={5}
+                                                                        max={10000}
                                                                         {...field}
                                                                     />
                                                                 </FormControl>
@@ -243,12 +245,13 @@ export default function CustomizePopup() {
                                                         </p>
                                                         <FormField
                                                             control={form.control}
-                                                            name="keywords"
+                                                            name="blacklist"
                                                             render={({ field, fieldState }) => (
                                                                 <FormItem>
                                                                     <FormLabel></FormLabel>
                                                                     <FormControl>
                                                                         <TagsInputEl
+                                                                            className="min-h-[106px]"
                                                                             placeholder="Add keyword"
                                                                             max={5}
                                                                             {...field}
@@ -447,7 +450,7 @@ export default function CustomizePopup() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <GrBorderBox className="mt-4 rounded-none md:mt-[54px]">
+                                            <GrBorderBox className="rounded-none">
                                                 <div className="flex justify-end bg-gr-purple-dark space-x-[10px] py-2 md:py-5 px-7">
                                                     <SecondaryBtn
                                                         onClick={closeModal}

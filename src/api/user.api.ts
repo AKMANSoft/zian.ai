@@ -210,10 +210,12 @@ export async function updateKeyword(
           industry_id: parseInt(data.industry),
         }),
       keyword: data.keywords.join(", "),
+
       filter_brand: data.filter_brand,
       filter_negativity: data.filter_negativity,
       filter_advertisement: data.filter_advertisement,
       ...(data.website && { website: data.website }),
+      ...(data.blacklist && { blacklist: data.blacklist.join(", ") }),
     });
     if (res.status === 200 && res.data.status) {
       if (data.tone) {

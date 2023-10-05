@@ -163,7 +163,7 @@ function InputTone({ label, placeholder = "", labelNode = null, id = "", endIcon
         className={cn(
           "text-white text-start font-jakarta font-semibold text-sm leading-6 py-3 px-5",
           "border border-white/40 appearance-none rounded-10 w-full bg-transparent h-[60px]",
-          "focus:bg-th-gray/10 outline-none transition-all placeholder:text-white/50"
+          "focus:bg-th-gray/10 outline-none transition-all placeholder:text-white/50",
         )} />
       {
         endIcon && endIcon !== null &&
