@@ -49,7 +49,7 @@ export default function CustomizePopup() {
                 : "",
             keywords: authUser?.keyword?.keyword?.split(",") ?? [],
             tone: authUser?.tone,
-            blacklist: []
+            blacklist: authUser?.blacklist?.split(",") ?? []
         },
     });
     const { data: industryList } = useSwrFetcher<Array<TIndustry>>(
