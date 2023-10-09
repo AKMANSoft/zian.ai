@@ -301,6 +301,7 @@ const TagsInputEl = React.forwardRef<HTMLInputElement, InputElWChipsProps>(
   }) => {
     const [chips, setChips] = React.useState<string[]>(value || []);
     const [inputVal, setInputVal] = React.useState("");
+    const inputRef = React.useRef<HTMLInputElement>(null)
 
     const handleKeyPress: React.KeyboardEventHandler<HTMLInputElement> = (
       e
@@ -311,6 +312,7 @@ const TagsInputEl = React.forwardRef<HTMLInputElement, InputElWChipsProps>(
         if (max && chips.length >= max) return;
         setChips([...chips, inputVal]);
         setInputVal("");
+        inputRef.current?.focus()
       }
     };
     const handleAddChip = (e: any) => {
@@ -319,6 +321,7 @@ const TagsInputEl = React.forwardRef<HTMLInputElement, InputElWChipsProps>(
       if (max && chips.length >= max) return;
       setChips([...chips, inputVal]);
       setInputVal("");
+      inputRef.current?.focus()
     };
 
     React.useEffect(() => {
@@ -368,28 +371,29 @@ const TagsInputEl = React.forwardRef<HTMLInputElement, InputElWChipsProps>(
             </PrimaryBtnNeon>
           ))}
           {(!max || chips?.length < max) && (
-            <>
+            <div className="inline-flex items-center h-10 w-[200px]">
               <input
                 type="text"
                 id={id}
+                ref={inputRef}
                 value={inputVal}
                 onChange={(e) => setInputVal(e.target.value)}
                 onKeyDown={handleKeyPress}
                 placeholder={placeholder}
                 autoComplete="off"
                 className={cn(
-                  "text-white h-10 text-start bg-transparent font-jakarta font-normal text-sm leading-6 w-[200px] max-w-full px-2",
+                  "text-white h-10 text-start bg-transparent font-jakarta font-normal flex-1 text-sm leading-6 max-w-full px-2",
                   "outline-none transition-all placeholder:text-white/70"
                 )}
               />
               <Button
                 variant="ghost"
-                className="hover:bg-white/10 rounded-full w-auto h-10 aspect-square lg:hidden"
+                className="hover:bg-white/10 rounded-full w-auto h-8 aspect-square lg:hidden"
                 onClick={handleAddChip}
               >
                 <FontAwesomeIcon icon={faPlus} />
               </Button>
-            </>
+            </div>
           )}
         </div>
       </div>
