@@ -219,7 +219,7 @@ export default function CustomizePopup() {
                                                                     <TagsInputEl
                                                                         className="min-h-[106px]"
                                                                         placeholder="Add keyword"
-                                                                        max={10000}
+                                                                        max={5}
                                                                         {...field}
                                                                     />
                                                                 </FormControl>
@@ -253,7 +253,7 @@ export default function CustomizePopup() {
                                                                         <TagsInputEl
                                                                             className="min-h-[106px]"
                                                                             placeholder="Add keyword"
-                                                                            max={5}
+                                                                            max={10000}
                                                                             {...field}
                                                                         />
                                                                     </FormControl>
