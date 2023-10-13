@@ -40,6 +40,9 @@ export default function DashboardArticleLoaded() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+
+  console.log(uiState.state?.data?.total_articles)
+
   return (
     <MainLayout
       heading={`Welcome, ${authUser?.name}`}
@@ -80,7 +83,8 @@ export default function DashboardArticleLoaded() {
                 uiState?.state?.data?.articles?.map((article, index) => (
                   <SingleArticleRow
                     article={article}
-                    num={((currentPage - 1) * DEFAULTS.PER_PAGE_ITEMS) + (index + 1)}
+                    totalArticles={uiState.state?.data?.total_articles ?? 1}
+                    num={((currentPage - 1) * DEFAULTS.PER_PAGE_ITEMS) + (index)}
                     key={article.id}
                   />
                 ))
@@ -203,10 +207,11 @@ function Pagination({
 type SingleArticleRowProps = {
   num: number;
   article: Article;
+  totalArticles: number;
   onClick?: () => void;
 };
 
-function SingleArticleRow({ num, article }: SingleArticleRowProps) {
+function SingleArticleRow({ num, article, totalArticles }: SingleArticleRowProps) {
   return (
     <ArticleViewPopup
       article={article}
@@ -217,7 +222,7 @@ function SingleArticleRow({ num, article }: SingleArticleRowProps) {
           className="flex flex-wrap xl:justify-between lg:flex-nowrap lg:gap-3 items-center w-full"
         >
           <span className="hidden lg:block text-sm py-3 min-h-[50px] text-start w-[50px] overflow-hidden lg:ps-4">
-            {formatNumberto0(num)}
+            {formatNumberto0(totalArticles - num)}
           </span>
           <span className="block py-3 lg:min-h-[50px] text-start lg:w-[100px] overflow-hidden">
             <img
