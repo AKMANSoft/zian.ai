@@ -46,7 +46,7 @@ try:
     nodes = []
     item = inputData
     print(f'item id: {item["id"]}')
-    paras = item['article'].split('\n\n')
+    paras = item['article'].split('\\n\\n')
 
     for p in paras:
         nodes.append(
