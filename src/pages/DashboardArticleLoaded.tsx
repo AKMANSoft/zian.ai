@@ -41,8 +41,6 @@ export default function DashboardArticleLoaded() {
   }, []);
 
 
-  console.log(uiState.state?.data?.total_articles)
-
   return (
     <MainLayout
       heading={`Welcome, ${authUser?.name}`}
