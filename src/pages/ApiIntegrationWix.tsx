@@ -1,13 +1,11 @@
 import MainLayout from "../components/layout";
 import GrBorderBox from "../components/ui/gr-border-box";
 import { Input } from "@/components/ui/input";
-import { faCopy } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useAuthUserStore from "@/lib/zustand/authUserStore";
-import { PrimaryBtn, PrimaryBtnNeon } from "@/components/ui/buttons";
+import { CopyAPIKeyButton, PrimaryBtn, PrimaryBtnNeon } from "@/components/ui/buttons";
 import WixSteps from "@/components/WixStepsComponent";
 import { Link } from "react-router-dom";
-
+import { ExternalLinkIcon } from "@radix-ui/react-icons";
 
 
 
@@ -29,9 +27,7 @@ export default function ApiIntegrationWix() {
               </h1>
               <div className="relative mt-[10px]">
                 <Input className="pr-24" readOnly value={authUser?.authorization} />
-                <button className="absolute text-sm font-semibold -translate-y-1/2 font-jakarta top-1/2 right-5">
-                  <FontAwesomeIcon className="pr-2" icon={faCopy} /> Copy
-                </button>
+                <CopyAPIKeyButton />
               </div>
               <div className="mt-3 md:mt-5  mb-[15px]">
                 <p className="text-base font-bold text-white lg:text-xl font-jakarta">
@@ -57,6 +53,13 @@ export default function ApiIntegrationWix() {
               </div>
               <hr className="border-2 border-primary " />
               <div className="">
+                <a
+                  href="https://docs.google.com/document/d/1Pq_0LjSnRr8lxasuZhvYcjQIKE6KWdaRROuuWW7Cj64"
+                  target="_blank"
+                  className="mt-2 inline-flex items-center gap-2 underline text-primary ps-1"
+                >
+                  Or view on Google Docs here <ExternalLinkIcon className="mt-[3px]" />
+                </a>
                 <h2 className="md:text-[32px] text-2xl font-bold font-jakarta text-white my-4 md:my-[30px] tracking-wider">
                   How To Connect Zian AI SEO to Wix Via Zapier
                 </h2>
@@ -66,60 +69,27 @@ export default function ApiIntegrationWix() {
                 </h2>
                 <ol className="text-sm font-normal list-decimal text-white/70 md:text-base font-jakarta px-[18px]">
                   <li className="">
-                    <span className="ps-1">
-                      Your Zian SEO API Key:{" "}
-                      <a
-                        target="_blank"
-                        href=" https://seo.zian.ai/integrate"
-                        className="underline text-primary ps-1"
-                      >
-                        {" "}
-                        https://seo.zian.ai/integrate
-                      </a>{" "}
-                    </span>
+                    <span className="ps-1">Your Zian SEO API</span>
                   </li>
                   <li className="">
-                    <span className="md:flex items-center ps-1">
-                      Zapier:{" "}
-                      <a
-                        target="_blank"
-                        href="https://zapier.com/ "
-                        className="underline text-primary ps-1"
-                      >
-                        {" "}
-                        https://zapier.com/
-                      </a>
-                    </span>
+                    <a href="https://zapier.com/" target="_blank" className="inline-flex items-center gap-2 underline text-primary ps-1">
+                      Zapier <ExternalLinkIcon className="mt-[3px]" />
+                    </a>
+                    {" "} (free account won’t work, you need at least the cheapest Starter $19/mo plan)
                   </li>
                   <li className="">
-                    <span className="md:flex items-center ps-1 ">
-                      UUID Generator:{" "}
-                      <a
-                        target="_blank"
-                        href="https://www.uuidgenerator.net/version4"
-                        className="underline text-primary ps-1"
-                      >
-                        https://www.uuidgenerator.net/version4
-                      </a>
-                    </span>
+                    <a href="https://www.uuidgenerator.net/version4" target="_blank" className="inline-flex items-center gap-2 underline text-primary ps-1">
+                      UUID Generator <ExternalLinkIcon className="mt-[3px]" />
+                    </a>
                   </li>
-                  <li className="">
-                    <span className="md:flex items-center md:ps-1 ">
-                      Your Wix API Key:{" "}
-                      <a
-                        target="_blank"
-                        href=" https://manage.wix.com/account/api-keys"
-                        className="underline text-primary md:ps-1"
-                      >
-                        {" "}
-                        https://manage.wix.com/account/api-keys
-                      </a>
-                    </span>
+                  <li>
+                    <a href="https://manage.wix.com/account/api-keys" target="_blank" className="inline-flex items-center gap-2 underline text-primary ps-1">
+                      Your Wix API Key <ExternalLinkIcon className="mt-[3px]" />
+                    </a>
                   </li>
                 </ol>
                 {/* steps for wix from zapier */}
-                <WixSteps/>
-              
+                <WixSteps />
               </div>
             </div>
           </div>
@@ -132,4 +102,3 @@ export default function ApiIntegrationWix() {
 
 
 
- 

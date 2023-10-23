@@ -447,3 +447,8 @@ input::-webkit-inner-spin-button {
 
 
 
+
+
+.code-viewer pre {
+  background: transparent !important;
+}

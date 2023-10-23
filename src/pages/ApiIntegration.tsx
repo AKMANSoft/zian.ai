@@ -1,12 +1,10 @@
 import MainLayout from "../components/layout";
 import GrBorderBox from "../components/ui/gr-border-box";
 import { Input } from "@/components/ui/input";
-import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import JSONPretty from 'react-json-pretty';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useAuthUserStore from "@/lib/zustand/authUserStore";
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
-import { PrimaryBtn, PrimaryBtnNeon } from "@/components/ui/buttons";
+import { CopyAPIKeyButton, PrimaryBtn, PrimaryBtnNeon } from "@/components/ui/buttons";
 import { Link } from "react-router-dom";
 
 
@@ -29,9 +27,7 @@ export default function ApiIntegrationPage() {
                             <div className="relative">
                                 <Input className="pr-24" readOnly
                                     value={authUser?.authorization} />
-                                <button className="absolute text-sm font-semibold -translate-y-1/2 font-jakarta top-1/2 right-5">
-                                    <FontAwesomeIcon className="pr-2" icon={faCopy} /> Copy
-                                </button>
+                                <CopyAPIKeyButton />
                             </div>
 
                             <div className="  mb-[9px]" >
@@ -74,7 +70,7 @@ export default function ApiIntegrationPage() {
                                 </h1>
                                 <ol className="text-sm font-normal text-white/70 md:text-base font-jakarta">
                                     <li>
-                                        1. Download, install and activate this <a href="#" target="_blank" className="text-white underline cursor-pointer">Zain.Ai</a> plugin
+                                        1. Download, install and activate this <a href="https://seo.zian.ai/zian-wordpress-plugin" target="_blank" className="text-white underline cursor-pointer">Zain Wordpress</a> plugin
                                     </li>
                                     <li>2. Go to Setting -{">"} Zian.ai API
                                     </li>

@@ -1,5 +1,9 @@
 import React, { ReactNode } from "react";
 import { cn } from "../../lib/utils";
+import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import useAuthUserStore from "@/lib/zustand/authUserStore";
+import { useToast } from "./use-toast";
 
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -11,6 +15,30 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 }
 
 
+export function CopyAPIKeyButton() {
+    const { authUser } = useAuthUserStore()
+    const { toast } = useToast();
+
+    const copyAPIKey = async () => {
+        if (!authUser?.authorization) return;
+        await navigator.clipboard.writeText(authUser?.authorization);
+        toast({
+            title: "API key copied to clipboard.",
+            variant: "default",
+            duration: 2500
+        })
+    }
+
+    return (
+        <button
+            type="button"
+            onClick={copyAPIKey}
+            className="absolute text-sm font-semibold -translate-y-1/2 font-jakarta top-1/2 right-5"
+        >
+            <FontAwesomeIcon className="pr-2" icon={faCopy} /> Copy
+        </button>
+    )
+}
 export function SecondaryBtn({ className, children, filled = true, onClick }: ButtonProps) {
     return (
         <button type="button" onClick={onClick} className={cn(
